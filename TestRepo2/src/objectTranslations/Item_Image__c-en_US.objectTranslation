@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item Image</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Item Images</value>
+    </caseValues>
+    <fields>
+        <label><!-- Exclude --></label>
+        <name>Exclude__c</name>
+    </fields>
+    <fields>
+        <label><!-- File Name --></label>
+        <name>File_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Image Types --></label>
+        <name>Image_Types__c</name>
+        <picklistValues>
+            <masterLabel>image</masterLabel>
+            <translation><!-- image --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>small_image</masterLabel>
+            <translation><!-- small_image --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>thumbnail</masterLabel>
+            <translation><!-- thumbnail --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ImgBase64String --></label>
+        <name>ImgBase64String__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Item Images --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento File Name --></label>
+        <name>Magento_File_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento Image URL --></label>
+        <name>Magento_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento Image --></label>
+        <name>Magento_Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mime Type --></label>
+        <name>Mime_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Position --></label>
+        <name>Position__c</name>
+    </fields>
+    <layouts>
+        <layout>POS Item Image Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

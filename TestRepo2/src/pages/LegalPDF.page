@@ -1,0 +1,38 @@
+<apex:page controller="Controller_LegalPDFGenerator" showHeader="false" standardStylesheets="true" renderas="pdf">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FaqPage, 'style.css')}"/>    
+      <div class="content-wrapper">    
+        <head>
+        <title>Diageo Compliance PDF</title>
+        </head>
+        <img src="https://c.na7.content.force.com/servlet/servlet.ImageServer?id=015A00000017Jvx&oid=00DA0000000A9es&lastMod=1295953375000"/>
+
+        <br/>
+        
+        <div style="width:700px; margin-left:auto; margin-right:auto; font-family:sans-serif; color: #000000; ">{!NOW()}</div>
+     
+        <!-- PAGE CONTENT -->
+       
+      
+        <!-- State rules -->
+           
+            
+                <apex:outputPanel id="thePanel">
+                    <apex:pageBlock >
+                            <apex:pageBlockTable value="{!issues}" var="issue" width="100%">
+                                <apex:column value="{!issue.State__r.Name}" width="5%" style="vertical-align:top; font-size:small; border: 1px solid #D4DADC;"/>
+                                <apex:column value="{!issue.Rule__r.Name}" width="10%" style="vertical-align:top; font-size:small; border: 1px solid #D4DADC;"/>
+                                <apex:column value="{!issue.Rule_Applies__c}" width="5%" style="vertical-align:top; font-size:small; border: 1px solid #D4DADC;"/>
+                                <apex:column value="{!issue.Applicability_Comment__c}" width="60%" style="vertical-align:top; font-size:small; border: 1px solid #D4DADC; "/>
+                                <apex:column value="{!issue.Statute_Ref__c}" width="20%" style="vertical-align:top; font-size:small; border: 1px solid #D4DADC;"/>
+                            </apex:pageBlockTable>
+                    </apex:pageBlock> 
+                </apex:outputPanel>    
+            </div>
+     
+    
+ 
+   
+    <c:ajaxLoader />
+
+</apex:page>

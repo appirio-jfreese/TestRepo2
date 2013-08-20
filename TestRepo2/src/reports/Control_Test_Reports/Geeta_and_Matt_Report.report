@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Goal__c$Id</field>
+    </columns>
+    <columns>
+        <field>Goal__c$RecordType</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Sales_Channel__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Program__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Name</field>
+    </columns>
+    <columns>
+        <field>Goal__c$CreatedBy</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Goal_For__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Minimum_of_Accounts__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Due_Date__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+        <criteriaItems>
+            <column>Goal__c$CreatedBy</column>
+            <operator>equals</operator>
+            <value>Geeta Rai</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$CreatedBy</column>
+            <operator>equals</operator>
+            <value>Matt Fong</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$CreatedBy</column>
+            <operator>equals</operator>
+            <value>Peter Salamy</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$CreatedBy</column>
+            <operator>equals</operator>
+            <value>Christine Mccord</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$CreatedBy</column>
+            <operator>equals</operator>
+            <value>Scott Klarman</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c$State__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Geeta and Matt Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Goals_Actions_Territories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Goal__c$Program__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Goal__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

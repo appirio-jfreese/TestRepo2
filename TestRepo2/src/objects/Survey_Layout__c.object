@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Holds the configuration for dynamically rendered survey layouts.</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>Activate_Survey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check this checkbox to activate survey layout and publish survey records to each account.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this checkbox to activate survey layout and publish survey records to each account.</inlineHelpText>
+        <label>Activate Survey</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_10__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 10</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_1__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 1</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_2__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 2</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_3__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 3</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_4__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 4</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_5__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 5</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_6__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 6</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_7__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 7</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_8__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 8</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Label_9__c</fullName>
+        <description>This field is the label for a Beating The Competition line item.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is the label for a Beating The Competition line item.  Leave this field blank if you do not want it rendered on this survey record.</inlineHelpText>
+        <label>Beating Comp Label 9</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_10__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 10</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_1__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>This is the criteria that determines if the Diageo number and the Total number evaluate to a successful ratio / percentage.  If the label says &apos;&gt;= 35% of Displays,&apos; enter a &apos;35&apos; here.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the criteria that determines if the Diageo number and the Total number evaluate to a successful ratio / percentage.  If the label says &apos;&gt;= 35% of Displays,&apos; enter a &apos;35&apos; here.</inlineHelpText>
+        <label>Beating Comp Success Percent 1</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 2</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 3</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 4</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_5__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 5</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_6__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 6</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_7__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 7</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_8__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 8</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Beating_Comp_Success_Percent_9__c</fullName>
+        <externalId>false</externalId>
+        <label>Beating Comp Success Percent 9</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clone_Survey_Layout__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Hidden field used for the survey layout trigger that will clone a survey layout and will also clone copies of the related brand item and brand bottle item layout records.</description>
+        <externalId>false</externalId>
+        <label>Clone Survey Layout</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Due Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_10__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 10</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 1</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 2</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 3</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 4</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_5__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 5</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_6__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 6</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_7__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 7</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_8__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 8</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extra_Credit_Label_9__c</fullName>
+        <externalId>false</externalId>
+        <label>Extra Credit Label 9</label>
+        <length>150</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_of_Grade_BeatComp__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent of Grade BeatComp</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_of_Grade_Dist__c</fullName>
+        <description>This field is used to calculate the percentage of Distrubution/Shelf/Display used for the final Account Grade.</description>
+        <externalId>false</externalId>
+        <label>Percent of Grade Distribution</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_of_Grade_Extra_Credit__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent of Grade Extra Credit</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_of_Grade_Innovation__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent of Grade Innovation</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Survey Layout</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Due_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Survey Layout Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Survey Layouts</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Deep_Clone</fullName>
+        <availability>online</availability>
+        <description>Used with a webservice call (plus a trigger) to run a deep clone (with child-lookup records cloned as well) of a given survey layout record.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Deep Clone</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/23.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/23.0/apex.js&quot;)}
+
+
+var recordId = &apos;{!Survey_Layout__c.Id}&apos; ;
+
+
+if (recordId) {
+     var methodArgumentsObject = {} ;
+     methodArgumentsObject.surveyLayoutId = recordId ;
+     var result = sforce.apex.execute( &quot;WebServiceCloneSurvey&quot;, &quot;cloneSurveyLayoutRecordAndReturnMessageString&quot;, 
+                                                                    methodArgumentsObject );
+     var resultString = result[0] ;
+     if(resultString.substr(0,8) == &apos;SUCCESS-&apos;) {
+          var url = &apos;/&apos; ;
+          url += resultString.substr(8) ;
+          window.location.href = url ;
+     }else{
+          alert(resultString);
+     }
+
+}</url>
+    </webLinks>
+</CustomObject>

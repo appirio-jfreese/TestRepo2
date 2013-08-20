@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Content Category</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Content Category</value>
+    </caseValues>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- The parent theme(s) of this sub category. Should be comma delimited if more than one parent. --></help>
+        <label><!-- Parent Theme --></label>
+        <name>Parent_Theme__c</name>
+    </fields>
+    <fields>
+        <help><!-- Order to display items --></help>
+        <label><!-- Sort Order --></label>
+        <name>Sort_Order__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

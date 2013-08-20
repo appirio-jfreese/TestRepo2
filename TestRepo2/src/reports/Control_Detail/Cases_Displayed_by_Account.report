@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Account.NABCA_Licensee_State__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>CUST_RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>Action__c.Goal__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Cases_Displayed__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Date_Finished__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Comments__c</field>
+    </columns>
+    <description>This report shows all Displays and their associated cases (when applicable) for all of my goal actions for off-premise accounts.</description>
+    <filter>
+        <criteriaItems>
+            <column>CUST_RECORDTYPE</column>
+            <operator>equals</operator>
+            <value>Action__c.Display_Control</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Cases Displayed by Account</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Action__c@Action__c.Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>FK_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Action__c.Date_Finished__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

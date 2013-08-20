@@ -1,0 +1,74 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_MonthlyExecutionPlan" renderAs="pdf">
+
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'pdf.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'pdf_style.css')}"/>
+ 
+    <div class="header">   
+    	<div class="logo"><img src="{!URLFOR($Resource.CommonPage,'images/pdf_logotype.png')}" /></div>
+    	<div class="header-details" style="font-size: 12px;">
+    		{!themeOptionsString}<br/>
+    		Printed {!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}<br />
+    		Page <span class="pagenumber"/> of <span class="pagecount"/><br />
+    		{!startDate} - {!endDate}
+    	</div>
+    	<div class="pdf-title">
+               Monthly Execution Plan
+		</div>  
+		 <table class="mep-data header-table">
+                        <thead>
+                            <tr>
+                                <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                                    <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                        <th class=" sectionClearBg mep_program{!salesDriversToShowCount}">{!salesdrivername}</th>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!salesDriversToShowCount!=1}">
+                                        <th class=" sectionClearBg mep_program{!salesDriversToShowCount}">{!salesdrivername}</th>
+                                    </apex:outputText>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+                        </table> 
+                        
+    </div>  
+        <!-- PAGE CONTENT -->
+        <div class="content">
+
+			    
+       
+                <apex:pageBlock id="mepData">
+                    <table class="mep-data">
+                        <tbody>
+                            <apex:repeat value="{!months}" var="month"> 
+                                <!-- month box -->
+                                <tr class="mep-month">
+                                    <td colspan="{!salesDriversToShowCount}" class="month">
+                                        {!month.name}
+                                    </td>
+                                </tr>
+                                <tr class="month-data month{!span}">
+                                    <apex:repeat value="{!salesDriversToShow}" var="program">
+                                        <td class="mep_program{!salesDriversToShowCount}">
+                                            <apex:repeat value="{!calendarData[month.data][program]}" var="programData">
+                                            	<div class="month{!span} mep-general" style="width: auto !important; {!programData.styleBackgroundColor} {!programData.styleTextColor}">
+	                                                <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                                        <div class="month{!span}-sep1-desc">
+                                                            <apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext>
+                                                        </div>
+                                                	</apex:outputText>          
+                                                    <div class="month{!span}-sep month{!span}-sep{!salesDriversToShowCount}" style="{!programData.styleBackgroundImage};">
+                                                        <div class="mep-label">{!programData.label}</div>
+                                                    </div>
+                                                </div>
+                                            </apex:repeat>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </apex:pageBlock>
+                
+        </div>
+
+</apex:page>

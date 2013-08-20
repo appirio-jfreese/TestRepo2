@@ -1,0 +1,713 @@
+<apex:component controller="Controller_Base" extensions="POS_BaseRemote,Controller_BaseRemote" allowDML="true">
+	
+ 	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'utils.js')}"></script>
+	
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.mousewheel.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.jscrollpane.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'imgscale.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.treeview.js')}"></script>
+
+	<script type="text/javascript">
+
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', '{!googleAnalyticsUID}']);
+			_gaq.push(['_trackPageview']);
+			
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		
+			function pageViewed(page){
+				_gaq.push(['_trackPageview', page]);
+			}
+			
+	</script>
+
+    <style type="text/css">
+/*Temporary workaround for IE8. If I set background from the commonpage style sheet, It cause IE8 crash*/
+body {
+    background: url({!URLFOR($Resource.CommonPage, 'images/page_bg.png')}) #ffffff repeat-x 0px 0px;
+}
+    
+#header {
+	background: url({!URLFOR($Resource.POS_Skin, 'images/bg-header.gif')}) repeat-x scroll 0 0 transparent;
+	
+}
+.page {
+	background: none;
+}
+.visual-block{
+	margin: 0 10px 11px;                                       
+    min-height:569px;                                         
+    padding:30px 1px 0;                                                                     
+    position:relative;                                        
+    background:#3f3f3f url({!URLFOR($Resource.POS_NewComps,'images/bg-visual.gif')}) no-repeat;
+}                                                           
+.visual-block .items-list li{                              
+    float:left;                                            
+    margin:0 4px 6px 0;                                    
+    width:308px;                                           
+    position:relative;                                     
+    height:175px;                                          
+    background:url({!URLFOR($Resource.POS_NewComps,'images/bg-items.png')}) no-repeat;      
+}          
+.visual-block .brand-list .holder {
+  background: url({!URLFOR($Resource.POS_NewComps,'images/bg-visual-t.png')}) no-repeat scroll 0 0 transparent;
+  float: left;
+  margin: 0 7px 0 0;
+  width: 308px;
+}
+.visual-block .brand-list .frame {
+  background: url({!URLFOR($Resource.POS_NewComps,'images/bg-visual-b.png')}) no-repeat scroll 0 100% transparent;
+  display: block;
+  overflow: hidden;
+  padding: 67px 0 55px;
+  width: 308px;
+}
+.visual-block .brand-list .text-holder {
+  background: url({!URLFOR($Resource.POS_NewComps,'images/bg-visual-c.png')}) repeat-y scroll 0 0 transparent;
+  color: #FFFFFF;
+  display: block;
+  font: bold 23px/27px Tahoma,Geneva,sans-serif;
+  width: 308px;
+}
+.visual-block .brand-list ul li {
+  background: url({!URLFOR($Resource.POS_NewComps,'images/bg-brand.png')}) no-repeat scroll 0 0 transparent;
+  font: bold 18px/20px Tahoma,Geneva,sans-serif;
+  height: 55px;
+  overflow: hidden;
+  vertical-align: top;
+  width: 308px;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+body{
+    *font-family: Arial !important;
+}
+div {
+    *font-family: Arial !important;
+}
+span {
+    *font-family: Arial !important;
+}
+table td {
+    *font-family: Arial !important;
+}
+
+body a.btn {
+  background: url({!URLFOR($Resource.POS_NewComps,'images/bg-btn.png')}) no-repeat scroll 100% -38px transparent;
+  color: #FFFFFF;
+  cursor: pointer;
+  float: left;
+  font-size: 13px;
+  height: 38px;
+  line-height: 20px;
+  margin: 0 0 0 -3px;
+  padding: 0 14px 0 0;
+  text-transform: uppercase;
+}
+body a.btn span {
+  background: url({!URLFOR($Resource.POS_NewComps,'images/bg-btn.png')}) no-repeat scroll 0 0 transparent;
+  float: left;
+  height: 29px;
+  padding: 9px 0 0 8px;
+}
+.log-box .droplogout{
+	position:absolute;
+	top:100%;
+	right:0;
+	padding:6px 12px 0 0;
+	/*z-index:100;*/
+}
+
+</style>
+
+    
+    <apex:stylesheet value="{!URLFOR($Resource.jquery, 'jquery.jscrollpane.css')}"/>
+   
+	<script type="text/javascript">
+	jQuery.noConflict();
+	
+	var customSelectBoxHideTimeout = null;
+		
+	jQuery(document).ready(function() {
+		
+		jQuery("button.back-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery("button.back-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+					
+		jQuery(".download-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".download-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+		
+		jQuery(".download-pdf-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".download-pdf-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			}); 
+		
+		jQuery(".downloadAllButton").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".downloadAllButton").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+		
+		jQuery(".action-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".action-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+			
+		jQuery("a.additionalBrand").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery("a.additionalBrand").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			}); 
+			
+		jQuery(".green").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".green").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+			
+		jQuery(".sub-section-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".sub-section-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+		
+		jQuery(".section-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".section-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+
+		jQuery(".horizontal-slider-navigation-button").live('mouseenter', function() {
+			jQuery(this).addClass('over');
+			}); 
+
+ 		jQuery(".horizontal-slider-navigation-button").live('mouseleave', function(){
+			jQuery(this).removeClass('over');
+			});
+
+        jQuery.ui.accordion.prototype.options.header = '> li > :first-child,> :not(li):even:not(.hidden)';
+        jQuery.fn.jScrollPane.defaults.enableKeyboardNavigation = false;
+        jQuery.fn.jScrollPane.defaults.showArrows = true;
+	    if(!jQuery('.custom-select-box-values').hasClass('js-scroll')){
+	       	jQuery('.custom-select-box-values').jScrollPane();
+	    	jQuery('.custom-select-box-values').addClass('js-scroll');
+	    }
+
+  		jQuery('img.scaleImg').imgscale({parent : '.preview-wrapper',scale: 'fit',fade : 1000}); 
+
+ 		jQuery('.forceSubmit').keydown(function(e) {
+ 			if(!jQuery.browser.msie){
+ 				return;
+ 			}
+			if(e.keyCode == 13){
+				if(jQuery(this).parents('form').length != 0 ){
+					form = jQuery(this).parents('form');
+					if(form.find('input[type=submit]').length == 1){
+						form.find('input[type=submit]').trigger('click');
+					} else if(form.find('button').length == 1) {
+						form.find('button').trigger('click');
+					}
+				}
+			}
+        });
+
+		jQuery(".custom-select-box-header").live('click',function() {
+			selectBox = jQuery(this).parent();
+	       	if(!jQuery('.custom-select-box-values').hasClass('js-scroll')){
+	       		jQuery('.custom-select-box-values').jScrollPane();
+	       		jQuery('.custom-select-box-values').addClass('js-scroll');
+	      	}
+			if(selectBox.hasClass('expanded')){
+				selectBox.removeClass('expanded');
+				jQuery('.custom-select-button',selectBox).animate({'rotate': 0}, 400);					
+				selectBox.animate({height: jQuery('.custom-select-box-header', selectBox).outerHeight()}, 400);
+			} else {
+				selectBox.addClass('expanded');
+				selectBoxMaxHeight = jQuery('.custom-select-box-values', selectBox).outerHeight();
+				selectBoxActualHeight = jQuery('.custom-select-box-item', selectBox).first().outerHeight()*jQuery('.custom-select-box-item', selectBox).size();
+				if(selectBoxActualHeight >= selectBoxMaxHeight){
+					selectBoxHeight = selectBoxMaxHeight;				
+				} else {
+					selectBoxHeight = selectBoxActualHeight;
+				}
+				selectBox.animate({height: selectBoxHeight+45}, 600);
+				jQuery('.custom-select-button',selectBox).animate({'rotate': 180}, 600);				
+			}
+		});
+
+		jQuery(".custom-select-box").live('mouseenter', function() {
+			jQuery(this).addClass('hover');
+		});
+
+		jQuery(".custom-select-box").live('mouseleave', function() {
+			jQuery(this).removeClass('hover');
+			var that = this;
+			if(customSelectBoxHideTimeout != null) {
+				clearTimeout(customSelectBoxHideTimeout);
+			}
+			customSelectBoxHideTimeout = setTimeout(function(){
+				if(jQuery(that).hasClass('expanded') && !jQuery(that).hasClass('hover')){
+					jQuery(that).delay(200).animate({height: jQuery('.custom-select-box-header', that).outerHeight()}, 400, function(){
+						jQuery(that).removeClass('expanded');
+					});
+					jQuery('.custom-select-button',that).delay(200).animate({'rotate': 0}, 400);				
+				}
+			}, 1000);
+		});
+
+		jQuery(".custom-select-box-item").live('mouseenter', function() {
+			jQuery(this).addClass('custom-select-box-item-active');
+			if(jQuery(this).hasClass('useSectionTheme')){
+				jQuery(this).addClass('sectionBackground');
+				jQuery(this).addClass('sectionBorder');				
+			}
+		});		
+		jQuery(".custom-select-box-item").live('mouseleave',function() {
+			jQuery(this).removeClass('custom-select-box-item-active');
+			if(jQuery(this).hasClass('useSectionTheme')){
+				jQuery(this).removeClass('sectionBackground');
+				jQuery(this).removeClass('sectionBorder');				
+			}			
+		});
+		
+		jQuery(".custom-select-box-item").live('click', function(){
+			customSelectBox = jQuery(this).parents('.custom-select-box');
+			if(customSelectBox.length == 0){
+				return;
+			}
+
+			clearTimeout(customSelectBoxHideTimeout);
+			customSelectBox.animate({height: jQuery('.custom-select-box-header', customSelectBox).outerHeight()}, 400, function(){
+				jQuery(customSelectBox).removeClass('expanded');
+			});
+			jQuery('.custom-select-button',customSelectBox).animate({'rotate': 0}, 400);				
+			
+			valDescription = jQuery.trim( jQuery(this).html() );
+			if(valDescription.length > 18 && customSelectBox.hasClass('trim')){
+				customSelectBox.find('.custom-select-box-val').html(valDescription.substring(0, 18)+'...');			
+			} else {
+				customSelectBox.find('.custom-select-box-val').html(valDescription);
+			}
+
+			selectBox = jQuery("select.orgSelect-"+customSelectBox.attr('id')+"");
+			if(selectBox.length == 0){
+				return;
+			}
+
+			selectBox.val(jQuery(this).attr('name'));			
+			//customSelectBox.trigger('mouseleave');
+			customSelectBox.find(".custom-select-box-item").removeClass('current');
+			jQuery(this).addClass('current');
+			
+			selectBox.focus();	// important
+			selectBox.blur();	// important
+			selectBox.change();	// important
+		});
+		
+        jQuery(".close").live('click', function(){
+            if(jQuery(this).parents('.dialog').length != 0){
+
+				dialog = jQuery(this).parents('.dialog');
+				dialog.find('input[type="text"]').val('');
+				dialog.find('input[type="checkbox"]').attr('checked', false);
+				jQuery('span.totalDownloadSizeValue', dialog).html('0.00');			
+				jQuery('span.totalDownloadTimeValue', dialog).html('0 second');
+				
+                dialogId = jQuery(this).parents('.dialog').attr('id');
+                if(jQuery(this).parents('.dialog').attr('name') !== undefined){
+                	dialogName = jQuery(this).parents('.dialog').attr('name');
+                } else {
+                	dialogName = '';
+                }      
+                if(dialogId.length != 0){
+                	if(dialogName.length !=0){
+                		hideDialog(""+dialogId+"[name='"+dialogName+"']");
+                	} else {
+                    	hideDialog(dialogId);
+                    }
+                }
+            }
+        });
+        
+        jQuery(".content-item-description").live('mouseenter', function() {        	
+        	var iparent = jQuery(this).parents(".content-item");        	
+          	if(iparent.find('.item-buttons').length != 0){          	
+          		var bottomValue = jQuery("div.item-description", iparent).height()-jQuery("div.content-item-menu", iparent).height() - 5;
+	           	jQuery("div.item-description", iparent).stop().animate({bottom: -bottomValue}, 400);
+	        }
+        });
+        jQuery(".content-item-description").live('mouseleave', function() {
+        	var iparent = jQuery(this).parents(".content-item"); 
+        	var bottomValue = jQuery("div.item-description", iparent).height()-jQuery("div.content-item-menu div", iparent).height() - 5;
+	        jQuery("div.item-description", iparent).stop().animate({bottom: -bottomValue}, 400);
+        });
+        
+        jQuery(".content-item-list").live('mouseenter', function() {
+        	jQuery("div.content-item-list-buttons", this).css('opacity', 0);
+        	jQuery("div.content-item-list-buttons", this).removeClass('hidden');
+           	jQuery("div.content-item-list-buttons", this).stop().animate({opacity: 1}, 400);
+        });
+        jQuery(".content-item-list").live('mouseleave', function() {
+            jQuery("div.content-item-list-buttons", this).removeClass('hidden');    
+	        jQuery("div.content-item-list-buttons", this).stop().animate({opacity: 0});
+        });        
+        jQuery(".showResolution").live('click',function() {
+	        jQuery(this).parents("div.item-description").stop().animate({bottom: -3}, 400);
+        });
+        jQuery(".user-menu-dropdown").live('mouseenter',function() {
+			jQuery(this).addClass('user-menu-dropdown-active');
+			jQuery(this).stop().animate({height: jQuery('.user-menu-values', this).outerHeight()+jQuery('.user-menu-name', this).outerHeight()}, 400, function(){
+
+			});
+			jQuery('.user-menu-dropdown-ind',this).stop().animate({'rotate': 180}, 400);				
+        });
+        jQuery(".user-menu-dropdown").live('mouseleave',function() {
+			jQuery(this).stop().animate({height: jQuery('.user-menu-name', this).outerHeight()}, 400, function(){
+				jQuery(this).removeClass('user-menu-dropdown-active');
+			});
+			jQuery('.user-menu-dropdown-ind',this).stop().animate({'rotate': 0}, 400);	
+        });
+        jQuery(".user-menu-value").live('mouseenter',function() {
+        	jQuery(this).addClass('user-menu-value-acitve');
+        });
+        jQuery(".user-menu-value").live('mouseleave',function() {
+        	jQuery(this).removeClass('user-menu-value-acitve');
+        });
+        jQuery('.downloadAllButton').live('click', function(){
+    	    if(jQuery(this).attr('id') !== undefined){
+        	   	if(jQuery(this).attr('id').length != 0){
+					showDialog("downloadAllInfo-"+jQuery(this).attr('id'), true);
+            	} else {
+                    showDialog("downloadAllInfo", true);
+            	}
+            	return;
+			}
+        	if(jQuery('div#downloadAllInfo').length != 0){
+				showDialog('downloadAllInfo', true);
+			}       
+        });
+        jQuery('.downloadAllButtonDynamic').live('click', function(){
+        	if(jQuery('div#downloadAllInfo').length != 0){
+				showDialog('downloadAllInfo');
+			}        
+        });
+        jQuery('.uploadFileButton').live('click', function(){
+        	if(jQuery('div#uploadFileInfo').length != 0){
+				showDialog('uploadFileInfo', true);
+                jQuery('form', 'div#uploadFileInfo')[0].reset();
+				var date  = new Date();
+				jQuery('input.availableUntil','div#uploadFileInfo').val((date.getMonth()+1)+'/'+(date.getDate())+'/'+(date.getFullYear()+1));
+			}        
+        });
+                
+        jQuery('input[type=checkbox].doc').live('click',function(){
+			stringIds = '';
+			docTotalSizeInB = 0;
+			numberOfSelectedFiles = 0;
+			numberOfFiles = jQuery(this).parents('.dialog').find('input[type=checkbox].doc').size();
+			jQuery(this).parents('.dialog').find('input[type=checkbox].doc').each(function(){
+				if(jQuery(this).is(':checked')){
+
+			        if(jQuery(this).attr('id') !== undefined && jQuery(this).attr('id').length != 0 && jQuery(this).attr('name') !== undefined && jQuery(this).attr('name').length != 0){
+		       	    	docId = jQuery(this).attr('id');
+		       	    	stringIds = stringIds +'/'+docId;
+		      	    	docSize = jQuery(this).attr('name');
+		       	    	docSizeInt = 0;
+		       	    	if (docSize.toLowerCase().indexOf("kb") >= 0){
+		      	    		docSizeInt = parseInt(docSize.toLowerCase().replace('kb', ''));
+		       	    		if(!isNaN(docSizeInt)){
+		       	    			docTotalSizeInB = docTotalSizeInB + (docSizeInt * 1024);
+		       	    		}
+		       	    	} else if (docSize.toLowerCase().indexOf("mb") >= 0){
+		       	    		docSizeInt = parseInt(docSize.toLowerCase().replace('mb', ''));
+		       	    		if(!isNaN(docSizeInt)){
+		      	    			docTotalSizeInB = docTotalSizeInB + (docSizeInt * 1024 * 1024);			        	    		
+		       	    		}
+		       	    	}
+						numberOfSelectedFiles++;
+		           	} else {
+		           		jQuery(this).attr('checked', false);
+		           	}
+		    	}
+			});
+
+			docTotalSizeInMB = (docTotalSizeInB/1024/1024);
+			jQuery('span.totalDownloadSizeValue', jQuery(this).parents('.dialog')).html(docTotalSizeInMB.toFixed(2));
+			timeInSec = docTotalSizeInB / 175000;
+			if(timeInSec < 60){
+				timeNum = timeInSec.toFixed(0);
+				if(timeNum > 1){
+					timeDesc = 'seconds';
+				} else {
+					timeDesc = 'second';
+				}
+			} else {
+				timeInMin = timeInSec / 60;
+				timeNum = timeInMin.toFixed(0);
+				
+				if(timeNum < 60){	
+					if(timeNum > 1){
+						timeDesc = 'minutes';
+					} else {
+						timeDesc = 'minute';
+					}
+				} else {
+					timeInH = timeInMin / 60;
+					timeNum = timeInH.toFixed(0);
+					if(timeNum > 1){
+						timeDesc = 'hours';
+					} else {
+						timeDesc = 'hour';
+					}						
+				}
+			}
+			if(!isNaN(timeNum)){
+				jQuery('span.totalDownloadTimeValue', jQuery(this).parents('.dialog')).html(timeNum+' '+timeDesc);
+			}
+			
+			if(numberOfSelectedFiles == numberOfFiles && numberOfFiles != 0){
+				jQuery('#selectTotalDocForDownload').attr('checked', true);
+			} else {
+				jQuery('#selectTotalDocForDownload').attr('checked', false);
+			}
+        });
+
+		jQuery('.startShareAll').live('click', function(){
+			dataContainer = jQuery(this).parents('.dialog');
+			if(dataContainer.find('input[type=checkbox]').length != 0){
+				if(dataContainer.find('input[type=checkbox].doc').length != 0){
+                    var stringIds = '';
+                    var glue = '';
+					docTotalSizeInB = 0;
+					dataContainer.find('input[type=checkbox].doc').each(function(){
+						if(jQuery(this).is(':checked')){
+			    	        if(jQuery(this).attr('id') !== undefined && jQuery(this).attr('id').length != 0 && jQuery(this).attr('name') !== undefined && jQuery(this).attr('name').length != 0){
+			        	    	docId = jQuery(this).attr('id');
+			        	    	stringIds += glue+docId;
+			        	    	glue = ',';
+			            	}
+			            }
+					});
+					if(stringIds != '' && stringIds != null){
+						userMultipleShare(stringIds);
+						dialog = jQuery(this).parents('.dialog');
+						dialog.addClass('hidden');
+						dialog.find('input[type="text"]').val('');
+						dialog.find('input[type="checkbox"]').attr('checked', false);
+						jQuery('span.totalDownloadSizeValue', dialog).html('0.00');			
+						jQuery('span.totalDownloadTimeValue', dialog).html('0 second');
+						dialog.attr('style','');
+						showDialog('shareInfo');
+					}
+				}
+				dataContainer.find('input[type=checkbox]').each(function(){this.checked = false;})
+			}
+			
+		});
+    	jQuery('.startDownloadAll').live('click', function(){
+			dataContainer = jQuery(this).parents('.dialog');
+			if(dataContainer.find('input[type=checkbox]').length != 0){
+				if(dataContainer.find('input[type=checkbox].doc').length != 0){
+					stringIds = '';
+					videoIds = Array();
+					docTotalSizeInB = 0;
+					dataContainer.find('input[type=checkbox].doc').each(function(){
+						if(jQuery(this).is(':checked')){
+			    	        if(jQuery(this).attr('id') !== undefined && jQuery(this).attr('id').length != 0 && jQuery(this).attr('name') !== undefined && jQuery(this).attr('name').length != 0){
+			        	    	docId = jQuery(this).attr('id');
+			        	    	if(!jQuery(this).hasClass('videofile')){
+			        	    		stringIds = stringIds +'/'+docId;
+			        	    	} else {
+			        	    		videoIds.push(jQuery(this).parent().attr('id'));
+			        	    	}
+			        	    	docSize = jQuery(this).attr('name');
+			        	    	docSizeInt = 0;
+			        	    	if (docSize.toLowerCase().indexOf("kb") >= 0){
+			        	    		docSizeInt = parseInt(docSize.toLowerCase().replace('kb', ''));
+			        	    		if(!isNaN(docSizeInt)){
+			        	    			docTotalSizeInB = docTotalSizeInB + (docSizeInt * 1024);
+			        	    		}
+			        	    	} else if (docSize.toLowerCase().indexOf("mb") >= 0){
+			        	    		docSizeInt = parseInt(docSize.toLowerCase().replace('mb', ''));
+			        	    		if(!isNaN(docSizeInt)){
+			        	    			docTotalSizeInB = docTotalSizeInB + (docSizeInt * 1024 * 1024);			        	    		
+			        	    		}
+			        	    	}
+			            	}
+			            }
+			            docTotalSizeInMB = (docTotalSizeInB/1024/1024);
+					});
+			        if(docTotalSizeInMB > 100){
+			          	var answer = confirm("Please confirm, that you you would like to download more then 100MB.");
+			           	if (!answer) {
+                            return;
+			           	}
+			        }
+			        
+					if(stringIds != '' && stringIds != null){
+                        var iframe = document.createElement('iframe');
+                        iframe.style.width      = '1px';
+                        iframe.style.height     = '1px';
+                        iframe.style.visibility = 'hidden';
+                        iframe.src              = '/sfc/servlet.shepherd/version/download' + stringIds;
+						jQuery(document.body).append(iframe);
+						if (jQuery(this).parents('.dialog').length != 0) {
+                            dialogId = jQuery(this).parents('.dialog').attr('id');
+                            if (dialogId.length != 0) {
+                                hideDialog(dialogId);
+                                dialog = jQuery(this).parents('.dialog');
+								dialog.find('input[type="text"]').val('');
+								dialog.find('input[type="checkbox"]').attr('checked', false);
+								jQuery('span.totalDownloadSizeValue', dialog).html('0.00');			
+								jQuery('span.totalDownloadTimeValue', dialog).html('0 second');
+                            }
+                        }
+					}
+					jQuery.each(videoIds, function(index, videoId){
+			    		if(videoId.length != 0){
+			    			var videodesc = jQuery('div[id="'+videoId+'"] label').html();
+			    			var videourl = '/apex/VideoDownload?videoid='+videoId+'&videodesc='+videodesc;			    		
+			    			window.open(videourl);
+						}					
+					});
+				}
+			}
+    	});
+    	
+    	jQuery('.videoDownloadButton').live('click', function(){
+    		var videoId = jQuery(this).attr('id');
+    		if(videoId.length != 0){
+				Controller_Base.downloadVideoFromBC(videoId, function(videourl, event){
+					if (event.status) {
+						window.location = videourl;
+					} else if (event.type === 'exception') {
+						alert(event.message);
+					} else {
+						alert(event.message);
+					}
+				}, {escape:true});
+    		} else {
+    			alert('Video ID not found.');
+    		}
+    	});
+	});
+	</script>
+	<!-- 
+    <apex:attribute name="isLoggedIn" description="Tell if user is logged in or not. Content of div.user-info depends on this value" type="Boolean" required="true"/>
+    <apex:attribute name="preview" description="" type="String" required="false" default="false"/>
+    <apex:attribute name="showSearch" description="" type="Boolean" required="false" default="true"/>
+    
+   
+    
+    <div id="overlayDisable"></div>
+    <div class="header">
+        <a href="{!$Page.HomePage}" class="box-link"><div class="logotype">&nbsp;</div></a>
+        <div class="user-info">
+        	<apex:pageBlock rendered="{!AND(isLoggedIn, preview='false')}">
+        		<div style="float: left; padding-top: 6px;">Welcome&nbsp;</div>
+        		<div class="user-menu-dropdown" style="float: left;">
+        			<div class="user-menu-name"><span class="bold">{!$User.FirstName} {!$User.LastName} <span class="user-menu-dropdown-ind"><img src="{!URLFOR($Resource.CommonPage, 'images/user-menu-arrow.png')}"/></span></span></div>
+        			<div class="user-menu-values">
+	        			<div class="user-menu-value"><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">{!$Label.site.logout}</apex:outputLink></div>
+					</div>
+        		</div>
+        		<div style="clear: both;"></div>
+			</apex:pageBlock>
+           	<apex:pageBlock rendered="{!AND(NOT(isLoggedIn),preview=='false')}">Please sign in</apex:pageBlock>
+       </div>
+       
+        <div class="headerdistr {!If(OR(isLoggedIn!=true, preview=='true') ,'hidden','')}" style="bottom: 41px; height: 32px; position: absolute; right: 15px; width: 500px; color: #ffffff; font-family: Tahoma,Arial; font-size: 14px;">
+    			 <span style="float: right;">{!distributorName}</span>
+       </div>
+       	<apex:outputPanel rendered="{!showSearch}">
+	        <div class="searchbox {!If(OR(isLoggedIn!=true, preview=='true') ,'hidden','')}">
+	           	<apex:form >
+					<apex:actionFunction status="ajax-status" name="userSearch" action="{!userSearch}" rerender="messages, sValue"/>	                
+		        	<apex:outputPanel id="sValue">
+			        	<apex:inputText value="{!searchPhrase}" styleClass="search forceSubmit"/>
+			            <button class="update-filter" onclick="userSearch(); return false;">GO</button>
+					</apex:outputPanel>
+				</apex:form>
+	        </div>
+        </apex:outputPanel>
+    </div>
+    -->
+<style>
+.POS_title {
+    font-family: Verdana,Arial,sans-serif !important;
+    font-size: 24px;
+    line-height: 24px;
+    padding-left: 10px;
+    padding-top: 12px;
+    display: inline-block;
+    zoom: 1;
+    margin-left: 305px;
+    margin-top: 29px;
+    color: #fff;
+}
+
+.newddlogo {
+	background: url({!URLFOR($Resource.CommonPage, 'images/page_logotype.png')}) no-repeat  !important;
+	text-indent:-9999px;
+	width:305px !important;
+	height:45px !important;
+	position: absolute;
+	bottom: 14px;
+}
+.newddlogo a{
+	display:block;
+	height:100%;
+}
+</style>
+<apex:attribute name="menuLinks" description="" type="pageLink[]" required="true"/>  
+<apex:attribute name="breadcrumbs" type="POS_BreadCrumb[]" required="true" description="List of breadcrumbs"/>
+<div class="header-container" id="header">
+ 	<div class="header" >
+		<div class="log-box">
+			Welcome <a href="#" class="log">{!$User.FirstName} {!$User.LastName}</a>
+			<div class="droplogout" style="display:none;">
+				<a href="{!$Site.Prefix}/secur/logout.jsp">Log Out</a>
+			</div>
+		</div>
+		<h1 class="newddlogo ddlogo"><a href="#">Diageo POS</a></h1><span class="POS_title">| POS</span>
+	</div>
+	<div class="nav-container">
+		<div class="nav-holder">
+			<c:POS_Navigation menuLinks="{!menuLinks}" breadcrumbs="{!breadcrumbs}"/>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+jQuery('.log-box').mouseover(function(){jQuery('.droplogout').show();}).mouseout(function(){jQuery('.droplogout').hide();})
+</script>
+</apex:component>

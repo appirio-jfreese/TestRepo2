@@ -1,0 +1,2 @@
+<apex:page standardController="Action_Product_Link__c" extensions="ActionBrandEditController" action="{!forwardPage}">
+</apex:page>

@@ -1,0 +1,243 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_PerformanceManagment">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PerformanceManagmentPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PerformanceManagmentPage, 'dirtree.css')}"/>
+    <style type="text/css">
+        body, html{
+        	overflow: hidden;
+        }
+    </style>
+    
+    <c:loader />	
+     
+    <div class="content-wrapper" style="overflow: visible !important;">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+		<script type="text/javascript">
+	    	pageViewed('Performance Managment');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+        	<c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}" showExtendedBreancrumbs="true" breadcrumbHolder="{!organizationalUnitBreadcrumbs}"/>
+		</apex:outputPanel>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient {!if(ISNULL(siteTheme),'hidden','')}" style="text-align:left; overflow: visible !important;">
+			<apex:outputPanel id="messages">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+			
+			<div class="sub-title-with-menu-wrapper">
+                <div id="pm-title" class="pm-title"><apex:outputText value="Performance Management"/></div>
+			</div>
+
+			<!-- CONTENT -->
+			<apex:form >
+				<apex:actionFunction status="ajax-status" name="showContent" action="{!showContent}" rerender="pageContent, beadcrumblinks, messages, addCommentDialog,  uploadDialog, editDialog">
+					<apex:param name="distributorId" assignTo="{!currentDistributorId}" value="" />
+					<apex:param name="distributor" assignTo="{!currentDistributor}" value="" />
+        	    </apex:actionFunction>
+        	    
+        	    <apex:actionFunction status="ajax-status" name="nextOrganizationalUnit" action="{!nextOrganizationalUnit}" rerender="pageContent, beadcrumblinks, messages">
+					<apex:param name="mapL" assignTo="{!currentOrganizationalUnit}" value="" />
+					<apex:param name="key" assignTo="{!selectedIterator}" value="" />
+        	    </apex:actionFunction> 
+        	     
+        	    <apex:actionFunction status="ajax-status" name="distributorsContent" action="{!distributorsContent}" rerender="pageContent, beadcrumblinks, messages">
+					<apex:param name="currentDistributorId" assignTo="{!currentDistributorId}" value="" />
+					<apex:param name="currentDistributor" assignTo="{!currentDistributor}" value="" />
+					<apex:param name="currentOrganizationalUnit" assignTo="{!currentOrganizationalUnit}" value="" />
+					<apex:param name="key2" assignTo="{!selectedIterator}" value="" />
+        	    </apex:actionFunction>   
+        	    
+				<apex:actionFunction status="ajax-status" name="downloadFromFolder" action="{!downloadFromFolder}" rerender="downloadAll, beadcrumblinks, messages">
+					<apex:param name="downloadFromFolderId" assignTo="{!downloadFromFolderId}" value="" />
+        	    </apex:actionFunction>
+
+
+
+				<div style="text-align: left; margin-left: 20px; margin-right: 20px;">
+				<apex:outputPanel id="pageContent">
+								<div style="color: #2A96A7; font-size: 16px; font-weight: bold;">{!currentDistributor}</div>
+				            	<apex:outputPanel rendered="{!IF(currentDistributor != '','true','false')}">
+									<apex:repeat value="{!directoryTree}" var="parentFolder">
+										<ul id="document-file-tree" class="main-section hidden">
+											<apex:repeat value="{!parentFolder.dirs}" var="subFolder">
+												<li><span class="folder main-folders"> {!subFolder.folderName}</span>
+													<ul class="sub-section">
+														<apex:repeat value="{!subFolder.dirs}" var="subSubFolder">
+															<li><span class="folder"> {!subSubFolder.folderName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="downloadFromFolder('{!subSubFolder.folderId}')" class="download-all-link downloadAllButtonDynamic {!if(subSubFolder.files.size = 0,'hidden','')}">Download Multiple Files</a></span>
+																<ul class="sub-section">
+																	<apex:repeat value="{!subSubFolder.dirs}" var="subSubSubFolder">
+																		<li><span class="folder"> {!subSubSubFolder.folderName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="downloadFromFolder('{!subSubSubFolder.folderId}')" class="download-all-link downloadAllButtonDynamic {!if(subSubSubFolder.files.size = 0,'hidden','')}">Download Multiple Files</a></span>
+																			<ul class="sub-section">
+																				<apex:repeat value="{!subSubSubFolder.dirs}" var="subSubSubSubFolder">
+																					<li><span class="folder"> {!subSubSubSubFolder.folderName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="downloadFromFolder('{!subSubSubSubFolder.folderId}')" class="download-all-link downloadAllButtonDynamic {!if(subSubSubSubFolder.files.size = 0,'hidden','')}">Download Multiple Files</a></span>
+																						<ul class="sub-section">
+																							<apex:repeat value="{!subSubSubSubFolder.dirs}" var="subSubSubSubSubFolder">
+																								<li><span class="folder"> {!subSubSubSubSubFolder.folderName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="downloadFromFolder('{!subSubSubSubSubFolder.folderId}')" class="download-all-link downloadAllButtonDynamic {!if(subSubSubSubSubFolder.files.size = 0,'hidden','')}">Download Multiple Files</a></span></li>
+																							</apex:repeat>
+																							<apex:repeat value="{!subSubSubSubFolder.files}" var="subSubSubSubSubFile">
+																								<li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!subSubSubSubSubFile.filetype}"/>
+																									<span class="file">
+																										<apex:outputPanel rendered="{!ISNULL(subSubSubSubSubFile.videoId)}">
+																											<a href="/sfc/servlet.shepherd/version/download/{!subSubSubSubSubFile.cvid}"> {!subSubSubSubSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubSubSubSubFile.filesize}
+																										</apex:outputPanel>
+																										<apex:outputPanel rendered="{!NOT(ISNULL(subSubSubSubSubFile.videoId))}">
+																											<a href="{!$Page.Preview}?videoId={!subSubSubSubSubFile.videoId}"> {!subSubSubSubSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubSubSubSubFile.filesize}
+																										</apex:outputPanel>
+																									</span>
+																								</li>
+																							</apex:repeat>																							
+																							<li><span class="no-file {!IF(AND(subSubSubSubFolder.dirs.size = 0, subSubSubSubFolder.files.size = 0), '','hidden')}">No items.</span></li>
+																						</ul>
+																					</li>
+																				</apex:repeat>
+																				<apex:repeat value="{!subSubSubFolder.files}" var="subSubSubSubFile">
+																					<li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!subSubSubSubFile.filetype}"/>
+																						<span class="file">
+																							<apex:outputPanel rendered="{!ISNULL(subSubSubSubFile.videoId)}">
+																								<a href="/sfc/servlet.shepherd/version/download/{!subSubSubSubFile.cvid}"> {!subSubSubSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubSubSubFile.filesize}
+																							</apex:outputPanel>
+																							<apex:outputPanel rendered="{!NOT(ISNULL(subSubSubSubFile.videoId))}">
+																								<a href="{!$Page.Preview}?videoId={!subSubSubSubFile.videoId}"> {!subSubSubSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubSubSubFile.filesize}
+																							</apex:outputPanel>
+																						</span>
+																					</li>
+																				</apex:repeat>
+																				<li><span class="no-file {!IF(AND(subSubSubFolder.dirs.size = 0, subSubSubFolder.files.size = 0), '','hidden')}">No items.</span></li>
+																			</ul>														
+																		</li>
+																	</apex:repeat>
+																	<apex:repeat value="{!subSubFolder.files}" var="subSubSubFile">
+																		<li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!subSubSubFile.filetype}"/>
+																			<span class="file">
+																				<apex:outputPanel rendered="{!ISNULL(subSubSubFile.videoId)}">
+																					<a href="/sfc/servlet.shepherd/version/download/{!subSubSubFile.cvid}"> {!subSubSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubSubFile.filesize}
+																				</apex:outputPanel>
+																				<apex:outputPanel rendered="{!NOT(ISNULL(subSubSubFile.videoId))}">
+																					<a href="{!$Page.Preview}?videoId={!subSubSubFile.videoId}"> {!subSubSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubSubFile.filesize}
+																				</apex:outputPanel>
+																			</span>
+																		</li>
+																	</apex:repeat>
+																	<li><span class="no-file {!IF(AND(subSubFolder.dirs.size = 0, subSubFolder.files.size = 0), '','hidden')}">No items.</span></li>
+																</ul>														
+															</li>
+														</apex:repeat>
+														<apex:repeat value="{!subFolder.files}" var="subSubFile">
+															<li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!subSubFile.filetype}"/>
+																<span class="file">
+																	<apex:outputPanel rendered="{!ISNULL(subSubFile.videoId)}">
+																		<a href="/sfc/servlet.shepherd/version/download/{!subSubFile.cvid}"> {!subSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubFile.filesize}
+																	</apex:outputPanel>
+																	<apex:outputPanel rendered="{!NOT(ISNULL(subSubFile.videoId))}">
+																		<a href="{!$Page.Preview}?videoId={!subSubFile.videoId}"> {!subSubFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subSubFile.filesize}
+																	</apex:outputPanel>
+																</span>
+															</li>
+														</apex:repeat>
+														<li><span class="no-file {!IF(AND(subFolder.dirs.size = 0, subFolder.files.size = 0), '','hidden')}">No items.</span></li>
+													</ul>														
+												</li>
+											</apex:repeat>
+											<apex:repeat value="{!parentFolder.files}" var="subFile">
+												<li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!subFile.filetype}"/>
+													<span class="file">
+														<apex:outputPanel rendered="{!ISNULL(subFile.videoId)}">
+															<a href="/sfc/servlet.shepherd/version/download/{!subFile.cvid}"> {!subFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subFile.filesize}
+														</apex:outputPanel>
+														<apex:outputPanel rendered="{!NOT(ISNULL(subFile.videoId))}">
+															<a href="{!$Page.Preview}?videoId={!subFile.videoId}"> {!subFile.name}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!subFile.filesize}
+														</apex:outputPanel>
+													</span>
+												</li>
+											</apex:repeat>
+											<li><span class="no-file {!IF(AND(parentFolder.dirs.size = 0, parentFolder.files.size = 0), '','hidden')}">No items.</span></li>
+										</ul>
+									</apex:repeat>
+		        		    	</apex:outputPanel>
+	            </apex:outputPanel>
+	            </div>
+				<apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+				</apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+				</apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+				</apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+				</apex:actionFunction>	          
+				
+				<apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+				</apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+				</apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+				</apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+					<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+				</apex:actionFunction>	     
+            </apex:form>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+	    <div id="downloadAllInfo" class="hidden dialog" >
+			<apex:outputPanel id="downloadAll">
+				<c:downloadAll content="{!content}" hideShare="true" isFileObject="true"/>
+			</apex:outputPanel>
+	    </div>
+   	</div>
+
+    <c:ajaxLoader afterStop="bindJs();"/>
+    <script type="text/javascript">
+	function bindJs(){
+		var isiPad = navigator.userAgent.match(/iPad/i) != null;
+    	    		
+    	if( isiPad == true){
+    		jQuery("div.content-item-list-description").live('touchstart', function(){
+    			jQuery("div.content-item-list-buttons").addClass("hidden");
+    			jQuery(this).parent().find("div.content-item-list-buttons").removeClass("hidden");
+    			return false;
+    		});
+    	}
+        
+		if(!jQuery("#document-file-tree").hasClass('js-tree')){
+		    jQuery("#document-file-tree").treeview({
+				animated: "medium",
+				collapsed: true
+	        });
+	        jQuery("#document-file-tree").addClass('js-tree');
+	        jQuery("#document-file-tree").fadeIn(1000, function(){
+	        	jQuery(this).removeClass('hidden');
+	        });
+        }
+		jQuery('.extrabreadcrumbs').each(function(){
+		    var wdth = jQuery(this).find('.button-bread').width();
+		    jQuery(this).find('.breadcrumbs-wrapper-ext').css('width', wdth+5);
+		});
+	}
+
+    jQuery(document).ready(function() {
+    
+    	hideDialog('startingLoader');
+		hideDialog('startingLoaderOverlayDisable');
+		jQuery("body").css("overflow","auto");
+		jQuery("html").css("overflow","auto");
+		bindJs();
+		
+		// show last possible ou menu
+		if({!IF(currentDistributorId == '','true','false')}){
+			jQuery('.extrabreadcrumbs').find(".subnav:not('.subnav2')").last().css('display', 'block');
+		}
+    });
+    </script>
+</apex:page>

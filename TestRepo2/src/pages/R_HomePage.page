@@ -1,0 +1,340 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : R_HomePage.page
+
+Created By  : Randy Wandell (Appirio)   
+Date 		: 6/25/13
+Story/Task	: US584
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 7/23/13
+Story/Task  : DE670
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 7/29/13
+Story/Task  : US584/DE706
+------------------------------------------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Home">
+ <!-- START - Changed for  - Basant Verma -->
+<!-- this is a test from Randy Wandell -->
+ <body class="home-page">
+ <!-- END - Changed for  - Basant Verma -->
+ <!-- 
+    <apex:outputPanel rendered="{!if(ISNULL(siteTheme),'true','false')}">
+        <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'styleSpirits.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.HomePage, 'styleSpirits.css')}" />
+    </apex:outputPanel>  
+--> 
+    <apex:form >
+        <apex:actionFunction status="ajax-status" name="openSpiritsPlanningPage" action="{!openSpiritsPlanningPage}"/>
+        <apex:actionFunction status="ajax-status" name="openWinePlanningPage" action="{!openWinePlanningPage}"/>
+        
+        <apex:actionFunction status="ajax-status" name="openPlanningPage" action="{!openPlanningPage}">
+            <apex:param name="firstParam" assignTo="{!planningTheme}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+
+
+<div class="wrapper">
+    <div class="container">
+        <!-- PAGE HEADER -->
+        <c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" /> <!--thisAvatarURL="{!avatarUrl}"-->
+        <script type="text/javascript">
+            pageViewed('Home Page');
+        </script>
+                
+        <!-- content -->
+        <div class="content clearfix">
+
+<!-- News bar at top of page is out of scope for release 4 
+            <div class="news">
+                <ul class="slides">
+                    <li>
+                        <img src="{!URLFOR($Resource.Responsive_Base, 'i/news-image.png')}">
+                        <div class="info">
+                            <h5><a href="blog-home.html">Ketel One Distribution Tool Kit Title Longnamus Goes Here</a></h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Uta ullamun samit onsectetur adipiscing elit dolor.... <a href="blog-home.html">Read More</a></p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="./i/news-image.png"/>
+                        <div class="info">
+                            <h5><a href="blog-home.html">Ketel One Distribution Tool Kit Title Longnamus Goes Here 2</a></h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Uta ullamun samit onsectetur adipiscing elit dolor.... <a href="blog-home.html">Read More</a></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+-->
+
+            <div class="boxes">
+                <div class="column default">
+                		<!-- START - Changed for  - Basant Verma -->
+                    <img src="{!URLFOR($Resource.Responsive_Base, IF(ISNULL(siteTheme), 'i/Spirits/mep.png' ,'i/'+siteTheme+'/mep.png'))}" />
+                    <!-- END - Changed for  - Basant Verma -->
+                    <a class="pink" href="{!$Page.R_MonthlyExecutionPlan}">Monthly Execution Plan</a>
+                </div>
+
+<!-- Hiding the video for now
+                <div class="column video default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, '/i/home-image-2.png')}"/>
+                </div>
+-->
+
+                <div class="column default">
+                		<!-- START - Changed for  - Basant Verma -->
+                    <img src="{!URLFOR($Resource.Responsive_Base, IF(ISNULL(siteTheme), 'i/Spirits/sm.png', 'i/'+siteTheme+'/sm.png'))}"/>
+                    <!-- END - Changed for  - Basant Verma -->
+                    <a class="purple" href="{!$Page.R_SMIntro}">Selling Materials</a>
+                </div>
+
+                <div class="column last default">
+                		<!-- START - Changed for  - Basant Verma -->
+                    <img src="{!URLFOR($Resource.Responsive_Base, IF(ISNULL(siteTheme), 'i/Spirits/isv.png', 'i/'+siteTheme+'/isv.png'))}"/>
+                    <!-- END - Changed for  - Basant Verma -->
+                    <!-- START - Changed for US584/DE706 - Basant Verma -->
+                    <apex:outputPanel rendered="{!innovationSectionName}">
+                    	<a class="med-green two-lines" href="{!$Page.R_InnovationAndVAP}">Innovation,<br/>Sustainovation &amp; VAP</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!NOT(innovationSectionName)}">
+                    	<a class="med-green two-lines" href="{!$Page.R_InnovationAndVAP}">Innovation, Sustainovation<br/> &amp; Vintage Transition</a>
+                    </apex:outputPanel>
+                    <!-- END - Changed for US584/DE706  - Basant Verma -->
+                </div>
+
+
+<!-- Category Development is out of scope for release 4 
+                <div class="column default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-4.png')}"/>
+                    <a class="orange" href="#;">Category Development</a>
+                </div>
+-->
+
+<!-- Brand and Marketing Info is out of scope for release 4 
+                <div class="column last default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-5.png')}"/>
+                    <a class="med-blue" href="#;" data-related="brand-marketing-boxes">Brand &amp; Marketing Info</a>
+                </div>
+-->
+
+<!-- Product Images and Logos is out of scope for release 4 
+                <div class="column default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-6.png')}"/>
+                    <a class="dark-red" href="#">Product Images &amp; Logos</a>
+                </div>
+-->
+
+<!-- POS is out of scope for release 4 
+                <div class="column default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-7.png')}"/>
+                    <a class="dark-blue" href="#;">Point of Sale</a>
+                </div>
+-->
+
+<!-- Collaboration is out of scope for release 4 
+                <div class="column last default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-8.png')}"/>
+                    <a class="med-purple" href="#;" data-related="collaboration-boxes">Collaboration</a>
+                </div>
+-->
+
+<!-- Planning is out of scope for release 4 
+                <div class="column default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-9.png')}"/>
+                    <a class="yellow" href="#;" data-related="planning-boxes">Planning</a>
+                </div>
+                <div class="column default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-10.png')}"/>
+                    <a class="dark-green" href="#;">Multicultural</a>
+                </div>
+-->
+
+<!-- Ideas is out of scope for release 4 
+                <div class="column last default">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-11.png')}"/>
+                    <a class="light-blue" href="#;">Ideas</a>
+                </div>
+-->
+
+                <!--
+                <div class="column last">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-12.png')}"/>
+                    <a class="pink" href="#;">News</a>
+                </div>
+                <div class="column empty">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-black.png')}"/>
+                </div>
+                <div class="column empty last">
+                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-black.png')}"/>
+                </div>
+                -->
+
+                <!--  Add link to full site as a tab per client request, with two blank tabs to the right -->
+                
+                <div class="column default">
+                    <a class="black" href="{!$Page.HomePage}">Full Site</a>
+                </div>
+                
+                <div class="column default empty">
+                    <a class="black" href=""></a>
+                </div>                
+
+                <div class="column default empty last">
+                    <a class="black" href="javascript:;"></a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <apex:outputPanel rendered="{!if(isInternalUser, 'true', 'false')}" >        
+        <div class="ads">
+            <a class="ad" style="width: 186px;
+                background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_i_1_diageo_wines2.png) 0 0 no-repeat;"
+                href="/idp/login?app={!ssoId}&RelayState={!hexDiageowines}" target="_blank"
+                onclick="pageViewed('Home Page - diageo_wines2.png');">
+            </a>
+            <a class="ad" style="width: 119px;
+                background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_i_2_diageo_ways2.png) 0 0 no-repeat;"
+                href="/idp/login?app={!ssoId}&RelayState={!hexDwsacademies}" target="_blank"
+                onclick="pageViewed('Home Page - diageo_ways2.png');">
+            </a>
+            <a class="ad" style="width: 186px;
+                background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_i_3_national_accounts2.png) 0 0 no-repeat;"
+                href="http://v6.diageonac.com" target="_blank"
+                onclick="pageViewed('Home Page - national_accounts2.png');">
+            </a>
+            <a class="ad" style="width: 119px;
+                background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_i_4_diageo_drinks2.png) 0 0 no-repeat;"
+                href="http://www.diageodrinks.com" target="_blank"
+                onclick="pageViewed('Home Page - diageo_drinks2.png');">
+            </a>
+            <a class="ad" style="width: 186px;
+                background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_i_5_code_policies2.png) 0 0 no-repeat;"
+                href="{!$Page.R_CodesPolicies}"
+                onclick="pageViewed('Home Page - code_policies2.png');">
+            </a>
+            <a class="ad" style="width: 118px; margin-right: 0px;
+                background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_i_6_smart_brand2.png) 0 0 no-repeat;"
+                href="http://www.diageosmartbrand.com" target="_blank"
+                onclick="pageViewed('Home Page - smart_brand2.png');">
+            </a>           
+        </div>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!if(isInternalUser, 'false', 'true')}" >
+        <apex:outputPanel rendered="{!if(innovationSectionName,'true','false')}" >
+            <div class="ads">
+                <a class="ad" style="width: 219px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_es_1_diageo_wines.png) 0 0 no-repeat;"
+                    href="/idp/login?app={!ssoId}&RelayState={!hexDiageowines}" target="_blank"
+                    onclick="pageViewed('Home Page - diageo_wines.png');">
+                </a>
+                <a class="ad" style="width: 131px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_2_diageo_drinks.png) 0 0 no-repeat;"
+                    href="http://www.diageodrinks.com" target="_blank"
+                    onclick="pageViewed('Home Page - diageo_drinks.png');">
+                </a>
+                <a class="ad" style="width: 219px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_3_national_accounts.png) 0 0 no-repeat;"
+                    href="http://v6.diageonac.com" target="_blank"
+                    onclick="pageViewed('Home Page - national_accounts.png');">
+                </a>
+                <a class="ad" style="width: 132px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_4_smart_library.png) 0 0 no-repeat;"
+                    href="https://www.diageosmartbrand.com/login/" target="_blank"
+                    onclick="pageViewed('Home Page - smart_library.png');">
+                </a>
+                <a class="ad" style="width: 219px; margin-right: 0px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_5_codes_policies.png) 0 0 no-repeat;"
+                    href="{!$Page.R_CodesPolicies}"
+                    onclick="pageViewed('Home Page - codes_policies.png');">
+                </a>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!if(innovationSectionName,'false','true')}" >
+            <div class="ads">
+                <a class="ad" style="width: 119px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_ew_1_diageo_ways2.png) 0 0 no-repeat;"
+                    href="/idp/login?app={!ssoId}&RelayState={!hexDwsacademies}" target="_blank"
+                    onclick="pageViewed('Home Page - diageo_ways2.png');">
+                </a>
+                <a class="ad" style="width: 131px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_2_diageo_drinks.png) 0 0 no-repeat;"
+                    href="http://www.diageodrinks.com" target="_blank"
+                    onclick="pageViewed('Home Page - diageo_drinks.png');">
+                </a>
+                <a class="ad" style="width: 219px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_3_national_accounts.png) 0 0 no-repeat;"
+                    href="http://v6.diageonac.com" target="_blank"
+                    onclick="pageViewed('Home Page - national_accounts.png');">
+                </a>
+                <a class="ad" style="width: 132px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_4_smart_library.png) 0 0 no-repeat;"
+                    href="https://www.diageosmartbrand.com/login/" target="_blank"
+                    onclick="pageViewed('Home Page - smart_library.png');">
+                </a>
+                <a class="ad" style="width: 219px; margin-right: 0px;
+                    background: url({!URLFOR($Resource.Responsive_Base)}/i/Ads/ad_e_5_codes_policies.png) 0 0 no-repeat;"
+                    href="{!$Page.R_CodesPolicies}"
+                    onclick="pageViewed('Home Page - codes_policies.png');">
+                </a>
+            </div>
+        </apex:outputPanel>  
+    </apex:outputPanel>
+
+    <c:R_pageFooter isInternal="{!isInternalUser }" />
+</div>
+
+  <!-- START - Changed for  - Basant Verma -->
+  <!-- site theme select -->
+    
+<apex:outputPanel id="selectThemeHolder" styleClass="selectThemeHolderClass {!if(OR(siteTheme == null, siteTheme == ''), 'selectThemeRequired','')}" rendered="{!if(ISNULL(siteTheme),'true','false')}" >
+<!--		<div class="modal" id="theme-selector-modal">
+	  	<div class="title">  -->
+	<div align="center" style="position: fixed; top: 0px; left: 0px; background-color: #000000; width: 100%; height: 100%; z-index: 10001;">
+		<div align="left" class="theme-selector-modal">
+			<div class="title">
+				<div style="height: 10px; width: 100%;"></div>
+					<img src="{!URLFOR($Resource.Responsive_Base, 'i/logo.png')}"/>
+				<div style="height: 10px; width: 100%;"></div>
+			</div>
+			 <div class="moreInfoError">
+				<apex:outputPanel id="moreInfoError">
+					<apex:messages styleClass="errorMessagesList" />
+				</apex:outputPanel>
+			</div>
+			<apex:form >
+				<apex:actionFunction status="ajax-status" name="changeSiteTheme" action="{!changeSiteTheme}" rerender="moreInfoError, selectThemeHolder" onComplete="alert('hello');"/>
+				<apex:inputText value="{!siteTheme}" id="themeWrapperSelector" styleClass="themeWrapperSelector" style="display: none;"/>
+				<div class="html">
+					<div class="boxes">
+						<apex:variable var="counter" value="{!1}"/>
+						<apex:repeat value="{!SiteThemes}" var="theme">
+							<div class="column default {!IF(counter == SiteThemes.size,'last','')}">
+<!--								<a class="{!theme['label']}-bg" onclick="themeClicked('{!theme['label']}');" href="javascript:;">{!theme["label"]}</a> -->
+								<a class="{!theme['label']}-bg" onclick="{!IF(theme['label']='Wine','toggleToWine()','toggleToSpirits()')};" href="javascript:;">{!theme["label"]}</a>
+							</div>
+							<apex:variable var="counter" value="{!counter + 1}"/>
+						</apex:repeat>
+						<div class="clear"></div>
+					</div>
+<!-- 					
+					<label>
+						Use as default
+					</label>
+					<apex:inputCheckbox value="{!isSiteThemeDef}"/>
+					<a href="javascript:;" onclick="preChangeSiteTheme();" class="button go-btn" >GO</a>
+					<a href="javascript:;" onclick="changeSiteTheme();" class="button go-btn postSelectThemeButton" rel="modal:close" style="display: none;">GO</a>
+-->					
+				</div>
+			</apex:form>
+		</div>
+	</div>
+</apex:outputPanel>
+
+<!-- END - Changed for  - Basant Verma -->
+
+<!-- START - Changed for  - Basant Verma -->
+</body>
+<!-- END - Changed for  - Basant Verma -->
+</apex:page>

@@ -1,0 +1,249 @@
+<apex:page controller="MM_MasterRecipeController" showHeader="false" sidebar="false" standardStylesheets="false">
+<head>
+<apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-1.6.2.min.js')}"  />
+<apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-ui-1.8.16.custom.min.js')}"  />
+<apex:stylesheet value="{!URLFOR($Resource.jQueryLib, '/css/ui-lightness/jquery-ui-1.8.16.custom.css')}" />
+<apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7MasterRecipePageCSS}" /></apex:outputpanel>
+<apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.masterRecipePageCSS}" /></apex:outputpanel>
+<style>
+.visitedClass1{
+background-Color:White;
+}
+.colorClass{
+color:#820527;
+font-style:normal;
+}
+
+</style>
+</head>
+<script type="text/javascript">
+//Special case only for IE because it reload parent window every time child window is closed. Irrespective of changes made. 
+	if(navigator.appName == 'Microsoft Internet Explorer') { 
+		intId = window.setInterval("checkPopup()",500); 
+	}
+	function popupImageWindow(recipeId) {
+		var popupWin; 
+		var intId = 0; 
+		popupWin = window.open('/apex/MM_ImageTestpage?recipeId=' + recipeId,'_blank','location=1,status=1,scrollbars=1,width=600,height=350');
+		checkPopup= function() { 
+			if (intId != 0) { 
+				if (popupWin.closed) { 
+					window.clearInterval(intId); 
+					intId = 0; 
+					document.location.reload();
+				} 
+			} 
+		}	
+	}
+	function clearField(input) {
+		document.getElementById(input).value='';	
+	}
+	function toggle(div_id) {
+		var el = document.getElementById(div_id);
+		if ( el.style.display == 'none' ) {	el.style.display = 'block';}
+		else {el.style.display = 'none';}
+	}
+	function blanket_size(popUpDivVar) {
+		if (typeof window.innerWidth != 'undefined') {
+			viewportheight = window.innerHeight;
+		} else {
+			viewportheight = document.documentElement.clientHeight;
+		}
+		if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
+			blanket_height = viewportheight;
+		} else {
+			if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
+				blanket_height = document.body.parentNode.clientHeight;
+			} else {
+				blanket_height = document.body.parentNode.scrollHeight;
+			}
+		}
+		var blanket = document.getElementById('blanket');
+		blanket.style.height = blanket_height + 'px';
+		var popUpDiv = document.getElementById(popUpDivVar);
+		popUpDiv_height=blanket_height/2-150;//150 is half popup's height
+		popUpDiv.style.top = popUpDiv_height + 'px';
+	}
+	
+	function window_pos(popUpDivVar) {
+		if (typeof window.innerWidth != 'undefined') {
+			viewportwidth = window.innerHeight;
+		} 
+		else {
+			viewportwidth = document.documentElement.clientHeight;
+		}
+		if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth)) {
+			window_width = viewportwidth;
+		} 
+		else {
+			if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth) {
+				window_width = document.body.parentNode.clientWidth;
+			} 
+			else {
+				window_width = document.body.parentNode.scrollWidth;
+			}
+		}
+		var popUpDiv = document.getElementById(popUpDivVar);
+		window_width=window_width/2-150;//150 is half popup's width
+		popUpDiv.style.left = window_width + 'px';
+	}
+	
+	function popup(windowname) {
+		blanket_size(windowname);
+		window_pos(windowname);
+		toggle('blanket');
+		toggle(windowname);		
+	}
+	
+	function focusItem(){
+   		//rerenderinputJS();
+    	//alert(document.getElementById(id));
+    	var children=document.getElementById("masterId");
+    	children.focus();
+    	//children.outline = none;
+     	//setTimeout(children[0].focus(),1);       
+   }  
+</script>
+
+<body>
+
+<div class="outerDiv">
+
+<c:DashBoardHeader />
+<div id="bodyHeader">
+	<div id="headerInner">
+ 		<div class="header arrow3">
+    		<apex:outputLink value="apex/MM_RecipeDashboard"><apex:image title="Dashboard" value="/resource/1320379988000/home"/>
+    		</apex:outputLink>
+    	</div> 
+    	<apex:image styleClass="header arrow2" title="Home" value="/resource/1320379988000/barrow"/>
+    	<b><apex:outputText value="Create A Recipe" styleClass="header arrow"></apex:outputText></b>
+	</div>
+</div>
+<div class="innerDiv" >
+<apex:form id="theForm">
+<div  align="center" id="bodyContainer">
+	<apex:outputText value="Related Recipes" rendered="{!recipeId != null}"/>
+		<div class="relatedRecipesClass">
+  			 <apex:outputPanel rendered="{!recipeId == null}" id="manualSearch">
+      			<apex:outputText styleClass="left padR" value="Search for a recipe:" />
+     			<apex:inputText styleClass="recipeSearch left" value="{!searchTerm}"/>
+      			<div class="pad left">
+         			<apex:commandButton action="{!filterResults}" rerender="masterPanel,manualSearch,controls" value="Search" styleClass="filterSearchButton offGreenButton"/>&nbsp;
+      		    </div>
+      		    <div class="pad left">
+         			
+         			<apex:commandButton action="{!clearResults}" rerender="masterPanel,manualSearch,controls" value="Clear" styleClass="filterSearchButton offGreenButton"/>
+      		    </div>
+   			 </apex:outputPanel>
+   		 </div>
+	
+	<apex:outputPanel rendered="{!recipeId == null}" >
+	<div style="float:left;padding-left:20px;margin-top:0px;top:0px;position:relative;height:30px;width:600px;">
+	<div style="width:71px;float:left"><apex:outputText value="Create a" styleClass="left padR" /></div><div style="width:120px;float:left"><apex:outputLink value="/apex/MM_RecipeView?newRecipe=true&editMode=true" styleClass="newRecipe filterButton offGreenButton">New Recipe</apex:outputLink></div><div style="width:auto;float:left;height:30px;padding-top:5px;"><apex:outputText value="or Clone from an Approved recipe below."  styleclass="padAppLr"/></div>
+	</div>
+	</apex:outputPanel>
+	
+	<br/>
+	<br/>
+	 
+<div style="float:left;padding-left:23px;margin-top:5px;"><apex:outputText styleClass="heading" value="Approved Recipes:"  rendered="{!recipeId == null}"/></div>
+<br/>
+<br/>
+<apex:outputpanel id="controls" rendered="{!recipeId == null}">
+<div style="width:942px;height:65px;">
+<script type="text/javascript">/** searchTerm --- {!searchTerm} totalRecords --- {!totalRecords}  **/</script>
+		<apex:outputpanel rendered="{!if(searchTerm == null,true,false)}">
+			<div style="float:left;width:93%;height:25px;">
+                 <apex:repeat value="{!alphabets}" var="c" id="alphaBets">  
+                 				   
+                                <apex:commandLink value="{!c}" rerender="masterPanel,controls" status="statusImg" action="{!filterResults}" styleclass="{!IF(CONTAINS(currentAlpha,c),'visitedClass1','vClass')}">
+                                       <apex:param name="selectedAlphabet" AssignTo="{!selectedAlphabet}" value="{!c}"/> 
+                                 </apex:commandLink>&nbsp;  
+                                <apex:outputText value=" | " rendered="true" />                       																								
+                  </apex:repeat>                
+               </div>
+               <br/>
+          </apex:outputpanel>
+          <apex:outputpanel rendered="{!if(totalRecords>0,true,false)}">
+               <div style="width:92%;float:left;">
+	               
+	                 <i class="colorClass"> Now Viewing &nbsp;:&nbsp;{!currentStartRecord}&nbsp; - &nbsp;{!currentEndRecord}&nbsp;&nbsp;of&nbsp;&nbsp;{!totalRecords}&nbsp;</i><apex:outputText value=" Approved Recipes Starting with  {!selectedAlphabet}" rendered="{!if(searchTerm==null,true,false)}" styleclass="colorClass"></apex:outputText><apex:outputText value=" Approved Recipes Containing {!searchTerm}" rendered="{!if(searchTerm!=null,true,false)}" styleclass="colorClass"></apex:outputText>  	  	
+	                  <br/>
+	                  <apex:panelGrid columns="4">
+						    <apex:commandLink action="{!first}" rerender="masterPanel,controls">First</apex:commandlink>
+						    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="masterPanel,controls">Previous</apex:commandlink>
+						    <apex:commandLink action="{!next}" rendered="{!hasNext}" rerender="masterPanel,controls">Next</apex:commandlink>
+						    <apex:commandLink action="{!last}" rendered="{!hasNext}" rerender="masterPanel,controls">Last</apex:commandlink>
+					  </apex:panelGrid>
+				</div>   
+		</apex:outputpanel>            
+</div>
+</apex:outputpanel>
+<div class="masterRecipeContainer" id="masterId" tabindex="0" onmouseover="focusItem()">
+	<apex:outputPanel id="masterPanel"> 
+				
+		<apex:outputPanel rendered="{!recipeId != null}">
+			<apex:repeat value="{!childRecipes}" var="r">
+				<div class="searchResultRow">
+					<apex:outputPanel styleClass="mainRow" id="refreshPane">
+						<apex:outputLink value="/apex/MM_RecipeView?recipeId={!r.rec.Id}">
+                            <span class="imgCol"> 
+                                <apex:image value="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!r.image}" rendered="{!r.image!=null}" height="51" styleclass="imageInline"/>
+                                <apex:image value="{!$Resource.DiageoLogo}" rendered="{!r.image==null}"  height="51" styleclass="imageInline"/>
+                              </span> 
+                              
+                             <span class="textCol"> 
+                               
+                                <apex:outputText styleClass="recipeName" value="{!r.rec.Recipe_Title__c}"/><br/>
+                                <apex:outputText value="by {!authorMap[r.rec.CreatedById].Name} on "/>
+                                <apex:outputText value="{0,date,MM/dd/yyyy}">
+                                    <apex:param value="{!r.rec.LastModifiedDate}"/>
+                                </apex:outputText>
+                            </span> 
+            			</apex:outputLink>
+            		</apex:outputPanel>
+            	</div>
+			</apex:repeat>
+		</apex:outputPanel>
+		
+		<apex:outputPanel rendered="{!recipeId == null}" >
+		<apex:outputPanel rendered="{!IF(allApproved.size == 0,true,false)}">
+		<br/>
+		<b>No results found.</b>
+		</apex:outputPanel>
+			<apex:repeat value="{!allApproved}" var="r">
+				<div class="searchResultRow">
+         			<apex:outputPanel styleClass="mainRow" id="refreshPane">
+            			<apex:commandLink action="{!cloneRecipe}" styleClass="fullRow">
+                            <span class="imgCol"> 
+                                <apex:image value="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!r.image}" rendered="{!r.image!=null}" height="51px" styleclass="imageInline"/>
+                                <apex:image value="{!$Resource.DiageoLogo}" rendered="{!r.image==null}"  height="51px" styleclass="imageInline"/>
+                              </span> 
+                              
+                             <span class="textCol"> 
+                                <apex:outputText styleClass="recipeName" value="{!r.rec.Recipe_Title__c}"/><br/>
+                                <apex:outputText value="by {!authorMap[r.rec.CreatedById].Name} on "/>
+                                <apex:outputText value="{0,date,MM/dd/yyyy}">
+                                    <apex:param value="{!r.rec.LastModifiedDate}"/>
+                                </apex:outputText>
+                            </span> 
+                            <span class="statusCol"> 
+                              	<center> <apex:outputText value="Clone" styleClass="actionButton offGreenButton"/> </center>
+                            </span>   
+                            <apex:param name="cloneFromId" value="{!r.rec.Id}" assignTo="{!cloneFromId}"/>
+            			</apex:commandLink>
+            		</apex:outputPanel>
+            	</div>
+				<apex:outputLink rendered="{!recipeId != null}" value="/apex/MM_RecipeView?recipeId={!r.rec.Id}">{!r.rec.Recipe_Title__c}</apex:outputLink>
+			</apex:repeat>
+		</apex:outputPanel>
+	</apex:outputPanel>	
+</div>
+</div>
+</apex:form>
+</div>
+</div>
+</body>
+<div></div>
+</apex:page>

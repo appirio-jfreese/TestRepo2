@@ -1,0 +1,185 @@
+<apex:page controller="POS_OrderHistoryDetailController" standardStylesheets="false" showHeader="false" sidebar="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=1138"  /> 
+    <meta name="MobileOptimized" content="1138" />  
+    <title>Diageo POS</title> 
+    <link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+    <script type="text/javascript">
+        
+        
+        /** no!
+        function resizeWindowList() {
+          element = $(".scrollingTable");
+          var height = 0;
+          var body = window.document.body;
+          if (window.innerHeight) {
+              height = window.innerHeight;
+          } else if (body.parentElement.clientHeight) {
+              height = body.parentElement.clientHeight;
+          } else if (body && body.clientHeight) {
+              height = body.clientHeight;
+          }
+          
+          var bottomHeight = 256; //Based on height of footer plus some padding
+          
+          element.height((height - element.offset().top - bottomHeight ));
+          
+        }
+    
+        $(window).resize(function() {
+            resizeWindowList();
+        });
+        */
+        
+        var btnDownUrl="{!URLFOR($Resource.POS_Skin,'images/btn-down.png')}";
+        var btnRightUrl="{!URLFOR($Resource.POS_Skin,'images/btn-right.png')}";
+        
+        
+        
+        
+        function toggleDiv (toggleArrow) {
+            shipTo = toggleArrow.attr("shipTo");
+            (jQuery("tr[shipTo='"+shipTo+"']")).toggle(100);
+            
+        }
+        
+        
+    
+    </script>
+
+</head>
+<body>
+    
+
+    <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+    <div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+    <div class="wrapper">
+        <div class="page">
+            <div class="main col-full-layout" id="main">
+                <c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/> 
+                <div class="col-main" style="width: auto;">     
+                    <apex:form >         
+                    
+                    <div class="std"> 
+                        <div class="full-content-block">
+                                
+                            <apex:outputPanel layout="block" id="orderList">
+                                
+                                <apex:actionFunction action="{!nextOrders}" name="nextOrders" reRender="orderList" status="spinner" >
+                                </apex:actionFunction>
+                                <apex:actionFunction action="{!previousOrders}" name="previousOrders" reRender="orderList" status="spinner">
+                                </apex:actionFunction>
+                            
+                                <script type="text/javascript">
+                                
+                                jQuery(document).ready(function() {
+                                    jQuery(".showDivArrow").click(function() {
+                                        currentImage = jQuery(this).attr("src");
+                                        if (currentImage == btnRightUrl) {
+                                            jQuery(this).attr("src",btnDownUrl);
+                                            toggleDiv(jQuery(this));
+                                        }
+                                        else {
+                                            jQuery(this).attr("src",btnRightUrl);
+                                            toggleDiv(jQuery(this));
+                                        }
+                                    });
+                                    
+                                    jQuery(".previousOrdersArrow").click(function() {
+                                        previousOrders();
+                                    });
+                                    
+                                    jQuery(".nextOrdersArrow").click(function() {
+                                        nextOrders();
+                                    });
+                                    
+                                    jQuery("tr[vis=false]").hide();
+                                    jQuery("tr[vis=false]").attr("shipTo","");
+                                });
+                                </script>
+                                <table cellpadding="0" cellspacing="0" class="data-table order-history" summary="data table">
+                                    
+                                <thead>
+                                    <tr>
+                                        <th class="first" colspan="3">
+                                        <apex:outputPanel rendered="{!rowNumber>0}">
+                                        <img class="previousOrdersArrow" src="{!URLFOR($Resource.POS_Skin,'images/btn-left.png')}" height="15px"/>
+                                        </apex:outputPanel>
+                                        TRACKING
+                                        <apex:actionStatus startStyleClass="loadingText" startText="Loading..."  id="spinner"/>
+                            
+                                         <apex:outputPanel rendered="{!((rowNumber-1)+rowLimit)<maxRows}">
+                                        <img class="nextOrdersArrow" src="{!URLFOR($Resource.POS_Skin,'images/btn-right.png')}" height="15px"/>
+                                        </apex:outputPanel>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                </table>
+                                <div class="scrollingTable">
+                                    <table cellpadding="0" cellspacing="0" class="data-table orderDetail" summary="data table">
+                                        
+                                        
+                                        <apex:variable value="{!1}" var="rowNum"/>
+                                        <apex:variable value="" var="previousProgram"/>
+                                        <apex:repeat value="{!lineItemsToDisplay}" var="lineItem">
+                                            
+                                            <tr vis="{!(lineItem.newShipTo && rowNum>1)}" class="shipToBreak"><td colspan="8">&nbsp;</td></tr>
+                                        
+                                            <tr vis="{!lineItem.newShipTo}" class="shipToHeader"><td colspan="8">{!lineItem.cartItem.Ship_To__r.Name}
+                                            - {!shipToStatusMap[lineItem.cartItem.Ship_To__c]}
+                                            <img class="showDivArrow" shipTo="{!lineItem.cartItem.Ship_To__c}" src="{!URLFOR($Resource.POS_Skin,'images/btn-down.png')}" height="15" width="15"/>
+                                            </td></tr>
+                                            <tr vis="{!lineItem.newShipTo}" class="itemHeader" shipTo="{!lineItem.cartItem.Ship_To__c}">
+                                                <td>Program Name</td>
+                                                <td>Item Name</td>
+                                                <td style="text-align:right;">Item Price</td>
+                                                <td style="text-align:right;">Quantity</td> 
+                                                <td style="text-align:right;">Item Total</td> 
+                                                <td>Status</td>
+                                                <td>Carrier</td>
+                                                <td>Tracking</td> 
+                                            </tr>
+                                            <tr class="shippedItem" shipTo="{!lineItem.cartItem.Ship_To__c}">
+                                                <td><apex:outputText rendered="{!OR(lineItem.newShipTo,lineItem.cartItem.Item__r.Program__r.Name!=previousProgram)}">{!lineItem.cartItem.Item__r.Program__r.Name}</apex:outputText></td>
+                                                <td>{!lineItem.cartItem.Item__r.Name}</td>
+                                                <td style="text-align:right;"><apex:outputText value="{0,number,$#,###.##}"><apex:param value="{!lineItem.cartItem.Total_Spend__c / lineItem.cartItem.Quantity__c}" /></apex:outputText></td>
+                                                <td style="text-align:right;">{!ROUND(lineItem.cartItem.Quantity__c, 0)}</td>
+                                                <td style="text-align:right;"><apex:outputText value="{0,number,$#,###.##}"><apex:param value="{!lineItem.cartItem.Total_Spend__c}" /></apex:outputText></td>
+                                                <td>{!lineItem.status}</td>
+                                                <td>{!lineItem.cartItem.Carrier__c}</td>
+                                                <td>{!lineItem.cartItem.Tracking_Code__c}</td>
+                                            </tr>
+                                            <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                                            <apex:variable var="previousProgram" value="{!lineItem.cartItem.Item__r.Program__r.Name}"/>
+                                        </apex:repeat>
+                                        
+                                    </table>    
+                                    
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    </apex:form>
+                </div>
+                <c:POS_Footer />
+            </div>
+        </div>
+        
+    </div>
+    <div class="skip"><a href="#header" accesskey="b">back to top</a></div>
+    <div id="popup"></div>
+</body>
+</html>
+
+
+</apex:page>

@@ -1,0 +1,8 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Init" action="{!initEnvironment}">
+
+<apex:outputPanel id="messages">
+	<apex:messages styleClass="errorMessagesList" />
+</apex:outputPanel>
+
+Loading...
+</apex:page>

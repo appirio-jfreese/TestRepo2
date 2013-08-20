@@ -1,0 +1,76 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_InnovationAndVAP" renderAs="pdf">
+
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'pdf.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.InnovationAndVAP, 'pdf_style.css')}"/>
+   <head>
+   	<style>
+   		
+		
+   	</style>
+   </head>
+		<div class="header">   
+    	<div class="logo"><img src="{!URLFOR($Resource.CommonPage,'images/pdf_logotype.png')}" /></div>
+    	<div class="header-details" style="font-size: 12px;">
+    		{!themeOptionsString}<br/>
+    		Printed {!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}<br />
+    		Page <span class="pagenumber"/> of <span class="pagecount"/><br />
+    		{!startDate} - {!endDate}
+    	</div>
+    	<div class="pdf-title">
+              <apex:outputText value="Innovation, Sustainovation & VAP"/>
+		</div>  
+		 <table class="ivap-data">
+                        <thead>
+                            <tr>
+                                <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                                    <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                        <th class="sectionClearBg ivap_program{!salesDriversToShowCount}">{!salesdrivername}</th>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!salesDriversToShowCount!=1}">
+                                        <th class="sectionClearBg ivap_program{!salesDriversToShowCount}" onclick="selectSalesDriver('{!salesdrivername}')" style="cursor:pointer;">{!salesdrivername}</th>
+                                    </apex:outputText>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+       </table>
+		 
+                        
+    </div>  
+        <div class="content">
+
+                <apex:pageBlock id="ivapData">
+                    <table class="ivap-data">
+                        <tbody>
+                            <apex:repeat value="{!months}" var="month"> 
+                                <!-- month box -->
+                                <tr class="ivap-month">
+                                    <td colspan="{!salesDriversToShowCount}" class="month">
+                                        {!month.name}
+                                    </td>
+                                </tr>
+                                <tr class="month-data month{!span}">
+                                    <apex:repeat value="{!salesDriversToShow}" var="program">
+                                        <td class="ivap_program{!salesDriversToShowCount}"  >
+                                            <apex:repeat value="{!calendarData[month.data][program]}" var="programData">
+                                            	<div id="{!programData.id}" class="month{!span} ivap-general tooltip ivap_program{!salesDriversToShowCount}" style="{!programData.styleBackgroundColor}{!programData.styleTextColor}; width: auto !important;">
+	                                                <apex:outputText rendered="{!salesDriversToShowCount==1}" >
+                                                        <div class="month{!span}-sep1-desc" >
+                                                            <apex:outputtext escape="false" value="{!programData.description}" ></apex:outputtext>
+                                                        </div>
+                                                	</apex:outputText>          
+                                                    <div class="month{!span}-sep month{!span}-sep{!salesDriversToShowCount} " style="position: relative;{!programData.styleBackgroundImage}">
+                                                        <div class="mep-label">{!programData.label}</div>
+                                                    </div>
+                                                </div>
+                                            </apex:repeat>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </apex:pageBlock>
+        </div>
+    
+</apex:page>

@@ -1,0 +1,13 @@
+<pre style="font-family: Arial">Dear {!Cart__c.Shopper__c},
+
+
+Thank you for your recent Diageo {!Cart__c.Order_Window__c} POS order! Your order number is {!Cart__c.Name} and has been submitted on {!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())} at {!IF(VALUE(MID(TEXT(NOW()), 12, 2)) > 12, VALUE(MID(TEXT(NOW()), 12, 2)) - 12, VALUE(MID(TEXT(NOW()), 12, 2)))}:{!MID(TEXT(NOW()), 15, 2)} {!IF(VALUE(MID(TEXT(NOW()), 12, 2)) > 12, "PM", "AM")} GMT. If you want to review or amend your order, click <a href="{!IF(Cart__c.Shopper_User_License__c = "Standard", "https://na7.salesforce.com/apex/POS_OrderHistoryDetail?id=" & Cart__c.Id, "https://diageodirect.force.com/apex/POS_OrderHistoryDetail?id=" & Cart__c.Id)}">here</a>.
+
+Please do not reply to this email.
+
+Thank you,
+
+
+Your Diageo POS Team
+www.diageodirect.com
+</pre>

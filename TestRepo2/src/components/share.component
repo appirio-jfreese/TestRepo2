@@ -1,0 +1,57 @@
+<apex:component controller="Service_Messages" allowDML="true">
+
+    <apex:attribute name="cvid" description="Id" type="String" required="false" assignTo="{!cvid}"/>
+    <apex:attribute name="description" description="Description" type="String" required="false"/>
+    <apex:attribute name="cShareLink" description="sharelink" type="String" required="false" assignTo="{!cShareLink}"/>
+    <apex:attribute name="cShareLinkLow" description="sharelinklow" type="String" required="false" assignTo="{!cShareLinkLow}"/>
+    <apex:attribute name="cvids" description="String of ids" type="String" required="false" assignTo="{!cvids}"/>
+
+    <div class="moreInfoWrapper">
+        <div class="moreInfoDescriptionWrapper sectionBackground">
+            <div class="moreInfoDescription">Share:
+            	<apex:outputPanel rendered="{! OR(ISNULL(cvids), len(cvids)=0 )}"> 
+            		<b>{! IF (len(description)>30, LEFT(description, 30)+'...',description)}</b>
+            	</apex:outputPanel>
+            	<apex:outputPanel rendered="{! AND(NOT(ISNULL(cvids)), len(cvids)!=0 )}"> 
+            		<b>Multiple files</b>
+            	</apex:outputPanel>
+            </div>
+            <div class="moreInfoClose close emptyBasketPopupRequired" onclick="closeEmailMsg()">&nbsp;</div>
+        </div>
+		<div class="moreInfoError">
+			<apex:outputPanel id="moreInfoError">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+		</div>          
+		<div class="moreInfoContentWrapper">
+			<apex:form >
+				<apex:actionFunction status="ajax-status" name="sendEmailMsg" action="{!sendEmailMsg}" rerender="sendBox, moreInfoError"/>
+				<apex:actionFunction status="ajax-status" name="sendEmailMsgMultiple" action="{!sendEmailMsgMultiple}" rerender="sendBox, moreInfoError"/>
+				<apex:actionFunction status="ajax-status" name="closeEmailMsg" action="{!closeEmailMsg}" rerender="sendBox, moreInfoError"/>
+
+				<apex:pageBlock id="sendBox">
+					<div class="shareRecipientInformation">
+						<apex:outputPanel rendered="{!isSend!=true}">
+							Recipient Email<br/>
+							<apex:inputTextarea rows="1" value="{!sRecipientEmail}" styleClass="recipientEmailInput"/><br/>
+							Custom Message (optional)<br/>
+							<apex:inputTextarea value="{!sRecipientMsg}"/><br/>
+            				<apex:outputPanel rendered="{! OR(ISNULL(cvids), len(cvids)=0 )}"> 
+								<button class="green" onclick="sendEmailMsg(); return false;">SEND</button> <span class="close defaultTheme" onclick="closeEmailMsg();">cancel</span>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{! AND(NOT(ISNULL(cvids)), len(cvids)!=0 )}">
+								<button class="green" onclick="sendEmailMsgMultiple(); return false;">SEND</button> <span class="close defaultTheme" onclick="closeEmailMsg();">cancel</span>
+							</apex:outputPanel> 			
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!isSend==true}">
+							Message sent. Thank You.<br/><br/>
+							<button class="green close emptyBasketPopupRequired" onclick="closeEmailMsg(); return false;">CLOSE</button>
+						</apex:outputPanel>
+					</div>		
+				</apex:pageBlock>	
+			</apex:form>						
+			
+		</div>
+	</div>
+ 
+</apex:component>

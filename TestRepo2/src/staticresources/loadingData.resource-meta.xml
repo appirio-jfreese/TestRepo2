@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+    <contentType>image/gif</contentType>
+    <description>A Status/Processing Symbol that shows Up while fetching the data from Controller</description>
+</StaticResource>

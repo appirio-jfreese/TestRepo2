@@ -1,0 +1,29 @@
+<apex:page controller="POS_ReportBudgetInfo" ContentType="application/vnd.ms-excel#POS_BudgetVsActualSpend.xls" cache="true" action="{!initializerAction}">
+  <apex:messages />
+  <table>
+    <thead>
+      <tr>
+        <th>Order Window</th>
+        <th>Account</th>
+        <th>Shopper</th>
+        <th>Brand</th>
+        <th>Brand Type </th>
+        <th>Budgeted Amount</th>
+        <th>Spent Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <apex:repeat value="{!budgets}" var="budget"> 
+        <tr>
+          <td>{!budget.Order_Window__r.Name}</td>
+          <td>{!budget.Account__r.Name}</td>
+          <td>{!budget.Shopper__r.Name}</td>
+          <td>{!budget.Brand__r.Name}</td>
+          <td>{!budget.Brand__r.Brand_Type__c}</td>
+          <td><apex:outputText value="{0, number, #0.00}"><apex:param value="{!budget.Amount__c}" /></apex:outputText></td>
+          <td><apex:outputText value="{0, number, #0.00}"><apex:param value="{!budget.My_Spent_Amount__c}" /></apex:outputText></td>
+        </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+</apex:page>

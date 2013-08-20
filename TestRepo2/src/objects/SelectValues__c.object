@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ParentSelectName__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Select Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ParentSelectvalue__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Select value</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SelectName__c</fullName>
+        <description>Select name</description>
+        <externalId>false</externalId>
+        <label>Select Name</label>
+        <length>30</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SelectSubValue__c</fullName>
+        <externalId>false</externalId>
+        <label>Select sub value</label>
+        <length>30</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SelectValue__c</fullName>
+        <description>Option (value &amp; label)</description>
+        <externalId>false</externalId>
+        <label>Select value</label>
+        <length>30</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Select values</label>
+</CustomObject>

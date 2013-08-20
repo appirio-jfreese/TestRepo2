@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Blitzes</relationshipLabel>
+        <relationshipName>Blitzes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Blitz_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Blitz Brand</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Blackhaus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Goldschlager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rumple Minze</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Johnnie Walker Blue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Crown Royal Reserve</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio 1942</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bushmills Honey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Crown Black</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Crown Maple</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio Blanco</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio Reposado</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio Anejo</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio Real</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Blitz_Details__c</fullName>
+        <defaultValue>&quot;1. Select Program&quot; &amp; BR() &amp; &quot;2. Select Brand&quot; &amp; BR() &amp; &quot;3. Enter the Amount as Follows:&quot; &amp; BR() &amp; BR() &amp; &quot;     a.) New Distribution - enter 1 in the amount field&quot; &amp; BR() &amp;
+&quot;     b.) Menu - enter 1 in the amount field&quot; &amp; BR() &amp;
+&quot;     c.) Feature - enter 1 in the amount field&quot; &amp; BR() &amp; BR() &amp;&quot;4. Click Save &amp; New to add another Brand&quot; &amp; BR() &amp; &quot;5. Click Save when done&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Blitz Details</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Blitz_Program__c</fullName>
+        <externalId>false</externalId>
+        <label>Blitz Program</label>
+        <picklist>
+            <picklistValues>
+                <fullName>All for One, One for Me - Additional Bottle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>All for One, One for Me - Feature</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>All for One, One for Me - New Distribution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Blitz Week December 3rd</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shot Heard Around the World</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cinco De Mayo-New Distribution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cinco De Mayo-Feature Cards</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cinco De Mayo-Menu</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Date_FInished__c</fullName>
+        <defaultValue>Today ()</defaultValue>
+        <externalId>false</externalId>
+        <label>Date FInished</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PDF_Link__c</fullName>
+        <defaultValue>&quot;Not Available&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>PDF Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Url</type>
+    </fields>
+    <label>Blitz</label>
+    <nameField>
+        <displayFormat>BL-{0000}</displayFormat>
+        <label>Blitz Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Blitzes</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Active_Blitz</fullName>
+        <active>true</active>
+        <label>Active Blitz</label>
+        <picklistValues>
+            <picklist>Blitz_Brand__c</picklist>
+            <values>
+                <fullName>Don Julio 1942</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Don Julio Anejo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Don Julio Blanco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Don Julio Real</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Don Julio Reposado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Blitz_Program__c</picklist>
+            <values>
+                <fullName>Cinco De Mayo-Feature Cards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cinco De Mayo-Menu</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cinco De Mayo-New Distribution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

@@ -1,0 +1,264 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : blogPost.component
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 5/31/13
+Story/Task  : US503/TA907
+------------------------------------------------------------------------------------------------------------------->
+<apex:component controller="Controller_BlogPost" id="blogPostComponent">
+<apex:stylesheet value="{!URLFOR($Resource.BlogCSS, 'css/layout.css')}" />
+    <style type="text/css">
+        div.blogPost-wrap{
+            overflow: auto;
+            margin:     0px auto;
+            padding:    0px;
+            overflow:   auto;
+            border:     1px solid #C5C5C5;
+            width:      308px;
+            position:   absolute;
+            top:        200px;            
+        }
+        
+        div.display-options{
+            background: -webkit-linear-gradient(top, #4e4e4e 0%,#010101 100%);
+            color: #FFFFFF;
+            margin: 0px auto;
+            overflow: hidden;
+            font-family: Tahoma, Arial;
+            text-align: left;
+            border-bottom: 1px solid #C5C5C5;
+            font-weight: normal;
+            font-size: 12px;
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        div.blogPost-item{
+            background: #ffffff;
+            margin: 0px auto;
+            padding: 10px;
+            overflow: auto;
+            font-family: Tahoma, Arial;
+            text-align: left;
+            border-bottom: 1px solid #C5C5C5;
+        }
+        
+        div.blogPost-item-title{
+            color: #cc0066;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        label.blogPost-item-title-link{
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        label.disabled-text{
+            color: #C5C5C5;
+        }
+        
+        label.enabled-text{
+            color: #000000;
+        }
+        
+        div.blogPost-item-tittle-info{
+            color: #5e5d5d;
+            font-size: 12px;
+        }
+        
+        span.blogPost-item-tittle-info-spcl{
+            color: #cc0066;
+        }
+        
+        div.blogPost-item-desc{
+            color: #000000;
+            font-size: 15px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+    </style>
+    <script type="text/javascript">
+        function openDetails(blogId){
+            var the_inputs=document.getElementsByTagName("input");
+            var clickedBlogHidden;
+            for(var n=0;n<the_inputs.length;n++){
+                if(the_inputs[n].type=="hidden" && the_inputs[n].name.indexOf("blogPostComp:blogPostComponent:blogPostFrm:clickedBlogPostId")>0){
+                    clickedBlogHidden = the_inputs[n];
+                }
+            }
+            if(clickedBlogHidden != null){
+                clickedBlogHidden.value = blogId;
+            }
+            openBlogDetail();
+        }
+        
+        function pageChange(pageNumElement){
+            var pageNum  = pageNumElement.value;
+            if(pageNum <= {!pageCount} && pageNum != {!currPage})
+                pageChanged();
+            else
+                pageNumElement.value = {!currPage};
+        }
+        
+        function previous(){
+            if({!currPage} > 1)
+                previousPage();
+        }
+        
+        function next(){
+            if({!currPage} < {!pageCount})
+                nextPage();
+        }
+        
+        function changeDisplay(opt){
+            var shortDesc = document.getElementsByClassName('TitlesAndShortDesc_block');
+            var longDesc = document.getElementsByClassName('TitlesAndLongDesc_block');
+            var descBlock = document.getElementsByClassName('BlogPostDesc_block');
+            var blockDisplay, shortDisplay, longDisplay;
+            if(opt == 'Titles'){
+                blockDisplay = "none";
+                shortDisplay = "none";
+                longDisplay = "none";
+            }else if(opt == 'TitlesAndShortDesc'){
+                blockDisplay = "block";
+                shortDisplay = "block";
+                longDisplay = "none";
+            }else if(opt == 'TitlesAndLongDesc'){
+                blockDisplay = "block";
+                shortDisplay = "none";
+                longDisplay = "block";
+            }
+            for(var i=0; i<shortDesc.length; i++){
+                shortDesc[i].style.display = shortDisplay;
+                longDesc[i].style.display = longDisplay;
+                descBlock[i].style.display = blockDisplay;
+            }
+            
+            var the_inputs=document.getElementsByTagName("input");
+            var dispOpt;
+            for(var n=0;n<the_inputs.length;n++){
+                if(the_inputs[n].type=="hidden" && the_inputs[n].name.indexOf("blogPostComp:blogPostComponent:blogPostFrm:disOpt")>0){
+                    dispOpt = the_inputs[n];
+                }
+            }
+            if(dispOpt != null){
+                dispOpt.value = opt;
+            }
+        }
+        
+        function onLoad(){
+            changeDisplay('{!format}');
+        }
+    </script>
+    
+    <apex:attribute name="isLoggedIn" type="Boolean" required="true" description="" />
+    <apex:attribute name="url" type="String[]" default="" required="false" assignTo="{!blogUrls}" description=""/>
+    <apex:attribute name="singleTag" type="String" default="" required="false" assignTo="{!blogTag}" description=""/>
+    <apex:attribute name="tagList" type="String[]" default="" required="false" assignTo="{!blogTags}" description=""/>
+    <apex:attribute name="smartTag" type="String" default="" required="false" assignTo="{!blogSTag}" description=""/>
+    <apex:attribute name="maxAllowdBlogs" type="Integer" default="5" required="false" assignTo="{!blogCount}" description="" />
+    <apex:attribute name="format" type="String" default="TitlesAndShortDesc" required="false" assignTo="{!blogFormat}" description="format for blog post, possible values (Titles, TitlesAndShortDesc, TitlesAndLongDesc)" />
+    <apex:form id="blogPostFrm">
+        <apex:actionFunction action="{!openBlogDetail}" name="openBlogDetail">
+            <!-- <apex:param name="firstParam" assignTo="{!clickedBlogId}" value="" />  -->
+        </apex:actionFunction>
+        <apex:actionFunction action="{!pageChanged}" name="pageChanged"/>
+        <apex:actionFunction action="{!previousPage}" name="previousPage"/>
+        <apex:actionFunction action="{!nextPage}" name="nextPage"/>
+      <apex:inputHidden value="{!clickedBlogId}" id="clickedBlogPostId"/>
+      <apex:inputHidden value="{!currPage}" id="pageNumber"/>
+      <apex:inputHidden value="{!blogFormat}" id="disOpt"/>
+        
+        <div class="blogPost-wrap" id="blogPost-wrap">
+            <!-- 
+                Titles                          : DISPLAY TITLE ONLY
+                TitlesAndShortDesc  : DISPLAY TITLE AND 100 CHAR OF BLOG
+                TitlesAndLongDesc   : DISPLAY TITLE AND 200 CHAR OF BLOG 
+            -->
+          
+            <apex:outputPanel rendered="{!OR(blogPosts != null, blogPosts.size != 0)}">
+<!--            
+                <div class="display-options">
+                    Display Options &nbsp;&nbsp;
+                    <apex:selectList value="{!blogFormat}" multiselect="false" size="1" onChange="changeDisplay(this.value)">
+                        <apex:selectOptions value="{!DisplayOptions}" />
+                    </apex:selectList>
+                </div>
+-->
+                <h1 style="text-align: left; margin: 0px 0px 0px 0px; cursor: pointer;" onClick="location.href='BlogHome';" >
+                    <span>News Blog</span>
+                </h1>
+                <apex:repeat value="{!blogPosts}" var="bp">
+                    <div class="blogPost-item">
+                        
+                        <!-- TITLES -->
+                        <div class="blogPost-item-title">
+                            <apex:outputLabel styleClass="blogPost-item-title-link" 
+                                    onclick="openDetails('{!bp.Id}'); pageViewed('BlogPosts - {!IF(LEFT(bp.Name,20) = bp.Name, bp.Name, TRIM(LEFT(bp.Name,20))&'....')}');">
+                                    {!bp.Name}
+                            </apex:outputLabel>
+                        </div>
+                        <div class="blogPost-item-tittle-info">
+                            Posted By : <span class="blogPost-item-tittle-info-spcl"> {!bp.CreatedBy.Name} </span> | &nbsp; <apex:outputField value="{!bp.CreatedDate}"/>
+                        </div>
+                        
+                        <!-- Descriptions -->
+                        <apex:outputPanel styleClass="BlogPostDesc_block" style="{!IF(OR(blogFormat = 'TitlesAndLongDesc', format = 'TitlesAndShortDesc'), 'display:block', 'display:none')}">  
+                            <div class="blogPost-item-desc">
+                                <!-- SHORT DESCRIPTION -->
+                                <apex:outputPanel styleClass="TitlesAndShortDesc_block" style="{!IF(format = 'TitlesAndShortDesc', 'display:block', 'display:none')}">
+                                    <apex:outputText styleClass="_summaryText" value="{!LEFT(bp.Summary__c,100)}" escape="false"/>
+                                    <apex:outputPanel rendered="{!IF(LEFT(bp.Summary__c,100) = bp.Summary__c, false, true)}">
+                                        ...<span class="blogPost-item-tittle-info-spcl">
+                                                <apex:outputLabel styleClass="blogPost-item-title-link" 
+                                                    onclick="openDetails('{!bp.Id}'); pageViewed('BlogPosts - {!IF(LEFT(bp.Name,20) = bp.Name, bp.Name, TRIM(LEFT(bp.Name,20))&'....')}');">
+                                                read more</apex:outputLabel>
+                                        </span>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <!-- LONG DESCRIPTION -->
+                                <apex:outputPanel styleClass="TitlesAndLongDesc_block" style="{!IF(format = 'TitlesAndLongDesc', 'display:block', 'display:none')}">
+                                    <apex:outputText styleClass="_summaryText" value="{!LEFT(bp.Summary__c, 200)}" escape="false"/>
+                                    <apex:outputPanel rendered="{!IF(LEFT(bp.Summary__c, 200) = bp.Summary__c, false, true)}">
+                                        ...<span class="blogPost-item-tittle-info-spcl">
+                                                <apex:outputLabel styleClass="blogPost-item-title-link" 
+                                                    onclick="openDetails('{!bp.Id}'); pageViewed('BlogPosts - {!IF(LEFT(bp.Name,20) = bp.Name, bp.Name, TRIM(LEFT(bp.Name,20))&'....')}');">
+                                                read more</apex:outputLabel>
+                                        </span>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+                            <div class="blogPost-item-tittle-info">
+                                {!bp.Comment__r.size} Comments | Tags : 
+                                <span class="blogPost-item-tittle-info-spcl">
+                                    <apex:repeat value="{!bp.Blog2Tag__r}" var="tg">
+                                        {!tg.Tag__r.Name},
+                                    </apex:repeat>
+                                </span>
+                            </div>
+                        </apex:outputPanel>
+                        
+                    </div>
+                </apex:repeat>
+                <div>
+                    <span style="align:left;"><apex:outputLabel styleClass="{!IF( currPage != 1,'blogPost-item-title-link enabled-text', 'disabled-text')}" value="|<<   " onclick="previous();"/></span>
+                        Page <apex:inputText id="pageSelector" size="3" style="width:15px; align:center;" value="{!currPage}" onblur="pageChange(this);"/> of {!pageCount}
+                    <span style="align:right;"><apex:outputLabel styleClass="{!IF( currPage != pageCount,'blogPost-item-title-link enabled-text', 'disabled-text')}" value="   >>|" onclick="next();"/></span>
+                </div>
+            </apex:outputPanel>
+            <!-- <apex:outputLabel rendered="{!OR(blogPosts = null, blogPosts.size = 0)}">
+                <div class="blogPost-item">
+                    <div class="blogPost-item-title">
+                    There is no Blogs to show for provided filter criteria...!! 
+                    </div>
+                </div>
+            </apex:outputLabel> -->
+        </div>
+        <script type="text/javascript">
+            onLoad();
+        </script>
+        </apex:form>
+</apex:component>

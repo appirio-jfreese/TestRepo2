@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Action__c$Name</field>
+    </columns>
+    <columns>
+        <field>Action__c$RecordType</field>
+    </columns>
+    <columns>
+        <field>Action__c$Account__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Goal__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Status__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Action_Product_Links__r$Generic_Brand__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Action__c$Status__c</column>
+            <operator>equals</operator>
+            <value>Closed - Complete</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c$RecordType</column>
+            <operator>equals</operator>
+            <value>Action__c.Ad_Execution,Action__c.Bar_Promotion_Control,Action__c.Cold_Box_Control,Action__c.Display_Control,Action__c.Distribution_Accts_Sold_Control,Action__c.Distribution_POD_Control,Action__c.Ease_of_Shop_Control,Action__c.Feature_Execution,Action__c.General_Control,Action__c.Menu_Execution,Action__c.Shelf_Set,Action__c.Training,Action__c.Tasting_Control,Action__c.Tastings_Control,Action__c.Volume_QD_Control,Action__c.Window_Display</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c$Goal__c</column>
+            <operator>contains</operator>
+            <value>Rep Goal</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$State_Abbreviation__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Owner</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>actions rep goal test</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Actions_with_Accounts_Brands__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Action__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

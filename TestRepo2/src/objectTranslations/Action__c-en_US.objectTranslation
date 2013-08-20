@@ -1,0 +1,1312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Activity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Actions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Accomplishment Recap --></label>
+        <name>Accomplishment_Recap__c</name>
+    </fields>
+    <fields>
+        <label><!-- Territory, Goal &amp; Account Name --></label>
+        <name>Account_Goal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Completed Action --></label>
+        <name>Action_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Count --></label>
+        <name>Action_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Reporting Type --></label>
+        <name>Action_Reporting_Type__c</name>
+        <picklistValues>
+            <masterLabel>Display</masterLabel>
+            <translation><!-- Display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ease of Shop</masterLabel>
+            <translation><!-- Ease of Shop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General</masterLabel>
+            <translation><!-- General --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Staff Training</masterLabel>
+            <translation><!-- Staff Training --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Activity Type --></label>
+        <name>Activity_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- BrandBottle Size --></label>
+        <name>BrandBottle_Size__c</name>
+        <relationshipLabel><!-- Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand Bottle Size --></label>
+        <name>Brand_Bottle_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Category --></label>
+        <name>Brand_Category__c</name>
+        <relationshipLabel><!-- Brand Category --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Called On Accounts --></label>
+        <name>Called_On_Accounts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cases Displayed --></label>
+        <name>Cases_Displayed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed - Complete Date --></label>
+        <name>Closed_Complete_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Finished --></label>
+        <name>Date_Finished__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Started --></label>
+        <name>Date_Started__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dave Flag --></label>
+        <name>Dave_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date_offline__c</name>
+    </fields>
+    <fields>
+        <label><!-- Feature Type --></label>
+        <name>Feature_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cocktail List</masterLabel>
+            <translation><!-- Cocktail List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dessert List</masterLabel>
+            <translation><!-- Dessert List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Drink List</masterLabel>
+            <translation><!-- Drink List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shot List</masterLabel>
+            <translation><!-- Shot List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine list</masterLabel>
+            <translation><!-- Wine list --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Force Update --></label>
+        <name>Force_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal For --></label>
+        <name>Goal_For_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal For --></label>
+        <name>Goal_For_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal For --></label>
+        <name>Goal_For_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Level --></label>
+        <name>Goal_Level_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Level --></label>
+        <name>Goal_Level_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Name --></label>
+        <name>Goal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Priority --></label>
+        <name>Goal_Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+        <relationshipLabel><!-- Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard Met --></label>
+        <name>Gold_Standard_Met__c</name>
+        <relationshipLabel><!-- Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Has Attachment --></label>
+        <name>Has_Attachment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Level --></label>
+        <name>Highest_Goal_Level_Director__c</name>
+    </fields>
+    <fields>
+        <help><!-- Length of time in minutes that the training took place --></help>
+        <label><!-- Length of Training --></label>
+        <name>Length_of_Training__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Completed Actions --></label>
+        <name>Local_Completed_Actions_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Completed Actions --></label>
+        <name>Local_Completed_Actions_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Completed Actions --></label>
+        <name>Local_Completed_Actions_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Goal --></label>
+        <name>Local_Goal_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Goal --></label>
+        <name>Local_Goal_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local Goal --></label>
+        <name>Local_Goal_Rep__c</name>
+    </fields>
+    <fields>
+        <help><!-- A = Front end cap, main lobby, checkout
+B = Back of store, isle display, mid end cap
+C = Others --></help>
+        <label><!-- Location Grade --></label>
+        <name>Location_Grade__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Manager Completed Actions --></label>
+        <name>Manager_Completed_Actions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Manager Goal --></label>
+        <name>Manager_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Marketing Material --></label>
+        <name>Marketing_Material__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mass Update Records for Data Change --></label>
+        <name>Mass_Update_Records_for_Data_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mass Update --></label>
+        <name>Mass_Update__c</name>
+    </fields>
+    <fields>
+        <label><!-- NA7RTID --></label>
+        <name>NA7RTID__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Completed Actions --></label>
+        <name>National_Completed_Actions_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Completed Actions --></label>
+        <name>National_Completed_Actions_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Completed Actions --></label>
+        <name>National_Completed_Actions_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Goal --></label>
+        <name>National_Goal_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Goal --></label>
+        <name>National_Goal_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Goal --></label>
+        <name>National_Goal_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Org ID --></label>
+        <name>New_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Org --></label>
+        <name>New_Org__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Prod ID --></label>
+        <name>New_Prod_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Attendees --></label>
+        <name>Number_of_Attendees__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective --></label>
+        <name>Objective__c</name>
+        <relationshipLabel><!-- Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- POS Items - SFA --></label>
+        <name>POS_Items_SFA__c</name>
+        <picklistValues>
+            <masterLabel>A-Frame Cocktail Stand</masterLabel>
+            <translation><!-- A-Frame Cocktail Stand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banner</masterLabel>
+            <translation><!-- Banner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case Card</masterLabel>
+            <translation><!-- Case Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case Stacker</masterLabel>
+            <translation><!-- Case Stacker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case Tucker</masterLabel>
+            <translation><!-- Case Tucker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ceiling Dangler</masterLabel>
+            <translation><!-- Ceiling Dangler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coasters</masterLabel>
+            <translation><!-- Coasters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cocktail Drink List (Books)</masterLabel>
+            <translation><!-- Cocktail Drink List (Books) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Condiment Tray</masterLabel>
+            <translation><!-- Condiment Tray --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contravision</masterLabel>
+            <translation><!-- Contravision --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Corebuff</masterLabel>
+            <translation><!-- Corebuff --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Counter Card</masterLabel>
+            <translation><!-- Counter Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Counter Unit</masterLabel>
+            <translation><!-- Counter Unit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coupon</masterLabel>
+            <translation><!-- Coupon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Decal</masterLabel>
+            <translation><!-- Decal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display</masterLabel>
+            <translation><!-- Display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dummy Bottles</masterLabel>
+            <translation><!-- Dummy Bottles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FSI</masterLabel>
+            <translation><!-- FSI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glassware</masterLabel>
+            <translation><!-- Glassware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gutter Mat</masterLabel>
+            <translation><!-- Gutter Mat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hats</masterLabel>
+            <translation><!-- Hats --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Key Rings</masterLabel>
+            <translation><!-- Key Rings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lapel Pins</masterLabel>
+            <translation><!-- Lapel Pins --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine</masterLabel>
+            <translation><!-- Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Napkin</masterLabel>
+            <translation><!-- Napkin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Napkin Holder</masterLabel>
+            <translation><!-- Napkin Holder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Necker</masterLabel>
+            <translation><!-- Necker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper Ad</masterLabel>
+            <translation><!-- Newspaper Ad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>One Case Bin</masterLabel>
+            <translation><!-- One Case Bin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pennant String</masterLabel>
+            <translation><!-- Pennant String --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pens</masterLabel>
+            <translation><!-- Pens --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Permanent Display Piece</masterLabel>
+            <translation><!-- Permanent Display Piece --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pole Topper</masterLabel>
+            <translation><!-- Pole Topper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Poster</masterLabel>
+            <translation><!-- Poster --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premiums</masterLabel>
+            <translation><!-- Premiums --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Price Spot</masterLabel>
+            <translation><!-- Price Spot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promoflex</masterLabel>
+            <translation><!-- Promoflex --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rack</masterLabel>
+            <translation><!-- Rack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recipe Books</masterLabel>
+            <translation><!-- Recipe Books --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Samples</masterLabel>
+            <translation><!-- Samples --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sell Sheets</masterLabel>
+            <translation><!-- Sell Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Strip</masterLabel>
+            <translation><!-- Shelf Strip --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Talker</masterLabel>
+            <translation><!-- Shelf Talker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Violator</masterLabel>
+            <translation><!-- Shelf Violator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Wobbler</masterLabel>
+            <translation><!-- Shelf Wobbler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standee</masterLabel>
+            <translation><!-- Standee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Table Tent</masterLabel>
+            <translation><!-- Table Tent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Take One</masterLabel>
+            <translation><!-- Take One --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasting Card</masterLabel>
+            <translation><!-- Tasting Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasting Map</masterLabel>
+            <translation><!-- Tasting Map --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tear Pads</masterLabel>
+            <translation><!-- Tear Pads --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VAP</masterLabel>
+            <translation><!-- VAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wait Staff Mat</masterLabel>
+            <translation><!-- Wait Staff Mat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wearables</masterLabel>
+            <translation><!-- Wearables --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Window Kit</masterLabel>
+            <translation><!-- Window Kit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine List (BOOK)</masterLabel>
+            <translation><!-- Wine List (BOOK) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine List (Books)</masterLabel>
+            <translation><!-- Wine List (Books) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Goal Total --></label>
+        <name>Parent_Goal_Completed_Actions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Premise/Activity Type/Priority --></label>
+        <name>Premise_Activity_Type_Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Premise/Activity Type --></label>
+        <name>Premise_Activity_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Link Count --></label>
+        <name>Product_Link_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Sample(s) --></label>
+        <name>Product_Sample_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordTypeID_NA15 --></label>
+        <name>RecordTypeID_NA15__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rep Action Count --></label>
+        <name>Rep_Action_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rep Completed Actions --></label>
+        <name>Rep_Completed_Actions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rep Goal --></label>
+        <name>Rep_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelf Set Criteria --></label>
+        <name>Shelf_Set_Criteria__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size of Ad --></label>
+        <name>Size_of_Ad__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Abbreviation --></label>
+        <name>State_Abbreviation__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed - Already In Distribution</masterLabel>
+            <translation><!-- Closed - Already In Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Complete</masterLabel>
+            <translation><!-- Closed - Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Not Pitched</masterLabel>
+            <translation><!-- Closed - Not Pitched --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Not Sold</masterLabel>
+            <translation><!-- Closed - Not Sold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open - In Progress</masterLabel>
+            <translation><!-- Open - In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open - Not Started</masterLabel>
+            <translation><!-- Open - Not Started --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- “The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party.” --></help>
+        <label><!-- Suggested Display Price --></label>
+        <name>Suggested_Display_Price__c</name>
+    </fields>
+    <fields>
+        <help><!-- The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party. --></help>
+        <label><!-- Suggested Retail Price --></label>
+        <name>Suggested_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tasted Product --></label>
+        <name>Tasted_Product__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Completed Actions --></label>
+        <name>Total_Completed_Actions_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Completed Actions --></label>
+        <name>Total_Completed_Actions_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Completed Actions --></label>
+        <name>Total_Completed_Actions_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Goal --></label>
+        <name>Total_Goal_Director__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Goal --></label>
+        <name>Total_Goal_Manager__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Goal --></label>
+        <name>Total_Goal_Rep__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trainer --></label>
+        <name>Trainer__c</name>
+        <picklistValues>
+            <masterLabel>Brand Ambassador</masterLabel>
+            <translation><!-- Brand Ambassador --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diageo</masterLabel>
+            <translation><!-- Diageo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Rep (me)</masterLabel>
+            <translation><!-- Sales Rep (me) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Training Audience --></label>
+        <name>Training_Audience__c</name>
+        <picklistValues>
+            <masterLabel>Bartender</masterLabel>
+            <translation><!-- Bartender --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Floor Employees</masterLabel>
+            <translation><!-- Floor Employees --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Managers</masterLabel>
+            <translation><!-- Managers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wait Staff</masterLabel>
+            <translation><!-- Wait Staff --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of Ad --></label>
+        <name>Type_of_Ad__c</name>
+        <picklistValues>
+            <masterLabel>Coupon</masterLabel>
+            <translation><!-- Coupon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FSI</masterLabel>
+            <translation><!-- FSI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Magazine</masterLabel>
+            <translation><!-- Magazine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Newspaper</masterLabel>
+            <translation><!-- Newspaper --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Universe --></label>
+        <name>Universe__c</name>
+    </fields>
+    <layouts>
+        <layout>Action Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Ad Execution - Control</layout>
+        <sections>
+            <label><!-- Ad Detail --></label>
+            <section>Ad Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Ad Execution - Franchise</layout>
+        <sections>
+            <label><!-- Ad Detail --></label>
+            <section>Ad Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Admin Goal Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Advanced Goal Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Director Goal Reporting --></label>
+            <section>Director Goal Reporting</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Manager Goal Reporting --></label>
+            <section>Manager Goal Reporting</section>
+        </sections>
+        <sections>
+            <label><!-- Numbers for Reporting --></label>
+            <section>Numbers for Reporting</section>
+        </sections>
+        <sections>
+            <label><!-- Rep Goal Reporting --></label>
+            <section>Rep Goal Reporting</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Bar Promotion - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Bar Promotion - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Cold Box Action - Control</layout>
+        <sections>
+            <label><!-- Cold Box Detail --></label>
+            <section>Cold Box Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Cold Box Action - Franchise</layout>
+        <sections>
+            <label><!-- Cold Box Detail --></label>
+            <section>Cold Box Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Display Action</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Display Action - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Display Action - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distribution Action</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Distribution Detail --></label>
+            <section>Distribution Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distribution Action - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Distribution Detail --></label>
+            <section>Distribution Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distribution Action - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Distribution Detail --></label>
+            <section>Distribution Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Ease of Shop Action</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Ease of Shop Detail --></label>
+            <section>Ease of Shop Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Ease of Shop Action - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Ease of Shop Detail --></label>
+            <section>Ease of Shop Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Ease of Shop Action - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Ease of Shop Detail --></label>
+            <section>Ease of Shop Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Feature Execution - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Feature Details --></label>
+            <section>Feature Details</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Feature Execution - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Feature Details --></label>
+            <section>Feature Details</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>General - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>General - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>General Action</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Menu Execution - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Menu Details --></label>
+            <section>Menu Details</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Menu Execution - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Menu Details --></label>
+            <section>Menu Details</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Shelf Set - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Shelf Set Detail --></label>
+            <section>Shelf Set Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Shelf Set - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Shelf Set Detail --></label>
+            <section>Shelf Set Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Staff Training - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Training Details --></label>
+            <section>Training Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Staff Training - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Training Detail --></label>
+            <section>Training Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Tastings - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Tasting Details --></label>
+            <section>Tasting Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Tastings - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POS Detail --></label>
+            <section>POS Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Tasting Details --></label>
+            <section>Tasting Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Training Action</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Training Detail --></label>
+            <section>Training Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Volume/QD Action - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Volume/QD Action - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Window Display - Control</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Window Display Detail --></label>
+            <section>Window Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Window Display - Franchise</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Window Display Detail --></label>
+            <section>Window Display Detail</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Ad Execution - Control --></label>
+        <name>Ad_Execution</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Ad Execution - Franchise --></label>
+        <name>Ad_Execution_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Bar Promotion - Control --></label>
+        <name>Bar_Promotion_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Bar Promotion - Franchise --></label>
+        <name>Bar_Promotion_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Cold Box - Control --></label>
+        <name>Cold_Box_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Cold Box - Franchise --></label>
+        <name>Cold_Box_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Display - Franchise --></label>
+        <name>Display</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Display - Control --></label>
+        <name>Display_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distribution (Accts Sold) - Control --></label>
+        <name>Distribution_Accts_Sold_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distribution (Accts Sold) - Franchise --></label>
+        <name>Distribution_Accts_Sold_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distribution (POD) - Control --></label>
+        <name>Distribution_POD_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distribution (POD) - Franchise --></label>
+        <name>Distribution_POD_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Ease of Shop --></label>
+        <name>Ease_of_Shop</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Ease of Shop - Control --></label>
+        <name>Ease_of_Shop_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Ease of Shop - Franchise --></label>
+        <name>Ease_of_Shop_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Feature Execution - Control --></label>
+        <name>Feature_Execution</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Feature Execution - Franchise --></label>
+        <name>Feature_Execution_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- General - Franchise --></label>
+        <name>General</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- General - Control --></label>
+        <name>General_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Menu Execution - Control --></label>
+        <name>Menu_Execution</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Menu Execution - Franchise --></label>
+        <name>Menu_Execution_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Shelf Set - Control --></label>
+        <name>Shelf_Set</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Shelf Set - Franchise --></label>
+        <name>Shelf_Set_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Staff Training - Franchise --></label>
+        <name>Staff_Training</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Tasting - Control --></label>
+        <name>Tasting_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Tastings - Franchise --></label>
+        <name>Tasting_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Tastings - Control --></label>
+        <name>Tastings_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Staff Training - Control --></label>
+        <name>Training</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Volume/QD - Control --></label>
+        <name>Volume_QD_Control</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Volume/QD - Franchise --></label>
+        <name>Volume_QD_Franchise</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Window Display - Control --></label>
+        <name>Window_Display</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Window Display - Franchise --></label>
+        <name>Window_Display_Franchise</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Accomplishment recap is mandatory to save an Ease of Shop Activity Type --></errorMessage>
+        <name>Accomplishment_Recap_is_Mandatory</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The related Action cannot be changed. --></errorMessage>
+        <name>Action_ID_is_Uneditable</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Actions cannot be marked Closed - Complete without having at least one Action Brand. --></errorMessage>
+        <name>Action_cannot_close_without_brand</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- This Action&apos;s due date was more than 5 days ago, so its fields can no longer be edited (except Comments). --></errorMessage>
+        <name>Action_is_uneditable</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Record Type on this action cannot be changed. --></errorMessage>
+        <name>Record_Type_is_Uneditable</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Take_Picture --></label>
+        <name>Take_Picture</name>
+    </webLinks>
+</CustomObjectTranslation>

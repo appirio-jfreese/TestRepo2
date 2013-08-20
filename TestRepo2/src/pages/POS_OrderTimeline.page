@@ -1,0 +1,412 @@
+<apex:page controller="POS_OrderTimelineController" standardStylesheets="false" showHeader="false" sidebar="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=1138"  /> 
+	<meta name="MobileOptimized" content="1138" /> 
+	<title>Diageo POS</title> 
+
+	<link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+
+	
+	<link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+	
+	<style type="text/css">
+	html body div div .full-width {
+		width: 1025px;
+	}
+	html body .orderWindowCell, #popup .ui-icon-close:hover {
+		cursor: pointer;
+	}
+	div.legendWrapper{
+		float: right;
+	}
+	div.legendBox {
+		background-color: #ffffff;
+	    border-radius: 5px 5px 5px 5px;
+	    float: left;
+	    height: 10px;
+	    margin-left: 5px;
+	    margin-right: 5px;
+	    margin-top: 5px;
+	    width: 10px;
+	}
+	div.legendText {
+		float: left;
+		margin-right: 20px;
+	}
+	
+	div.clearFloat {
+		clear: both;
+	}
+	
+	div.orderWindowCell {
+		background-color: #202b62;
+		border-radius: 4px 4px 4px 4px;
+	}
+	div div.orderWindowCell.On.Demand {
+		background-color: #202B62;
+	}
+	
+	div.content {
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-top: 10px;
+		position: relative;
+		z-index: 100;
+	}
+	
+	img.bg {
+		bottom: 0;
+		height: 50px;
+		width: 100%;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		border-radius: 4px 4px 4px 4px;
+	}
+	
+	/** doesn't interoperate with CSS3PIE
+	div.orderWindowCell.Closed img.bg {
+		opacity: 0.5;
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+		filter: alpha(opacity=50);
+	}
+	
+	div.orderWindowCell.Archived img.bg {
+		opacity: 0.3;
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+		filter: alpha(opacity=30);
+	}
+	**/
+	
+	div.orderWindowCell {
+		position: relative !important;
+	}
+	
+	body div .ui-icon-close {
+		position: relative;
+		top: -23px;
+		right: 2px;
+		*top: -18px;
+		*right: 6px;
+	}
+	
+	body div .ui-widget {
+		border-radius: 4px 4px 4px 4px !important;
+	}
+	
+	body div .ui-widget-header {
+		border: 1px solid #202B62;
+		background-color: #202B62;
+		height: 18px;
+	}
+	
+	body div .ui-dialog-titlebar-close, body div .ui-dialog-titlebar-close.ui-state-focus, body div .ui-dialog-titlebar-close.ui-state-hover {
+		float: right;
+		background-color: #EEEEEE;
+		border: 1px solid black;
+		*position: relative;
+		*top: -17px;
+		*right: 4px;
+	}
+	
+	#calendarBackground {
+		position: absolute;
+		left: 18px;
+		height: 88%; 
+		min-height: 370px;
+		width: 898px; 
+		top: 61px;
+	}
+	*+html #calendarBackground {
+		height: 70%;
+	}
+	</style>
+	
+	 
+	
+	
+
+</head>
+<body>
+	<noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+	<div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+	<div class="wrapper">
+		<div class="page">
+			<div class="main col-full-layout" id="main">
+				<c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+
+		
+		
+				<div class="col-main">	
+					<div class="legendWrapper" style="padding-top:10px;">
+						<div class="legendText">Legend:</div> 
+						<div class="legendBox" style="background-color: #40C62C;">&nbsp;</div><div class="legendText"> - Open</div>
+						<div class="legendBox" style="background-color: #ffa500;">&nbsp;</div><div class="legendText"> - Upcoming</div>
+						<div class="legendBox" style="background-color: #DE4040;">&nbsp;</div><div class="legendText"> - Closed</div>
+						<div class="clearFloat"></div>
+					</div>
+					<div class="clearFloat"></div>	
+					<apex:form >		 
+					<div class="std"> 
+						<div class="full-content-block" style="position: relative; min-height: 715px;">
+							<div style="clear:both;"/>
+							<img id="calendarBackground" src="{!URLFOR($Resource.POS_NewComps,'images/bg-visual.gif')}"/>
+								<apex:outputPanel styleClass="calendarContainer" id="calendarContainer" layout="block">
+									<table cellpadding="0" cellspacing="0" class="data-table" summary="data table">
+										<thead>
+											<tr>
+												<th class="first" colspan="12" style="padding: 0;">
+													<table cellpadding="0" cellspacing="0" class="stupid_ie_workaround">
+														<tr>
+															<td class="yearArrow">
+																<span class="leftArrow"><apex:commandLink action="{!previousYear}" reRender="calendarContainer,thePanel" ><img class="leftYear" height="15px" src="{!URLFOR($Resource.brighter,'btn-left-bright.png')}"/></apex:commandLink></span>
+															</td>
+															<td class="year">
+																<apex:outputPanel styleClass="yearSelect" id="yearSelect">{!selectedYear}</apex:outputPanel>
+															</td>
+															<td class="yearArrow">
+																<span class="rightArrow"><apex:commandLink action="{!nextYear}" reRender="calendarContainer,thePanel"  ><img class="rightYear" height="15px" src="{!URLFOR($Resource.brighter,'btn-right-bright.png')}"/></apex:commandLink></span>
+															</td>
+														</tr>
+													</table>
+												</th>
+											</tr>
+										</thead>
+									</table>
+									<div class="calendarSubsection">
+										<div class="calendarHeaderRow">
+										<apex:repeat value="{!calendarDisplays}" var="calendar">
+											<div class="calendarHeader">
+												<apex:outputText value="{0,date,MMM}">
+												    <apex:param value="{!calendar.month}" /> 
+												</apex:outputText>
+											</div>
+										</apex:repeat>
+										</div> 
+										
+										<apex:repeat value="{!orderWindowRows}" var="row">
+											<div class="orderWindowRow" id="calendarRow_{!row.orderWindow.Id}">
+												
+												<apex:variable var="legendColor" value="border-left: 4px solid #ffa500;"/>
+												<apex:outputPanel rendered="{!if(row.orderWindow.Status__c = 'Closed','true','false')}">
+													<apex:variable var="legendColor" value="border-left: 4px solid #DE4040;"/>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!if(row.orderWindow.Status__c = 'Open','true','false')}">
+													<apex:variable var="legendColor" value="border-left: 4px solid #40C62C;"/>
+												</apex:outputPanel>
+											
+												<div class="orderWindowCell {!row.orderWindow.Status__c} {!row.orderWindow.Type__c}" style="{!legendColor}">
+													<div class="content">
+														{!row.orderWindow.Name}
+													</div>
+													 
+													<script type="text/javascript">
+														jQuery(document).ready(function() {
+															rowDiv = jQuery("#calendarRow_{!row.orderWindow.Id}");
+															spacer = rowDiv.children(".orderWindowCell");
+															spacer.css("left",({!row.startMonth-1}*75)+"px");
+															spacer.width({!row.monthSpan+1}*70+"px");
+														});
+													</script>
+													
+													<div class="orderWindowDetails">
+														<div class="orderWindowDetailsBody">
+															<span class="ui-icon ui-icon-close" onClick="$dialog.dialog('close');"></span>
+															
+															<span class="orderWindowDetailHeader">
+																<b>Window:</b> {!row.orderWindow.Name} (FY {!row.orderWindow.Fiscal_Year__c})
+																<br/>
+																<b>Status:</b> {!row.orderWindow.Status__c}
+																<br/>
+																<b>Dates:&nbsp;</b> 
+																<apex:outputText value="{0,date,MM'/'dd}">
+																    <apex:param value="{!row.orderWindow.Order_Start_Date__c}" /> 
+																</apex:outputText>&nbsp;-&nbsp; 
+																<apex:outputText value="{0,date,MM'/'dd}">
+																    <apex:param value="{!row.orderWindow.Order_Close_Date__c}" /> 
+																</apex:outputText> 
+																<br/>
+																<br/>
+																<b>Actions:</b>
+
+																<ul>
+																	<li>
+																		<apex:outputLink styleClass="btn" value="POS_BudgetingGrid?owId={!row.orderWindow.Id}">
+																			<span>Budgeting</span>
+																		</apex:outputLink>
+																	</li>
+																	<li>
+																	<apex:outputLink styleClass="btn" value="javascript:launchWindow('{!row.orderWindow.Magento_Id__c}')" rendered="{!row.orderWindow.Status__c=='Open' || row.orderWindow.Status__c=='Closed'  }">
+																		<span>View Catalog</span>
+																	</apex:outputLink>
+																	</li>
+																	<li>
+																		<apex:outputLink styleClass="btn" rendered="{!NOT(ISNULL(carts[row.orderWindow].Status__c))}" value="POS_OrderHistoryDetail?id={!carts[row.orderWindow].Id}">
+																			<span>View Tracking</span>
+																		</apex:outputLink>
+																	</li>
+																</ul>
+
+															</span>
+															
+														</div>
+													</div>
+												</div>
+											
+											
+											</div>
+										</apex:repeat> 
+										
+									</div>
+									
+								</apex:outputPanel>
+						</div>
+					</div>
+					</apex:form>
+				</div>
+				<!-- <div class="col-left">
+					&nbsp;				
+				</div> -->
+				<c:POS_Footer />
+			</div>
+		</div>
+	</div>
+	<div class="skip"><a href="#header" accesskey="b">back to top</a></div>
+	<div id="popup" style="height: auto;"></div>
+</body>
+
+<apex:outputText escape="false" value="{!lt}!--[if lt IE 10]{!gt}"/>
+<script type="text/javascript" src="{!URLFOR($Resource.CSS3PIE,'PIE.js')}"></script>
+<apex:outputText escape="false" value="{!lt}![endif]--{!gt}"/>
+ 
+<script type="text/javascript">
+	baseUrl = '{!baseUrl}';
+
+
+	function launchWindow (magentoId) {
+		//var expire = new Date();
+		//expire.setTime((new Date()).getTime() + 60000); //1 min expire
+		document.cookie="apex__returnUrl="+baseUrl+magentoId+";path=/";
+		//document.cookie="apex__returnUrl="+baseUrl+magentoId+";expires="+expire.toGMTString();
+		document.location.href="{!idpUrl}";
+	
+	}
+	
+	var $dialog;
+	jQuery(document).ready(function() {
+		$dialog = jQuery('#popup').dialog({ autoOpen: false, resizable: false, draggable: false, modal: true, width: 350 });
+	
+					
+		jQuery('.orderWindowCell').click(
+			function() {
+			
+				$dialog.dialog();
+				jQuery('#popup').css('height', 'auto');
+				window.scrollTo(0,0);
+				
+				$text = jQuery(this).children('.orderWindowDetails');
+				$dialog.dialog( "option" , "title" ,"Order Window Details");
+				$dialog.html($text.html());
+				
+		
+				$dialog.css('font-size','12px').css('background-color','#fff').css('text-align','left').css('border', 'none').dialog('open');
+				
+			    if (window.PIE) {
+		    	    jQuery('.ui-widget, .ui-widget-header, #popup, .orderWindowDetailsBody, .orderWindowDetailHeader').each(function() {
+		        	    jQuery(this).css('border-radius', '8px 8px 8px 8px');
+		        	    PIE.attach(this);
+		        	});
+		    	    jQuery('.ui-dialog-titlebar-close').each(function() {
+		        	    jQuery(this).css('border-radius', '4px 4px 4px 4px');
+		        	    PIE.attach(this);
+		        	});
+		        }
+		        
+				return false;
+			}
+		);	
+		
+		// IE CSS3 workarounds
+	    if (window.PIE) {
+    	    jQuery('.orderWindowCell, img.bg').each(function() {
+        	    PIE.attach(this);
+        	});
+        }
+	
+	});			
+									
+</script>
+<apex:outputPanel id="thePanel" >
+<script type="text/javascript">
+	baseUrl = '{!baseUrl}';
+
+
+	function launchWindow (magentoId) {
+		//var expire = new Date();
+		//expire.setTime((new Date()).getTime() + 60000); //1 min expire
+		document.cookie="apex__returnUrl="+baseUrl+magentoId+";path=/";
+		//document.cookie="apex__returnUrl="+baseUrl+magentoId+";expires="+expire.toGMTString();
+		document.location.href="{!idpUrl}";
+	
+	}
+	
+	var $dialog;
+	jQuery(document).ready(function() {
+		$dialog = jQuery('#popup').dialog({ autoOpen: false, resizable: false, draggable: false, modal: true, width: 350 });
+	
+					
+		jQuery('.orderWindowCell').click(
+			function() {
+			
+				$dialog.dialog();
+				jQuery('#popup').css('height', 'auto');
+				window.scrollTo(0,0);
+				
+				$text = jQuery(this).children('.orderWindowDetails');
+				$dialog.dialog( "option" , "title" ,"Order Window Details");
+				$dialog.html($text.html());
+				
+		
+				$dialog.css('font-size','12px').css('background-color','#fff').css('text-align','left').css('border', 'none').dialog('open');
+				
+			    if (window.PIE) {
+		    	    jQuery('.ui-widget, .ui-widget-header, #popup, .orderWindowDetailsBody, .orderWindowDetailHeader').each(function() {
+		        	    jQuery(this).css('border-radius', '8px 8px 8px 8px');
+		        	    PIE.attach(this);
+		        	});
+		    	    jQuery('.ui-dialog-titlebar-close').each(function() {
+		        	    jQuery(this).css('border-radius', '4px 4px 4px 4px');
+		        	    PIE.attach(this);
+		        	});
+		        }
+		        
+				return false;
+			}
+		);	
+		
+		// IE CSS3 workarounds
+	    if (window.PIE) {
+    	    jQuery('.orderWindowCell, img.bg').each(function() {
+        	    PIE.attach(this);
+        	});
+        }
+	
+	});			
+									
+</script>
+    
+</apex:outputPanel>
+</html>
+
+
+</apex:page>

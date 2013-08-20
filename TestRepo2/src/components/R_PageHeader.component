@@ -1,0 +1,361 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : R_PageHeader.component
+
+Created By  : Randy Wandell (Appirio)
+Date        : 6/25/13
+Story/Task  : US607/TA1014
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 7/1/13
+Story/Task  : US585/TA1082
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 7/23/13
+Story/Task  : DE670
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 7/24/13
+Story/Task  : US645/DE675, US646/DE674
+------------------------------------------------------------------------------------------------------------------->
+<apex:component controller="Controller_Base" extensions="Controller_BaseRemote" allowDML="true"> 
+	<!-- Start : Changes by Basant for Responsive Behavior : US585/TA1082 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<!-- End : Changes by Basant for Responsive Behavior  -->
+
+	<link rel="stylesheet" href="path/to/add2home.css" />
+	<script type="application/javascript" src="path/to/add2home.js"></script>
+			
+    <apex:attribute name="isLoggedIn" description="Tell if user is logged in or not" type="Boolean" required="true"/>
+    <apex:attribute name="preview" description="" type="String" required="false" default="false"/>
+    <apex:attribute name="showSearch" description="" type="Boolean" required="false" default="true"/>
+    <apex:attribute name="showThemeSelector" description="" type="Boolean" required="false"/>
+    <apex:attribute name="basketItemsNumber" description="" type="String" required="false"/>
+		
+<!--    <script type="text/javascript" src="{!URLFOR($Resource.Responsive_Base, 'js/jquery-1.8.2.min.js')}"></script>  -->
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+
+    <!-- Start : Changes by Basant for JQueries Library Load  : US585/TA1082-->
+     
+ 	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery-ui-1.8.15.custom.min.js')}"></script> 
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.jscrollpane.min.js')}"></script>
+ 	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'imgscale.js')}"></script>
+
+ 	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'utils.js')}"></script>
+ 	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.mousewheel.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.treeview.js')}"></script>  
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.autosize.js')}"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery, 'jquery.jscrollpane.css')}"/>
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'autosuggest.js')}"></script>
+	<!-- END : Changes by Basant for JQueries Library Load -->
+
+
+    <script type="text/javascript" src="{!URLFOR($Resource.Responsive_Base, 'js/jquery.jqtransform.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.Responsive_Base, 'js/jquery.flexslider-min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.Responsive_Base, 'js/script.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/mod_script.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/PageHeaderJQ.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.Responsive_Base, 'js/jquery.modal.min.js')}"></script>
+ 	
+    <apex:stylesheet value="{!URLFOR($Resource.Responsive_Base, 'css/base.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.Responsive_Base, 'css/skeleton-fluid.css')}" /> 
+    <apex:stylesheet value="{!URLFOR($Resource.Responsive_Base, 'css/layout.css')}" />
+   
+    <style type="text/css">
+		.theme-selector-modal {
+		    width: 100%;
+		    max-width: 721px;
+		    height: 100%;
+		    z-index: 1001;
+		}
+		    .theme-selector-modal .html {
+		        margin: 0;
+		        padding-bottom: 10px;
+		    }
+		    .theme-selector-modal .column {
+		        float: none;
+		        width: 99.4%;
+		        margin: 15px 0 15px .6%;
+		        height: 135px;
+		    }
+		        .theme-selector-modal .boxes a {
+		            line-height: 105px;
+		            height: 105px;
+		        }
+		        .theme-selector-modal label {
+		            float: left;
+		            font-size: 18px;
+		            margin: 0 10px 0 0.68870523415978%;
+		            color: #e0e0e0;
+		        }
+		        .theme-selector-modal .html .go-btn {
+		            float: right;
+		            margin-right: 0.68870523415978%;
+		        }  
+		                    
+        /*Create a go_btn for search submit*/
+	    .header .go_btn {
+	        float: left;
+	        width: 12.0%; /*this was 12.54355400696864%; in the source layout.css, but that did not fix it at 110% zoom.  Dropping the .5% does fix it (though it still wraps at 150% and 175%).*/
+	        text-align: center;
+	        line-height: 32px;
+	        color: #D8D5D5;
+	        font-size: 16px;
+	        font-weight: normal;
+		    border: 2px solid #8A023A;
+		    border-radius: 2px;
+		    margin: 0px 0px 0px 1px;
+		    padding: 0px 4px 0px 4px;
+	    }
+	        .header go_btn:hover {
+	            color: #fff;
+	            background: #d20756;
+	        }
+
+        /*UX width was wrong for ad_i_5_code_policies2.png, when corrected need to reduce margin*/
+		    .ads .ad {
+		        /*margin-right: 6px;*/
+                margin-right: 4px;
+		    }
+
+        /*over-ride width settings for ads for under 670px so they will form three rows of two*/
+        @media only screen and (max-width: 670px) {
+        .ads {
+                /*width: 96.875%;*/
+                width: 100%;
+                margin: 0 auto;
+            }
+                .ads .ad {
+                    /*margin-right: 5px;*/
+                    margin-right: 2px;
+                }
+        }
+        
+        /* START - Changed for DE670 - Basant Verma */
+        /*in proto we have css with all lower case but in realtime the class name is derived which is in Camel Case*/
+        .Wine-bg {
+				    background-image: -webkit-linear-gradient(top, #f9e084 1%, #e7a723 100%) !important;
+				    background-image: linear-gradient(180deg, #f9e084, #e7a723 100%) !important;
+				}
+				
+				.Spirits-bg {
+				    background-image: -webkit-linear-gradient(top, #8cbef8 1%, #438de7 100%) !important;
+				    background-image: linear-gradient(180deg, #8cbef8, #438de7 100%) !important;
+				}
+				/* END - Changed for DE670 - Basant Verma */
+    </style>
+
+
+	<style type="text/css">
+		/* autocomplete menu */
+		.ui-menu {
+			list-style:none;
+			display:block;
+			float: left;
+			-webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.60) !important;
+			-moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.60) !important;
+			box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.60) !important;
+			-webkit-border-radius: 1px !important;
+			-moz-border-radius: 1px !important;
+			border-radius: 1px !important;	
+			background: #efefef !important;	 /* Old browsers */
+		    border: 2px solid #DFDFDF !important;
+		    border-top: 0px solid transparent !important;	
+		    color: #575757 !important;
+		    cursor: pointer;
+		    font-family: Tahoma !important;
+		    font-size: 12px !important;
+		    font-weight: bold !important;
+			padding-top: 2px !important;
+			padding-bottom: 2px !important;	
+			padding-left: 2px !important;
+			padding-right: 2px !important;
+			z-index: 1001;
+		}
+		.ui-menu .ui-menu {
+			margin-top: -4px;
+		}
+		.ui-menu .ui-menu-item {
+			zoom: 1;
+			float: left;
+			clear: left;
+			width: 100%;
+		}
+		.ui-menu .ui-menu-item a {
+			text-decoration:none;
+			display:block;
+			zoom:1;
+		}
+		.ui-menu .ui-menu-item a {
+			padding: 6px;
+			padding-left: 11px;
+		}
+		.ui-menu .ui-menu-item a.ui-state-hover,
+		.ui-menu .ui-menu-item a.ui-state-active {
+			margin: -1px;
+			-webkit-border-radius: 1px !important;
+			-moz-border-radius: 1px !important;
+			border-radius: 1px !important;	
+			background: #ad2b5f !important; /* Old browsers */
+			background: -moz-linear-gradient(top, #ad2b5f 1%, #7e0c3a 100%) !important; /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ad2b5f), color-stop(100%,#7e0c3a)) !important; /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, #ad2b5f 1%,#7e0c3a 100%) !important; /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, #ad2b5f 1%,#7e0c3a 100%) !important; /* Opera11.10+ */
+			background: -ms-linear-gradient(top, #ad2b5f 1%,#7e0c3a 100%) !important; /* IE10+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ad2b5f', endColorstr='#7e0c3a',GradientType=0 ) !important; /* IE6-9 */
+			background: linear-gradient(top, #ad2b5f 1%,#7e0c3a 100%) !important; /* W3C */
+			border-color: #ad2b5f !important;
+			-webkit-border-radius: 2px !important;
+			-moz-border-radius: 2px !important;
+			border-radius: 2px !important;		
+			color: #ffffff;
+		    cursor: pointer;	
+		}
+	
+	</style>
+	
+
+    <!-- header -->
+    <div id="overlayDisable"></div>
+	<div class="header {!IF(showThemeSelector,'','no-theme-selector')}" >
+		
+        <div id="name_avatar_follow_basket" class="info row sixteen">
+            <div class="desc-wrapper">
+                <div class="desc">
+                    <span class="name">
+                        {!$User.FirstName} {!$User.LastName}<br/>
+                        <span class="dropdown">
+                            <apex:outputPanel rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+                             <!-- <a href="{!$Page.R_UserProfile}">User&nbsp;Profile</a>
+                             <a href="{!$Page.R_DownloadHistory}">Download&nbsp;History</a>
+                             <a href="{!$Page.R_ShareHistory}">Share&nbsp;History</a>
+                             <a href="{!$Page.R_FollowedItems}">Followed&nbsp;Items</a> -->
+                             
+                             <!--  <a href="javascript:;">User&nbsp;Profile</a>
+                             <a href="javascript:;">Download&nbsp;History</a>
+                             <a href="javascript:;">Share&nbsp;History</a>
+                             <a href="javascript:;">Followed&nbsp;Items</a> -->
+                             <a href="{!$Site.Prefix}/secur/logout.jsp">{!$Label.site.logout}</a>
+                            </apex:outputPanel>
+                        </span>
+                    </span>
+                    <span class="hello">Hello,</span>
+                    <span class="company">{!distributorBreadcrumbString}</span>
+
+                </div>
+                <apex:outputPanel rendered="{!showAvatar}">
+                    <div class="avatar-wrapper">
+                        <a href="/_ui/core/userprofile/UserProfilePage" class="avatar"><apex:image value="{!avatarUrl}"/></a>
+                    </div>
+                </apex:outputPanel>
+            </div>
+            <div class="icons">
+            		<!-- Start Changes for US585/TA1082 - Basant Verma (OffShore) {Just added outputPanel and it's Id so we can rerender it after AJAX actionFunction Call}-->
+            		<apex:outputPanel id="currentBasketItemsNo">
+                 <!-- START : Commenting code now for US646/DE674 - Basant Verma -->
+                 <!-- <a href="javascript:;" class="cart">
+                     {!basketItemsNumber}
+                 </a> -->
+                 <!-- END : Commenting code now for US646/DE674 - Basant Verma -->
+                </apex:outputPanel>
+                <apex:outputPanel id="currentFollowedItemsNo">
+                 <!-- START : Commenting code now for US645/DE675 - Basant Verma -->
+                 <!-- <a href="javascript:;" class="fav">
+                     {!followItemsNo}
+                 </a> -->
+                 <!-- END : Commenting code now for US645/DE675 - Basant Verma -->
+                </apex:outputPanel>
+                <!-- End Changes for US585/TA1082 - Basant -->
+            </div>
+        </div>
+        <apex:outputPanel rendered="{!showAvatar}">
+            <div id="SFDC_link">
+          <a href="{!$Label.SalesforceHomePage}" class="gotoSF">
+              <strong>Go To Salesforce</strong>
+          </a>
+	        </div>
+        </apex:outputPanel>
+        <div class="clear"></div>
+        <div id="logo_buttons_search" class="row clearfix">
+            <a href="{!$Page.R_HomePage}" class="logo">
+                <img src="{!URLFOR($Resource.Responsive_Base, 'i/logo.png')}"/>
+            </a>
+            <div class="btns">
+             <apex:form >
+                 <apex:actionFunction status="ajax-status" name="toggleToWine" action="{!toggleToWine}"/>
+                 <apex:actionFunction status="ajax-status" name="toggleToSpirits" action="{!toggleToSpirits}"/>
+                 <apex:outputPanel id="sTheme" >
+                         <apex:outputPanel rendered="{!siteTheme == 'Spirits'}">
+                            <a href="javascript:;" class="active btn">Spirits</a>
+                            <a href="javascript:;" class="btn" onclick="toggleToWine()">Wine</a>
+                            <a href="javascript:;" class="btn last" style="visibility: hidden">Beer</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!siteTheme == 'Wine'}">
+                            <a href="javascript:;" class="btn" onclick="toggleToSpirits()">Spirits</a>
+                            <a href="javascript:;" class="active btn">Wine</a>
+                            <a href="javascript:;" class="btn last" style="visibility: hidden">Beer</a>
+                        </apex:outputPanel>                        
+                 </apex:outputPanel>
+             </apex:form>
+            </div>
+
+            <apex:outputPanel rendered="{!showSearch}">
+                <div class="search {!If(OR(isLoggedIn!=true, preview=='true') ,'hidden','')}">
+                    <apex:form >
+                        <apex:actionFunction status="ajax-status" name="userSearch" action="{!userSearch}" rerender="messages, sValue"/>
+                        <apex:outputPanel id="sValue">
+                            <div>
+                                <apex:inputText value="{!searchPhrase}" styleClass="text"/>
+                                <!-- <a href="javascript:;" class="btn" onclick="userSearch(); return false;">GO</a> -->
+                                <button class="go_btn" onclick="userSearch(); return false;">GO</button>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:form>
+                </div>
+            </apex:outputPanel>
+        </div>
+    </div>
+    <!-- end of header -->
+    <!-- START - Changed for  - Basant Verma -->
+    <!-- site theme select -->
+      
+    <apex:outputPanel id="selectThemeHolder" styleClass="selectThemeHolderClass {!if(OR(siteTheme == null, siteTheme == ''), 'selectThemeRequired','')}" rendered="{!if(ISNULL(siteTheme),'true','false')}" >
+<!--		<div class="modal" id="theme-selector-modal">
+	  	<div class="title">  -->
+		<div id="theme-selector-modal-r">
+	  	<div class="title">
+	  		<div style="height: 10px; width: 100%;"></div>
+	        <img src="{!URLFOR($Resource.Responsive_Base, 'i/logo.png')}"/>
+			<div style="height: 10px; width: 100%;"></div>
+	    </div>
+	    <div class="moreInfoError">
+				<apex:outputPanel id="moreInfoError">
+        	<apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+     	</div>
+     	<apex:form >
+	     	<apex:actionFunction status="ajax-status" name="changeSiteTheme" action="{!changeSiteTheme}" rerender="moreInfoError, selectThemeHolder"/>
+	     	<apex:inputText value="{!siteTheme}" id="themeWrapperSelector" styleClass="themeWrapperSelector" style="display: none;"/>
+		    <div class="html">
+		        <div class="boxes">
+		        		<apex:variable var="counter" value="{!1}"/>
+		        		<apex:repeat value="{!SiteThemes}" var="theme">
+		        			<div class="column default {!IF(counter == SiteThemes.size,'last','')}">
+			                <a class="{!theme['label']}-bg" onclick="themeClicked('{!theme['label']}');" href="javascript:;">{!theme["label"]}</a>
+			            </div>
+			            <apex:variable var="counter" value="{!counter + 1}"/>
+		        		</apex:repeat>
+		            <div class="clear"></div>
+		        </div>
+		        <label>
+		            Use as default
+		        </label>
+		        <apex:inputCheckbox value="{!isSiteThemeDef}"/>
+		        <a href="javascript:;" onclick="preChangeSiteTheme();" class="button go-btn" >GO</a>
+		        <a href="javascript:;" onclick="changeSiteTheme();" class="button go-btn postSelectThemeButton" rel="modal:close" style="display: none;">GO</a>
+		    </div>
+	    </apex:form>
+		</div>
+		</apex:outputPanel>
+	
+		<!-- END - Changed for  - Basant Verma -->
+</apex:component>

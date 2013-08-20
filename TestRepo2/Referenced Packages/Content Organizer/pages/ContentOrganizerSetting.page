@@ -1,0 +1,827 @@
+<apex:page sidebar="false"  standardStylesheets="false"  controller="LS_CO.ContentOrganizerSetting"  tabStyle="Content_Organizer__tab" >
+<apex:form >
+<style>
+   body {
+       text-align: left !important;
+       font-size: 75% !important;
+   }
+   
+   .popTags{
+        background:#f7f7f7;
+        border:1px solid #bdbdbd;
+        margin:10px 0;
+        padding:4px;
+    }
+    .footer0 {
+        width: 99% !important;
+    }
+    .tree_view_bg
+        {
+              background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e2e2e2));
+              background-image: -webkit-linear-gradient(top, #fff, #e2e2e2);
+              background-image: -moz-linear-gradient(top, #fff, #f1f1f1);
+              background-image: -ms-linear-gradient(top, #fff, #e2e2e2);
+              background-image: -o-linear-gradient(top, #fff, #e2e2e2);
+              background-image: linear-gradient(to bottom, #fff, #e2e2e2); 
+              filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e2e2e2'); /* for IE */ 
+        }
+</style>
+<style>
+  
+   .top_menu td {
+   margin:0px;
+   padding:0px;
+   }
+   .top_menu a {
+   color:#333;
+   font-family:arial;
+   font-size:11px;
+   }
+</style>
+
+<link href="{!URLFOR($Resource.CO_SearchResult, 'css/style.css')}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{!URLFOR($Resource.CO_TreeResult, 'files/general.css')}" type="text/css" media="screen" />
+
+<style type="text/css">
+
+/**
+ * Additional styles for the controls.
+ */
+
+#search_rslt_tbl tr
+{ border:1px solid #ccc;}
+.jcarousel-control a:focus,
+.jcarousel-control a:active {
+    outline: none;
+}
+
+/*.jcarousel-scroll {
+    margin-top: 10px;
+    text-align: center;
+}*/
+
+.hd_r
+{border-right: 1px solid #fff; border-bottom: 1px solid #ccc;}
+.hd_btm
+{ border-bottom:none;}
+.sh_r
+{border-right: 1px solid #fff; border-bottom: 1px solid #ccc;}
+.sh_btm
+{ border-bottom:none;}
+#overview
+{
+    font-size:11px !important;  
+}
+#dat_content td
+{
+    height:25px;
+    vertical-align:middle;
+    border-collapse:collapse;   
+}
+#dat_content td
+{
+    
+    padding:5px;    
+}
+.data_title_row td
+{
+    background-color:#c6e0f4;
+    padding:0 8px !important;
+    vertical-align:middle;
+    font-size:12px;
+        
+}
+#dat_content_bottom td
+{
+    
+    padding:0 5px;  
+}
+.data_title_row_bottom td
+{
+    background-color:#f6f6f6;
+    
+    vertical-align:middle;
+    font-size:12px;
+        
+}
+
+.data_title_row_search_page, .data_title_row_search_page_last
+{
+    padding:0px 5px;
+    vertical-align:middle;
+    font-size:14px;
+}
+.data_title_row_search_cont
+{
+    padding:3px 5px;
+    vertical-align:middle;
+    font-size:12px; 
+}
+.data_title_row_search_page 
+{
+    border-right:1px solid rgb(204, 204, 204);      
+}
+#inside_container
+{ border:1px solid #ccc;
+    -moz-border-radius:0.7em;
+    padding:5px;
+}
+#popupContact1 a
+{ color:#000;}
+.cstm_confg_text_btm_brdr
+{ border-bottom:0px solid #ccc !important; padding-top:10px;}
+button
+{ font-size:11px;}
+.left-label
+{padding-right:10px;}
+.tree_view_bg
+        {
+              background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e2e2e2));
+              background-image: -webkit-linear-gradient(top, #fff, #e2e2e2);
+              background-image: -moz-linear-gradient(top, #fff, #f1f1f1);
+              background-image: -ms-linear-gradient(top, #fff, #e2e2e2);
+              background-image: -o-linear-gradient(top, #fff, #e2e2e2);
+              background-image: linear-gradient(to bottom, #fff, #e2e2e2); 
+              filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e2e2e2'); /* for IE */ 
+        }
+        .cstm_confg_text_settings {
+            height: 20px;
+            margin: 0 auto;
+            padding: 6px 0 0px 8px;
+            width: 178px !important;
+        }
+</style>
+
+<script type="text/javascript">
+    function goHomePage(){
+        location.href = '/apex/Content_Organizer';        
+    }
+</script>
+
+    <div style="width:140px;position:absolute;top:5px; right:0;">
+        <!-- table align="right" width="200" border="0" cellspacing="0" cellpadding="0" -->
+        
+      <table align="right" width="200" border="0" cellspacing="0" cellpadding="0" class="top_menu">
+      <tr>
+            <td align="left" width="20px" valign="middle" ><img alt="" src="{!URLFOR($Resource.CO_TreeResult, 'images/home_icon.jpg')}" border="0" /></td>
+            <td align="left" width="35px" valign="middle" ><a href="/apex/Content_Organizer">Home</a></td>
+            <td align="left" valign="middle" width="18px"><img alt="" src="{!URLFOR($Resource.CO_TreeResult, 'images/settings_icon.jpg')}" border="0"  /></td>
+            <td align="left" valign="middle" width="48px"><a id="button" href="/apex/ContentOrganizerSetting">Settings</a></td>
+            <td align="left" valign="middle" width="20px"><img alt="" src="{!URLFOR($Resource.CO_TreeResult, 'images/tree_icon.jpg')}" border="0"  /></td>
+            <td align="left" valign="middle" ><a id="button" href="/apex/ContentOrganizerTree?lib=null&src=Tags">Tree View</a></td>
+      </tr>
+      </table>  
+    </div>
+
+    <div style="width:100%; margin-top:20px;margin-bottom:50px;">
+        
+        <table width="700px" border="0" cellspacing="0" cellpadding="0" align="center">
+            <tr>
+                <td>
+                    <div id="popupContact1"  style="margin:0 auto;"><!--<h1>Login</h1>-->
+                        <div id="contactArea" class="login_frm">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>
+                                      <table height="34px" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td width="7px"  ><img alt="" src="{!URLFOR($Resource.CO_TreeResult,'images/title_l.jpg')}" width="7" height="34" /></td>
+                                        <td style="background-image:url('{!URLFOR($Resource.CO_SearchResult, 'images/title_m.jpg')}'); background-repeat:repeat-x; width:auto;" ><img alt="" src="{!URLFOR($Resource.CO_TreeResult,'images/custom_config_icon.jpg')}" border="0" align="absmiddle" style="margin-right:8px;" />Custom Configuration</td>
+                                        <td width="7px" ><img alt="" src="{!URLFOR($Resource.CO_TreeResult,'images/title_r.jpg')}" width="7" height="34" /></td>
+                                      </tr>
+                                      </table>
+                                    </td>
+                
+                                     <td rowspan="2" valign="top"><div style="width:680px; height:310px;margin-top:2px; border:1px solid #ccc; ">                           
+                                       <!-- Layout Setting -Start--> 
+                                       <apex:outputPanel rendered="{!currentPanel == 'Layout'}">  
+                                       <table id="criteria" width="98%" border="0" cellspacing="0" cellpadding="0">                
+                                          <tr>
+                                            <td width="10%">&nbsp;</td>
+                                            <td width="80%" colspan="2">
+                                                <apex:outputPanel layout="block" styleClass="popTags" id="layoutpanel"
+                                                    rendered="{!defaultLayout}"
+                                                    style="padding: 10px; color: #565252;word-wrap: normal">
+                                                        Note: Default Custom Settings have been selected for the organization. 
+                                                </apex:outputPanel>&nbsp;
+                                            </td>                    
+                                            <td width="10%">&nbsp;</td>
+                                          </tr>
+                     
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td align="right" valign="top" class="left-label" style="padding-top: 8px;">Results Page Order Criteria :</td>
+                        <td valign="top"> <apex:selectRadio value="{!browserOrderCustomization}" id="brSelect"
+                                layout="pageDirection">
+                                <apex:selectOptions value="{!browserOrderOptions}" />
+                            </apex:selectRadio>
+                        </td>                   
+                        <td >&nbsp;</td>
+                      </tr>                                  
+                      
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      
+                       <tr>
+                       
+                       <td>&nbsp;</td>
+                        <td align="right" valign="top" class="left-label" style="padding-top: 8px;">Slideshow Browser :</td>
+                        <td valign="top"><apex:selectRadio value="{!slideshowCustomization}" id="slideSelect"
+                                layout="pageDirection">
+                                <apex:selectOptions value="{!enableBrowserOptions}" />
+                            </apex:selectRadio>
+                        </td>
+                        <td>&nbsp;</td>
+                        
+                      </tr>
+                      
+                       <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="2"> <div style="position:absolute;margin-left:290px;">
+                                <apex:actionStatus id="stlayout" startText="processing...">
+                                   <apex:facet name="start" >
+                                   <img src="/apexpages/devmode/img/saveStatus.gif"/>
+                                  </apex:facet>
+                               </apex:actionStatus>
+                            </div> 
+                        </td>                        
+                        <td>&nbsp;</td>
+                      </tr>
+                      
+                      
+                      <tr>
+                        <td width="10%">&nbsp;</td>
+                        <td width="80%" colspan="2" align="center">
+                            <br/>
+                            <apex:commandButton styleClass="btn configuration-save-btn"
+                                    style="margin-left:40px;"  value="Save" action="{!saveConfigurationChanges}" />
+                            <apex:commandbutton style="margin-left:4px;" styleClass="btn configuration-reset-btn" action="{!resetUserCustomization}" 
+                                    value="Reset To Defaults" rerender="brSelect,slideSelect" status="stlayout">   
+                            </apex:commandbutton>
+                            <input type="button" class="btn configuration-cancel-btn"
+                                    value="Cancel" onClick="goHomePage();" />  
+                        </td>                    
+                        <td width="10%">&nbsp;</td>
+                       
+                      </tr>
+                       
+                  </table>
+                  </apex:outputPanel>   
+                  <!-- Layout Setting -End -->              
+                  
+   <!---Home Setting Start --->
+                  <apex:outputPanel rendered="{!currentPanel == 'Home Setting'}">  
+                   <table id="homecriteria" width="98%" border="0" cellspacing="0" cellpadding="0">                
+                      <tr>
+                        <td width="10%">&nbsp;</td>
+                        <td width="70%" colspan="2">
+                            <apex:outputPanel layout="block" styleClass="popTags" id="homepanel"
+                                rendered="{!defaultLayout}" style="padding: 10px; color: #565252;word-wrap: normal">                                
+                                    Note: Default Home Settings have been selected for the organization. 
+                            </apex:outputPanel>&nbsp;
+                        </td>                    
+                        <td width="20%">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td height="75">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td> &nbsp;</td>  
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td align="right" valign="top" class="left-label" style="padding-top: 2px;">Libraries Order Criteria :</td>
+                        <td valign="top"> <apex:selectRadio value="{!homeSettingCustomization}" id="homeBrowser"
+                                layout="pageDirection">
+                                <apex:selectOptions value="{!browserOrderOptions}" />
+                            </apex:selectRadio>
+                        </td>                   
+                        <td >&nbsp;</td>
+                      </tr>                                  
+                      
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      
+                     <!-- <tr>
+                        <td>&nbsp;</td>
+                        <td align="right" valign="top" class="left-label" style="padding-top: 8px;">Slideshow Browser :</td>
+                        <td valign="top"><apex:selectRadio value="{!slideshowCustomization}"
+                                layout="pageDirection">
+                                <apex:selectOptions value="{!enableBrowserOptions}" />
+                            </apex:selectRadio>
+                        </td>
+                        <td>&nbsp;</td>
+                      </tr> -->
+                       <!--New Code--Library Settings Processing Image --starts-->
+                       <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="2">
+                            <div style="position:absolute;margin-left:290px;">
+                                <apex:actionStatus id="librarylayout" startText="processing...">
+                                      <apex:facet name="start" >
+                                           <img src="/apexpages/devmode/img/saveStatus.gif"/>
+                                     </apex:facet>
+                               </apex:actionStatus>
+                            </div> 
+                        </td>                        
+                        <td>&nbsp;</td>
+                      </tr>
+                      <!--New Code--Library Settings Processing Image --End-->
+                      <tr>
+                        <td width="10%">&nbsp;</td>
+                        <td width="80%" colspan="2" align="center">
+                            <br/>
+                            <apex:commandButton styleClass="btn configuration-save-btn"
+                                    style="margin-left:40px;"  value="Save" action="{!SaveHomeSettingChanges}" />
+                            <apex:commandbutton style="margin-left:4px;" styleClass="btn configuration-reset-btn" action="{!resetHomeCustomization}" 
+                                    value="Reset To Defaults" status="homelayout" rerender="homeBrowser,homepanel">
+                            </apex:commandbutton>
+                            <input type="button" class="btn configuration-cancel-btn"
+                                    value="Cancel" onClick="goHomePage();" />  
+                        </td>                    
+                        <td width="10%">&nbsp;</td>
+                      </tr>
+                  </table>
+                  </apex:outputPanel>              
+                                    
+                  <!---Home Setting End ---->   
+                   <!-- CustomField -Start--> 
+                <apex:outputPanel rendered="{!currentPanel == 'CustomField'}">  
+                       <table id="criteria" width="100%" border="0" cellspacing="0" cellpadding="0" >                
+                           <tr>
+                             
+                               <td style="padding-left:10px;padding-right:10px;">
+                                   <apex:outputPanel layout="block" styleClass="popTags"
+                                       style="padding:10px;align:center;color: #565252;word-wrap: normal" rendered="{!NOT(flagForCF)}">
+                                          Note: First select fields for the "Default" setting. To specify fields for a specific Profile, select Profile and customize.If no default settings are configured, all fields will be visible to all users.
+                                   </apex:outputPanel>&nbsp;
+                                   <apex:outputPanel layout="block" styleClass="popTags"
+                                      style="padding: 10px; color: #565252;word-wrap: normal" rendered="{!flagForCF}">
+                                      Please select Custom Fieldss between 1 - 20 for visible.
+                                   </apex:outputPanel>&nbsp;
+                                </td>                    
+                               
+                          </tr>
+                          <tr>
+                             
+                              <td> 
+                                  <apex:OutputText value="Profiles" style="margin-left:20px;margin-right:15px;font-size:13px;" />                           
+                                    <apex:selectList value="{!profileSelected}"  size="1">
+                                        <apex:selectOptions value="{!Profiles}" />
+                                        <apex:actionsupport event="onchange"
+                                            action="{!assignCustomFieldstoRoles}"
+                                            rerender="selList1,selList2,multiList" status="load"/>
+                                    </apex:selectList>
+                                    &nbsp;&nbsp;<apex:actionStatus id="load" startText="Loading..."> </apex:actionStatus>
+                             </td>                   
+                            
+                         </tr>
+                         <tr>                      
+                                       
+                            <td >
+                                <apex:panelGrid columns="4" id="multiList" style="margin-left:10px; marging-top:9px;">
+                                   <apex:panelGroup >
+                                   <br/>
+                                        <span style="position:absolute;top:150px;"> Hidden Fields </span>
+                                        <apex:selectList id="selList1" value="{!leftListSelected}"
+                                            multiselect="true" style="width:200px" size="5">
+                                            <apex:selectOptions value="{!unselectedvalues}"/>
+                                        </apex:selectList>
+                                   </apex:panelGroup>
+                                    <apex:panelGroup style="margin-top:10px;">
+                                            <br/>
+                                            <br/>
+                                            <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/add.png')}"
+                                                style="margin:0 10px;cursor:pointer;">
+                                                <apex:actionSupport event="onclick" action="{!addValues}"
+                                                    reRender="multiList" status="bstatus" />
+                                            </apex:image>
+                                            
+                                           <div style="position:absolute;margin:0 10px;">
+                                                 <apex:actionStatus id="bstatus" startText="processing...">
+                                                 </apex:actionStatus>
+                                           </div>
+                                             <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/remove.png')}"
+                                                style="margin:15px 10px 0;cursor:pointer;">
+                                                <apex:actionSupport event="onclick" action="{!removeValues}"
+                                                    reRender="multiList" status="bstatus"  />
+                                            </apex:image>                                        
+                                    </apex:panelGroup>
+                                    
+                                   
+                                    
+                                    <apex:panelGroup >
+                                           <br/>
+                                            <span style="position:absolute;top:150px;"> Visible Fields</span>
+                                            <apex:selectList id="selList2" value="{!rightListSelected}"
+                                                multiselect="true" style="width:200px" size="5">
+                                                <apex:selectOptions value="{!selectedvalues}" />
+                                            </apex:selectList>
+                                    </apex:panelGroup>
+                                    
+                                    <apex:panelGroup >
+                                            <br/>
+                                            <br/>
+                                            <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/up.png')}"
+                                                style="margin-left:10px;cursor:pointer;">
+                                                <apex:actionSupport event="onclick" action="{!onUpCondition}"
+                                                    reRender="multiList" status="bstatus1" />
+                                            </apex:image>
+                                            <div style="position:absolute;margin:0 10px;">
+                                             <apex:actionStatus id="bstatus1" startText="processing...">
+                                             </apex:actionStatus>
+                                           </div>
+                                            
+                                            <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/down.png')}"
+                                                style="margin:17px 10px 0px;cursor:pointer;">
+                                                <apex:actionSupport event="onclick" action="{!onDownCondition}"
+                                                    reRender="multiList" status="bstatus1" />
+                                            </apex:image>                                         
+                                    </apex:panelGroup>
+                                </apex:panelGrid>
+                            </td>
+                          
+                        </tr> 
+                      
+                        <tr>
+                           
+                            <td > 
+                                <div style="position:absolute;margin-left:290px;">
+                                    <apex:actionStatus id="bst1" startText="processing...">
+                                       <apex:facet name="start" >
+                                       <img src="/apexpages/devmode/img/saveStatus.gif"/>
+                                      </apex:facet>
+                                   </apex:actionStatus>
+                                </div> 
+                            </td>                        
+                       
+                      </tr>
+                      
+                      <tr>
+                      
+                        <td width="75%"  align="center">
+                            <apex:commandButton style="margin-left:20px;" action="{!doSaveCustomFieldsCustomization}"
+                                value="Save" />
+                            <apex:commandbutton style="margin-left:4px;" action="{!resetCustomFieldsCustomization}"
+                                value="Reset To Defaults" status="bst1"
+                                rerender="multiList,selList1,selList2">
+                            </apex:commandbutton>
+                            <input type="button" class="btn configuration-cancel-btn"
+                                value="Cancel" onClick="goHomePage();" />
+                        </td>                    
+                       
+                      </tr>
+                  </table>
+                  </apex:outputPanel>  
+                  <!-- CustomField  -End -->
+                   
+                  <!-- SearchSetting -Start--> 
+                   <apex:outputPanel rendered="{!currentPanel == 'SearchSetting'}">  
+                   <table id="criteria" width="98%" border="0" cellspacing="0" cellpadding="0">                
+                      <tr>
+                        <td width="10%">&nbsp;</td>
+                        <td width="80%" colspan="2">
+                            <apex:outputPanel layout="block" styleClass="popTags"
+                                  style="padding: 10px; color: #565252;word-wrap: normal" rendered="{!flagForSearch}">
+                             Please select Between 4 to 8 fields for visible.
+                            </apex:outputPanel>&nbsp;
+                        </td>                    
+                        <td width="10%">&nbsp;</td>
+                      </tr>
+                      
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td></td>
+                        <td> 
+                            &nbsp;
+                        </td>                   
+                        <td >&nbsp;</td>
+                      </tr>
+                      
+                      <tr>
+                        <td>&nbsp;</td>                        
+                        <td colspan="2">
+                            <apex:panelGrid columns="4" id="multiListSearch" style="margin-left:20px;">
+                                <apex:panelGroup >
+                                    <br/>
+                                    <span style="position:absolute;top:85px;">Hidden Fields</span>
+                                    <!--<apex:OutputText value="" style="margin-right:8px;font-size:13px;padding-bottom:4px;" />-->
+                                    <apex:selectList id="selList1Search" value="{!leftListSelectedForSearch}"
+                                        multiselect="true" style="width:200px" size="5">
+                                        <apex:selectOptions value="{!UnSelectedValuesForSearch}"/>
+                                    </apex:selectList>
+                                </apex:panelGroup>
+                                
+                                <apex:panelGroup style="margin-top:10px;">
+                                        <br/>
+                                        <br/>
+                                        <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/add.png')}"
+                                            style="margin:0 10px;cursor:pointer;">
+                                            <apex:actionSupport event="onclick" action="{!addValuesForSearch}"
+                                                reRender="multiListSearch" status="bstatusSearch" />
+                                        </apex:image>
+                                        <div style="position:absolute;margin:0 10px;">
+                                             <apex:actionStatus id="bstatusSearch" startText="processing...">
+                                             </apex:actionStatus>
+                                       </div>
+                                         <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/remove.png')}"
+                                            style="margin:15px 10px 0;cursor:pointer;">
+                                            <apex:actionSupport event="onclick" action="{!removeValuesForSearch}"
+                                                reRender="multiListSearch" status="bstatusSearch"  />
+                                        </apex:image>
+                                        
+                                </apex:panelGroup>
+                                
+                                <apex:panelGroup >
+                                        <br/>
+                                        <span style="position:absolute;top:85px;">Visible Fields</span>
+                                        <!--<apex:OutputText value="" style="margin-right:8px;font-size:13px;padding-bottom:4px;" />-->
+                                        <apex:selectList id="selList2Search" value="{!rightListSelectedForSearch}"
+                                            multiselect="true" style="width:200px" size="5">
+                                            <apex:selectOptions value="{!SelectedValuesForSearch}" />
+                                        </apex:selectList>
+                                </apex:panelGroup>
+                                
+                                <apex:panelGroup >
+                                        <br/>
+                                        <br/>
+                                        <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/up.png')}"
+                                            style="margin-left:10px;cursor:pointer;">
+                                            <apex:actionSupport event="onclick" action="{!onUpConditionForSearch}"
+                                                reRender="multiListSearch" status="bstatus1Search" />
+                                        </apex:image>
+                                        <div style="position:absolute;margin:0 10px;">
+                                         <apex:actionStatus id="bstatus1Search" startText="processing...">
+                                         </apex:actionStatus>
+                                       </div>
+                                        <apex:image value="{!URLFOR($Resource.LS_CO__organizerStyle, 'images/down.png')}"
+                                            style="margin:17px 10px 0px;cursor:pointer;">
+                                            <apex:actionSupport event="onclick" action="{!onDownConditionForSearch}"
+                                                reRender="multiListSearch" status="bstatus1Search" />
+                                        </apex:image>
+                                         
+                                </apex:panelGroup>
+                                
+                            </apex:panelGrid>
+                        </td>
+                        <td>&nbsp;</td>
+                      </tr> 
+                      
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="2"> <div style="position:absolute;margin-left:290px;">
+                                <apex:actionStatus id="bst1Search" startText="processing...">
+                                   <apex:facet name="start" >
+                                   <img src="/apexpages/devmode/img/saveStatus.gif"/>
+                                  </apex:facet>
+                               </apex:actionStatus>
+                            </div> 
+                        </td>                        
+                        <td>&nbsp;</td>
+                      </tr>
+                      
+                      <tr>
+                        <td width="10%">&nbsp;</td>
+                        <td width="80%" colspan="2" align="center">
+                            <apex:commandButton style="margin-left:20px;" action="{!doSaveSearchFields}"
+                                value="Save" />
+                            <apex:commandbutton style="margin-left:4px;" action="{!doResetListForSearch}"
+                                value="Reset To Defaults" status="bst1Search"
+                                rerender="multiListSearch,selList1Search,selList2Search">
+                            </apex:commandbutton>
+                            <input type="button" class="btn configuration-cancel-btn"
+                                value="Cancel" onClick="goHomePage();" />
+                        </td>                    
+                        <td width="10%">&nbsp;</td>
+                      </tr>
+                  </table>
+                  </apex:outputPanel>    
+                  <!-- SearchSetting -End -->     
+                    <!-- LibrarySetting -starts--New Code--> 
+                       
+                  <apex:outputPanel id="libraryPanel"  rendered="{!currentPanel == 'LibrarySetting'}">  
+                      <table  width="98%" border="0" cellspacing="0" cellpadding="0">                
+                          <tr>
+                             <td width="10%">&nbsp;</td>
+                             <td width="80%" colspan="2">
+                                <apex:outputPanel layout="block" styleClass="popTags"
+                                      style="padding: 10px; color: #565252;word-wrap: normal">
+                                  Note: Select a Library to make as "Default".  If no Library is configured, the first Library visible to all users will used as default.
+                                </apex:outputPanel>&nbsp;
+                             </td>                    
+                             <td width="10%">&nbsp;</td>
+                          </tr>
+                         
+                          <tr>
+                             <td>&nbsp;</td> 
+                             <td valign="top" style="position:fixed;">
+                                  <apex:selectRadio value="{!LibrarySettingCustomization}" id="LibraryBrowser"  layout="pageDirection">
+                                  <apex:selectOptions value="{!contentWorkspace}" />
+                                  </apex:selectRadio>
+                             </td>
+                             <td >&nbsp;</td>
+                           </tr>    
+             
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                      
+                           <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="2"> <div style="position:absolute;margin-left:290px;">
+                                    <apex:actionStatus id="homelayout" startText="processing...">
+                                       <apex:facet name="start" >
+                                       <img src="/apexpages/devmode/img/saveStatus.gif"/>
+                                      </apex:facet>
+                                   </apex:actionStatus>
+                                </div> 
+                            </td>                     
+                          </tr>
+                           <tr valign="Bottom">
+                            <td  width="10%">&nbsp;</td>
+                            <td  width="10%">&nbsp;</td>
+                          </tr>
+                          <tr valign="Bottom">
+                            <td  width="10%">&nbsp;</td>
+                            <td  width="10%">&nbsp;</td>
+                          </tr>
+                          <tr valign="Bottom">
+                            <td  width="10%">&nbsp;</td>
+                            <td  width="10%">&nbsp;</td>
+                          </tr>
+                          
+                         <tr>
+                            <td width="10%">&nbsp;</td>
+                            <td width="80%" colspan="2" align="center">
+                                <br/>
+                                 <apex:commandLink action="{!Beginning}" title="Beginning" value="First" rendered="{!disablePrevious}"  styleClass="marginLeft marginRight pagingText" reRender="libraryPanel"/>
+                                 <apex:outputPanel >&nbsp;&nbsp;</apex:outputPanel>
+                                 <apex:commandLink action="{!Previous}" title="Previous" value="Prev" rendered="{!disablePrevious}"  styleClass="marginLeft marginRight pagingText" reRender="libraryPanel"/>        
+                                <apex:outputPanel >&nbsp;&nbsp;</apex:outputPanel>
+                                 <apex:commandLink action="{!Next}" title="Next" value="Next" rendered="{!disableNext}"  reRender="libraryPanel"/>
+                                <apex:outputPanel >&nbsp;&nbsp;</apex:outputPanel>
+    
+                                <apex:commandLink action="{!End}" title="End" value="End" rendered="{!disableNext}"  styleClass="marginLeft marginRight pagingText" reRender="libraryPanel"/>
+                            </td>                    
+                        <tr>
+                            <td width="10%">&nbsp;</td></tr>
+                        </tr>
+                      
+                      <tr valign ="bottom">
+                        <td width="10%">&nbsp;</td>
+                        <td width="80%" colspan="2" align="center" valign ="bottom">
+                            <br/>
+                            <apex:commandButton styleClass="btn configuration-save-btn"
+                                    style="margin-left:40px;"  value="Save" action="{!SaveLibrarySettingChanges}" />
+                            <apex:commandbutton style="margin-left:4px;" styleClass="btn configuration-reset-btn" action="{!resetLibraryCustomization}" 
+                                    value="Reset To Defaults" status="homelayout" rerender="LibraryBrowser,homepanel">
+                            </apex:commandbutton>
+                            <input type="button" class="btn configuration-cancel-btn"
+                                    value="Cancel" onClick="goHomePage();" />  
+                        </td>                    
+                        <td width="10%">&nbsp;</td>
+                      </tr>
+                     
+                  </table>
+                  </apex:outputPanel> 
+                <!-- Library Settings  ended--New Code -->
+                
+                
+                
+                
+                <!-- New Panel Item Per Page Starts--->
+                 <apex:outputPanel rendered="{!currentPanel == 'ItemPerPage'}">  
+                     <table id="criteria" width="98%" border="0" cellspacing="0" cellpadding="0">                
+                         <tr>
+                            <td width="10%">&nbsp;</td>
+                            <td width="80%" colspan="2">
+                                <apex:outputPanel layout="block" styleClass="popTags" style="padding: 10px; color: #565252;word-wrap: normal">
+                                        Note: Select Default Items per page. If there is no default Items per page selected then 10 items per page display as default. 
+                                </apex:outputPanel>&nbsp;
+                            </td>                    
+                            <td width="10%">&nbsp;</td>
+                        </tr>
+                         <tr>
+                            <td>&nbsp;</td>
+                            <td valign="top"> 
+                                <apex:selectRadio value="{!resultPageSize}" id="resetPageSize" layout="pageDirection">
+                                    <apex:selectOptions value="{!PaginationSizeList}" />
+                                </apex:selectRadio>
+                            </td> 
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="2"> <div style="position:absolute;margin-left:290px;">
+                                    <apex:actionStatus id="stlayout1" startText="processing...">
+                                       <apex:facet name="start" >
+                                       <img src="/apexpages/devmode/img/saveStatus.gif"/>
+                                      </apex:facet>
+                                   </apex:actionStatus>
+                                </div> 
+                            </td>                        
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="10%">&nbsp;</td>
+                            <td width="80%" colspan="2" align="center">
+                                <br/>
+                                <apex:commandButton styleClass="btn configuration-save-btn" 
+                                        style="margin-left:40px;"  value="Save" action="{!SavePageSizeSetting}" />
+                                <apex:commandbutton style="margin-left:4px;" styleClass="btn configuration-reset-btn"  action="{!resetPageSizeCustomization}" 
+                                        value="Reset To Defaults" status="stlayout1" reRender="resetPageSize,homepanel">   
+                                </apex:commandbutton>
+                                <input type="button" class="btn configuration-cancel-btn"
+                                        value="Cancel" onClick="goHomePage();" />  
+                            </td>                    
+                            <td width="10%">&nbsp;</td>
+                           
+                          </tr>
+                       
+                      </table>
+                  </apex:outputPanel>  
+              <!-- Page size setting  ended--New Code -->                       
+  
+              </div></td>
+              </tr>
+              
+              <tr>
+                <td class="tree_view_bg" valign="top" style="background-repeat:repeat-x; width:auto; height:277px;border:1px solid #ccc;"> 
+                    
+                    <apex:commandLink action="{!showPanel}">
+                        <apex:param name="Layout" assignTo="{!currentPanel}" value="Layout" />
+                         <div style="position:relative;width:100%;height:26px;margin:0;padding:0;border-left:1px solid #ccc !important;border-bottom:1px solid #ccc !important;">
+                            <div id="hide_r_brdr"  style="{!if(currentPanel == 'Layout', 'width:191px;background-color:#fff;position:absolute;left:0;top:0;border:0px solid #fff !important;', 'width:100%;')}">
+                            <div id="hide_btm_brdr" class="cstm_confg_text_settings cstm_confg_text_btm_brdr" style="border:0px solid #fff !important;">Layout</div></div>
+                         </div>
+                    </apex:commandLink>
+                    <apex:commandLink action="{!showPanel}">
+                        <apex:param name="Layout" assignTo="{!currentPanel}" value="Home Setting" />
+                        <div style="position:relative;width:100%;height:26px;margin:0;padding:0;border-left:1px solid #ccc !important;border-bottom:1px solid #ccc !important;">
+                            <div id="hide_r_brdr1"  style="{!if(currentPanel == 'Home Setting', 'width:191px;background-color:#fff;position:absolute;left:0;top:0;border:0px solid #fff !important;', 'width:100%;')}">
+                            <div id="hide_btm_brdr1" class="cstm_confg_text_settings cstm_confg_text_btm_brdr">Tree Settings</div></div>
+                        </div>
+                    </apex:commandLink> 
+                    
+                    <apex:commandLink action="{!showPanel}">
+                        <apex:param name="Layout" assignTo="{!currentPanel}" value="CustomField" />
+                        <div style="position:relative;width:100%;height:26px;margin:0;padding:0;border-left:1px solid #ccc !important;border-bottom:1px solid #ccc !important;">
+                            <div id="hide_r_brdr2"  style="{!if(currentPanel == 'CustomField', 'width:190px;background-color:#fff;position:absolute;left:0;top:0;border:0px solid #fff !important;', 'width:100%;')}">
+                            <div id="hide_btm_brdr2" class="cstm_confg_text_settings cstm_confg_text_btm_brdr">Custom Fields</div></div>
+                        </div>    
+                    </apex:commandLink>
+                    
+                    <apex:commandLink action="{!showPanel}">
+                         <apex:param name="Layout" assignTo="{!currentPanel}" value="SearchSetting" />
+                         <div style="position:relative;width:100%;height:26px;margin:0;padding:0;border-left:1px solid #ccc !important;border-bottom:1px solid #ccc !important;">
+                             <div id="hide_r_brdr3"  style="{!if(currentPanel == 'SearchSetting', 'width:190px;background-color:#fff;position:absolute;left:0;top:0;border:0px solid #fff !important;', 'width:100%;')}">
+                             <div id="hide_btm_brdr3" class="cstm_confg_text_settings cstm_confg_text_btm_brdr">Search Results</div></div>
+                         </div>
+                    </apex:commandLink>
+                    <!-- New Code --Library Settings's Panel Starts----> 
+                    <apex:commandLink action="{!showPanel}">
+                         <apex:param name="Layout" assignTo="{!currentPanel}" value="LibrarySetting" />
+                         <div style="position:relative;width:100%;height:26px;margin:0;padding:0;border-left:1px solid #ccc !important;border-bottom:1px solid #ccc !important;">
+                             <div id="hide_r_brdr4"  style="{!if(currentPanel == 'LibrarySetting', 'width:190px;background-color:#fff;position:absolute;left:0;top:0;border:0px solid #fff !important;', 'width:100%;')}">
+                             <div id="hide_btm_brdr4" class="cstm_confg_text_settings cstm_confg_text_btm_brdr">Library Settings</div></div>
+                         </div>
+                    </apex:commandLink>
+                    <!-- New Code --Library Settings's Panel End----> 
+                    
+                    <!-- New Code --Page size Setting's Panel Start---->
+                    <apex:commandLink action="{!showPanel}">
+                         <apex:param name="Layout" assignTo="{!currentPanel}" value="ItemPerPage" />
+                         <div style="position:relative;width:100%;height:26px;margin:0;padding:0;border-left:1px solid #ccc !important;border-bottom:1px solid #ccc !important;">
+                             <div id="hide_r_brdr3"  style="{!if(currentPanel == 'ItemPerPage', 'width:190px;background-color:#fff;position:absolute;left:0;top:0;border:0px solid #fff !important;', 'width:100%;')}">
+                             <div id="hide_btm_brdr3" class="cstm_confg_text_settings cstm_confg_text_btm_brdr">Items per Page</div></div>
+                         </div>
+                    </apex:commandLink>
+                   <!-- New Code --Page size Setting's Panel End----> 
+                    
+                    
+                     <div style="position:relative;width:100%;height:110px;margin:0;padding:0;border-left:1px solid #ccc !important;">
+                     </div>
+                </td>              
+              </tr>
+            </table>
+      </div>
+    </div>
+    </td></tr></table>
+</div>
+ <div class="footer0" style="position:absolute; bottom:0" >
+  <div> <img alt="" src="{!URLFOR($Resource.CO_TreeResult,'images/lets_strategize_logo_small.png')}" /></div>  
+    <div>Content Organizer :: Publisher www.letsstrategize.com</div> 
+</div>
+</apex:form>
+</apex:page>

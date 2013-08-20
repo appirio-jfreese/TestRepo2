@@ -1,0 +1,252 @@
+<apex:page controller="POS_OrderHistoryController" standardStylesheets="false" showHeader="false" sidebar="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=1138"  /> 
+    <meta name="MobileOptimized" content="1138" /> 
+    <title>Diageo POS</title> 
+    <link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+    <style type="text/css">
+        a.program_details {
+            border-bottom: 1px dotted blue;
+            cursor: pointer;
+        }
+        a.program_details:hover {
+            border-bottom: none;
+        }
+        table.order-history.table-nav{
+            border: none !important;
+        }
+        .scrollingTable div.bg {
+            background-color: #202B62;
+        }
+        table.order-history tr td{
+            border-bottom: 4px solid #202B62 !important;
+            vertical-align: top;
+        }
+
+        td.orderSubmittedColumn {
+            width: 140px;
+        }
+        td.orderSubmittedColumnValue {
+            text-align: right;        
+        }
+    </style>
+</head>
+<body>
+    <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+    <div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+    <div id="popup">    </div>
+    
+    <div class="wrapper">
+        <div class="page">
+            <div class="main col-full-layout" id="main">
+                <c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/> 
+                <div class="col-main" style="width: 940px !important;margin:auto;padding:0;">       
+                    <apex:form >         
+                    <div class="std"> 
+                        <div class="full-content-block" style="position: relative;">
+                            <div class="windowFilter" style="position: absolute; top: 9px; right: 25px; padding: 0px !important;">
+                                <apex:selectList value="{!filterValue}" multiselect="false" size="1" id="filterList" >
+                                    <apex:selectOptions value="{!orderWindowFilter}"/>
+                                    <apex:actionSupport event="onchange" action="{!filterList}" rerender="windowList,filterList" />                 
+                                </apex:selectList>
+                            </div>
+                            <table cellpadding="0" cellspacing="0" class="data-table order-history table-nav">
+                            <thead>
+                                <tr>
+                                    <th class="first" colspan="3" style="padding: 0;">
+                                        <table cellpadding="0" cellspacing="0" class="stupid_ie_workaround">
+                                        <tr>
+                                        <td class="yearArrow">
+                                            <span class="leftArrow"><apex:commandLink action="{!previousYear}" reRender="yearSelect,windowList" oncomplete="resizeWindowList();"><img class="leftYear" height="15px" src="{!URLFOR($Resource.brighter,'btn-left-bright.png')}"/></apex:commandLink></span>
+                                        </td>
+                                        <td class="year">
+                                            <apex:outputPanel styleClass="yearSelect" id="yearSelect">{!selectedYear}</apex:outputPanel>
+                                        </td>
+                                        <td class="yearArrow">
+                                            <span class="rightArrow"><apex:commandLink action="{!nextYear}" reRender="yearSelect,windowList" oncomplete="resizeWindowList();"><img class="rightYear" height="15px" src="{!URLFOR($Resource.brighter,'btn-right-bright.png')}"/></apex:commandLink></span>
+                                        </td>
+                                        </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                            </thead>
+                            </table>
+                            <apex:outputPanel id="windowList" styleClass="scrollingTable" layout="block">
+                            <div class="bg">
+                                <table cellpadding="0" cellspacing="0" class="data-table order-history" summary="data table">
+                                <tbody>
+                                    <apex:repeat value="{!orderWindowCustomers}" var="owc" >
+                                    
+                                    <tr>
+                                        <td class="orderWindowColumn">
+                                            {!owc.Order_Window__r.Name} ({!owc.Order_Window__r.Type__c} {!owc.Order_Window__r.Icon_Label__c})
+                                            <apex:outputPanel rendered="{!owc.Order_Window__r.Type__c=='Monthly'}"><img class="orderWindowDetails" height="15px" src="{!URLFOR($Resource.POS_Skin,'images/bg-search-label.gif')}"/></apex:outputPanel>
+                                             <br/>
+                                             
+                                            <apex:outputText value="{0,date,MM'/'dd}">
+                                                <apex:param value="{!owc.Order_Window__r.Order_Start_Date__c}" /> 
+                                            </apex:outputText>&nbsp;-&nbsp; 
+                                            <apex:outputText value="{0,date,MM'/'dd}">
+                                                <apex:param value="{!owc.Order_Window__r.Order_Close_Date__c}" /> 
+                                            </apex:outputText>
+                                            <apex:outputPanel rendered="{!owc.Order_Window__r.Type__c=='Monthly'}"><br/><a class="program_details">program details</a></apex:outputPanel>
+                                            <input class="windowType" type="hidden" name="windowType" value="{!owc.Order_Window__r.Type__c}"/>
+                                            <apex:outputPanel styleClass="monthlyDetails" rendered="{!owc.Order_Window__r.Type__c=='Monthly'}">
+                                                <div class="monthlyDetailBody">
+                                                    <span class="monthlyDetailHeader">Program Details:</span><br/>
+                                                    <ul>
+                                                    <apex:repeat value="{!programs[owc.Order_Window__c]}" var="program">
+                                                        <li>{!program.Name}</li>
+                                                    </apex:repeat>
+                                                    </ul>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </td>
+                                        <td class="orderSubmittedColumn">
+                                            Order Submitted: <br />
+                                            Sub total: <br />
+                                            Tax/shipping totals: <br />
+                                            Net total:
+                                        </td>
+                                        <td class="orderSubmittedColumnValue">
+                                            <apex:outputText value="{0,date,MM'/'dd}" rendered="{!NOT(ISNULL(carts[owc.Order_Window__c].Status__c))}">
+                                                <apex:param value="{!carts[owc.Order_Window__c].Last_Submitted__c}" /> 
+                                            </apex:outputText> 
+                                            <apex:outputText rendered="{!ISNULL(carts[owc.Order_Window__c].Status__c)}">
+                                                N/A
+                                            </apex:outputText><br />
+                                            <apex:outputText value="{0,number,$#,###.##}"><apex:param value="{!sub_totals[owc.Order_Window__c]}" /></apex:outputText><br />
+                                            <apex:outputText value="{0,number,$#,###.##}"><apex:param value="{!nett_totals[owc.Order_Window__c] - sub_totals[owc.Order_Window__c]}" /></apex:outputText><br />
+                                            <apex:outputText value="{0,number,$#,###.##}"><apex:param value="{!nett_totals[owc.Order_Window__c]}" /></apex:outputText>
+                                        </td>                                       
+                                        <td class="OW_actions">
+                                            <ul>
+                                                <li>
+                                                <apex:outputLink styleClass="btn" value="javascript:launchWindow('{!owc.Order_Window__r.Magento_Id__c}')" rendered="{!owc.Order_Window__r.Status__c=='Open' || owc.Order_Window__r.Status__c=='Closed'  }">
+                                                    <span>View Catalog</span>
+                                                </apex:outputLink>
+                                                </li>
+                                                <li>
+                                                <apex:outputLink styleClass="btn" rendered="{!NOT(ISNULL(carts[owc.Order_Window__c].Status__c))}" value="POS_OrderHistoryDetail?id={!carts[owc.Order_Window__c].Id}">
+                                                    <span>View Tracking</span>
+                                                </apex:outputLink>
+                                                </li>
+                                            </ul>
+                                        </td> 
+                                    </tr>
+                                    </apex:repeat>
+                                    <tr id="no-windows" style="display: none;">
+                                        <td class="noWindowsColumn"> 
+                                        <apex:outputPanel rendered="{!orderWindowCustomers.size<1}">
+                                            No Order Windows For This Year 
+                                            <script type="text/javascript">
+                                            jQuery('#no-windows').show();
+                                            </script>
+                                        </apex:outputPanel>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>    
+                                </div>
+                            </apex:outputPanel>
+                            
+                        </div>
+                    </div>
+                    </apex:form>
+                </div>
+                <!-- <div class="col-left">
+                    &nbsp;              
+                </div> -->
+                <c:POS_Footer />
+            </div>
+        </div>
+    </div>
+    <div class="skip"><a href="#header" accesskey="b">back to top</a></div>
+</body>
+<script type="text/javascript">
+    
+    baseUrl = '{!baseUrl}';
+    var ssoComplete = false;
+    
+    function launchWindow (magentoId) {
+        //var expire = new Date();
+        //expire.setTime((new Date()).getTime() + 60000); //1 min expire
+        document.cookie="apex__returnUrl="+baseUrl+magentoId+";path=/";;
+        //document.cookie="apex__returnUrl="+baseUrl+magentoId+";expires="+expire.toGMTString();
+        document.location.href="{!idpUrl}";
+    
+    }
+    
+/** no!
+    function resizeWindowList() {
+      element = jQuery(".scrollingTable");
+      var height = 0;
+      var body = window.document.body;
+      if (window.innerHeight) {
+          height = window.innerHeight;
+      } else if (body.parentElement.clientHeight) {
+          height = body.parentElement.clientHeight;
+      } else if (body && body.clientHeight) {
+          height = body.clientHeight;
+      }
+      
+      var bottomHeight = 256; //Based on height of footer plus some padding
+      
+      element.height((height - element.offset().top - bottomHeight ));
+      
+    }
+
+    jQuery(window).resize(function() {
+        resizeWindowList();
+    });
+**/
+    
+    jQuery(document).ready(function() {
+        
+        var $dialog = jQuery('#popup').dialog({ autoOpen: false, resizable: false, draggable: false, modal: false });
+        
+        jQuery('a.program_details').mouseover(
+            function() {
+                $div = jQuery(this).parent().parent();              
+                $dialog.dialog( "option", "position",  [($div.position().left+100),($div.position().top+30)]);
+                jQuery("#popup.ui-dialog-titlebar").hide();
+                
+                $text = $div.children('.monthlyDetails');
+                $dialog.dialog( "option" , "title" ,"Program Details");
+                $dialog.html($text.html());
+                
+                //$dialog.html('TESTING');
+                $dialog.css('font-size','12px');
+                $dialog.css('background-color','#fff');
+                $dialog.css('text-align','left');
+                $dialog.dialog('open');
+                window.scrollTo(0,0); // IE bug fix
+                jQuery(".ui-dialog .ui-dialog-titlebar").css('display', 'none');
+                
+                return false;
+            }
+        ).mouseout(
+            function() {
+                $dialog.dialog('close');
+                return false;
+            }
+        );
+        
+    });
+    </script>
+
+
+</html>
+
+
+</apex:page>

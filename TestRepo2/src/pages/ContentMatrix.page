@@ -1,0 +1,263 @@
+<apex:page controller="Controller_ContentMatrix">
+
+    <apex:sectionHeader title="Content Matrix"/>  
+        <apex:outputPanel id="messages">
+            <apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+        <apex:form >
+            <apex:actionFunction name="switchSection" action="{!switchSection}" />        
+            <apex:pageBlock rendered="{!ISNULL(cm_type)}">
+	            <apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem >
+	           				<apex:outputLabel value="Select Matrix Type"/>
+		       				<apex:selectList onchange="switchSection();" value="{!cm_type}" size="1">
+								<apex:selectOptions value="{!MatrixType}"/>
+		       				</apex:selectList>           				        				           			
+	           			</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection>
+            </apex:pageBlock>        
+        
+            <apex:pageBlock title="New Matrix Item - {!cm_type}" rendered="{!NOT(ISNULL(cm_type))}">
+				<apex:inputHidden value="{!cm_category}" id="Category__c"/>
+				<apex:inputHidden value="{!cm_sub_category}" id="Sub_Category__c"/>
+				<apex:inputHidden value="{!cm_sub_sub_category}" id="Sub_Sub_Category__c"/>
+				<apex:inputHidden value="{!cm_sub_sub_sub_category}" id="Sub_Sub_Sub_Category__c"/>
+
+                <apex:pageMessages />
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Add" action="{!saveMatrixItem}"/>
+                    <apex:commandButton value="Cancel" action="{!cancel}"/>
+                </apex:pageBlockButtons>
+	            <apex:pageBlockSection columns="1">                
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Category"/>
+	       				<apex:selectList styleClass="Category__c" onchange="clearDeepSelect(1); populateDependency('Sub_Category__c', 'Sub_Category__c', this.value);" size="1">
+							<apex:selectOptions value="{!Categories}"/>
+	       				</apex:selectList>	
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >					                						
+						<apex:outputLabel value="Sub Category"/>
+						<apex:outputPanel >
+		       				<select class="Sub_Category__c" onchange="clearDeepSelect(2); populateDependency('Sub_Sub_Category__c', 'Sub_Sub_Category__c', this.value);" size="1">
+								<option value="">Select</option>
+		       				</select>
+		       			</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >					                						
+						<apex:outputLabel value="Sub Sub Category"/>
+						<apex:outputPanel >
+		       				<select class="Sub_Sub_Category__c" onchange="clearDeepSelect(3); populateDependency('Sub_Sub_Sub_Category__c', 'Sub_Sub_Sub_Category__c', this.value);" size="1">
+								<option value="">Select</option>
+		       				</select>
+		       			</apex:outputPanel>
+	       			</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >					                						
+						<apex:outputLabel styleClass="Sub_Sub_Sub_Category__c" value="Sub Sub Sub Category"/>
+						<apex:outputPanel >
+		       				<select size="1" class="Sub_Sub_Sub_Category__c">
+								<option value="">Select</option>
+		       				</select>	
+	       				</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+	        </apex:pageBlock>
+            <apex:pageBlock title="Matrix Item List - {!cm_type}" rendered="{!NOT(ISNULL(cm_type))}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Delete" action="{!deleteMatrixItem}"/>
+                    <apex:commandButton value="Delete All" action="{!deleteAll}"/>
+                </apex:pageBlockButtons> 
+                <apex:pageBlockTable value="{!matrixList}" var="c" id="listTable">
+                    <apex:column style="width:40px;">
+                    	<apex:facet name="header"><input type="checkbox" id="selectAllmatrix"/> Select All</apex:facet>                     
+                        <apex:inputCheckbox value="{!c.selected}" styleClass="matrixCheckbox"/>
+                    </apex:column>
+                    <apex:column headerValue="Matrix Type">
+                        <apex:outputText value="{!c.m.Matrix_type__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Category">
+                        <apex:outputText value="{!c.m.Category__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Sub Category">
+                        <apex:outputText value="{!c.m.Sub_Category__c}" />
+                    </apex:column>                    
+                    <apex:column headerValue="Sub Sub Category">
+                        <apex:outputText value="{!c.m.Sub_Sub_Category__c}" />
+                    </apex:column>                    
+                    <apex:column headerValue="Sub Sub Sub Category">
+                        <apex:outputText value="{!c.m.Sub_Sub_Sub_Category__c}" />
+                    </apex:column>
+                                        
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions"> 
+                        <apex:commandLink action="{!first}"    rendered="{!hasPrevious}" rerender="listTable, actions, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="listTable, actions, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!next}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!last}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>    
+    
+    	</apex:form>
+    	
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+    <script type="text/javascript">
+	    var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <script src="../../soap/ajax/24.0/connection.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    describeResults = null;
+
+
+    jQuery(document).ready(function() {
+		jQuery('#selectAllmatrix').live('click', function(){
+			if(jQuery(this).is(':checked')){
+				jQuery('.matrixCheckbox').attr('checked', true);
+			} else {
+				jQuery('.matrixCheckbox').attr('checked', false);
+			}
+		});
+
+		describeResults = sforce.connection.describeSObject("Content_Property__c"); 
+		
+    });
+	
+	function clearDeepSelect(level){
+		if(level == 1){
+			jQuery('select.Sub_Category__c, select.Sub_Sub_Category__c, select.Sub_Sub_Sub_Category__c').each(function(){
+				select = jQuery(this);
+				select.find('option').remove();
+				select.append($("<option></option>").attr("value","").text('Select'));
+			});
+		} else if(level == 2){
+			jQuery('select.Sub_Sub_Category__c, select.Sub_Sub_Sub_Category__c').each(function(){
+				select = jQuery(this);
+				select.find('option').remove();
+				select.append($("<option></option>").attr("value","").text('Select'));
+			});
+		} else if(level == 3){
+			jQuery('select.Sub_Sub_Sub_Category__c').each(function(){
+				select = jQuery(this);
+				select.find('option').remove();
+				select.append($("<option></option>").attr("value","").text('Select'));
+			});
+		}
+		
+		jQuery('select.Category__c, select.Sub_Category__c, select.Sub_Sub_Category__c, select.Sub_Sub_Sub_Category__c').each(function(){
+			hiddenValue = jQuery(this).val()
+			hiddenClass = jQuery(this).attr('class');
+			jQuery('input[type=hidden]').each(function(index, elem){
+    	        if(jQuery(elem).attr('id') !== undefined){
+        	    	if(jQuery(elem).attr('id').search(hiddenClass) != -1){
+            			jQuery(elem).val(hiddenValue);
+            			return;
+            		}
+            	}
+			});			
+		});
+	}
+    
+	function getPicklistValues(field) {
+	    var values = null;
+	    for(var i = 0; i < describeResults.fields.length; i++) {
+	        var fieldList = describeResults.fields[i];
+	        var fieldName = fieldList.name;
+	        if(fieldName == field) {
+	            values = fieldList.picklistValues;
+	            break;
+	        }
+	    }
+	    return values;
+	}
+
+	function getControllerName(field) {
+	    var name = null;
+	    for(var i = 0; i < describeResults.fields.length; i++) {
+	        var fieldList = describeResults.fields[i];
+	        var fieldName = fieldList.name;
+	
+	        if(fieldName == field) {
+	            name = fieldList.controllerName;
+	            break;
+	        }
+	    }
+	    return name;
+	}
+
+
+	function populateDependency(div, field, value) {
+
+	    var picklistValues = getPicklistValues(field);
+	    var dependencyCode = new Array();
+	    var controller = getControllerName(field);
+
+ 		function findRealIndex(val){
+ 			var vals = getPicklistValues(getControllerName(field));
+ 			var result = 0;
+ 			jQuery.each(vals, function(index, elem){
+ 				if(elem.value == val){
+ 					result = index;
+ 				}
+ 			});
+ 			return result;
+ 		}
+ 		
+
+	    function isDependentValue(index, validFor) {
+	        var base64 = new sforce.Base64Binary("");
+	        var decoded = base64.decode(validFor);
+	        var bits = decoded.charCodeAt(index>>3);
+	        
+	        return ((bits & (0x80 >> (index%8))) != 0);
+	    }
+	
+	    Array.prototype.doesExist = function(value) {
+	        for(var i = 0; i < this.length; i++) {
+	            if(this[i] == value) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	
+	    Array.prototype.addUnique = function(value) {
+	        if(this.doesExist(value)) {
+	            return this;
+	        } else {
+
+	            this.push(value);
+	
+	            return this;
+	        }
+	    }
+	
+		jQuery('select.'+controller).find('option').each(function(item, elem){  
+	        if(elem.value == value) {
+	        	index = findRealIndex(value);
+	            for(var i = 0; i < picklistValues.length; i++) {
+	                if(isDependentValue(index, picklistValues[i].validFor)) {
+	                    dependencyCode.addUnique(picklistValues[i].validFor);
+	                }
+	            }
+	        }
+	    });
+	    
+	    if(picklistValues != null) {
+	        var select = jQuery('select.'+div);
+	        select.find('option').remove();
+	        if(dependencyCode != null) {
+	            select.append($("<option></option>").attr("value","").text('Select'));
+	            for(var i = 0; i < picklistValues.length; i++) {
+  	                if(dependencyCode.doesExist(picklistValues[i].validFor)) {
+	                    select.append($("<option></option>").attr("value",picklistValues[i].value).text(picklistValues[i].label));
+	                }
+	            }
+	        }
+	    } else {
+	        alert("There was an error finding the dependency picklists for: " + field);
+	    }
+	}
+
+	</script>
+
+  
+</apex:page>

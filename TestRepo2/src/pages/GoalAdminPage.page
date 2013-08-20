@@ -1,0 +1,354 @@
+<apex:page controller="GoalAdminController" sidebar="false">
+
+	<head>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/lib/jquery-1.7.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/lib/jquery-ui-1.8.16.custom.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/lib/jquery.event.drag-2.0.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.core.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.formatters.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.grid.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.dataview.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/plugins/slick.rowselectionmodel.js')}"/>
+		<apex:includeScript value="{!$Resource.GAPSetup}"/>
+		
+		<apex:stylesheet value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/css/smoothness/jquery-ui-1.8.16.custom.css')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.grid.css')}"/>
+	
+		<script>
+			var j$ = jQuery.noConflict();
+			
+			j$(document).ready(function() {
+				applyFilters('{!filterStateSelection}',
+							 '{!filterTypeSelection}',
+							 '{!filterPrioritySelection}',
+							 '{!filterDueDateSelection}',
+							 '{!filterRecTypeSelection}',
+							 '{!filterNameValue}');
+			});
+			
+			function confirmGoalDeletion(){
+				var yes = window.confirm('Are you sure you want to delete this goal and all child goals and actions?');
+				if(yes){
+					deleteSelected();
+					deleteConfirmed();
+				}
+			}
+			
+			function confirmSaveChanges(){
+				var yes = window.confirm('This goal (and possibly its child goals and actions) has already been cascaded. Are you sure you want to change its values?');
+				if(yes){
+					saveConfirmed();
+				}
+			}
+		</script>
+	</head>
+	
+	<style>
+	
+		.commandButtonDiv {
+			padding: 10px 0px;
+			text-align: center;
+		}
+		
+		#goalGrid {
+			border: 1px solid gray;
+			width: 1000px;
+			height: 500px;
+		}
+		
+		.toggle {
+	      height: 9px;
+	      width: 9px;
+	      display: inline-block;
+	    }
+	
+	    .toggle.expand {
+	      background: url(http://mleibman.github.com/SlickGrid/images/expand.gif) no-repeat center center;
+	    }
+	
+	    .toggle.collapse {
+	      background: url(http://mleibman.github.com/SlickGrid/images/collapse.gif) no-repeat center center;
+	    }
+	    
+	    .cell-right-align {
+	    	text-align: right;
+	    }
+	    .cell-center-align {
+	    	text-align: right;
+	    }
+	    
+	    .selected {
+	    	background-color: #9EADC4;
+	    }
+	    
+	    .slick-row.odd {
+			background: #fbfbfb;
+		}
+	    
+	    .stateRow {
+			background: #85C8DE !important;
+		}
+	    
+	    .groupRow {
+			background: #CEE8F0 !important;
+		}
+	    
+	    .goalDetailLeft {
+	    	font-weight: bold;
+	    	text-align: right;
+	    }
+	    
+	    .detailTitle {
+	    	width: 100%;
+	    	font-size: 1.2em;
+	    	font-weight: bold;
+	    	margin: 10px;
+	    }
+	    
+	    .bottomLink {
+	    	width: 100%;
+	    	text-align: center;
+	    	font-style: italic;
+	    	margin: 20px 0px 10px 0px;
+	    }
+	
+	</style>
+	
+	<body>
+		
+		<div class="messagePanelDiv">
+			<apex:outputPanel id="messagePanel">
+				<apex:pageMessages />
+			</apex:outputPanel>
+		</div>
+		
+		<apex:form >
+			<apex:actionFunction name="showGridBlock"
+								 action="{!showGridBlock}"
+								 rerender="gridBlockPanel, messagePanel"
+								 oncomplete="applyFilterResult()"/>
+			<apex:actionFunction name="goalSelected"
+								 action="{!goalSelected}"
+								 rerender="selectedGoalPanel, selectedGroupPanel, messagePanel"
+								 status="goalSelectStatus">
+				<apex:param name="selectedGoalId"
+							assignTo="{!selectedGoalId}"
+							value=""/>
+			</apex:actionFunction>
+			<apex:actionFunction name="groupSelected"
+								 action="{!groupSelected}"
+								 rerender="selectedGroupPanel, selectedGoalPanel, messagePanel"
+								 status="goalSelectStatus">
+				<apex:param name="selectedGroupIds"
+							assignTo="{!selectedGroupIds}"
+							value=""/>
+			</apex:actionFunction>
+			<apex:actionFunction name="selectNone"
+								 action="{!hideDetail}"
+								 rerender="selectedGoalPanel, selectedGroupPanel, messagePanel"
+								 status="goalSelectStatus"/>
+			<apex:actionFunction name="deleteConfirmed"
+							 action="{!deleteSelectedGoal}"
+							 rerender="selectedGoalPanel, messagePanel"/>
+			<apex:actionFunction name="saveConfirmed"
+							 action="{!saveChanges}"
+							 rerender="selectedGoalPanel, messagePanel"
+							 oncomplete="applyGoalChanges('{!selectedGoal.Minimum_of_Accounts__c}', '{!selectedGoal.Cases_Displayed__c}');"/>
+								 
+			<apex:pageBlock title="Filters"
+							mode="edit">
+				<apex:pageBlockSection columns="3">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="State"
+										  for="filterStateInput"/>
+						<apex:selectList id="filterStateInput"
+										 size="1"
+										 value="{!filterStateSelection}">
+							<apex:selectOptions value="{!filterStateChoices}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Goal Type"
+										  for="filterTypeInput"/>
+						<apex:selectList id="filterTypeInput"
+										 size="1"
+										 value="{!filterTypeSelection}">
+							<apex:selectOptions value="{!filterTypeChoices}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Priority"
+										  for="filterPriorityInput"/>
+						<apex:selectList id="filterPriorityInput"
+										 size="1"
+										 value="{!filterPrioritySelection}">
+							<apex:selectOptions value="{!filterPriorityChoices}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Due Date"
+										  for="filterDueDateInput"/>
+						<apex:selectList id="filterDueDateInput"
+										 size="1"
+										 value="{!filterDueDateSelection}">
+							<apex:selectOptions value="{!filterDueDateChoices}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Record Type"
+										  for="filterRecTypeInput"/>
+						<apex:selectList id="filterRecTypeInput"
+										 size="1"
+										 value="{!filterRecTypeSelection}">
+							<apex:selectOptions value="{!filterRecTypeChoices}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Name Contains"
+										  for="filterNameInput"/>
+						<apex:inputText id="filterNameInput"
+										value="{!filterNameValue}"/>
+					</apex:pageBlockSectionItem>
+					
+				</apex:pageBlockSection>
+				<div class="commandButtonDiv">
+					<apex:actionStatus id="applyFilterStatus">
+						<apex:facet name="stop">
+							<apex:commandButton value="Apply"
+												action="{!hideGridBlock}"
+												rerender="gridBlockPanel"
+												status="applyFilterStatus"
+												oncomplete="applyFilters('{!filterStateSelection}',
+																		 '{!filterTypeSelection}',
+																		 '{!filterPrioritySelection}',
+																		 '{!filterDueDateSelection}',
+																		 '{!filterRecTypeSelection}',
+																		 '{!filterNameValue}')"/>
+						</apex:facet>
+						<apex:facet name="start">
+							<apex:commandButton value="Loading..."
+												disabled="true"/>
+						</apex:facet>
+					</apex:actionStatus>
+				</div>
+			</apex:pageBlock>
+			
+			<apex:outputPanel id="gridBlockPanel">
+				<apex:pageBlock id="gridBlock"
+								title="Goals"
+								rendered="{!shouldShowGridBlock}">
+					<div id="goalGrid"/>
+					<apex:commandButton value="Expand All"
+										action="{!doNothing}"
+										rerender="nullPanel"
+										status="goalSelectStatus"
+										onclick="expandAll()"/>
+					<apex:commandButton value="Collapse All"
+										action="{!doNothing}"
+										rerender="nullPanel"
+										status="goalSelectStatus"
+										onclick="collapseAll()"/>
+					<apex:actionStatus id="goalSelectStatus">
+						<apex:facet name="start">
+							<apex:image value="/img/loading.gif"
+										style="padding: 3px 0px 0px 3px;"/>
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:pageBlock>
+			</apex:outputPanel>
+			<apex:outputPanel id="nullPanel"/>
+			
+			<apex:outputPanel id="selectedGroupPanel">
+				<apex:pageBlock rendered="{!showGroupDetail}"
+								mode="edit">
+					<div class="detailTitle">
+						{!selectedGoal.Long_Name__c}
+					</div>
+					<div style="text-align: center">
+						<apex:commandButton value="Save & Apply Changes"
+											action="{!saveChanges}"
+											rerender="selectedGroupPanel, messagePanel"/>
+											<!-- 
+											oncomplete="var escape = '{!selectedGoal.Name}';
+														escape = escape.replace('\'', '\\\'');
+														applyGroupChanges(escape,
+																		  '{!selectedGoal.Start_Date__c}',
+																		  '{!selectedGoal.Due_Date__c}',
+																		  '{!selectedGoal.Priority__c}');"/>
+											 -->
+						<apex:commandButton value="Cancel"
+											immediate="true"
+											action="{!cancelGroupSelect}"
+											rerender="selectedGroupPanel"
+											oncomplete="grid.resetActiveCell();"/>
+					</div>
+					<apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="Name"
+											  for="longNameInput"/>
+							<apex:inputField id="longNameInput"
+											 value="{!selectedGoal.Long_Name__c}"
+											 style="width: 300px"
+											 required="true"/>
+						</apex:pageBlockSectionItem>
+						<apex:inputField value="{!selectedGoal.Start_Date__c}"
+										 required="true"/>
+						<apex:inputField value="{!selectedGoal.Due_Date__c}"
+										 required="true"/>
+						<apex:inputField value="{!selectedGoal.Priority__c}"
+										 required="true"/>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</apex:outputPanel>
+			
+			<apex:outputPanel id="selectedGoalPanel">
+				<apex:pageBlock rendered="{!showGoalDetail}"
+								mode="edit">
+					<div class="detailTitle">
+						{!selectedGoal.Long_Name__c}
+					</div>
+					<div style="text-align: center">
+						<apex:commandButton value="Delete Goal (and Children)"
+											immediate="true"
+											action="{!doNothing}"
+											oncomplete="confirmGoalDeletion();"/>
+						<apex:commandButton value="Save & Apply Changes"
+											rendered="{!selectedGoal.Completed__c == true}"
+											action="{!doNothing}"
+											oncomplete="confirmSaveChanges();"/>
+						<apex:commandButton value="Save & Apply Changes"
+											rendered="{!selectedGoal.Completed__c == false}"
+											action="{!doNothing}"
+											oncomplete="saveConfirmed();"/>
+						<apex:commandButton value="Cancel"
+											immediate="true"
+											action="{!cancelGoalSelect}"
+											rerender="selectedGoalPanel"
+											oncomplete="grid.resetActiveCell();"/>
+					</div>
+					<apex:pageBlockSection columns="1">
+						<apex:inputField value="{!selectedGoal.Minimum_of_Accounts__c}"
+										 required="true"/>
+						<apex:inputField value="{!selectedGoal.Cases_Displayed__c}"
+										 required="true"
+										 rendered="{!selectedGoal.RecordType.Name == 'Display Goals' || selectedGoal.RecordType.Name == 'Volume/QD Goals'}"/>
+					</apex:pageBlockSection>
+					<div class="bottomLink">
+						To edit other values, please use this link to open the standard edit view in a new window:&nbsp;&nbsp;
+						<a href="{!'/' + selectedGoal.Id + '/e'}" target="_blank">
+							{!selectedGoal.Name}
+						</a>
+					</div>
+				</apex:pageBlock>
+			</apex:outputPanel>
+		</apex:form>
+		
+	</body>
+	
+
+</apex:page>

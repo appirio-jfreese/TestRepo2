@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Actual Spend</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Actual Spends</value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Actual Spends --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cart --></label>
+        <name>Cart__c</name>
+        <relationshipLabel><!-- Actual Spends --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Actual Spends --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>POS Actual Spend Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

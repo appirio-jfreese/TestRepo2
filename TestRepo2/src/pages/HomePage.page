@@ -1,0 +1,389 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : HomePage.page
+
+Updated By  : Basant Verma (Appirio Offshore)   
+Date                : 6/14/13
+Story/Task  : US503/TA1011
+
+Updated By  : Basant Verma (Appirio Offshore)   
+Date        : 5/29/13
+Story/Task  : US491/TA920
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 6/3/13
+Story/Task  : US503/TA907 
+------------------------------------------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Home">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.HomePage, 'style'+siteTheme+'.css')}" />
+    
+    <apex:outputPanel rendered="{!if(ISNULL(siteTheme),'true','false')}">
+        <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'styleSpirits.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.HomePage, 'styleSpirits.css')}" />
+    </apex:outputPanel>  
+    <!-- Start changes for DE550 : Basant -->  
+    <apex:form >
+        <apex:actionFunction status="ajax-status" name="openSpiritsPlanningPage" action="{!openSpiritsPlanningPage}"/>
+        <apex:actionFunction status="ajax-status" name="openWinePlanningPage" action="{!openWinePlanningPage}"/>
+        
+        <apex:actionFunction status="ajax-status" name="openPlanningPage" action="{!openPlanningPage}">
+            <apex:param name="firstParam" assignTo="{!planningTheme}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+    <!-- End changes for DE550 : Basant -->
+    <style type="text/css">
+        body, html{
+            overflow: hidden;
+        }
+        
+        .home-page-box-pos {
+            background: url({!URLFOR($Resource.POS_Blue)}) !important;
+        }
+        
+        .home-page-box-title-bg-pos {
+            /*background-color: #202B62 !important;
+            background: #FBD100;*/
+            background: -moz-linear-gradient(top, #7580b7 1%, #202B62 100%) !important;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#7580b7), color-stop(100%,#202B62)) !important;
+            background: -webkit-linear-gradient(top, #7580b7 1%,#202B62 100%) !important;
+            background: -o-linear-gradient(top, #7580b7 1%,#202B62 100%) !important;
+            background: -ms-linear-gradient(top, #7580b7 1%,#202B62 100%) !important;
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7580b7', endColorstr='#202B62',GradientType=0 ) !important;
+            background: linear-gradient(top, #7580b7 1%,#202B62 100%) !important;
+        }
+        
+        .home-page-box-title-pos {
+            border-color: #202B62 !important;
+        }
+       
+    </style>
+    <c:loader />
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <!-- Start : Changes for TA920 - Basant Verma -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" /> <!--thisAvatarURL="{!avatarUrl}"-->
+        <!-- End : Changes for TA920 - Basant Verma -->
+        <script type="text/javascript">
+            pageViewed('Home Page');
+        </script>
+                
+        <!-- PAGE CONTENT -->
+        <div class="content">
+            <!-- First Row -->
+            <a href="{!$Page.MonthlyExecutionPlan}" class="box-link" onclick="pageViewed('Home Page - MonthlyExecutionPlan');">
+                <div class="home-page-box home-page-box-mep">
+                    <div class="home-page-box-title home-page-box-title-mep">
+                        <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                        <div class="home-page-box-title-bg home-page-box-title-bg-mep">&nbsp;</div>
+                        <div class="home-page-box-title-text">Monthly Execution Plan</div>
+                    </div>
+                </div>
+            </a>
+            <div class="home-page-box home-page-box-news-article">
+                <div class="home-page-box-news-title">Latest News</div>
+                <!--  <div class="home-page-box-news-separator">&nbsp;</div> -->
+                <div class="home-page-news-wrapper">
+                  <ul style="display: block;">
+                    <apex:repeat value="{!articles}" var="article">
+                        <li title="{!article.Title__c}">
+                            <a href="{!articleUrl}?id={!article.Id}" onclick="pageViewed('Home Page - {!articleUrl}');">
+                                {! IF (len(article.Title__c)>34, LEFT(article.Title__c, 34)+'...', article.Title__c)}
+                            </a>
+                        </li>                       
+                    </apex:repeat>
+                            <!-- START : Changes for TA907 -->
+                            <!-- START : Changes for US503/TA1011 : Comment Blog Code - Basant Verma -->
+                            <!-- 
+                        <li>
+                            <a href="{!$Page.BlogHome}" onclick="pageViewed('Home Page - Blog Home');">
+                                Blog Posts
+                                </a>
+                        </li>
+                        -->     
+                        <!-- END : Changes for US503/TA1011 : Comment Blog Code - Basant Verma -->
+                        <!-- END : Changes for TA907 -->               
+                  </ul>
+                </div>                    
+            </div>
+            <div class="home-page-box home-page-box-last" style="display:{!showPlayer};">
+                <div class="">
+                    <c:videoPlayer videoId="{!videoId}" width="310" height="173"/>
+                </div>
+            </div>
+               
+
+            <!-- Second Row -->
+            <!-- Innovation, Sustainovation and VAP -->
+            <a href="{!$Page.InnovationAndVAP}" class="box-link" onclick="pageViewed('Home Page - InnovationAndVAP');"> 
+            <div class="home-page-box home-page-box-isv">
+                <div class="home-page-box-title home-page-box-title-isv">
+                    <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                    <div class="home-page-box-title-bg home-page-box-title-bg-isv">&nbsp;</div>
+                    <apex:pageBlock rendered="{!innovationSectionName}"><div class="home-page-box-title-text home-page-box-title-text2">Innovation,<br />Sustainovation &amp; VAP</div></apex:pageBlock>
+                    <apex:pageBlock rendered="{!NOT(innovationSectionName)}"><div class="home-page-box-title-text home-page-box-title-text2" style="font-size:22px;">Innovation, Sustainovation <br />&amp; Vintage Transition</div></apex:pageBlock>
+                </div>
+            </div>
+            </a>
+            <!-- Selling Materials -->
+            <a href="{!$Page.SMIntro}" class="box-link" onclick="pageViewed('Home Page - Selling Materials');">            
+                <div class="home-page-box home-page-box-sm">
+                    <div class="home-page-box-title home-page-box-title-sm">
+                        <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                        <div class="home-page-box-title-bg home-page-box-title-bg-sm">&nbsp;</div>
+                        <div class="home-page-box-title-text">Selling Materials</div>
+                    </div>
+                </div>
+            </a>
+            <!-- Performance Management -->
+            <a href="{!$Page.CDIntro}" class="box-link" onclick="pageViewed('Home Page - Category Development');"> 
+            <div class="home-page-box home-page-box-pm home-page-box-last">
+                <div class="home-page-box-title home-page-box-title-pm">
+                    <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                    <div class="home-page-box-title-bg home-page-box-title-bg-pm">&nbsp;</div>
+                    <div class="home-page-box-title-text home-page-box-title-text2">Category<br />Development</div>
+                </div>
+            </div>
+            </a>
+            
+            <!-- third Row -->
+            <!-- Brand Marketing Information -->
+            <a href="{!$Page.BMIIntro}" class="box-link" onclick="pageViewed('Home Page - Brand Marketing Information');">
+                <div class="home-page-box home-page-box-bmi">
+                    <div class="home-page-box-title home-page-box-title-bmi">
+                        <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                        <div class="home-page-box-title-bg home-page-box-title-bg-bmi">&nbsp;</div>
+                        <div class="home-page-box-title-text home-page-box-title-text2">Brand Marketing<br />Information</div>
+                    </div>
+                </div>
+            </a>
+            <!-- Product Images and Logos -->
+            <a href="{!$Page.PIL}" class="box-link" onclick="pageViewed('Home Page - Product Images and Logos');">            
+            <div class="home-page-box home-page-box-pil">
+                <div class="home-page-box-title home-page-box-title-pil">
+                    <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                    <div class="home-page-box-title-bg home-page-box-title-bg-pil">&nbsp;</div>
+                    <div class="home-page-box-title-text home-page-box-title-text2">Product Images <br />&amp; Logos</div>
+                 </div>
+            </div>
+            </a>
+            <!-- POS -->
+            <a href="{!$Page.POS_LegalDisclaimer}" class="box-link" onclick="pageViewed('Home Page - POS');">            
+            <div class="home-page-box home-page-box-pos home-page-box-last">
+                <div class="home-page-box-title home-page-box-title-pos">
+                    <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                    <div class="home-page-box-title-bg home-page-box-title-bg-pos">&nbsp;</div>
+                    <div class="home-page-box-title-text">POS</div>
+                </div>
+            </div>
+            </a>
+            
+            <!-- fourth Row -->
+            <!-- Collaboration -->
+            <a href="{!$Page.Collaboration}" class="box-link" onclick="pageViewed('Home Page - Collaboration');">
+            <div class="home-page-box home-page-box-col">
+                <div class="home-page-box-title home-page-box-title-col">
+                    <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                    <div class="home-page-box-title-bg home-page-box-title-bg-col">&nbsp;</div>
+                    <div class="home-page-box-title-text">Collaboration</div>
+                    </div>
+            </div>
+            </a>
+            <apex:outputPanel rendered="{!if(isInternalUser, 'true', 'false')}" >
+                <div class="home-page-box home-page-box-plan">
+                    <div class="home-page-box-title home-page-box-title-plan">
+                        <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                        <div class="home-page-box-title-bg home-page-box-title-bg-plan">&nbsp;</div>
+                        <div class="home-page-box-title-text">Planning</div>
+                     </div>
+                     <div class="home-page-box-menu-items">
+                        <ul>
+                                <!-- Start changes for DE550 : Basant -->
+                            <!-- <li><a href="{!$Page.SpiritsPlanning}" onclick="pageViewed('Home Page - Spirits Planning');">Spirits Planning</a></li> -->
+                            <li><apex:outputLabel value="Spirits Planning" onclick="openSpiritsPlanningPage();" style="text-decoration: none; cursor: pointer;"/></li>
+                            <!-- End changes for DE550 : Basant -->
+                            <li><a href="{!$Page.NationalAccounts}" onclick="pageViewed('Home Page - National Accounts');">National Accounts</a></li>
+                            <!-- Start changes for DE550 : Basant -->
+                            <!-- <li class="last"><a href="{!$Page.WinePlanning}" onclick="pageViewed('Home Page - Wine Planning'); openPlanningPage('Wine')">Wine Planning</a></li> -->
+                            <li class="last"><apex:outputLabel value="Wine Planning" onclick="openWinePlanningPage();" style="text-decoration: none; cursor: pointer;"/></li>
+                            <!-- End changes for DE550 : Basant --> 
+                        </ul>
+                     </div>
+                </div>
+           </apex:outputPanel>
+            <apex:outputPanel rendered="{!if(AND(innovationSectionName,NOT(isInternalUser)),'true','false')}" >
+                <apex:outputLink styleclass="box-link" value="/idp/login?app={!ssoId}&RelayState={!hexDwsacademies}" target="_blank" onclick="pageViewed('Home Page - dwsacademies.com');">
+                <div class="home-page-box home-page-box-plan">
+                    <div class="home-page-box-title home-page-box-title-plan">
+                        <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                        <div class="home-page-box-title-bg home-page-box-title-bg-plan">&nbsp;</div>
+                        <div class="home-page-box-title-text">DIAGEO Ways of Selling</div>
+                     </div>
+                </div>
+                </apex:outputLink>
+           </apex:outputPanel>
+           <apex:outputPanel rendered="{!if(AND(NOT(innovationSectionName),NOT(isInternalUser)),'true','false')}" >
+                <apex:outputLink styleclass="box-link" value="/idp/login?app={!ssoId}&RelayState={!hexDiageowines}" target="_blank" onclick="pageViewed('Home Page - diageowines.com');">
+                <div class="home-page-box home-page-box-plan">
+                    <div class="home-page-box-title home-page-box-title-plan">
+                        <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                        <div class="home-page-box-title-bg home-page-box-title-bg-plan">&nbsp;</div>
+                        <div class="home-page-box-title-text">diageowines.com</div>
+                     </div>
+                </div>
+                </apex:outputLink>
+           </apex:outputPanel>
+            <!-- DWS -->
+            <a href="{!$Page.Multicultural}" class="box-link" onclick="pageViewed('Home Page - Multicultural');">
+            <div class="home-page-box home-page-box-mult home-page-box-last">
+                <div class="home-page-box-title home-page-box-title-mult">
+                    <div class="home-page-box-title-hidden-bg">&nbsp;</div>
+                    <div class="home-page-box-title-bg home-page-box-title-bg-mult">&nbsp;</div>
+                    <div class="home-page-box-title-text">Multicultural</div>
+                </div>
+            </div>
+            </a>
+            
+
+        </div>
+        <div class="bottom-extra-boxes {!if(ISNULL(siteTheme),'hidden','')}">
+            <apex:outputPanel rendered="{!if(isInternalUser, 'true', 'false')}" >        
+                <a href="/idp/login?app={!ssoId}&RelayState={!hexDiageowines}" target="_blank" onclick="pageViewed('Home Page - diageo_wines2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_wines2.png')}"/>
+                </a>
+                <a href="/idp/login?app={!ssoId}&RelayState={!hexDwsacademies}" target="_blank" onclick="pageViewed('Home Page - diageo_ways2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_ways2.png')}"/>
+                </a>
+<!-- US647 Randy Wandell (Appirio) 07/17/13                
+                <a href="http://v6.diageonac.com" target="_blank" onclick="pageViewed('Home Page - national_accounts2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/national_accounts2.png')}"/>
+                </a>
+                <a href="http://www.diageodrinks.com" target="_blank" onclick="pageViewed('Home Page - diageo_drinks2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_drinks2.png')}"/>
+                </a>
+                <a href="{!$Page.CodesPolicies}" onclick="pageViewed('Home Page - code_policies2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/code_policies2.png')}"/>
+                </a>
+                <a href="http://www.diageosmartbrand.com" target="_blank" onclick="pageViewed('Home Page - smart_brand2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/smart_brand2.png')}"/>
+                </a>
+-->
+<!-- US647 Randy Wandell (Appirio) 07/17/13   -->
+                <a href="http://v6.diageonac.com" target="_blank" onclick="pageViewed('Home Page - national_accounts3.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/national_accounts3.png')}"/>
+                </a>
+                <a href="http://www.diageodrinks.com" target="_blank" onclick="pageViewed('Home Page - diageo_drinks2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_drinks2.png')}"/>
+                </a>
+                <a href="{!$Page.CodesPolicies}" onclick="pageViewed('Home Page - code_policies3.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/code_policies3.png')}"/>
+                </a>
+                <a href="http://www.diageosmartbrand.com" target="_blank" onclick="pageViewed('Home Page - smart_brand2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/smart_brand2.png')}"/>
+                </a>
+                <a href="{!$Page.LegalIntro}" onclick="pageViewed('Home Page - legal.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/legal.png')}"/>
+                </a> 
+<!-- US647 End -->  
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!if(isInternalUser, 'false', 'true')}" >
+                <apex:outputPanel rendered="{!if(innovationSectionName,'true','false')}" >
+                    <a href="/idp/login?app={!ssoId}&RelayState={!hexDiageowines}" target="_blank" onclick="pageViewed('Home Page - diageo_wines.png');">
+                        <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_wines.png')}"/>
+                    </a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(NOT(innovationSectionName),'true','false')}" >
+                    <a href="/idp/login?app={!ssoId}&RelayState={!hexDwsacademies}" target="_blank" onclick="pageViewed('Home Page - diageo_ways2.png');">
+                        <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_ways2.png')}"/>
+                    </a>
+                </apex:outputPanel>  
+                <a href="http://www.diageodrinks.com" target="_blank" onclick="pageViewed('Home Page - diageo_drinks.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_drinks.png')}"/>
+                </a>
+<!-- US647 Randy Wandell (Appirio) 07/17/13                 
+                <a href="http://v6.diageonac.com" target="_blank" onclick="pageViewed('Home Page - national_accounts.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/national_accounts.png')}"/>
+                </a>
+                <a href="https://www.diageosmartbrand.com/login/" target="_blank" onclick="pageViewed('Home Page - smart_library.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/smart_library.png')}"/>
+                </a>
+                <a href="{!$Page.CodesPolicies}" onclick="pageViewed('Home Page - codes_policies.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/codes_policies.png')}"/>
+                </a>
+-->
+<!-- US647 Randy Wandell (Appirio) 07/17/13  -->
+                <a href="http://v6.diageonac.com" target="_blank" onclick="pageViewed('Home Page - national_accounts3.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/national_accounts3.png')}"/>
+                </a>
+                <a href="https://www.diageosmartbrand.com/login/" target="_blank" onclick="pageViewed('Home Page - smart_library.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/smart_library.png')}"/>
+                </a>
+                <a href="http://www.diageodrinks.com" target="_blank" onclick="pageViewed('Home Page - diageo_drinks2.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/diageo_drinks2.png')}"/>
+                </a>
+                <a href="{!$Page.CodesPolicies}" onclick="pageViewed('Home Page - code_policies3.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/code_policies3.png')}"/>
+                </a>
+                <a href="{!$Page.LegalIntro}" onclick="pageViewed('Home Page - legal.png');">
+                    <apex:image url="{!URLFOR($Resource.HomePage, 'images/legal.png')}"/>
+                </a>
+<!--  US647 End -->                
+            </apex:outputPanel>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+        
+    </div>
+    
+
+    <c:ajaxLoader />   
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+            hideDialog('startingLoader');
+            hideDialog('startingLoaderOverlayDisable');
+            jQuery("body").css("overflow","auto");
+            jQuery("html").css("overflow","auto");
+        });     
+            
+        jQuery(document).ready(function() {
+                                
+            jQuery("button.update-filter").live('mouseenter', function() {
+            jQuery(this).addClass('over');
+            }); 
+
+            jQuery("button.update-filter").live('mouseleave', function(){
+            jQuery(this).removeClass('over');
+            }); 
+        
+            jQuery("div.home-page-box").hover(
+                function() {
+                    var menuItems = jQuery("div.home-page-box-menu-items", this);
+                    if( menuItems.length ==0){
+                        jQuery("div.home-page-box-title", this).stop(true).animate({'top': 25}, 500);
+                        jQuery("div.home-page-box-title-bg", this).stop(true).animate({'opacity':'0.75'}, 500);
+                    } else {
+                        jQuery("div.home-page-box-title", this).stop(true).animate({'top': 0, 'height': 50}, 500);
+                        jQuery("div.home-page-box-title-bg", this).stop(true).animate({'opacity':'0.75'}, 500);
+                        jQuery("div.home-page-box-title-text", this).stop(true).animate({'paddingTop':7,'paddingBottom':5 }, 500);
+                    //  menuItems.show();
+                        menuItems.stop(true).animate({'top':50,'height':115, opacity: 1 }, 500);
+                    }
+                    
+                },
+                function() {
+                    var menuItems = jQuery("div.home-page-box-menu-items", this);
+                    if( menuItems.length ==0){
+                        jQuery("div.home-page-box-title", this).animate({'top': 42}, 500);
+                        jQuery("div.home-page-box-title-bg", this).animate({'opacity':'0.95'}, 500);
+                    } else {
+                        jQuery("div.home-page-box-title", this).stop(true).animate({'top': 42, 'height': 90}, 500);
+                        jQuery("div.home-page-box-title-bg", this).stop(true).animate({'opacity':'0.95'}, 500);
+                        jQuery("div.home-page-box-title-text", this).stop(true).animate({'paddingTop':30,'paddingBottom':30}, 500);
+                        menuItems.stop(true).animate({'top':42,'height':50, opacity: 0 }, 500);
+                    //  menuItems.hide();
+                    }
+                }
+            )
+            jQuery('.home-page-news-wrapper').jScrollPane();
+        });
+    </script>
+</apex:page>

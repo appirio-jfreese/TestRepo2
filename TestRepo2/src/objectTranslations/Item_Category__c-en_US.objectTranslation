@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item Category</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Item Categories</value>
+    </caseValues>
+    <fields>
+        <label><!-- Customer Marketing Category --></label>
+        <name>Customer_Marketing_Category__c</name>
+        <picklistValues>
+            <masterLabel>Bar</masterLabel>
+            <translation><!-- Bar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display</masterLabel>
+            <translation><!-- Display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premiums</masterLabel>
+            <translation><!-- Premiums --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wearables</masterLabel>
+            <translation><!-- Wearables --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Friendly Name --></label>
+        <name>Friendly_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- IMS Specification ID --></label>
+        <name>IMS_Specification_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Material Code --></label>
+        <name>Material_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Group --></label>
+        <name>Primary_Group__c</name>
+        <picklistValues>
+            <masterLabel>Display</masterLabel>
+            <translation><!-- Display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glassware</masterLabel>
+            <translation><!-- Glassware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Permanent Displays</masterLabel>
+            <translation><!-- Permanent Displays --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plastic</masterLabel>
+            <translation><!-- Plastic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Premiums</masterLabel>
+            <translation><!-- Premiums --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Print</masterLabel>
+            <translation><!-- Print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Racks</masterLabel>
+            <translation><!-- Racks --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Temporary Displays</masterLabel>
+            <translation><!-- Temporary Displays --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wearables</masterLabel>
+            <translation><!-- Wearables --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Primary Type --></label>
+        <name>Primary_Type__c</name>
+        <picklistValues>
+            <masterLabel>NS</masterLabel>
+            <translation><!-- NS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PREM</masterLabel>
+            <translation><!-- PREM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PRNT</masterLabel>
+            <translation><!-- PRNT --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>POS Item Category Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Values that need to be shown on the basis of their picklist name on Digaoe direct and Control market case tab</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>App_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>App Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Picklist_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Picklist Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Picklist_values__c</fullName>
+        <externalId>false</externalId>
+        <label>Picklist values</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Dependent picklist values</label>
+</CustomObject>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account.NABCA_Licensee_State__c</field>
+    </columns>
+    <columns>
+        <field>Account.Channel_Type__c</field>
+    </columns>
+    <columns>
+        <field>USERS.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Territory__c</field>
+    </columns>
+    <columns>
+        <field>Account.Nabca_Account_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.Account_Segmentatiobn__c</field>
+    </columns>
+    <columns>
+        <field>Account.Nabca_Licensee_Address__c</field>
+    </columns>
+    <columns>
+        <field>Account.Nabca_Licensee_City__c</field>
+    </columns>
+    <description>01-01-13</description>
+    <filter>
+        <criteriaItems>
+            <column>Account.Called_On__c</column>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Nabca_Account_Name__c</column>
+            <operator>contains</operator>
+            <value>( N1 -,( NC -</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>NC Account List by Rep_Bazin</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountContactRole@Account.Licensee_State_Code__c</reportType>
+    <scope>team</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>USERS.NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>DUE_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

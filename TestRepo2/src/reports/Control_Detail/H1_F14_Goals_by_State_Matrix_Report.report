@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Goal__c$Minimum_of_Accounts__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Goal__c$Completed__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Due_Date__c</field>
+    </columns>
+    <description>All Current H1&apos;F14 Goals that were cascaded by Diageo to each NASW State Director.</description>
+    <filter>
+        <criteriaItems>
+            <column>Goal__c$Goal_Type__c</column>
+            <operator>equals</operator>
+            <value>On-Premise - Control,Off-Premise - Control</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$Goal_Level__c</column>
+            <operator>equals</operator>
+            <value>Director</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$Minimum_of_Accounts__c</column>
+            <operator>notEqual</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$Owner</column>
+            <operator>notEqual</operator>
+            <value>Geeta Rai,Matt Fong</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$Due_Date__c</column>
+            <operator>greaterOrEqual</operator>
+            <value>THIS_MONTH</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c$Start_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c$State__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c$Sales_Channel__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c$Goal_Name_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>H1&apos;F14 Goals by State - Matrix Report</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Accounts_with_Goals_Actions_Territories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Goal__c$Due_Date__c</dateColumn>
+        <endDate>2014-01-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-07-01</startDate>
+    </timeFrameFilter>
+</Report>

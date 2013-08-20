@@ -1,0 +1,68 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_NationalAccounts" renderAs="pdf">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'pdf.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SpiritsPlanningPage, 'pdf_style.css')}"/>
+    
+    <div class="header">   
+        <div class="logo"><img src="{!URLFOR($Resource.CommonPage,'images/pdf_logotype.png')}" /></div>
+        <div class="header-details" style="font-size: 12px;">
+    		{!themeOptionsString}<br/>
+            Printed {!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}<br />
+            Page <span class="pagenumber"/> of <span class="pagecount"/><br />
+            {!startDate} - {!endDate}
+        </div>
+        <div class="pdf-title">
+               National Accounts
+        </div>  
+        <apex:outputPanel rendered="{!NOT(ISNULL(salesDriversToShowCount))}">
+            <table class="calendar-data header-table" style="margin:0px; padding: 0px;">
+                  <thead>
+                      <tr>
+                          <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                              <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                  <th class="mep_program{!salesDriversToShowCount}" ><span class="mep-program-name-wrapper" >{!salesdrivername}</span></th>
+                              </apex:outputText>
+                              <apex:outputText rendered="{!salesDriversToShowCount!=1}">
+                                  <th class="mep_program{!salesDriversToShowCount}" ><a href="#">{!salesdrivername}</a> </th>
+                              </apex:outputText>
+                          </apex:repeat>
+                      </tr>
+                  </thead>
+                 </table>
+        </apex:outputPanel>                
+    </div>  
+    <div class="pdf-content">   
+    <table class="calendar-data" style="margin:0px; padding: 0px;">
+         <tbody>
+            <apex:repeat value="{!months}" var="month"> 
+                <!-- month box -->
+                <tr class="mep-month">
+                    <td colspan="{!salesDriversToShowCount}" class="month">
+                        {!month.name} 
+                    </td>
+                </tr>
+                <tr class="month-data month{!span}">
+                    <apex:repeat value="{!salesDriversToShow}" var="program">
+                        <td>
+                            <apex:repeat value="{!calendarData[month.data][program]}" var="programData">
+                                <div class="month{!span} mep-general mep_program{!salesDriversToShowCount}" style="width: auto !important; {!programData.styleBackgroundColor}{!programData.styleTextColor}" >
+                                    <a href="#">
+                                     <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                            <div class="month{!span}-sep1-desc">
+                                                <apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext>
+                                            </div>
+                                        </apex:outputText>          
+                                        <div class="month{!span}-sep month{!span}-sep{!salesDriversToShowCount}" style="{!programData.styleBackgroundImage}">
+                                        <div style="{!programData.styleTextColor}">{!programData.label}</div>
+                                    </div>
+                                </a>
+                                </div>
+                            </apex:repeat>
+                        </td>
+                    </apex:repeat>
+                </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+    </div>   
+</apex:page>

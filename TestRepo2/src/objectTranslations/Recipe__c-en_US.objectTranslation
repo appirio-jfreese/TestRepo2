@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Recipe</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Recipes</value>
+    </caseValues>
+    <fields>
+        <label><!-- API External ID --></label>
+        <name>API_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Additional Image 1 --></label>
+        <name>Additional_Image_1__c</name>
+        <relationshipLabel><!-- Recipes (Additional Image 1) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Image 2 --></label>
+        <name>Additional_Image_2__c</name>
+        <relationshipLabel><!-- Recipes (Additional Image 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Image 3 --></label>
+        <name>Additional_Image_3__c</name>
+        <relationshipLabel><!-- Recipes (Additional Image 3) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Image 4 --></label>
+        <name>Additional_Image_4__c</name>
+        <relationshipLabel><!-- Recipes (Additional Image 4) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Image 5 --></label>
+        <name>Additional_Image_5__c</name>
+        <relationshipLabel><!-- Recipes (Additional Image 5) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ApprovedBy --></label>
+        <name>ApprovedBy__c</name>
+        <relationshipLabel><!-- Recipes (ApprovedBy) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Background Image --></label>
+        <name>Background_Image__c</name>
+        <relationshipLabel><!-- Recipes (Background Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand Recipe Image --></label>
+        <name>Brand_Recipe_Image__c</name>
+        <relationshipLabel><!-- Recipes (Brand Recipe Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Check Profile --></label>
+        <name>Check_Profile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- CurrentLockedUser --></label>
+        <name>CurrentLockedUser__c</name>
+        <relationshipLabel><!-- Recipes (CurrentLockedUser) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Current Editor --></label>
+        <name>Current_Editor__c</name>
+        <relationshipLabel><!-- Recipes (Current Editor) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Edit Notification To Publisher Time --></label>
+        <name>Edit_Notification_To_Publisher_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Edit Notification To Publisher? --></label>
+        <name>Edit_Notification_To_Publisher__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flavor List String --></label>
+        <name>Flavor_List_String__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Legal Approval --></label>
+        <name>Has_Legal_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Language --></label>
+        <name>Language__c</name>
+        <picklistValues>
+            <masterLabel>Canadian French</masterLabel>
+            <translation><!-- Canadian French --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>English</masterLabel>
+            <translation><!-- English --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish</masterLabel>
+            <translation><!-- Spanish --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Locale --></label>
+        <name>Locale__c</name>
+        <picklistValues>
+            <masterLabel>DE</masterLabel>
+            <translation><!-- DE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-CA</masterLabel>
+            <translation><!-- EN-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-GB</masterLabel>
+            <translation><!-- EN-GB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-IN</masterLabel>
+            <translation><!-- EN-IN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-US</masterLabel>
+            <translation><!-- EN-US --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-AR</masterLabel>
+            <translation><!-- ES-AR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CL</masterLabel>
+            <translation><!-- ES-CL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CO</masterLabel>
+            <translation><!-- ES-CO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-MX</masterLabel>
+            <translation><!-- ES-MX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR</masterLabel>
+            <translation><!-- FR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR-CA</masterLabel>
+            <translation><!-- FR-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PT-BR</masterLabel>
+            <translation><!-- PT-BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TH</masterLabel>
+            <translation><!-- TH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Main Drink Image URL --></label>
+        <name>Main_Drink_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Main Drink Image --></label>
+        <name>Main_Drink_Image__c</name>
+        <relationshipLabel><!-- Recipes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Main Ingredient Image --></label>
+        <name>Main_Ingredient_Image__c</name>
+        <relationshipLabel><!-- Recipes (Main Ingredient Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Master Recipe --></label>
+        <name>Master_Recipe__c</name>
+        <relationshipLabel><!-- Recipes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Menu Description --></label>
+        <name>Menu_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Drink Image URL --></label>
+        <name>Mobile_Drink_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Drink Image --></label>
+        <name>Mobile_Drink_Image__c</name>
+        <relationshipLabel><!-- Recipes (Mobile Drink Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Mobile Selected Image URL --></label>
+        <name>Mobile_Selected_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Selected Image --></label>
+        <name>Mobile_Selected_Image__c</name>
+        <relationshipLabel><!-- Recipes (Mobile Selected Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Mobile Unselected Image URL --></label>
+        <name>Mobile_Unselected_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mobile Unselected Image --></label>
+        <name>Mobile_Unselected_Image__c</name>
+        <relationshipLabel><!-- Recipes (Mobile Unselected Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NEO Recipe Id --></label>
+        <name>NEO_Recipe_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Occasion List String --></label>
+        <name>Occasion_List_String__c</name>
+    </fields>
+    <fields>
+        <label><!-- Occasion Type --></label>
+        <name>Occasion_Type__c</name>
+        <picklistValues>
+            <masterLabel>Celebrations</masterLabel>
+            <translation><!-- Celebrations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holidays</masterLabel>
+            <translation><!-- Holidays --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Outdoor Gatherings</masterLabel>
+            <translation><!-- Outdoor Gatherings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Theme Parties</masterLabel>
+            <translation><!-- Theme Parties --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Occasion --></label>
+        <name>Occasion__c</name>
+        <picklistValues>
+            <masterLabel>4th of July</masterLabel>
+            <translation><!-- 4th of July --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Anniversary</masterLabel>
+            <translation><!-- Anniversary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>April Fool&apos;s Day</masterLabel>
+            <translation><!-- April Fool&apos;s Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Award Show Night</masterLabel>
+            <translation><!-- Award Show Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBQ</masterLabel>
+            <translation><!-- BBQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baby Shower</masterLabel>
+            <translation><!-- Baby Shower --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bachelor Party</masterLabel>
+            <translation><!-- Bachelor Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bachelorette Party</masterLabel>
+            <translation><!-- Bachelorette Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Beach Party</masterLabel>
+            <translation><!-- Beach Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Before the Bar</masterLabel>
+            <translation><!-- Before the Bar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Block Party</masterLabel>
+            <translation><!-- Block Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Board Game Night</masterLabel>
+            <translation><!-- Board Game Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bonfire Party</masterLabel>
+            <translation><!-- Bonfire Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Book Club</masterLabel>
+            <translation><!-- Book Club --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bridal Shower</masterLabel>
+            <translation><!-- Bridal Shower --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brunch</masterLabel>
+            <translation><!-- Brunch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Camping</masterLabel>
+            <translation><!-- Camping --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Carnival Night</masterLabel>
+            <translation><!-- Carnival Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casino Night</masterLabel>
+            <translation><!-- Casino Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cinco de Mayo</masterLabel>
+            <translation><!-- Cinco de Mayo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clambake</masterLabel>
+            <translation><!-- Clambake --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Class Reunion</masterLabel>
+            <translation><!-- Class Reunion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cocktail Party</masterLabel>
+            <translation><!-- Cocktail Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cuban Night</masterLabel>
+            <translation><!-- Cuban Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Day at the Races</masterLabel>
+            <translation><!-- Day at the Races --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>December Holidays</masterLabel>
+            <translation><!-- December Holidays --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dessert Party</masterLabel>
+            <translation><!-- Dessert Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft Party</masterLabel>
+            <translation><!-- Draft Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Election Day</masterLabel>
+            <translation><!-- Election Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Engagement Party</masterLabel>
+            <translation><!-- Engagement Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Family Reunion</masterLabel>
+            <translation><!-- Family Reunion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Farewell Party</masterLabel>
+            <translation><!-- Farewell Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Father&apos;s Day</masterLabel>
+            <translation><!-- Father&apos;s Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Game Day</masterLabel>
+            <translation><!-- Game Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Garden Party</masterLabel>
+            <translation><!-- Garden Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Girls&apos; Night</masterLabel>
+            <translation><!-- Girls&apos; Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Graduation</masterLabel>
+            <translation><!-- Graduation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Group Birthday</masterLabel>
+            <translation><!-- Group Birthday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guys&apos; Night</masterLabel>
+            <translation><!-- Guys&apos; Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Halloween</masterLabel>
+            <translation><!-- Halloween --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Happy Hour at Home</masterLabel>
+            <translation><!-- Happy Hour at Home --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Her Birthday</masterLabel>
+            <translation><!-- Her Birthday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>His Birthday</masterLabel>
+            <translation><!-- His Birthday --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Horse Races</masterLabel>
+            <translation><!-- Horse Races --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Housewarming Party</masterLabel>
+            <translation><!-- Housewarming Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jewelry Party</masterLabel>
+            <translation><!-- Jewelry Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Karaoke Party</masterLabel>
+            <translation><!-- Karaoke Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Labor Day</masterLabel>
+            <translation><!-- Labor Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Luau Party</masterLabel>
+            <translation><!-- Luau Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mardi Gras</masterLabel>
+            <translation><!-- Mardi Gras --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Memorial Day</masterLabel>
+            <translation><!-- Memorial Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mexican Night</masterLabel>
+            <translation><!-- Mexican Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mother&apos;s Day</masterLabel>
+            <translation><!-- Mother&apos;s Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Motor Sports Party</masterLabel>
+            <translation><!-- Motor Sports Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Movie Night</masterLabel>
+            <translation><!-- Movie Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nautical Theme Party</masterLabel>
+            <translation><!-- Nautical Theme Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Year&apos;s Eve</masterLabel>
+            <translation><!-- New Year&apos;s Eve --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Picnic</masterLabel>
+            <translation><!-- Picnic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Poker Night</masterLabel>
+            <translation><!-- Poker Night --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pool Party</masterLabel>
+            <translation><!-- Pool Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retirement Party</masterLabel>
+            <translation><!-- Retirement Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rooftop Party</masterLabel>
+            <translation><!-- Rooftop Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>St. Patrick&apos;s Day</masterLabel>
+            <translation><!-- St. Patrick&apos;s Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stock the Bar Party</masterLabel>
+            <translation><!-- Stock the Bar Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Summer Party</masterLabel>
+            <translation><!-- Summer Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Surprise Party</masterLabel>
+            <translation><!-- Surprise Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tailgating</masterLabel>
+            <translation><!-- Tailgating --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tax Day</masterLabel>
+            <translation><!-- Tax Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thanksgiving</masterLabel>
+            <translation><!-- Thanksgiving --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>The Big Game Party</masterLabel>
+            <translation><!-- The Big Game Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tiki/Tropical Party</masterLabel>
+            <translation><!-- Tiki/Tropical Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Toga Party</masterLabel>
+            <translation><!-- Toga Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tournament Party</masterLabel>
+            <translation><!-- Tournament Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tv Night/Tv Season Finale Party</masterLabel>
+            <translation><!-- Tv Night/Tv Season Finale Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Valentine&apos;s Day</masterLabel>
+            <translation><!-- Valentine&apos;s Day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Victory Party</masterLabel>
+            <translation><!-- Victory Party --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wedding Reception</masterLabel>
+            <translation><!-- Wedding Reception --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Preparation Steps --></label>
+        <name>Preparation_Steps__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe Color --></label>
+        <name>Recipe_Color_del__c</name>
+        <picklistValues>
+            <masterLabel>Black</masterLabel>
+            <translation><!-- Black --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blue</masterLabel>
+            <translation><!-- Blue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brown</masterLabel>
+            <translation><!-- Brown --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clear</masterLabel>
+            <translation><!-- Clear --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Orange</masterLabel>
+            <translation><!-- Orange --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pink</masterLabel>
+            <translation><!-- Pink --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purple</masterLabel>
+            <translation><!-- Purple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White</masterLabel>
+            <translation><!-- White --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipe Flavor --></label>
+        <name>Recipe_Flavor_del__c</name>
+        <picklistValues>
+            <masterLabel>Almond</masterLabel>
+            <translation><!-- Almond --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apple</masterLabel>
+            <translation><!-- Apple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banana</masterLabel>
+            <translation><!-- Banana --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cherry</masterLabel>
+            <translation><!-- Cherry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chocolate</masterLabel>
+            <translation><!-- Chocolate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cinnamon</masterLabel>
+            <translation><!-- Cinnamon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Citrus</masterLabel>
+            <translation><!-- Citrus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coconut</masterLabel>
+            <translation><!-- Coconut --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coffee</masterLabel>
+            <translation><!-- Coffee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cranberry</masterLabel>
+            <translation><!-- Cranberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ginger</masterLabel>
+            <translation><!-- Ginger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grapefruit</masterLabel>
+            <translation><!-- Grapefruit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lemon</masterLabel>
+            <translation><!-- Lemon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lime</masterLabel>
+            <translation><!-- Lime --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mango</masterLabel>
+            <translation><!-- Mango --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mint</masterLabel>
+            <translation><!-- Mint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nutty</masterLabel>
+            <translation><!-- Nutty --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Orange</masterLabel>
+            <translation><!-- Orange --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passion Fruit</masterLabel>
+            <translation><!-- Passion Fruit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Peach</masterLabel>
+            <translation><!-- Peach --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pineapple</masterLabel>
+            <translation><!-- Pineapple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pistachio</masterLabel>
+            <translation><!-- Pistachio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pomegranate</masterLabel>
+            <translation><!-- Pomegranate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Raspberry</masterLabel>
+            <translation><!-- Raspberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Salty</masterLabel>
+            <translation><!-- Salty --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sour</masterLabel>
+            <translation><!-- Sour --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spicy</masterLabel>
+            <translation><!-- Spicy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strawberry</masterLabel>
+            <translation><!-- Strawberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vanilla</masterLabel>
+            <translation><!-- Vanilla --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>White Grape</masterLabel>
+            <translation><!-- White Grape --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipe_Tag --></label>
+        <name>Recipe_Tag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe Tags --></label>
+        <name>Recipe_Tags__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe Title --></label>
+        <name>Recipe_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe Type List String --></label>
+        <name>Recipe_Type_List_String__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe Type --></label>
+        <name>Recipe_Type_del__c</name>
+        <picklistValues>
+            <masterLabel>Beer-Based</masterLabel>
+            <translation><!-- Beer-Based --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bloody Marys</masterLabel>
+            <translation><!-- Bloody Marys --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cocktails</masterLabel>
+            <translation><!-- Cocktails --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Daiquiris</masterLabel>
+            <translation><!-- Daiquiris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frozen Cocktails</masterLabel>
+            <translation><!-- Frozen Cocktails --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Good for Groups</masterLabel>
+            <translation><!-- Good for Groups --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hot Drinks</masterLabel>
+            <translation><!-- Hot Drinks --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lower Calorie</masterLabel>
+            <translation><!-- Lower Calorie --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Luxury Drops</masterLabel>
+            <translation><!-- Luxury Drops --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manhattans</masterLabel>
+            <translation><!-- Manhattans --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Margaritas</masterLabel>
+            <translation><!-- Margaritas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Martinis - Flavored Vodkas</masterLabel>
+            <translation><!-- Martinis - Flavored Vodkas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Martinis - Gin</masterLabel>
+            <translation><!-- Martinis - Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Martinis - Liqueurs</masterLabel>
+            <translation><!-- Martinis - Liqueurs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Martinis - Other</masterLabel>
+            <translation><!-- Martinis - Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Martinis - Vodka</masterLabel>
+            <translation><!-- Martinis - Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mix It</masterLabel>
+            <translation><!-- Mix It --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mojitos</masterLabel>
+            <translation><!-- Mojitos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Neat</masterLabel>
+            <translation><!-- Neat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Alcoholic</masterLabel>
+            <translation><!-- Non-Alcoholic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Old Fashioneds</masterLabel>
+            <translation><!-- Old Fashioneds --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On the Rocks</masterLabel>
+            <translation><!-- On the Rocks --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pour It</masterLabel>
+            <translation><!-- Pour It --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shots</masterLabel>
+            <translation><!-- Shots --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sours</masterLabel>
+            <translation><!-- Sours --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stir It</masterLabel>
+            <translation><!-- Stir It --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine-Based/ Sangria</masterLabel>
+            <translation><!-- Wine-Based/ Sangria --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipe Version --></label>
+        <name>Recipe_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- ReviewedBy --></label>
+        <name>ReviewedBy__c</name>
+        <relationshipLabel><!-- Recipes (ReviewedBy) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Search Recipe Image --></label>
+        <name>Search_Recipe_Image__c</name>
+        <relationshipLabel><!-- Recipes (Search Recipe Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Short Description --></label>
+        <name>Short_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Archive</masterLabel>
+            <translation><!-- Archive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Approval</masterLabel>
+            <translation><!-- Pending Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Thumbnail Drink Image URL --></label>
+        <name>Thumbnail_Drink_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Thumbnail Drink Image --></label>
+        <name>Thumbnail_Drink_Image__c</name>
+        <relationshipLabel><!-- Recipes (Thumbnail Drink Image) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- isSaved --></label>
+        <name>isSaved__c</name>
+    </fields>
+    <fields>
+        <label><!-- lastModifiedTime --></label>
+        <name>lastModifiedTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- recordSaved --></label>
+        <name>recordSaved__c</name>
+    </fields>
+    <layouts>
+        <layout>Recipe Admin Page Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Recipe Media --></label>
+            <section>Recipe Media</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Recipe Demo</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Recipe Media --></label>
+            <section>Recipe Media</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Recipe Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Add_Image --></label>
+        <name>Add_Image</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Other_Ingredient --></label>
+        <name>Add_Other_Ingredient</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Submit_for_Legal_Approval --></label>
+        <name>Submit_for_Legal_Approval</name>
+    </webLinks>
+</CustomObjectTranslation>

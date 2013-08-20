@@ -1,0 +1,124 @@
+<apex:page standardController="AccountBrand__c" extensions="Controller_AccountBrand" recordSetVar="accounts">
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+    <apex:sectionHeader title="Account Brand"/>  
+        <apex:outputPanel id="messages">
+            <apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+        <apex:form >
+            <apex:actionFunction name="reloadLists" action="{!reloadLists}" />
+            <apex:actionFunction name="reloadListsAfterSearch" action="{!reloadListsAfterSearch}" />            
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Distributor"/>
+                            <apex:inputField value="{!accountbrand.Account__c}" rendered="{!accountEditable}" onchange="reloadLists();"/>                                                                        
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputField value="{!accountbrand.Account__c}" rendered="{!!accountEditable}"/>      
+                        </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="Clone" mode="edit" rendered="{!!accountEditable}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Clone From" action="{!cloneRelationsFrom}"/>
+                    <apex:commandButton value="Clone To" action="{!cloneRelationsTo}"/>                    
+                </apex:pageBlockButtons> 
+
+                <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Select Distributor"/>
+                            <apex:selectList value="{!cloneAccount}" size="1">
+                                <apex:selectOptions value="{!possibleAccounts}"/>
+                            </apex:selectList>    
+                        </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>  
+                          
+            <apex:pageBlock title="Account Brand List" mode="edit" rendered="{!!accountEditable}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Delete" action="{!deleteRelations}"/>
+                    <apex:commandButton value="Delete All" action="{!deleteAll}"/>
+                </apex:pageBlockButtons> 
+                <div style="padding:12px 0px 12px 12px;">
+                    <apex:outputLabel value="Search by brand name: " for="avaliableS"/>&nbsp;
+                    <apex:inputText id="accountBL" value="{!accountBL}" rendered="{!!accountEditable}"/>
+                    <button onclick="reloadListsAfterSearch(); return false;">GO</button>
+                </div>
+                <apex:pageBlockTable value="{!accountBrandList}" var="c" id="listTable">
+                    <apex:column style="width:40px;">
+                        <apex:facet name="header"><input type="checkbox" id="selectAllAccount"/> Select All</apex:facet>                     
+                        <apex:inputCheckbox value="{!c.selected}" styleClass="accountCheckbox"/>
+                    </apex:column>
+                    <apex:column headerValue="Brand">
+                        <apex:outputText value="{!c.cb.brand__r.name}" />
+                    </apex:column>
+                    <apex:column headerValue="Parent Brand">
+                        <apex:outputText value="{!c.cb.brand__r.Parent_Brand__r.Name}" />
+                    </apex:column>                    
+                    <apex:column headerValue="Brand Variant Grouping">
+                        <apex:outputText value="{!c.cb.brand__r.Brand_Variant_Grouping__c}" />
+                    </apex:column>                    
+
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions"> 
+                        <apex:commandLink action="{!first}"    rendered="{!hasPrevious}" rerender="listTable, actions, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="listTable, actions, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!next}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!last}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>
+            <apex:pageBlock title="Available Brand List" mode="edit" rendered="{!!accountEditable}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Add" action="{!addRelations}"/>
+                    <apex:commandButton value="Add All" action="{!addAll}"/>
+                </apex:pageBlockButtons> 
+                <div style="padding:12px 0px 12px 12px;">
+                    <apex:outputLabel value="Search by brand name: " for="avaliableS"/>&nbsp;
+                    <apex:inputText id="avaliableS" value="{!avaliableS}" rendered="{!!accountEditable}"/>
+                    <button onclick="reloadListsAfterSearch(); return false;">GO</button>
+                </div>
+                
+                <apex:pageBlockTable value="{!brandList}" var="b" id="listTable2">
+                    <apex:column style="width:40px;">
+                        <apex:facet name="header"><input type="checkbox" id="selectAllBrands"/> Select All</apex:facet>                        
+                        <apex:inputCheckbox value="{!b.selected}" styleClass="brandCheckbox"/>
+                    </apex:column>
+                    <apex:column headerValue="Brand">
+                        <apex:outputText value="{!b.b.name}" />
+                    </apex:column>
+                    <apex:column headerValue="Parent Brand">
+                        <apex:outputText value="{!b.b.Parent_Brand__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Brand Variant Grouping">
+                        <apex:outputText value="{!b.b.Brand_Variant_Grouping__c}" />
+                    </apex:column>
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions2"> 
+                        <apex:commandLink action="{!firstB}"    rendered="{!hasPreviousB}" rerender="listTable2, actions2, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previousB}" rendered="{!hasPreviousB}" rerender="listTable2, actions2, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!nextB}"     rendered="{!hasNextB}"     rerender="listTable2, actions2, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!lastB}"     rendered="{!hasNextB}"     rerender="listTable2, actions2, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>    
+    </apex:form>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('#selectAllAccount').live('click', function(){
+            if(jQuery(this).is(':checked')){
+                jQuery('.accountCheckbox').attr('checked', true);
+            } else {
+                jQuery('.accountCheckbox').attr('checked', false);
+            }
+        });
+        jQuery('#selectAllBrands').live('click', function(){
+            if(jQuery(this).is(':checked')){
+                jQuery('.brandCheckbox').attr('checked', true);
+            } else {
+                jQuery('.brandCheckbox').attr('checked', false);
+            }
+        });
+
+    });
+    </script>        
+</apex:page>

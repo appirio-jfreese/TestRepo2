@@ -1,0 +1,42 @@
+<apex:page controller="POS_ViewOrderWindowItemsController" tabStyle="Order_Window__c">
+<script>
+function selectAllBrands(bln) {
+	var inputElem = document.getElementsByTagName("input");
+	for(var i=0; i<inputElem.length; i++) {
+		if(inputElem[i].type=="checkbox") {
+			inputElem[i].checked = bln;
+		}
+	}
+}
+</script>
+
+<apex:pageblock >
+<apex:pageBlockSection title="Select Brands to filter and list Items of OrderWindow - '{!orderWindow.Name}'" collapsible="false" id="resultsSection" columns="1">
+    <apex:form >
+        <apex:selectCheckboxes value="{!selectedBrands}" >
+            <apex:selectOptions value="{!applicableBrands}"/>
+        </apex:selectCheckboxes><br/>
+        <apex:commandButton value="Select All Brands" onclick="selectAllBrands(true); return false;"/>
+        <apex:commandButton value="Deselect All Brands" onclick="selectAllBrands(false); return false;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <apex:commandButton value="List Items Filtered by Selected Brands" action="{!filterByBrand}" rerender="resultsSection" status="status"/>&nbsp;&nbsp;
+        <apex:actionstatus id="status" startText="requesting..."/>
+    </apex:form>
+	
+<apex:pageBlockTable value="{!filterResult}" var="item" >
+    <apex:column value="{!item.Program__r.name}"/>
+    <apex:column >
+    <apex:facet name="header">Item Name</apex:facet>
+    <apex:outputLink value="/{!item.id}">{!item.name}</apex:outputLink>
+    </apex:column>
+    <apex:column value="{!item.Product_Image__c}"/>
+    <apex:column value="{!item.Status__c}"/>
+    <apex:column value="{!item.On_Allocation__c}" style="text-align:center;"/>
+    <apex:column value="{!item.Packout_Quantity__c}" style="text-align:right;"/>
+    <apex:column value="{!item.Current_Price__c}" style="text-align:right;"/>
+    <apex:column value="{!item.Estimated_Shipping_Tax__c}" style="text-align:right;"/>
+   	<apex:column value="{!item.Program__r.Brand__r.name}"/>
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+</apex:pageblock>
+
+</apex:page>

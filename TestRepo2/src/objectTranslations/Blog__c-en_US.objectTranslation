@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Blog</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Blog</value>
+    </caseValues>
+    <fields>
+        <label><!-- Allow Comments --></label>
+        <name>AllowComments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Detail --></label>
+        <name>Detail__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>EndDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>StartDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub-Title --></label>
+        <name>Sub_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Summary --></label>
+        <name>Summary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Theme --></label>
+        <name>Theme__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Blog Layout</layout>
+        <sections>
+            <label><!-- Blog Text --></label>
+            <section>Blog Text</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

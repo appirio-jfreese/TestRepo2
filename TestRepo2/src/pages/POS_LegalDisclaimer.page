@@ -1,0 +1,48 @@
+<apex:page controller="POS_LegalDisclaimerController" standardStylesheets="false" showHeader="false" sidebar="false" cache="false">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=1138"  />
+	<meta name="MobileOptimized" content="1138" /> 
+	<title>Legal Disclaimer</title> 
+	<link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+  	<style type="text/css">
+  	.wrapper .page .header-container {height: 137px;}
+  	</style>
+</head>
+<body >
+	<noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+	<div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+	<div class="wrapper">
+		<div class="page">
+			<div class="main col-full-layout" id="main">
+				<c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+					<apex:form >		 
+					<apex:outputPanel layout="block" style="margin:15px;height:340px;overflow:auto;" >
+						<br/>
+						<apex:outputText value="{!disclaimerText}" escape="false"/>
+					</apex:outputPanel>
+			        <apex:outputPanel style="margin:15px;" rendered="{!posShopper}">
+			        	<!-- <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			        	<apex:commandButton action="{!agree}" value="       I agree        "/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        	<apex:commandButton action="{!disagree}" value="      I don't agree      "/>
+			        </apex:outputPanel>	
+			        <apex:outputPanel rendered="{! !posShopper}">
+			        	<br/>
+			        	<apex:commandButton style="margin-left: 15px;" action="{!disagree}" value="      < < Back      "/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        </apex:outputPanel>			        				
+					</apex:form>
+					<br/>
+				<c:POS_Footer />
+			</div>
+		</div>
+	</div>
+</body>
+</apex:page>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Recipe Attribute</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Recipe Attributes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Attribute Value --></label>
+        <name>Attribute_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attribute --></label>
+        <name>Attribute__c</name>
+        <relationshipLabel><!-- Recipe Attributes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Dynamic Value --></label>
+        <name>Dynamic_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Recipe Attributes --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Recipe Attribute Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Add</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Brand__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Brand</label>
+        <referenceTo>Brand__c</referenceTo>
+        <relationshipLabel>Products</relationshipLabel>
+        <relationshipName>Products</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>text( Brand__r.Category__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Classification__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Brand__r.Classification__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Classification</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Family</fullName>
+        <picklist>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Generic_Brand__c</fullName>
+        <externalId>false</externalId>
+        <formula>Brand__r.Generic_Brand__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Generic Brand</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PackageConfiguration__c</fullName>
+        <externalId>false</externalId>
+        <label>PackageConfiguration</label>
+        <picklist>
+            <picklistValues>
+                <fullName>01x01 Pouch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01X02 BAG-IN-BOX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x03 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x04 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x06 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x12 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x120 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x120 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x24 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x24 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x30 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x48 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>01x48 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>02x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>02x03 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>02x06 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>03x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>03x02 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>03x04 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>04x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>04x03 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>04x06 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>04x12 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>04x15 LIGHTWEIGHT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>05x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x01 GLASS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x01 LIGHTWEIGHT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x02 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x03 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x04 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x04 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>06x10 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>08x03 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>08x06 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>09x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10x06 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10x06 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10x12 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10x12 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>120x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>120x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>128x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>128x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x01 LIGHTWEIGHT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x05 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x06 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12X10 NON-RET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x10 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12x10 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>16x12 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>20x04 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>20x06 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24x01 ALUMINIUM CAN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24x04 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>24x05 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>30x04 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>40x03 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>48x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>48x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>60x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>80x01 PET</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>96x01 STANDARD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NOT DEFINED</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>PackageSize__c</fullName>
+        <externalId>false</externalId>
+        <label>PackageSize</label>
+        <picklist>
+            <picklistValues>
+                <fullName>.0186L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.05L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.07L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.094L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.103L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.118L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.1L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.2L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.355L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.35L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.375L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.5L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.75L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.7L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.946L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0.98L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1.0L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1.14L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1.5L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1.75L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3.0L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4.5L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>9.46L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NOT DEFINED</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SKU__c</fullName>
+        <externalId>false</externalId>
+        <label>SKU</label>
+        <length>30</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>AllProducts</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+        <columns>Brand__c</columns>
+        <columns>Category__c</columns>
+        <columns>Classification__c</columns>
+        <columns>Generic_Brand__c</columns>
+        <columns>PackageConfiguration__c</columns>
+        <columns>PackageSize__c</columns>
+        <columns>SKU__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Products</label>
+    </listViews>
+    <searchLayouts>
+        <customTabListAdditionalFields>PRODUCT2.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</customTabListAdditionalFields>
+        <customTabListAdditionalFields>PRODUCT2.DESCRIPTION</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.FAMILY</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PRODUCT2.FAMILY</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.DESCRIPTION</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
+    </searchLayouts>
+</CustomObject>

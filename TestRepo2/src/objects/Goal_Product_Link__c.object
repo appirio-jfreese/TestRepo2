@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>CT_Loaded__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CT Loaded</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Dave_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Dave Flag</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Duplication_Key__c</fullName>
+        <externalId>false</externalId>
+        <formula>Goal__c + &apos;|&apos; + Product_Classification__c + &apos;|&apos; + Product_Group__c + &apos;|&apos; + Generic_Brand__c + &apos;|&apos; + Sub_Brand__c + &apos;|&apos; + Individual_Brand__c + &apos;|&apos; + Size__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Duplication Key</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Generic_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Generic Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>Goal</label>
+        <referenceTo>Goal__c</referenceTo>
+        <relationshipName>Goal_Product_Links</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Ind_Brand_Size__c</fullName>
+        <externalId>false</externalId>
+        <formula>Individual_Brand__c + &apos;, &apos; + Size__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ind. Brand / Size</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Individual_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Individual Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Match_Key__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product_Classification__c + &apos;|&apos; + Product_Group__c + &apos;|&apos; + Generic_Brand__c + &apos;|&apos; + Sub_Brand__c + &apos;|&apos; + Individual_Brand__c + &apos;|&apos; + Size__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Match Key</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Org_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>New Org ID</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Org__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>New Org</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Product_Classification__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Classification</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Group</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Size__c</fullName>
+        <externalId>false</externalId>
+        <label>Size</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sub_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Goal Brand</label>
+    <nameField>
+        <displayFormat>GPL-{0000000000}</displayFormat>
+        <label>Brand ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Goal Brands</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

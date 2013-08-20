@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Read</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <description>NASW Ctrl East VA/WV/AL</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>NASW Ctrl East VA/WV/AL Marketing Mgr</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>NASW_East_SVP</parentRole>
+</Role>

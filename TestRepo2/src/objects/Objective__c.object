@@ -1,0 +1,1587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>BrandBottle_Size__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BrandBottle Size</label>
+        <referenceTo>BrandBottle_Size__c</referenceTo>
+        <relationshipLabel>Objectives</relationshipLabel>
+        <relationshipName>Objectives</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cases_Displayed__c</fullName>
+        <externalId>false</externalId>
+        <label>Cases Displayed</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>General_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>General Goal</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_to_Content__c</fullName>
+        <externalId>false</externalId>
+        <label>Link to Content</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Location_Grade__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional
+A = Front end cap, main lobby, checkout 
+B = Back of store, isle display, mid end cap 
+C = Others</inlineHelpText>
+        <label>Location Grade</label>
+        <picklist>
+            <picklistValues>
+                <fullName>A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>B</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>C</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Migration_ID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>true</externalId>
+        <label>Migration ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_Number_of_Accounts__c</fullName>
+        <externalId>false</externalId>
+        <label>Minimum Number of Accounts</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Attendees__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Attendees</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Objective_Reporting_Type__c</fullName>
+        <description>This field is only for reporting purposes (Individual Activity Management).  The values mirror the Record Type.</description>
+        <externalId>false</externalId>
+        <label>Objective Reporting Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ease of Shop</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SFA_POS_Items__c</fullName>
+        <externalId>false</externalId>
+        <label>SFA POS Items</label>
+        <picklist>
+            <picklistValues>
+                <fullName>banner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>case card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>case card-DGUSA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>case stacker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>case tucker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ceiling dangler</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>coasters</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>condiment tray</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>contravision</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>corebuff</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>counter card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>counter unit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>coupon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>decal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>display</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>glassware</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>gutter mat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>hats</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>key rings</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>lapel pins</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>napkin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>napkin holder</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>necker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>one case bin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>pennant string</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>pens</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>permanent display piece</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>pole topper</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>premiums</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>price spot</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>print</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>promoflex</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>rack</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>shelf strip</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>shelf talker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>shelf violator</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>shelf wobbler</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>standee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>table tent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>take one</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>tasting card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>tear pads</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>wait staff mat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>wearables</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Standard_Required__c</fullName>
+        <externalId>false</externalId>
+        <formula>BrandBottle_Size__r.Brand__r.Parent_Brand__r.Gold_Standard_Shelf__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Standard Required</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Suggested_Display_Price__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>“The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party.”</inlineHelpText>
+        <label>Suggested Display Price</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Suggested_Shelf_Price__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>“The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party.”</inlineHelpText>
+        <label>Suggested Shelf Price</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <label>Objective</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>BrandBottle_Size__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Minimum_Number_of_Accounts__c</columns>
+        <columns>Due_Date__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Objective Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Objectives</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Display_Objective</fullName>
+        <active>true</active>
+        <label>Display Objective</label>
+        <picklistValues>
+            <picklist>Location_Grade__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Objective_Reporting_Type__c</picklist>
+            <values>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ease of Shop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFA_POS_Items__c</picklist>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>banner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card-DGUSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case stacker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case tucker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ceiling dangler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coasters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>condiment tray</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>contravision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>corebuff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter unit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coupon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>decal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>glassware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>gutter mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hats</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>key rings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>lapel pins</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin holder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>necker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>one case bin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pennant string</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pens</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>permanent display piece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pole topper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>premiums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>price spot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>print</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>promoflex</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>rack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf strip</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf talker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf violator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf wobbler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>standee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>table tent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>take one</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tasting card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tear pads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wait staff mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wearables</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Distribution_Objective</fullName>
+        <active>true</active>
+        <label>Distribution Objective</label>
+        <picklistValues>
+            <picklist>Location_Grade__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Objective_Reporting_Type__c</picklist>
+            <values>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ease of Shop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFA_POS_Items__c</picklist>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>banner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card-DGUSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case stacker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case tucker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ceiling dangler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coasters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>condiment tray</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>contravision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>corebuff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter unit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coupon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>decal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>glassware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>gutter mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hats</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>key rings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>lapel pins</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin holder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>necker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>one case bin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pennant string</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pens</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>permanent display piece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pole topper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>premiums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>price spot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>print</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>promoflex</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>rack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf strip</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf talker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf violator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf wobbler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>standee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>table tent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>take one</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tasting card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tear pads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wait staff mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wearables</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Ease_of_Shop_Objective</fullName>
+        <active>true</active>
+        <label>Ease of Shop Objective</label>
+        <picklistValues>
+            <picklist>Location_Grade__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Objective_Reporting_Type__c</picklist>
+            <values>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ease of Shop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFA_POS_Items__c</picklist>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>banner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card-DGUSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case stacker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case tucker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ceiling dangler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coasters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>condiment tray</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>contravision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>corebuff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter unit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coupon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>decal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>glassware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>gutter mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hats</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>key rings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>lapel pins</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin holder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>necker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>one case bin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pennant string</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pens</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>permanent display piece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pole topper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>premiums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>price spot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>print</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>promoflex</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>rack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf strip</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf talker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf violator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf wobbler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>standee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>table tent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>take one</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tasting card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tear pads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wait staff mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wearables</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>General_Objective</fullName>
+        <active>true</active>
+        <label>General Objective</label>
+        <picklistValues>
+            <picklist>Location_Grade__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Objective_Reporting_Type__c</picklist>
+            <values>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ease of Shop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFA_POS_Items__c</picklist>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>banner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card-DGUSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case stacker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case tucker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ceiling dangler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coasters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>condiment tray</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>contravision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>corebuff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter unit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coupon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>decal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>glassware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>gutter mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hats</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>key rings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>lapel pins</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin holder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>necker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>one case bin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pennant string</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pens</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>permanent display piece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pole topper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>premiums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>price spot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>print</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>promoflex</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>rack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf strip</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf talker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf violator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf wobbler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>standee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>table tent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>take one</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tasting card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tear pads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wait staff mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wearables</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Training_Objective</fullName>
+        <active>true</active>
+        <label>Staff Training Objective</label>
+        <picklistValues>
+            <picklist>Location_Grade__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Objective_Reporting_Type__c</picklist>
+            <values>
+                <fullName>Display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ease of Shop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SFA_POS_Items__c</picklist>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>banner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case card-DGUSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case stacker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>case tucker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ceiling dangler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coasters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>condiment tray</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>contravision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>corebuff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>counter unit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>coupon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>decal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>display</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>glassware</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>gutter mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>hats</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>key rings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>lapel pins</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>napkin holder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>necker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>one case bin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pennant string</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pens</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>permanent display piece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pole topper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>premiums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>price spot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>print</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>promoflex</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>rack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf strip</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf talker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf violator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>shelf wobbler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>standee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>table tent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>take one</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tasting card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>tear pads</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wait staff mat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>wearables</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

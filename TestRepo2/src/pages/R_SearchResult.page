@@ -1,0 +1,249 @@
+<!------------------------------------------------------------------------------
+Name        : R_SearchResult.page
+
+Modified By : Basant Kumar Verma
+Date                : 7/15/2013
+Story/Task  : US612/DE635
+
+Modified By : Basant Kumar Verma
+Date                : 7/16/2013
+Story/Task  : US612/DE636
+
+Modified By : Basant Kumar Verma
+Date        : 7/17/2013
+Story/Task  : US612/DE634
+
+Modified By : Basant Kumar Verma
+Date        : 7/17/2013
+Story/Task  : US585/DE678
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_SearchResult">
+    <body class="results-page">
+    <div class="wrapper">
+        <div class="container">
+        <!-- PAGE HEADER -->
+        <c:R_PageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        <script type="text/javascript">
+            pageViewed('Search Result Page');
+          </script>
+                    
+        <!-- content -->
+        <apex:form > 
+        <div class="content clearfix">
+    
+                <!-- BREADCRUMB -->
+          <apex:outputPanel id="beadcrumblinks">
+            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+          </apex:outputPanel>
+            
+          <apex:outputPanel id="messages">
+                    <apex:messages styleClass="errorMessagesList" />
+                </apex:outputPanel>
+                
+                
+                    <!-- START : changed for US612/DE636 - Basant -->
+                    <apex:outputPanel rendered="{!firstZeroResult}" styleClass="searchMessage">
+                        <br/><h6>Please refine your search and try again.</h6><br/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!secondZeroResult}" styleClass="searchMessage">
+                        <br/><h6>If you would like help finding something <a href="{!$Page.Cases}?caseType=Finding%20Information">contact us</a></h6><br/>
+                    </apex:outputPanel>
+                    <!-- <apex:outputPanel rendered="{!NOT(isDetails)}">
+                        <apex:outputPanel rendered="{!NOT(secondZeroResult)}">
+                            <c:R_OperationLines showPages="false" pageNamePrefix="mep" allowRemoveBasket="false" allowAddBasket="true" allowUnfollow="false" allowFollow="true">
+                                <div class="doc-list">
+                                <apex:repeat value="{!sectionOrder}" var="sectionName">
+                                            <div class="list-view"> 
+                                            <apex:outputPanel rendered="{!AND(!ISNULL(contentMap[sectionName]),sectionItemNumber[sectionName]!=0)}">
+                                                    <h6>{!sectionName}</h6>
+                                                    <a href="javascript:;" class="button" onclick="switchSection('{!sectionName}'); return false;">Show All</a>
+                                          <apex:repeat value="{!contentHolderMap[sectionName]}" var="contentItem">
+                                                <c:R_contentItem pageNamePrefix="mep" followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!contentItem}" renderAsList="true" displayUploadDate="true" lastLoginDateItem="{!lastLoginDate}" allowFileEdit="false"/>
+                                                    </apex:repeat>
+                                            </apex:outputPanel>
+                                            </div>
+                                        </apex:repeat>
+                                </div>
+                            </c:R_OperationLines>
+                            <c:R_pagination totalNumberOfPages="{!numberOfPages}" showPager="false" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="1" />
+                        </apex:outputPanel>
+                    </apex:outputPanel> -->
+                    <!-- END : changed for US612/DE636 - Basant -->
+                    
+                    <apex:outputPanel rendered="{!AND(isDetails, sectionContentHolder.size > 0)}">
+                        <apex:outputPanel rendered="{!NOT(secondZeroResult)}">                      
+                            <h2 class="with-select">
+                                <span class="title">
+                                    Search Results
+                                </span>
+                                <!-- START : Changed for US612/DE634 - Basant Verma -->
+                                <select class="sortOpt" id="sortOptId" >
+                        <option value="Alpha_Asc">Alphabetical, A-Z</option>
+                        <option value="Alpha_Desc">Alphabetical, Z-A</option>
+                        <option value="Date_Asc">Date, Ascending</option>
+                        <option value="Date_Desc">Date, Descending</option>
+                                </select>
+                                <!-- END : Changed for US612/DE634 - Basant Verma -->
+                    </h2>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="pageContent">
+                        <apex:variable value="1" var="firstRow"/>
+ 												<!-- START : Changed for US585/DE678 - Basant -->
+                        <c:R_OperationLines showPages="true" renderAsList="{!displayAsList}" options="{!NumberOfItemsPerPageList}" R_MultInFollow="{!R_MultInFollowWithselAll}" value="{!numberOfItemsOnPage}" className="period-select"   pagesStatus="Showing {!showFromIndex+1}-{!showToIndex} of {!numberOfItems} items" pageNamePrefix="mep" allowRemoveBasket="false" allowAddBasket="true" allowUnfollow="false" allowFollow="true">
+                        <!-- END : Changed for US585/DE678 - Basant -->
+                            <div class="doc-list">
+                            <!-- <div class="list-view">
+                                        <h6>{!currentSection}</h6>
+                                        <a href="javascript:;" class="button" style="margin-left: 0px;" onclick="clearSection(); return false;">Back</a>
+                                    </div> -->
+                                    
+
+                                    <div class="list-view" style="display: {!IF(firstRow!='1','none','')};"><h6>&nbsp;&nbsp;</h6></div>
+                                    <apex:variable value="0" var="firstRow"/>
+                                    
+                                    <div class="list-view">
+                                        <apex:repeat value="{!sectionContentHolder}" var="contentItem">
+                                       	<apex:outputPanel styleClass="ListViewContents hidden">
+                                						<c:R_contentItem pageNamePrefix="mep" followIds="{!currentFollowIds}"  basketIds="{!currentBasketIds}" aggregated="{!contentItem}" renderAsList="true" displayUploadDate="true" lastLoginDateItem="{!lastLoginDate}" allowFileEdit="false"/>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel styleClass="GridViewContents hidden">
+                                            <c:R_contentItem pageNamePrefix="mep" followIds="{!currentFollowIds}"  basketIds="{!currentBasketIds}" aggregated="{!contentItem}" renderAsList="false" displayUploadDate="true" lastLoginDateItem="{!lastLoginDate}" allowFileEdit="false"/>
+                                        </apex:outputPanel>
+                                        </apex:repeat>
+                                    </div>
+                            </div>
+                        </c:R_OperationLines>
+                        <c:R_pagination totalNumberOfPages="{!numberOfPages}" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="{!numberOfCurrentPage}" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                 
+            </div>
+            </apex:form>
+      </div>
+      <!-- PAGE FOOTER -->
+        <c:R_pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <apex:form >
+    		<!-- START : Changed for US585/DE678 - Basant -->
+    		<apex:actionFunction name="renderAsListSlider" action="{!renderAsListSlider}" rerender="messages, pageContent" onComplete="jqTransformScript(); sectionVisibility();"/>
+				<apex:actionFunction name="renderAsBoxSlider" action="{!renderAsBoxSlider}" rerender="messages, pageContent" onComplete="jqTransformScript(); sectionVisibility();"/>
+				<!-- START : Changed for US585/DE678 - Basant -->
+        <apex:actionFunction status="ajax-status" name="userResearch" action="{!userResearch}" rerender="messages, sValue" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();"/>
+            
+        <apex:actionFunction status="ajax-status" name="changeNumberOfItemPerPage" action="{!changeNumberOfItemPerPage}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+        
+        <apex:param name="numberOfItemsOnPage" assignTo="{!numberOfItemsOnPage}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="showFirstPage" action="{!showFirstPage}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();"/>
+        <apex:actionFunction status="ajax-status" name="showPrevPage" action="{!showPrevPage}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();"/>
+        <apex:actionFunction status="ajax-status" name="showNextPage" action="{!showNextPage}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();"/>
+    <apex:actionFunction status="ajax-status" name="showLastPage" action="{!showLastPage}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();"/>
+    <apex:actionFunction status="ajax-status" name="showPageRequested" action="{!showPageRequested}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="requestedPageNumber" assignTo="{!numberOfCurrentPage}" value="" />
+        </apex:actionFunction>
+    <apex:actionFunction status="ajax-status" name="clearSection" action="{!clearSection}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();"/>
+    <apex:actionFunction status="ajax-status" name="switchSection" action="{!switchSection}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility(); initializationFunction();">
+            <apex:param name="switchSection" assignTo="{!currentSection}" value=""/>
+    </apex:actionFunction>
+    
+    <apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages" onComplete="bindUserAutoComplete();sectionVisibility();showModalPopup();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>                          
+        <apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages" onComplete="bindUserAutoComplete();sectionVisibility();showModalPopup();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>  
+        
+        <apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" /> 
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" /> 
+        </apex:actionFunction>
+        
+        <apex:actionFunction status="ajax-status" name="setFileToEdit" action="{!setFileToEdit}" rerender="editDialog"  onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="fileToEdit" assignTo="{!fileToEdit}" value="" />
+        </apex:actionFunction>
+        
+        <apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentFollowedItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentFollowedItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentFollowedItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+            <apex:param name="selAll" assignTo="{!R_MultInFollowWithselAll}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentFollowedItemsNo, pageContent, downloadAllDialog" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+            <apex:param name="selAll" assignTo="{!R_MultInFollowWithselAll}" value="" />
+        </apex:actionFunction>
+        <!-- START : Changed for US612/DE634 - Basant Verma -->
+        <apex:actionFunction status="ajax-status" name="orderByAlphabetice" action="{!R_usersearchOrdertBy}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="ordertBy" assignTo="{!R_OrdertByAlpha}" value="" />
+            <apex:param name="ordertBy2" assignTo="{!R_OrdertByDate}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="orderByDate" action="{!R_usersearchOrdertBy}" rerender="messages, pageContent, downloadAllDialog, ds-button" onComplete="jqTransformScript(); sectionVisibility();initializationFunction();">
+            <apex:param name="ordertBy" assignTo="{!R_OrdertByDate}" value="" />
+            <apex:param name="ordertBy2" assignTo="{!R_OrdertByAlpha}" value="" />
+        </apex:actionFunction>
+        <!-- END : Changed for US612/DE634 - Basant Verma -->
+    </apex:form>
+    
+    <div id="moreInfo" class="hidden dialog" >
+        <apex:outputPanel id="overviewDialog">
+            <c:R_overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+        </apex:outputPanel>        
+    </div>
+        
+    <div id="shareInfo">
+        <apex:outputPanel id="shareDialog">         
+            <c:R_share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div> 
+
+    <!-- START : New Script Added -->
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/R_DetailPages.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/contentItemCheckBox.js')}"></script>  
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/sectionOptions.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/contentViewMode.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/contentViewShare.js')}"></script>
+    <script type="text/javascript">
+    /*****************************************************************************
+                START : THIS JAVASCRIPT MUST BE IN PAGE ITSELF
+    *****************************************************************************/
+    /*****************************************************************************
+            MUST BE PROVIDE THIS VARIABLE IN PAGE ITSELF 
+            - IT IS ENABLE US TO USE A COMMON JS FOR MULTIPLE PAGES
+    *****************************************************************************/
+    var pageNamePrefix = "mep";
+    /*****************************************************************************
+                END : THIS JAVASCRIPT MUST BE IN PAGE ITSELF
+    *****************************************************************************/
+    </script>
+    <!-- END : New Script Added -->
+    <!-- Added the select width for  -->
+    <style type="text/css">
+    
+        .hidden {
+            display: none;
+        }
+    .filter .jqTransformSelectWrapper {width: 94px;}
+    .paging-simple .prev {
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            background-image: -webkit-linear-gradient(top, #d40759 1%, #8f043c 100%);
+            background-image: linear-gradient(180deg, #d40759, #8f043c 100%);
+        }
+        
+    </style>
+    </body>
+</apex:page>

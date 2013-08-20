@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>NABCA Brand</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>NABCA Brands</value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand Composite Key --></label>
+        <name>Brand_Composite_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Common Code --></label>
+        <name>Common_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Common Description --></label>
+        <name>Common_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- NABCA Beverage Type Description --></label>
+        <name>NABCA_Beverage_Type_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- NABCA Category --></label>
+        <name>NABCA_Category__c</name>
+        <relationshipLabel><!-- NABCA Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- NABCA IMP DOM IND Description --></label>
+        <name>NABCA_IMP_DOM_IND_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- NABCA Size Description --></label>
+        <name>NABCA_Size_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- NABCA Vendor --></label>
+        <name>NABCA_Vendor__c</name>
+        <relationshipLabel><!-- NABCA Brands --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

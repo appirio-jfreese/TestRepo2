@@ -1,0 +1,67 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : R_HomePage.page
+
+Created By  : Randy Wandell (Appirio)   
+Date 		: 6/25/13
+Story/Task	: US584
+------------------------------------------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_TermsAndConditions">
+    
+<div class="wrapper">
+    <div class="container">
+        <!-- PAGE HEADER -->
+        <c:R_PageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        <script type="text/javascript">
+            pageViewed('Terms and Conditions');
+        </script>
+        
+        <style type="text/css">
+			div.pageContentRichText{
+				text-align: left;
+				margin: 15px;
+				font-family: Tahoma, Arial;
+				font-size:   12px;
+				z-index:     2;
+				min-height:  400px;
+				overflow:    hidden;
+			}
+			
+			div.sub-header {
+				text-align: left;
+				padding-top: 10px;
+				border-bottom: 1px dotted #000000;
+				margin-10px;
+				font-size: 16px;
+				font-weight: bold;
+				color: #2A96A7;
+			}
+
+        </style>
+                
+        <!-- content -->
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+                
+		<div class="sub-header">WEBSITE TERMS &amp; CONDITIONS OF USE</div>
+		<div class="pageContentRichText">
+			<apex:repeat value="{!contentItems}" var="item">
+				<apex:outputText value="{!item['Page_Content_Value__c']}" escape="false" />
+			</apex:repeat>
+			<apex:outputPanel rendered="{!if(attachments.size >  0, true, false)}">		            	
+	            <ol class="attachments-list" style="padding-left: 0px;">
+	            	<apex:repeat value="{!attachments}" var="att">
+	            		<li style="list-style: none;"><a href="{!URLFOR($Action.Attachment.Download, att.id)}" onclick="pageViewed('Website Terms and Conditions of Use - {!att.Name}');">{!att.Name}</a></li>
+	           	 	</apex:repeat>
+	            </ol>
+            </apex:outputPanel>
+		</div>					
+
+       <!-- end of content -->
+
+    </div>
+
+    <c:R_pageFooter isInternal="{!isInternalUser }" />
+</div>
+</apex:page>

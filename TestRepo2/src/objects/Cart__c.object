@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>POS Project: object that represents a shopping cart</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Last_Submitted__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Submitted</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Magento_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Magento ID</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Window_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Order_Window__c</formula>
+        <label>Order Window ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Window__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Order Window</label>
+        <referenceTo>Order_Window__c</referenceTo>
+        <relationshipLabel>Carts</relationshipLabel>
+        <relationshipName>Carts</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shopper_User_License__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Shopper__r.UserType)</formula>
+        <label>Shopper User License</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shopper__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shopper</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Carts</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Processing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Removed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Cart</label>
+    <listViews>
+        <fullName>AMJ_F13_Orders</fullName>
+        <columns>NAME</columns>
+        <columns>Magento_ID__c</columns>
+        <columns>Last_Submitted__c</columns>
+        <columns>Order_Window__c</columns>
+        <columns>Shopper__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Order_Window__c</field>
+            <operation>contains</operation>
+            <value>AMJ F13</value>
+        </filters>
+        <label>AMJ F13 Orders</label>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Order_Window__c</columns>
+        <columns>Shopper__c</columns>
+        <columns>Magento_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Submitted_Carts_AMJ_F13_Quarterly</fullName>
+        <columns>NAME</columns>
+        <columns>Order_Window__c</columns>
+        <columns>Shopper__c</columns>
+        <columns>Status__c</columns>
+        <columns>Last_Submitted__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </filters>
+        <filters>
+            <field>Order_Window__c</field>
+            <operation>equals</operation>
+            <value>AMJ F13 Quarterly Ordering</value>
+        </filters>
+        <label>Submitted Carts: AMJ F13 Quarterly</label>
+    </listViews>
+    <nameField>
+        <displayFormat>CRT-{00000000}</displayFormat>
+        <label>Cart ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IRTMA2_00NZ0000000I1O4MAK</fullName>
+        <active>true</active>
+        <errorMessage>It is not possible to create or edit a Cart Item if the related quarterly or monthly Order Window is new, in review, budgeting, completed or archived</errorMessage>
+        <field>Cart_Item__c.Cart__c</field>
+        <filterItems>
+            <field>Cart__c.Order_Window__r.Status__c</field>
+            <operation>notEqual</operation>
+            <value>New, In Review, Budgeting, Completed, Archived</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Cart Item_Cart</name>
+    </namedFilters>
+    <pluralLabel>Carts</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Order_Window__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Shopper__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Order_Window__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Shopper__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order_Window__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Shopper__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Order_Window__c</searchFilterFields>
+        <searchFilterFields>Shopper__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchResultsAdditionalFields>Order_Window__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Shopper__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Order_Window_Required</fullName>
+        <active>true</active>
+        <description>Enforces the Cart to have a related Order Window. Intended for integration via API.</description>
+        <errorConditionFormula>ISBLANK(Order_Window__c)</errorConditionFormula>
+        <errorDisplayField>Order_Window__c</errorDisplayField>
+        <errorMessage>Please specify a value for the Order Window</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Shopper_Required</fullName>
+        <active>true</active>
+        <description>Enforces the Cart to have a related Shopper. Intended for integration via API.</description>
+        <errorConditionFormula>ISBLANK(Shopper__c)</errorConditionFormula>
+        <errorDisplayField>Shopper__c</errorDisplayField>
+        <errorMessage>Please specify a value for the Shopper</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Status_Required</fullName>
+        <active>true</active>
+        <description>Enforces the Cart to have a Status. Intended for integration via API.</description>
+        <errorConditionFormula>ISPICKVAL(Status__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Status</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,205 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="LegalIntroController">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.BrandMarketingInformationPage, 'style'+siteTheme+'.css')}"/>
+    <style type="text/css">
+        body, html{
+            overflow: hidden;
+        }
+        
+        div.section-box
+        {
+        background-color: #EC8041;
+        }
+        div.intro-header 
+        {
+            color: #EC8041;
+        }
+        .startingloaderbox
+        {
+        
+        background:#EC8041 !important;
+        border-color:#EC8041 !important;
+        }
+        .sectionBorder
+        {
+        background:#EC8041 !important;
+        border-color:#EC8041 !important;
+        {
+        .sectionBackground
+        {
+        background:#EC8041 !important;
+        border-color:#EC8041 !important;
+        }
+    </style>
+    <c:loader />
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+        <script type="text/javascript">
+            pageViewed('Legal - Intro Page');
+        </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content intro-page-bg  {!if(ISNULL(siteTheme),'hidden','')}">
+            <div class="intro-header">
+                Legal
+            </div>
+            <div class="page-wrapper">
+            <a href="Legal">
+                    <div class="section-box hidden intro-box-legal" id="legal">
+                        <div class="white-mask"></div>
+                        <div class="section-title">
+                            Searchable State Database<br/>
+                        </div>
+                       
+                    </div></a>
+                    <a href="{!$Page.SpiritsPlanning}?section=a0GA000000D6DQtMAN" onclick="pageViewed('Legal');" >
+                    <div class="section-box hidden intro-box-planning" id="planning">
+                        <div class="white-mask"></div>
+                        <div class="section-title">
+                            Legal Documents and Guidelines<br/>
+                        </div>
+                        
+                    </div>
+                    </a>
+            </div>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+            hideDialog('startingLoader');
+            hideDialog('startingLoaderOverlayDisable');
+            jQuery("body").css("overflow","auto");
+            jQuery("html").css("overflow","auto");
+        });     
+        
+    var defaultBoxPosition = [];
+
+    jQuery.fn.reverse = function() {
+        return this.pushStack(this.get().reverse(), arguments);
+    };
+        
+    function initPosition(){
+        indexHorizontal = 0;
+        indexVertical = 0;
+        jQuery('.section-box').each(function(index){
+            leftPostition = indexHorizontal*315;
+            topPosition = indexVertical*180;
+            indexHorizontal++;
+            if(index % 3 == 2){
+                indexVertical++;
+                indexHorizontal = 0;
+            }
+
+            elemId = jQuery(this).attr('id');
+            defaultBoxPosition[elemId] = {top: topPosition, left: leftPostition};
+            jQuery(this).css({'top': topPosition, 'left': leftPostition, opacity: 0});
+            jQuery(this).removeClass('hidden');
+            jQuery(this).stop().animate({opacity: 1}, 1000);
+        });
+        jQuery('.section-back').css('opacity', 0);
+        jQuery('.sub-section-box').each(function(){
+            index = jQuery(this).index();
+            if(index > 10){
+                index = 10;
+            }
+            whiteMaskOpacity = index*0.03;
+            jQuery(this).find('.white-mask').css('opacity', whiteMaskOpacity);
+            bgPosition = '-'+(10+Math.floor(Math.random()*180))+'px 0px';
+            jQuery(this).css({backgroundPosition: bgPosition});
+        });
+        
+        jQuery('.section-back').removeClass('hidden');
+        jQuery('.sub-section-box').css('opacity', 0);
+        jQuery('.section-box').find('.white-mask').css('opacity', 0);
+    }
+
+
+    jQuery(document).ready(function() {
+        initPosition();
+        
+        jQuery('.sub-section-box').mouseenter(function(){
+            whiteMaskOpacity = 0.6;
+            jQuery(this).find('.white-mask').css('opacity', whiteMaskOpacity);
+        });
+
+        jQuery('.sub-section-box').mouseleave(function(){
+            index = jQuery(this).index();
+            if(index > 10){
+                index = 10;
+            }
+            whiteMaskOpacity = index*0.03;
+            jQuery(this).find('.white-mask').css('opacity', whiteMaskOpacity);
+        });
+
+        jQuery('.section-box').mouseenter(function(){
+            if(!jQuery(this).hasClass('selected')){
+                whiteMaskOpacity = 0.4;
+                jQuery(this).find('.white-mask').css('opacity', whiteMaskOpacity);
+            }
+        });
+
+        jQuery('.section-box').mouseleave(function(){
+            if(!jQuery(this).hasClass('selected')){
+                jQuery(this).find('.white-mask').css('opacity', 0);
+            }
+        });
+        
+        jQuery('.section-box').click(function(){
+            if(jQuery('.selected').length == 0){
+                jQuery(this).addClass('selected');
+                boxElem = jQuery(this);
+                boxElemId = boxElem.attr('id');
+                whiteMaskOpacity = 0.4;
+                jQuery(this).find('.white-mask').css('opacity', whiteMaskOpacity);
+                jQuery('.section-box').not(this).stop().animate({opacity: 0}, 600, function(){
+                    jQuery(this).addClass('hidden');
+                    boxElem.stop().animate({top: 0, left: 0}, 600, function(){
+                        boxElem.children('.section-back').stop().animate({opacity: 1}, 400);
+                        jQuery('#sub-menu-'+boxElemId).children().each(function(index){
+                            jQuery(this).removeClass('hidden');
+                            jQuery(this).stop().delay(index*150).animate({opacity: 1}, 400, function(){
+                                
+                            });
+                        });                     
+                    });
+                });
+            }
+        });
+        
+        jQuery('.section-back').click(function(){
+            boxElem = jQuery(this).parent();
+            boxElemId = boxElem.attr('id');
+            boxElemDefaultPosition = defaultBoxPosition[boxElemId];
+            button = jQuery(this);          
+            if(boxElem.hasClass('selected')){
+                subMenuElems = jQuery('#sub-menu-'+boxElemId).children();
+                numberOfsubMenuElems = subMenuElems.size();
+                subMenuElems.reverse().each(function(index){
+                    jQuery(this).stop().delay(index*150).animate({opacity: 0}, 400, function(){
+                        jQuery(this).addClass('hidden');
+                        if(index == numberOfsubMenuElems - 1){
+                            button.stop().animate({opacity: 0}, 400);
+                            boxElem.find('.white-mask').css('opacity', 0);
+                            boxElem.stop().animate({top: boxElemDefaultPosition.top, left: boxElemDefaultPosition.left}, 600, function(){
+                                jQuery('.section-box').removeClass('hidden');
+                                jQuery('.section-box').not(this).stop().animate({opacity: 1}, 600, function(){
+                                    boxElem.removeClass('selected');
+                                });
+                            });
+                        }
+                    });
+                });             
+            }
+        });     
+    });
+    </script>
+
+</apex:page>

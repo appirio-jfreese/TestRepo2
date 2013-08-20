@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Survey</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Surveys</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc10 --></label>
+        <name>Beating_Comp_Calc10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc1 --></label>
+        <name>Beating_Comp_Calc1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc2 --></label>
+        <name>Beating_Comp_Calc2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc3 --></label>
+        <name>Beating_Comp_Calc3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc4 --></label>
+        <name>Beating_Comp_Calc4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc5 --></label>
+        <name>Beating_Comp_Calc5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc6 --></label>
+        <name>Beating_Comp_Calc6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc7 --></label>
+        <name>Beating_Comp_Calc7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc8 --></label>
+        <name>Beating_Comp_Calc8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Calc9 --></label>
+        <name>Beating_Comp_Calc9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 10 --></label>
+        <name>Beating_Comp_Diageo_Val_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 1 --></label>
+        <name>Beating_Comp_Diageo_Val_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 2 --></label>
+        <name>Beating_Comp_Diageo_Val_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 3 --></label>
+        <name>Beating_Comp_Diageo_Val_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 4 --></label>
+        <name>Beating_Comp_Diageo_Val_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 5 --></label>
+        <name>Beating_Comp_Diageo_Val_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 6 --></label>
+        <name>Beating_Comp_Diageo_Val_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 7 --></label>
+        <name>Beating_Comp_Diageo_Val_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 8 --></label>
+        <name>Beating_Comp_Diageo_Val_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Diageo Val 9 --></label>
+        <name>Beating_Comp_Diageo_Val_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 10 --></label>
+        <name>Beating_Comp_Tot_Val_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 1 --></label>
+        <name>Beating_Comp_Tot_Val_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 2 --></label>
+        <name>Beating_Comp_Tot_Val_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 3 --></label>
+        <name>Beating_Comp_Tot_Val_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 4 --></label>
+        <name>Beating_Comp_Tot_Val_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 5 --></label>
+        <name>Beating_Comp_Tot_Val_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 6 --></label>
+        <name>Beating_Comp_Tot_Val_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 7 --></label>
+        <name>Beating_Comp_Tot_Val_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 8 --></label>
+        <name>Beating_Comp_Tot_Val_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Beating Comp Tot Val 9 --></label>
+        <name>Beating_Comp_Tot_Val_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 10 --></label>
+        <name>Extra_Credit_Value_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 1 --></label>
+        <name>Extra_Credit_Value_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 2 --></label>
+        <name>Extra_Credit_Value_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 3 --></label>
+        <name>Extra_Credit_Value_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 4 --></label>
+        <name>Extra_Credit_Value_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 5 --></label>
+        <name>Extra_Credit_Value_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 6 --></label>
+        <name>Extra_Credit_Value_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 7 --></label>
+        <name>Extra_Credit_Value_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 8 --></label>
+        <name>Extra_Credit_Value_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extra Credit Value 9 --></label>
+        <name>Extra_Credit_Value_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Score - Beating the Competition --></label>
+        <name>Score_Beating_the_Competition__c</name>
+    </fields>
+    <fields>
+        <label><!-- Score - Distribution Shelf Display --></label>
+        <name>Score_Distribution_Shelf_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Score - Extra Credit --></label>
+        <name>Score_Extra_Credit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Score - Innovation Sustainovation --></label>
+        <name>Score_Sustainovation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Score - Total --></label>
+        <name>Score_Total__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey Date --></label>
+        <name>Survey_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey Layout --></label>
+        <name>Survey_Layout__c</name>
+        <relationshipLabel><!-- Surveys --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Status --></label>
+        <name>Survey_Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed - Complete</masterLabel>
+            <translation><!-- Closed - Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open - In Progress</masterLabel>
+            <translation><!-- Open - In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open - Not Started</masterLabel>
+            <translation><!-- Open - Not Started --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Survey Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Survey Layout VF</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

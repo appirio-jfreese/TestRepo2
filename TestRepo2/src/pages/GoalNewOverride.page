@@ -1,0 +1,7 @@
+<apex:page standardController="Goal__c">
+
+	<apex:pageMessage summary="Please use the Goal Creation and/or Action Assignment pages to create goals."
+					  severity="warning"
+					  strength="3"/>
+
+</apex:page>

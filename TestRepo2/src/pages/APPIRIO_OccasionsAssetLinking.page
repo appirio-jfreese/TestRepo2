@@ -1,0 +1,490 @@
+<apex:page id="pg" standardstylesheets="false" controller="APPIRIO_OccasionsAssetLinkingController" sidebar="false" showHeader="false">
+    <html>
+        <head>
+            <apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-1.6.2.min.js')}"  />
+            <apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-ui-1.8.16.custom.min.js')}"  />
+            <apex:stylesheet value="{!URLFOR($Resource.jQueryLib, '/css/ui-lightness/jquery-ui-1.8.16.custom.css')}"  />
+            <apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7ViewAllRecipesCSS}" /></apex:outputText>
+            <apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.viewAllRecipesCSS}" /></apex:outputText>
+            <style type="text/css">
+                .th70 {
+                    width: 70px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    font-weight: bold;
+                    display: inline;
+                    padding-left: 20px;
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .th100 {
+                    width: 100px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    font-weight: bold;
+                    display: inline;
+                    padding-left: 20px;
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .th150 {
+                    width: 150px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    font-weight: bold;
+                    display: inline;
+                    padding-left: 20px;
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .th200 {
+                    width: 200px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    font-weight: bold;
+                    display: inline;
+                    padding-left: 20px; 
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                
+                
+                .tr75 {
+                    width: 75px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    display: inline;
+                    padding-left: 20px;
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .tr100 {
+                    width: 100px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    display: inline;
+                    padding-left: 20px;
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .tr125 {
+                    width: 125px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    display: inline;
+                    padding-left: 20px;
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .tr150 {
+                    width: 150px;
+                    float: left;
+                    vertical-align: middle;
+                    text-decoration: none !important;
+                    display: inline;
+                    padding-left: 20px; 
+                    padding-top:9px;
+                    word-wrap:break-word;
+                }
+                .imgCol {
+                    width: 70px;
+                    float: left;
+                    vertical-align: middle;
+                    display: inline;  
+                    -moz-border-radius:6x;
+                    -webkit-border-radius:6px;
+                    border-radius:6px;
+                    border-color:black;
+                    border-width:1px;
+                    border-style:solid;
+                    text-align:center;
+                    background-color:white;
+                }
+                
+                .statusButton {
+                    width: 120px;
+                    text-align: center;
+                    -moz-box-shadow: 0px 2px 2px 2px #888;
+                    -webkit-box-shadow:  0px 2px 2px 2px #888;
+                    box-shadow: 0px 2px 2px 2px #888;
+                    -moz-border-radius:16px;
+                    -webkit-border-radius:16px;
+                    border-radius:16px;
+                    border:2px solid #ffffff;
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#98BC55', endColorstr='#89A94C',GradientType=0);
+                    background: -moz-linear-gradient(top, #98BC55 0%,#98BC55 49%,#89A94C 50%);
+                    display:inline-block;
+                    font-family:"Arial", "Arial", sans-serif;;
+                    font-size:13px;
+                    padding: 4px;
+                    font-weight:bold;
+                    text-decoration:none;
+                    behavior:url(border-radius.htc);
+                }
+            </style>
+            
+            <script>
+				$j = jQuery.noConflict();
+ 				$j(document).ready(function(){
+				 	typeCount = {!typeCounter};
+				 	monthCount = {!monthCounter};
+				 	dayCount = {!dayCounter};
+				 	localeCount = {!localeCounter};
+				 	
+				    if($j("#nav")) {
+				        $j("#nav dd").hide();
+				         $j('#nav dt b').each(function(){
+				       			 if(typeCount > 0)
+				       			 $j('#typeHead').addClass('visitedClass1');
+				       			 if(monthCount > 0)
+				       			 $j('#monthHead').addClass('visitedClass1');
+				       			 if(dayCount > 0)
+				       			 $j('#dayHead').addClass('visitedClass1');
+				       			 if(localeCount > 0)
+				       			 $j('#localeHead').addClass('visitedClass1');
+				        }); 
+				         
+				        $j("#nav dt b").click(function() {
+				        	//alert('Hello');
+				            if(this.className.indexOf("clicked") != -1) {
+				                $j(this).parent().next().slideUp(200);
+				                $j(this).removeClass("clicked");
+				                if(typeCount>0)
+				                $j("#typeHead").addClass('visitedClass1');
+				                if(monthCount>0)
+				                $j("#monthHead").addClass('visitedClass1');
+				                if(dayCount>0)
+				                $j("#dayHead").addClass('visitedClass1');
+				                if(localeCount>0)
+				                $j("#localeHead").addClass('visitedClass1');
+				            } else {
+				                $j("#nav dt b").removeClass();
+				                $j(this).addClass("clicked");
+				                $j("#nav dd:visible").slideUp(200);
+				                $j(this).parent().next().slideDown(500);
+				                if(typeCount>0)
+				                $j("#typeHead").addClass('visitedClass1');
+				                if(monthCount>0)
+				                $j("#monthHead").addClass('visitedClass1');
+				                if(dayCount>0)
+				                $j("#dayHead").addClass('visitedClass1');
+				                if(localeCount>0)
+				                $j("#localeHead").addClass('visitedClass1');
+				            }
+				            return false;
+				        });
+				    }
+				}); 
+
+				var typeCount;
+				var monthCount;
+				var dayCount;
+				var localeCount;
+				
+				$j(function(){
+				
+					$j('#rootPicklist').change(function(){
+				    	// alert($j(this).val());
+				        // getTypeValue($j(this), $j('#rootRow'));
+					}); 
+				          
+					$j('li').click(function(){
+				    	var s = $j(this).parent().parent();
+				       	if(!$j(this).hasClass('visitedClass1')){
+				       	 	$j(this).addClass('visitedClass1');
+				       	 	if(s.prev('dt').find('b:first').attr('id') == 'typeHead')
+				       			typeCount++;
+				       		if(s.prev('dt').find('b:first').attr('id') == 'monthHead')
+				       			monthCount++;
+				       		if(s.prev('dt').find('b:first').attr('id') == 'dayHead')
+				       			dayCount++;	
+				       		if(s.prev('dt').find('b:first').attr('id') == 'localeHead')
+				       			localeCount++;
+						} else {
+				        	$j(this).removeClass('visitedClass1');
+				         	if(s.prev('dt').find('b:first').attr('id') == 'typeHead')
+				       			typeCount--;
+				       		if(s.prev('dt').find('b:first').attr('id') == 'monthHead')
+				       			monthCount--;
+				       		if(s.prev('dt').find('b:first').attr('id') == 'dayHead')
+				       			dayCount--;
+				       		if(s.prev('dt').find('b:first').attr('id') == 'localeHead')
+				       			localeCount--;
+						}
+			      	 	if(typeCount>0 && s.prev('dt').find('b:first').attr('id') == 'typeHead')
+			       			s.prev('dt').find('b:first').addClass('visitedClass1');
+			        	else if(typeCount<1 && s.prev('dt').find('b:first').attr('id') == 'typeHead')
+			        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+			        	if(monthCount>0 && s.prev('dt').find('b:first').attr('id') == 'monthHead')
+			       			s.prev('dt').find('b:first').addClass('visitedClass1');
+			        	else if(monthCount<1 && s.prev('dt').find('b:first').attr('id') == 'monthHead')
+			        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+			        	if(dayCount>0 && s.prev('dt').find('b:first').attr('id') == 'dayHead')
+			       			s.prev('dt').find('b:first').addClass('visitedClass1');
+			        	else if(dayCount<1 && s.prev('dt').find('b:first').attr('id') == 'dayHead')
+			        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+			        	if(localeCount>0 && s.prev('dt').find('b:first').attr('id') == 'localeHead')
+			       			s.prev('dt').find('b:first').addClass('visitedClass1');
+			        	else if(localeCount<1 && s.prev('dt').find('b:first').attr('id') == 'localeHead')
+			        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+			        	     
+			            eval($j(this).find('a:first').attr("onclick"));
+			        });
+			    });
+                
+                function sResults(){
+                    var sortValue;
+                    var cc = document.getElementById("sortResults").options[document.getElementById("sortResults").selectedIndex].value;
+                    if(cc == "Alphabetically(A-Z)")
+                        sortValue = 'ASC';
+                    else if(cc == "Alphabetically(Z-A)")
+                        sortValue = 'DESC';
+                    
+                    sortTypetoDisplay(sortValue);
+                    //searchResPanel(cc
+				}
+				
+				function visibleStatus(bId) {
+					document.getElementById("pg:theform:repeatId:"+bId+":img").style.visibility = '';
+				}
+				
+				function invisibleStatus() {
+					var cnt = parseInt('{!totalRecords}');
+					for(var i=0; i<cnt; i++) {
+						if(document.getElementById("pg:theform:repeatId:"+i+":img") != null) {
+							document.getElementById("pg:theform:repeatId:"+i+":img").style.visibility = 'hidden';
+						}
+					}
+				}
+            </script>
+        </head>
+        <body onload="invisibleStatus()">
+            <div id="outerDiv" class="outerDiv">
+                <c:DashBoardHeader />
+                <div id="bodyHeader" >
+                    <div id="headerInner">
+                        <div class="header arrow3">
+                            <apex:outputLink value="apex/MM_RecipeDashboard"><apex:image title="Dashboard" value="/resource/1320379988000/home"/></apex:outputLink>
+                        </div> 
+                        <apex:image styleClass="header arrow2" title="Home" value="/resource/1320379988000/barrow"/>
+                        <b>
+			    		<apex:outputLink value="/apex/APPIRIO_MyAssets">
+			    			<apex:outputText value="My Assets" styleClass="header arrow"></apex:outputText>
+			    		</apex:outputLink>
+			    		</b>
+			    		<apex:image styleClass="header arrow2" title="My Assets" value="/resource/1320379988000/barrow"/>
+                        <b>
+			    		<apex:outputLink value="/apex/APPIRIO_ManageAsset?Id={!selectedAssetId}">
+			    			<apex:outputText value="{!selectedAssetName}" styleClass="header arrow"></apex:outputText>
+			    		</apex:outputLink>
+			    		</b>
+                        <apex:image styleClass="header arrow2" title="{!selectedAssetName}" value="/resource/1320379988000/barrow"/>
+                        <b><apex:outputText value="Add Occasions" styleClass="header arrow"></apex:outputText></b>
+                    </div>
+                </div>
+                <div class="innerDiv">
+                    <apex:form id="theform" >
+                        
+                        <apex:actionFunction name="filterResults" action="{!filterResults}"  rerender="theForm"  status="statusImg1"/>
+                        
+                        <div id="mainDiv" class="main">
+                            <div class="colmask leftmenu">
+                                <div class="col2" id="test" style="margin-top: 0px;">
+                                   <div class="whiteText"> <apex:outputLabel value="Filter Your Results" styleClass="whiteText"/></div>
+                                   <div class="xclass">
+                                        <div class="dlSearchComponent">
+                                            <b style="font-size:14px;">Search:</b>
+                                            <apex:inputText styleClass="textInput" value="{!searchTerm}"/>
+                                            <apex:commandButton styleClass="filterButton filterButtonsClass" value="Search" action="{!filterResults}" status="statusImg1" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <apex:commandButton styleClass="filterButton filterButtonsClass" value="Clear" action="{!clearFilters}" status="statusImg1" />
+                                            <apex:actionStatus id="statusImg1">
+                                                 <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                 <apex:facet name="stop" />
+                                            </apex:actionStatus>       
+                                        </div>
+                                        <hr class="horizontalRuleClass"/>
+                                   </div>
+                                   <div class="content">
+                                        <!-- Column 2 start -->
+                                        <dl id="nav">
+                                        	<!-- Type Filter  -->
+											<dt><b id="typeHead" style="padding-left:10px;">TYPE</b>
+						                    </dt>
+						                    <dd>
+						                        <ul>
+						                            <apex:repeat value="{!types}" var="c">
+						                                <li class="{!IF(CONTAINS(typeLast, c),'visitedClass1','vClass')}" styleclass="statusStyle">
+						                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" oncomplete="invisibleStatus();" status="typesImgStatus">
+						                                        <apex:param name="currentType" value="{!c}" assignTo="{!currentType}"/>
+						                                    </apex:commandLink> &nbsp;
+						                                    <apex:actionStatus id="typesImgStatus">
+						                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+						                                		<apex:facet name="stop" />
+						                            		</apex:actionStatus> 
+						                                </li>     
+						                            </apex:repeat>
+						                        </ul>
+						                    </dd>
+						                    <!-- Month Filter  -->
+											<dt><b id="monthHead" style="padding-left:10px;">MONTH</b>
+						                    </dt>
+						                    <dd>
+						                        <ul>
+						                            <apex:repeat value="{!months}" var="c">
+						                                <li class="{!IF(CONTAINS(monthLast, c),'visitedClass1','vClass')}" styleclass="statusStyle">
+						                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" oncomplete="invisibleStatus();" status="monthsImgStatus">
+						                                        <apex:param name="currentMonth" value="{!c}" assignTo="{!currentMonth}"/>
+						                                    </apex:commandLink> &nbsp;
+						                                    <apex:actionStatus id="monthsImgStatus">
+						                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+						                                		<apex:facet name="stop" />
+						                            		</apex:actionStatus> 
+						                                </li>     
+						                            </apex:repeat>
+						                        </ul>
+						                    </dd>
+						                    
+						                    <!-- Day Filter  -->
+											<dt><b id="dayHead" style="padding-left:10px;">DAY</b>
+						                    </dt>
+						                    <dd>
+						                        <ul>
+						                            <apex:repeat value="{!days}" var="c">
+						                                <li class="{!IF(CONTAINS(dayLast, c),'visitedClass1','vClass')}" styleclass="statusStyle">
+						                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" oncomplete="invisibleStatus();" status="daysImgStatus">
+						                                        <apex:param name="currentDay" value="{!c}" assignTo="{!currentDay}"/>
+						                                    </apex:commandLink> &nbsp;
+						                                    <apex:actionStatus id="daysImgStatus">
+						                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+						                                		<apex:facet name="stop" />
+						                            		</apex:actionStatus> 
+						                                </li>     
+						                            </apex:repeat>
+						                        </ul>
+						                    </dd> 
+                                        	
+                                        	<!-- Locale Filter  -->
+											<dt><b id="localeHead" style="padding-left:10px;">LOCALE</b>
+						                    </dt>
+						                    <dd>
+						                        <ul>
+						                            <apex:repeat value="{!locales}" var="c">
+						                                <li class="{!IF(CONTAINS(localeLast, c),'visitedClass1','vClass')}" styleclass="statusStyle">
+						                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" oncomplete="invisibleStatus();" status="localesImgStatus">
+						                                        <apex:param name="currentLocale" value="{!c}" assignTo="{!currentLocale}"/>
+						                                    </apex:commandLink> &nbsp;
+						                                    <apex:actionStatus id="localesImgStatus">
+						                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+						                                		<apex:facet name="stop" />
+						                            		</apex:actionStatus> 
+						                                </li>     
+						                            </apex:repeat>
+						                        </ul>
+						                    </dd>
+                                        	
+                                        	
+                                        </dl>
+                                        <!-- Column 2 end --> 
+                                    </div>     
+                                </div>
+                                
+                                <apex:actionFunction name="publishAll" action="{!publishAll}"  oncomplete="invisibleStatus();" rerender="theForm"  status="publishStatusImg"/>
+                                <apex:actionFunction name="suppressedAll" action="{!suppressedAll}" oncomplete="invisibleStatus();" rerender="theForm"  status="publishStatusImg"/>
+                                <apex:actionFunction name="publishOccasion" action="{!publishOccasion}" oncomplete="invisibleStatus();" rerender="theForm">
+                                    <apex:param name="selectedOccasionId" assignto="{!selectedOccasionId}" value=""/>
+                                </apex:actionFunction>
+                                
+                                <apex:outputpanel id="theForm">
+                                    <div id="col1Div" class="col1">
+                                        <apex:outputpanel id="opDiv1" rendered="{!If(totalRecords>0,true,false)}">
+                                            <!-- Column 1 start -->
+                                            <div id="topHeaderDiv">
+												<div style="width: auto; float: left; text-align: center;">
+					           						<apex:commandButton style="width :90px;" styleClass="filterButton filterButtonsClass" value="Publish All" title="Click to Publish" onclick="publishAll(); return false;" />&nbsp;
+					           						<apex:commandButton style="width :90px;" styleClass="filterButton filterButtonsClass" value="Suppress All" title="Click to Suppress" onclick="suppressedAll(); return false;" />
+					                			</div>
+						                		<div class="sortClass1" style="width: auto; text-align: center;">
+			                                            <b>&nbsp;<apex:outputtext value="Sort Results:" /></b>
+			                                            <apex:selectList value="{!sortTypeTop}" id="selectedOrder" multiselect="false" size="1" style="width: auto;">
+			                                             <apex:selectOptions value="{!sortOrderTypes}"></apex:selectOptions>
+			                                             <apex:actionSupport event="onchange" rerender="theForm" action="{!filterResults}" oncomplete="invisibleStatus()" status="publishStatusImg"/>
+			                                            </apex:selectList>&nbsp;
+			                                    </div>
+						           				<div class="pageClass" style="vertical-align:top; width: auto;"> 
+						           					Now Viewing :&nbsp;{!currentStartRecord}&nbsp; - &nbsp;{!currentEndRecord}&nbsp;of&nbsp;{!totalRecords}    	
+						           					<br/> 
+						           					<apex:outputText value="Page:" style="vertical-align:middle;"/>&nbsp;
+						           					<apex:commandLink action="{!first}" rendered="{!If(totalRecords>9,true,false)}">
+						           						<apex:image value="{!$Resource.FirstArrow}"  style="vertical-align:middle;"/>
+						           					</apex:commandlink>&nbsp;
+						           					<apex:commandLink action="{!previous}" rendered="{!hasPrevious}">
+						           						<apex:image value="{!$Resource.PreviousArrow}" style="vertical-align:middle;"/>
+						           					</apex:commandlink>&nbsp;&nbsp;
+						           					<apex:repeat value="{!pageNumbers}" var="p">
+						           						<apex:commandLink action="{!p.pageItems}" styleClass="{!p.Col} nLinks" >{!p.num}<apex:param name="cnt" value="{!p.cnt}"></apex:param></apex:commandlink>&nbsp;
+						           					</apex:repeat>&nbsp;           
+						           					<apex:commandLink action="{!next}" rendered="{!hasNext}" >
+						            					<apex:image value="{!$Resource.NextArrow}" style="vertical-align:middle;" />
+						           					</apex:commandlink>&nbsp;
+						           					<apex:commandLink action="{!last}" rendered="{!If(totalRecords>9,true,false)}" >
+						           						<apex:image value="{!$Resource.LastArrow}" style="vertical-align:middle;" />
+						           					</apex:commandlink>&nbsp;&nbsp;
+						       	   				</div>
+						       	   				<!--  </span>  --> 
+			           						</div>
+                                            <!--  </apex:outputpanel>   -->         
+                                            <!-- &#x2713; -->
+                                            <br/> 
+                                            <div id="searchResultsList">
+                                            	<apex:actionStatus id="publishStatusImg">
+                                                     <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                     <apex:facet name="stop" />
+                                                </apex:actionStatus>
+                                                <apex:variable var="cnt" value="{!0}"/>
+                                                <apex:repeat id="repeatId" var="o" value="{!WrapperOccasions}" >
+                                                	<div id="searchResultRowId" class="searchResultRow">
+                                                        <apex:outputPanel styleClass="mainRow" id="refreshPane">
+	                                                    	<span class="tr150">
+	                                                            <apex:outputText value="{!o.occ.Name_Of_The_Occasion__c}"/>
+	                                                        </span>
+	                                                        <span class="tr75">
+	                                                            <apex:outputText value="{!o.occ.Locale__c}"/>
+	                                                        </span>
+	                                                        <span class="tr125">
+	                                                            <apex:outputText value="{!o.occ.Occasion_Type__c}"/>
+	                                                        </span>
+	                                                        <span class="tr150">
+	                                                            <apex:commandButton id="btnPublish" styleClass="statusButton" style="color:white;background-color:#98BC55;" value="{!o.publishStatus}" onclick="visibleStatus({!cnt}); publishOccasion('{!o.occ.Id}'); return false;" title="Click to Suppress" rendered="{!if(o.publishStatus=='Published',true,false)}"/>
+	                                                            <apex:commandButton id="btnSuppres" styleClass="statusButton" style="background-color:yellow;" value="{!o.publishStatus}" onclick="visibleStatus({!cnt}); publishOccasion('{!o.occ.Id}'); return false;" title="Click to Publish" rendered="{!if(o.publishStatus=='Suppressed',true,false)}"/>
+	                                                            <apex:commandButton id="btnReady" styleClass="statusButton" style="background-color:white;" value="{!o.publishStatus}" onclick="visibleStatus({!cnt}); publishOccasion('{!o.occ.Id}'); return false;" title="Click to Publish" rendered="{!if(o.publishStatus=='Available',true,false)}"/>
+	                                                            &nbsp;&nbsp;<apex:image id="img" value="{!$Resource.loadingData}" width="17px" height="17px" rendered="true"/>
+	                                                        </span> 
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                    <apex:variable var="cnt" value="{!cnt+1}"/>                
+                                                </apex:repeat>
+                                            </div> 
+                                        </apex:outputpanel>   
+                                        <apex:outputPanel styleClass="navPanel navPanelError" rendered="{!If(totalRecords=0,true,false)}" >
+                                            <div class="dashboardRow"></div>
+                                            <br/>
+                                            <div style="margin-left: 100px; width:800px;">No Occasions Found. Please Refine Your Search Criteria.</div> 
+                                        </apex:outputPanel> 
+                                        <!-- Column 1 end --> 
+                                    </div>
+                                </apex:outputpanel>
+                            </div>
+                        </div>
+                    </apex:form>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

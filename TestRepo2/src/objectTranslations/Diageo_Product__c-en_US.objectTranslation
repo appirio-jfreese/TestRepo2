@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Recipe Diageo Product</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Recipe Diageo Products</value>
+    </caseValues>
+    <fields>
+        <label><!-- API External ID --></label>
+        <name>API_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alcoholic? --></label>
+        <name>Alcoholic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available --></label>
+        <name>Available__c</name>
+        <picklistValues>
+            <masterLabel>FALSE</masterLabel>
+            <translation><!-- FALSE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRUE</masterLabel>
+            <translation><!-- TRUE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Blended Scotch</masterLabel>
+            <translation><!-- Blended Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bourbon</masterLabel>
+            <translation><!-- Bourbon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Classic Malt</masterLabel>
+            <translation><!-- Classic Malt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Irish Whiskey</masterLabel>
+            <translation><!-- Irish Whiskey --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Content Display ID --></label>
+        <name>Content_Display_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content ID --></label>
+        <name>Content_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Brand --></label>
+        <name>Diageo_Brand_Id__c</name>
+        <relationshipLabel><!-- Recipe Diageo Products --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Diageo Product Image --></label>
+        <name>Diageo_Product_Image__c</name>
+        <relationshipLabel><!-- Recipe Diageo Products --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Diageo Product Tags --></label>
+        <name>Diageo_Product_Tags__c</name>
+    </fields>
+    <fields>
+        <label><!-- Equivalent Units --></label>
+        <name>Equivalent_Units__c</name>
+    </fields>
+    <fields>
+        <label><!-- File Type --></label>
+        <name>File_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Image --></label>
+        <name>Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Locale --></label>
+        <name>Locale__c</name>
+        <picklistValues>
+            <masterLabel>DE</masterLabel>
+            <translation><!-- DE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-CA</masterLabel>
+            <translation><!-- EN-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-GB</masterLabel>
+            <translation><!-- EN-GB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-IN</masterLabel>
+            <translation><!-- EN-IN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-US</masterLabel>
+            <translation><!-- EN-US --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-AR</masterLabel>
+            <translation><!-- ES-AR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CL</masterLabel>
+            <translation><!-- ES-CL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CO</masterLabel>
+            <translation><!-- ES-CO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-MX</masterLabel>
+            <translation><!-- ES-MX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR</masterLabel>
+            <translation><!-- FR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR-CA</masterLabel>
+            <translation><!-- FR-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PT-BR</masterLabel>
+            <translation><!-- PT-BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TH</masterLabel>
+            <translation><!-- TH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Long Description --></label>
+        <name>Long_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Level 5 Code --></label>
+        <name>SAP_Level_5_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Level 5 Description --></label>
+        <name>SAP_Level_5_Descr__c</name>
+    </fields>
+    <fields>
+        <label><!-- Short Description --></label>
+        <name>Short_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Units --></label>
+        <name>Units__c</name>
+    </fields>
+    <fields>
+        <label><!-- Version Number --></label>
+        <name>Version_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>Diageo Product Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

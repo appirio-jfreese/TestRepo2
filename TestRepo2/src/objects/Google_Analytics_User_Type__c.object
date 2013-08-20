@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Custom setting that maps the Salesforce UserType values to the values of &quot;Internal&quot; or &quot;External&quot;  (so that Google Analytics can track internal vs. external users)</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Google_Analytics_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Google Analytics Value</label>
+        <length>8</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Google Analytics User Type</label>
+</CustomObject>

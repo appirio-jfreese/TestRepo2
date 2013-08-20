@@ -1,0 +1,220 @@
+<apex:page standardController="Folder__c" extensions="Controller_Folder">
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+	<style type="text/css">
+		.multiSelectPicklistRow td select {
+			height: 200px;
+			width: 100px !important;
+		}
+		
+		.selectBox {
+		  min-width: 260px !important;
+		}
+	</style>
+	<script type="text/javascript">
+		  jQuery(document).ready(function() {
+		        bindEvents();
+		        bindEventsOU();
+	     	});
+	     	
+	     	var bindEvents = function(){
+		     	jQuery('.addDistributorButton').live('click', function() {
+		        	jQuery('.DL option:selected').remove().appendTo('.DL_Selected');
+		        	refreshHiddenFields();
+		        	return false;
+		     	});
+		     	 jQuery('.removeDistributorButton').live('click', function() {
+		        	jQuery('.DL_Selected option:selected').remove().appendTo('.DL');
+		        	refreshHiddenFields();
+		        	return false;
+		     	});
+	     		refreshHiddenFields();
+	     	}
+	     	
+	     	var fireChange = true;
+	     	var bindEventsOU = function(){
+		     	jQuery('.addOrganizationUnitButton').live('click', function() {
+		        	jQuery('.OL option:selected').remove().appendTo('.OL_Selected');
+		        	refreshHiddenFieldsOU();
+		        	return false;
+		     	});
+		     	 jQuery('.removeOrganizationUnitButton').live('click', function() {
+		        	jQuery('.OL_Selected option:selected').remove().appendTo('.OL');
+		        	refreshHiddenFieldsOU();
+		        	return false;
+		     	});
+		     	fireChange = false;
+	     		refreshHiddenFieldsOU();
+	     		fireChange = true;
+	     	}
+	     	
+	     	var refreshHiddenFieldsOU = function(){
+	     		var selectedOrganizationUnitsIds = '';
+	     		
+	     		var nodes = jQuery('.OL_Selected option');
+	     		var glue = '';
+	     		for(i=0; i < nodes.length; i++){
+	     			selectedOrganizationUnitsIds += glue + nodes[i].value;
+	     			glue = ';';
+	     		}
+	     		
+	     		jQuery('input[id*=selectedOrganizationUnitsIds]').val(selectedOrganizationUnitsIds);
+	     		
+	     		if(fireChange)
+	     			setDistributors(selectedOrganizationUnitsIds);
+	     		
+	     		jQuery(".OL_Selected").addClass('ie-fixer'); 
+	     		jQuery(".OL_Selected").removeClass('ie-fixer');
+	     	}
+	     	
+	     	
+	     	var refreshHiddenFields = function(){
+	     		var selectedDistributorIds = '';
+
+	     		
+	     		var nodes = jQuery('.DL_Selected option');
+	     		var glue = '';
+	     		for(i=0; i < nodes.length; i++){
+	     			selectedDistributorIds += glue + nodes[i].value;
+	     			glue = ';';
+	     		}
+	     		
+	     		jQuery('input[id*=selectedDistributorIds]').val(selectedDistributorIds);
+	     		jQuery(".DL_Selected").addClass('ie-fixer'); 
+	     		jQuery(".DL_Selected").removeClass('ie-fixer');
+	     	}
+	     	
+	     	var hideDistributors = function(){
+	     		jQuery('#DL').hide();
+	     		refreshHiddenFields();
+	     	}
+	     	
+	     	var hideOU = function(){
+	     		jQuery('#OL').hide();
+	     		refreshHiddenFieldsOU();
+	     	}
+	     	
+	     	var organizationUnitsMultiselectBox = null;
+	     	
+	     	function getOrgUnits(){     	
+	     		selectedOrganizationUnitsIds = jQuery('input[id*=selectedOrganizationUnitsIds]').val();
+     			glue = ';';
+     			selectedOrganizationUnitsIds  += jQuery(document.getElementById(selectedOrganizationUnitsIds)).val() + glue;   			
+    			updateOrganizationUnits(selectedOrganizationUnitsIds);
+	     	}	     	
+	     	
+	</script>
+    <apex:sectionHeader title="Folder" subtitle="{!Folder__c.name}"/>  
+        <apex:outputPanel id="messages">
+            <apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+        <apex:form >
+           	<apex:actionFunction name="updateDistributors" action="{!updateDistributors}" rerender="DL">
+           		<apex:param name="SelectedDivisions" assignTo="{!SelectedDivisions}" value="" />
+				<apex:param name="selectedDistributorIds" assignTo="{!selectedDistributorIds}" value="" />
+           	</apex:actionFunction>
+           	<apex:actionFunction name="updateOrganizationUnits" action="{!updateOrganizationUnits}" rerender="OL,DL">
+				<apex:param name="selectedOrganizationUnitsIds" assignTo="{!OrganizationUnitsIds}" value="" />
+           	</apex:actionFunction>
+           	<apex:actionFunction name="setDisplaySettings" action="{!setDisplaySettings}" rerender="formSection" />
+           	<apex:actionFunction name="changeTheme" action="{!changeTheme}" rerender="formSection" />
+
+           	<apex:actionFunction name="setDistributors" action="{!setDistributors}" rerender="DL">
+           		<apex:param name="selectedOus" assignTo="{!selectedOus}" value=""/>
+           	</apex:actionFunction>
+           	           	
+            <apex:pageBlock title="Folder Edit" mode="edit">
+                <apex:pageMessages />
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Save" action="{!save}"/>
+                    <apex:commandButton value="Cancel" action="{!cancel}"/>
+                </apex:pageBlockButtons> 
+				
+                <apex:pageBlockSection title="Folder Detail" collapsible="false" id="formSection" columns="1"> 
+                    <apex:inputField value="{!Folder__c.Name}" rendered="{!showFolderName}"/>
+                    <apex:inputField value="{!Folder__c.Page_Section__c}" onchange="setDisplaySettings()"/>
+                    <apex:inputField value="{!Folder__c.Parent_Folder__c}" rendered="{!showParentFolder}"/>
+					
+					<apex:inputField value="{!Folder__c.Classification__c}" rendered="{!isMulticlassificationAllowed}"/>
+                    <apex:PageBlockSectionItem rendered="{!NOT(isMulticlassificationAllowed)}">  
+                    	<apex:outputLabel value="Classification"/>
+	                    <apex:selectList value="{!Folder__c.Classification__c}" size="1" onchange="changeTheme()">
+		                    <apex:selectOptions value="{!Themes}"/>              
+		                </apex:selectList>
+		            </apex:PageBlockSectionItem>
+		            
+					<!-- ORG UNITS -->
+	              	<apex:PageBlockSectionItem rendered="{!showOrganizationUnits}" id="organizationUnitsMultiselect">
+	                        <apex:outputLabel value="Organization Units" />
+	                        <apex:outputPanel id="OL">
+								<apex:inputText style="visibility:hidden;float:right" value="{!Folder__c.OrgUnits__c}" id="selectedOrganizationUnitsIds" onchange="getOrgUnits();"/>
+		                        <table>
+		                        	<tr>
+				                        <td>
+				                        	<select class="selectBox OL" size="10" multiple="true">
+				                        		<apex:repeat value="{!OrganizationUnits}"  var="d">
+				                        			<option value="{!d.value}"> {!d.label}</option>
+				                        		</apex:repeat>
+				                        	</select>
+				                        </td>
+				                        <td class="arrowsPanel" multiple="true">
+				                        	<img width="17" height="17" border="0" align="texttop" title="Add" style="cursor:pointer;" alt="Add" src="/img/arrow2_picklist_right.gif" class="addOrganizationUnitButton" />
+				                        	<br /><br />
+				                        	<img width="17" height="17" border="0" align="texttop" title="Remove" style="cursor:pointer;" alt="Remove" src="/img/arrow2_picklist_left.gif" class="removeOrganizationUnitButton" />
+				                        </td>
+				                        <td>
+				                        	<select class="selectBox OL_Selected" size="10" multiple="true">
+				                        		<apex:repeat value="{!OrganizationUnitsSelected}"  var="d">
+				                        			<option value="{!d.value}"> {!d.label}</option>
+				                        		</apex:repeat>
+				                        	</select>
+				                        </td>
+			                        </tr>
+		                        </table>
+	                        </apex:outputPanel>
+	               	</apex:pageBlockSectionItem>
+	               
+                    
+		            <!-- DISTRIBUTORS -->
+                    <apex:PageBlockSectionItem rendered="{!showDistributors}" id="distributorsMultiselect">
+                        <apex:outputLabel value="{!$ObjectType.File__c.fields.Distributor_Names__c.label}" />
+                        <apex:outputPanel id="DL">
+							<apex:inputHidden value="{!Folder__c.Distributors__c}" id="selectedDistributorIds"/>
+	                        <table>
+	                        	<tr>
+			                        <td>
+			                        	<select class="selectBox DL" size="10" multiple="true">
+			                        		<apex:repeat value="{!Distributors}"  var="d">
+			                        			<option value="{!d.value}"> {!d.label}</option>
+			                        		</apex:repeat>
+			                        	</select>
+			                        </td>
+			                        <td class="arrowsPanel" multiple="true">
+			                        	<img width="17" height="17" border="0" align="texttop" title="Add" style="cursor:pointer;" alt="Add" src="/img/arrow2_picklist_right.gif" class="addDistributorButton" />
+			                        	<br /><br />
+			                        	<img width="17" height="17" border="0" align="texttop" title="Remove" style="cursor:pointer;" alt="Remove" src="/img/arrow2_picklist_left.gif" class="removeDistributorButton" />
+			                        </td>
+			                        <td>
+			                        	<select class="selectBox DL_Selected" size="10" multiple="true">
+			                        		<apex:repeat value="{!DistributorsSelected}"  var="d">
+			                        			<option value="{!d.value}"> {!d.label}</option>
+			                        		</apex:repeat>
+			                        	</select>
+			                        </td>
+		                        </tr>
+	                        </table>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputField value="{!Folder__c.Allow_File_Upload__c}"  rendered="{!showAllowFileUpload}"/>
+                    <apex:inputField value="{!Folder__c.Allow_Add_Comment__c}" rendered="{!showAllowAddComment}"/>
+                    <apex:inputField value="{!Folder__c.Filter_By_Brand__c}" rendered="{!showFilterByBrand}"/>
+                    <apex:inputField value="{!Folder__c.Filter_By_Time__c}" rendered="{!showFilterByTime}"/>
+                    <apex:inputField value="{!Folder__c.Order__c}" rendered="{!showOrder}"/><br />
+                    <apex:inputField value="{!Folder__c.Only_For_Internal_User__c}" rendered="{!showOnlyForInternal}"/>
+                    <apex:inputField value="{!Folder__c.Layout_Type__c}" rendered="{!showLayoutType}" onchange="setDisplaySettings()" />
+                    <apex:inputField value="{!Folder__c.is_header__c}" rendered="{!showHeaderChckbx}"/>
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+    </apex:form>
+    <apex:relatedList list="Folders__r" />
+</apex:page>

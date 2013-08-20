@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>POS Project: junction object that represents the many-to-many relationship between Order Windows and Users (customers)</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Customer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Customer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Order_Window_Customers</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Magento_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Magento Id</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Open_For_Shopping__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Open for Shopping</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order_Window__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Window</label>
+        <referenceTo>Order_Window__c</referenceTo>
+        <relationshipLabel>Order Window Customers</relationshipLabel>
+        <relationshipName>Order_Window_Customers</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Order Window Customer</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Magento_Id__c</columns>
+        <columns>Customer__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>OWC-{000000}</displayFormat>
+        <label>Order Window Customer ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Order Window Customers</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Order_Window__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Customer__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Open_For_Shopping__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Order_Window__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Customer__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Open_For_Shopping__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order_Window__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Customer__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Open_For_Shopping__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Order_Window__c</searchFilterFields>
+        <searchFilterFields>Customer__c</searchFilterFields>
+        <searchFilterFields>Open_For_Shopping__c</searchFilterFields>
+        <searchResultsAdditionalFields>Order_Window__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Customer__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Open_For_Shopping__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Order_Window_Status</fullName>
+        <active>true</active>
+        <description>Prevents creating or editing an Order Window Customer is the related Order Window is new, completed or archived, except for the &quot;Open for Shopping&quot; field which can always be edited</description>
+        <errorConditionFormula>(ISNEW() &amp;&amp; (TEXT(Order_Window__r.Status__c) = &quot;New&quot; || TEXT(Order_Window__r.Status__c) = &quot;Completed&quot; || TEXT(Order_Window__r.Status__c) = &quot;Archived&quot;)) || (NOT(ISNEW()) &amp;&amp; (TEXT(Order_Window__r.Status__c) = &quot;New&quot; || TEXT(Order_Window__r.Status__c) = &quot;Completed&quot; || TEXT(Order_Window__r.Status__c) = &quot;Archived&quot;) &amp;&amp; (ISCHANGED(Name) || ISCHANGED(Customer__c)))</errorConditionFormula>
+        <errorMessage>It is not possible to create or edit an Order Window Customer if the related Order Window is new, completed or archived, except for the &quot;Open for Shopping&quot; field which can always be edited</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Email_Shoppers</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Email Shoppers</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>/apex/POS_EmailShoppers?owId={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Manage_Order_Window_Customer_Assignment</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Manage Order Window Customer Assignment</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/POS_ManageOrderWindowCustomer?owId={!Order_Window__c.Id}</url>
+    </webLinks>
+</CustomObject>

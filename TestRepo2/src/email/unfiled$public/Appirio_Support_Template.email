@@ -1,0 +1,6 @@
+Case Number {!Case.CaseNumber} 
+Subject: {!Case.Subject} 
+Application: {!Case.Application__c} 
+Priority: {!Case.Priority} 
+Type: {!Case.Type} 
+Description: {!Case.Description}

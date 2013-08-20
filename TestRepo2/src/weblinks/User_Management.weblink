@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPageWebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <availability>online</availability>
+    <description>User Management</description>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>User Management</masterLabel>
+    <openType>noSidebar</openType>
+    <protected>false</protected>
+    <url>https://na7.salesforce.com/005?setupid=ManageUsers&amp;fcf=00BA00000078SBn</url>
+</CustomPageWebLink>

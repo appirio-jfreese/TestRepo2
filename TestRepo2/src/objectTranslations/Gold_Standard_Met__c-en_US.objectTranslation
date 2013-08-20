@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Gold Standard Met</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Gold Standards Met</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Gold Standards Met --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Optional relationship - use only for sub brands ie. Smirnoff flavors --></help>
+        <label><!-- BrandBottle Size --></label>
+        <name>BrandBottle_Size__c</name>
+        <relationshipLabel><!-- Gold Standards Met --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Gold Standards Met --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- If Brand does not have a Display, this field is checked and is propagated from the layout objects. --></help>
+        <label><!-- Gold Standard Display Not Applicable --></label>
+        <name>Gold_Standard_Display_Not_Applicable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display --></label>
+        <name>Gold_Standard_for_Display_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard for Display --></label>
+        <name>Gold_Standard_for_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distribution --></label>
+        <name>Gold_Standard_for_Distribution_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard for Distribution --></label>
+        <name>Gold_Standard_for_Distribution__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelf --></label>
+        <name>Gold_Standard_for_Shelf_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard for Shelf --></label>
+        <name>Gold_Standard_for_Shelf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Survey --></label>
+        <name>Survey__c</name>
+        <relationshipLabel><!-- Gold Standards Met --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Gold Standard Met Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Gold Standards --></label>
+            <section>Gold Standards</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

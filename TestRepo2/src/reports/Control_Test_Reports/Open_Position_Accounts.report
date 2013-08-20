@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>USERS.NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>ADDRESS1_STATE</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11</booleanFilter>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>West VA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Central West</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>ID Territory 3</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>IA Territory 5</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>MT Territory 1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Beaverton - Central Coast</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Eugene - Corvallis</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Westside - North Coast</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Park City,Salt Lake,East &amp; Southeast</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Salt Lake &amp; Southwest</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Casper</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Territory__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Open Position Accounts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2012-07-24</startDate>
+    </timeFrameFilter>
+</Report>

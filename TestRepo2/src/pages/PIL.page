@@ -1,0 +1,1521 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_PIL">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PIL, 'style'+siteTheme+'.css')}"/>
+    <script type="text/javascript">
+        var orgBrandNames = {};
+        var validBrandNames = {};
+        var brands = [];
+    </script>
+<style>
+body, html{
+    overflow: hidden;
+}
+.noVisible{
+    visibility: hidden;
+}
+.content-item-image-margin {
+    margin: -20px;
+}
+</style>
+    <c:loader />
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+        <script type="text/javascript">
+            pageViewed('Product Images and Logos');
+        </script>
+
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+            <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left pilsite {!if(ISNULL(siteTheme),'hidden','')}">
+            <apex:outputPanel id="messages">
+                <apex:messages styleClass="errorMessagesList" />
+            </apex:outputPanel>
+            <apex:form >
+                <apex:actionFunction status="ajax-status" name="switchSection" action="{!switchSection}" rerender="messages, brandPageContent, downloadAllDialog">
+                    <apex:param name="switchSection" assignTo="{!currentSection}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction status="ajax-status" name="showContent" action="{!showContent}" rerender="messages, brandPageContent, downloadAllDialog">
+                    <apex:param name="detailId" assignTo="{!detailId}" value="" />
+                    <apex:param name="brandFlag" assignTo="{!brandFlag}" value="" />                    
+                </apex:actionFunction>
+                <apex:actionFunction status="ajax-status" name="refreshPageContent" action="{!refreshPageContent}" rerender="messages, brandPageContent, downloadAllDialog" oncomplete="calculateBoxHeight()"/>
+                <apex:actionFunction status="ajax-status" name="renderAsList" action="{!renderAsList}" rerender="messages, brandPageContent" oncomplete="calculateBoxHeight()"/>
+                <apex:actionFunction status="ajax-status" name="renderAsBox" action="{!renderAsBox}" rerender="messages, brandPageContent" oncomplete="calculateBoxHeight()"/>
+
+                <apex:actionFunction status="ajax-status" name="changeNumberOfItemPerPage" action="{!changeNumberOfItemPerPage}" rerender="messages, brandPageContent, downloadAllDialog" oncomplete="calculateBoxHeight()"/>
+                <apex:actionFunction status="ajax-status" name="showFirstPage" action="{!showFirstPage}" rerender="messages, brandPageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showPrevPage" action="{!showPrevPage}" rerender="messages, brandPageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showNextPage" action="{!showNextPage}" rerender="messages, brandPageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showLastPage" action="{!showLastPage}" rerender="messages, brandPageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showPageRequested" action="{!showPageRequested}" rerender="messages, brandPageContent, downloadAllDialog">
+                    <apex:param name="requestedPageNumber" assignTo="{!numberOfCurrentPage}" value="" />
+                </apex:actionFunction>
+                <br/>
+                <!-- Slider -->
+                <div class="horizontal-slider" style="-moz-opacity:.0; -ms-filter:”alpha(opacity=0)”; filter:alpha(opacity=0); opacity:.0; ">
+                    <div class="horizontal-slider-container">
+                        <div class="horizontal-slider-content-wrapper">
+                            <!-- Search screen -->
+                            <div class="horizontal-slider-content searchScreen {!IF(siteTheme == 'Spirits' , '' , 'wine')}">
+                                <div class="right-arrow core-arrow"><apex:image url="{!URLFOR($Resource.PIL, 'images/right_arrow.png')}"/><br/><br/><img src="{!URLFOR($Resource.PIL, 'images/core.png')}" style="margin-left: -7px;"/></div>
+    
+                                <div class="box shelfBackground" style="background-position: 0 194px;">
+                                    <div class="search-header">
+                                        <div class="search-input">
+                                            <apex:outputPanel id="currentSearch">
+                                                <apex:inputText styleClass="brandNameSearch" value="{!searchBrand}"/>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="search-select">
+
+                                        </div>                              
+                                    </div>
+
+                                    <div class="box-header box-header2">
+                                        Search Result 
+                                    </div>                                  
+                                    <div class="box-header box-header3">
+                                        Search Result 
+                                    </div>                                  
+                                    <div class="box-header box-header4">
+                                        Search Result 
+                                    </div>                                  
+
+                                    <div class="{!IF(siteTheme == 'Spirits' , 'box-content box-content-all searchResult' , 'box-content box-content-all searchResult wine')}">
+                                        <apex:variable value="{!0}" var="bc"/>
+                                        <apex:repeat value="{!searchBrands}" var="brand">
+                                            <apex:outputPanel rendered="{!if(bc == 0,'true','false')}">
+                                                <div class="clear-float"></div>
+                                                <div class="float-left alignBox" style="width: {!IF(siteTheme == 'Spirits' , '10' , '40')}px;">&nbsp;</div>                                         
+                                            </apex:outputPanel>
+                                            <div class="{!IF(siteTheme == 'Spirits' , 'brand-box extra-bottle-margin' , 'brand-box extra-bottle-margin wine')}" name="{!brandValidNames[brand.Id]}" onclick="showContent('{!brand.id}','null');showDialog('brandPageContent', true);centerDialog();" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                <script type="text/javascript">
+                                                    var brand = {
+                                                        orgBrandName: "{!brand.Name}",
+                                                        validBrandName: "{!brandValidNames[brand.Id]}"
+                                                    }
+                                                    brands.push(brand);
+                                                    orgBrandNames["{!brandValidNames[brand.Id]}"] = "{!brand.Name}";
+                                                    validBrandNames["{!brand.Name}"] = "{!brandValidNames[brand.Id]}";
+                                                </script>
+                                                <apex:outputPanel rendered="{!IF(len(bottleImgMap[brand.Id])  > 0, 'true','false')}">               
+                                                    <img src="/sfc/servlet.shepherd/version/download/{!bottleImgMap[brand.Id]}" class="brand-box-bottle" style="{!IF(siteTheme == 'Spirits' , '' , 'padding:0px !important;' )}"/><br/>
+                                                    <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!IF(len(bottleImgMap[brand.Id]) == 0, 'true','false')}">               
+                                                    <img src="{!IF(siteTheme == 'Spirits' , URLFOR($Resource.PIL, 'images/defaultbottle.png') , URLFOR($Resource.PIL, 'images/defaultwine.png') )}" class="brand-box-bottle" style="{!IF(siteTheme == 'Spirits' , '' , 'padding:0px !important;' )}"/><br/>
+                                                    <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                </apex:outputPanel>
+                                                <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                            </div>
+                                            <apex:variable value="{!IF(siteTheme == 'Spirits' , mod(bc+1,10) , mod(bc+1,6) )}" var="bc"/>                                       
+                                        </apex:repeat>
+                                        <div class="clear-float"></div>
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <!-- Landing page -->
+                            <div class="horizontal-slider-content">
+                                <div class="left-arrow search-arrow"><apex:image url="{!URLFOR($Resource.PIL, 'images/left_arrow.png')}"/><br/><br/><img src="{!URLFOR($Resource.PIL, 'images/sear.png')}" style="margin-left: -4px;"/></div>
+                                <div class="right-arrow additional-arrow"><apex:image url="{!URLFOR($Resource.PIL, 'images/right_arrow.png')}"/><br/><br/><img src="{!URLFOR($Resource.PIL, 'images/addb.png')}" style="margin-left: -7px;"/></div>
+                                <div class="box shelfBackground">
+                                    <apex:outputpanel rendered="{!IF(siteTheme == 'Spirits' , 'true','false')}">
+                                        <div class="box-content">
+                                            <div class="float-left alignBox onMainPage"></div>
+                                            <apex:repeat value="{!coreBrands}" var="brand">
+                                                <div class="brand-box" onclick="showContent('{!brand.id}','core');showDialog('brandPageContent');">
+                                                    <div class="brand-box-description">{!brand.Name}</div>
+                                                    <apex:outputPanel rendered="{!if(brand.Core_Trademarks_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                        <img src="/sfc/servlet.shepherd/version/download/{!brand.Core_Trademarks_Logo__r.Content_Version_Id__c}" class="brand-box-bottle"/><br/>
+                                                        <div class="bottleShadow"></div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!if(brand.Core_Trademarks_Logo__r.Content_Version_Id__c == '', 'true','false')}">              
+                                                        <img src="{!URLFOR($Resource.PIL, 'images/defaultbottle.png')}" class="brand-box-bottle"/><br/>
+                                                        <div class="bottleShadow"></div>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </apex:repeat>
+                                            <div class="clear-float"></div>
+                                        </div>
+                                        <div class="box-content">
+                                            <div class="float-left alignBox onMainPage"></div>
+                                            <apex:repeat rows="10" value="{!reserveBrands}" var="brand">
+                                                <div class="brand-box" onclick="showContent('{!brand.id}', 'reserve');showDialog('brandPageContent'); ">
+                                                    <div class="brand-box-description">{!brand.Name}</div>
+                                                    <apex:outputPanel rendered="{!if(brand.Reserve_Brand_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                        <img src="/sfc/servlet.shepherd/version/download/{!brand.Reserve_Brand_Logo__r.Content_Version_Id__c}" class="brand-box-bottle"/><br/>
+                                                        <div class="bottleShadow"></div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!if(brand.Reserve_Brand_Logo__r.Content_Version_Id__c == '', 'true','false')}">                
+                                                        <img src="{!URLFOR($Resource.PIL, 'images/defaultbottle.png')}" class="brand-box-bottle"/><br/>
+                                                        <div class="bottleShadow"></div>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </apex:repeat>
+                                            <div class="clear-float"></div>
+                                        </div>  
+                                        <div class="box-content">
+                                            <div class="float-left alignBox onMainPage"></div>
+                                            <apex:repeat first="10" value="{!reserveBrands}" var="brand">
+                                                <div class="brand-box" onclick="showContent('{!brand.id}','reserve');showDialog('brandPageContent'); ">
+                                                    <div class="brand-box-description">{!brand.Name}</div>
+                                                    <apex:outputPanel rendered="{!if(brand.Reserve_Brand_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                        <img src="/sfc/servlet.shepherd/version/download/{!brand.Reserve_Brand_Logo__r.Content_Version_Id__c}" class="brand-box-bottle"/><br/>
+                                                        <div class="bottleShadow"></div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!if(brand.Reserve_Brand_Logo__r.Content_Version_Id__c == '', 'true','false')}">                
+                                                        <img src="{!URLFOR($Resource.PIL, 'images/defaultbottle.png')}" class="brand-box-bottle"/><br/>
+                                                        <div class="bottleShadow"></div>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </apex:repeat>  
+                                            <div class="clear-float"></div>
+                                        </div>
+                                        
+                                        <div class="box-content innovation-slider">
+                                            <div class="box-content-container innovation" style="width: 780px; height: 145px; overflow: hidden;">
+                                                <div class="{!IF(siteTheme == 'Spirits' , 'box-content-slide innovation','box-content-slide innovation wine')}">
+                                                    <div class="float-left alignBox onMainPage"></div>
+                                                    <apex:repeat value="{!innovationBrands}" var="brand">
+                                                        <div class="{!IF(siteTheme == 'Spirits' , 'brand-box','brand-box wine')}" onclick="showDialog('brandPageContent', true);showContent('{!brand.id}', 'null');centerDialog();" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                            <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                                            <apex:outputPanel rendered="{!if(brand.Innovation_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                                <img src="/sfc/servlet.shepherd/version/download/{!brand.Innovation_Logo__r.Content_Version_Id__c}" class="brand-box-bottle"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(brand.Innovation_Logo__r.Content_Version_Id__c == '', 'true','false')}">               
+                                                                <img src="{!IF(siteTheme == 'Spirits' , URLFOR($Resource.PIL, 'images/defaultbottle.png') , URLFOR($Resource.PIL, 'images/defaultwine.png') )}" class="brand-box-bottle"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </apex:repeat>  
+                                                    <div class="clear-float"></div>
+                                                </div>
+                                            </div>
+                                        </div>                                  
+                                        
+                                    </apex:outputpanel>
+                                    <apex:outputpanel rendered="{!IF(siteTheme == 'Wine' , 'true','false')}">
+                                        <div class="box-content">
+                                            <div class="box-content-container heritage" style="width: 760px; height: 145px; overflow: hidden;">
+                                                <div class="box-content-slide heritage wine">
+                                                    <div class="float-left alignBox onMainPage">&nbsp;</div> 
+                                                    <apex:repeat value="{!heritageBrands}" var="brand"> 
+                                                        <div class="brand-box wine" onclick="showDialog('brandPageContent', true);showContent('{!brand.id}', 'null');centerDialog();" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                            <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                                            <apex:outputPanel rendered="{!if(brand.Heritage_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                                <img src="/sfc/servlet.shepherd/version/download/{!brand.Heritage_Logo__r.Content_Version_Id__c}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(brand.Heritage_Logo__r.Content_Version_Id__c == '', 'true','false')}">             
+                                                                <img src="{!URLFOR($Resource.PIL, 'images/defaultwine.png')}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </apex:repeat>  
+                                                    <div class="clear-float"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="box-content">
+                                            <div class="box-content-container lifestyle" style="width: 760px; height: 145px; overflow: hidden;">
+                                                <div class="box-content-slide lifestyle wine">
+                                                    <div class="float-left alignBox onMainPage">&nbsp;</div>
+                                                    <apex:repeat value="{!lifestyleBrands}" var="brand"> 
+                                                        <div class="brand-box wine" onclick="showDialog('brandPageContent', true);showContent('{!brand.id}', 'null');centerDialog();" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                            <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                                            <apex:outputPanel rendered="{!if(brand.Lifestyle_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                                <img src="/sfc/servlet.shepherd/version/download/{!brand.Lifestyle_Logo__r.Content_Version_Id__c}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(brand.Lifestyle_Logo__r.Content_Version_Id__c == '', 'true','false')}">                
+                                                                <img src="{!URLFOR($Resource.PIL, 'images/defaultwine.png')}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </apex:repeat>  
+                                                    <div class="clear-float"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="box-content">
+                                            <div class="box-content-container luxury" style="width: 760px; height: 145px; overflow: hidden;">
+                                                <div class="box-content-slide luxury wine">
+                                                    <div class="float-left alignBox onMainPage">&nbsp;</div>
+                                                    <apex:repeat value="{!luxuryBrands}" var="brand"> 
+                                                        <div class="brand-box wine" onclick="showDialog('brandPageContent', true);showContent('{!brand.id}', 'null');centerDialog();" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                            <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                                            <apex:outputPanel rendered="{!if(brand.Luxury_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                                <img src="/sfc/servlet.shepherd/version/download/{!brand.Luxury_Logo__r.Content_Version_Id__c}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(brand.Luxury_Logo__r.Content_Version_Id__c == '', 'true','false')}">               
+                                                                <img src="{!URLFOR($Resource.PIL, 'images/defaultwine.png')}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </apex:repeat>  
+                                                    <div class="clear-float"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="box-content innovation-slider">
+                                            <div class="box-content-container innovation" style="width: 760px; height: 145px; overflow: hidden;">
+                                                <div class="{!IF(siteTheme == 'Spirits' , 'box-content-slide innovation','box-content-slide innovation wine')}">
+                                                    <div class="float-left alignBox onMainPage">&nbsp;</div>
+                                                    <apex:repeat value="{!innovationBrands}" var="brand">
+                                                        <div class="{!IF(siteTheme == 'Spirits' , 'brand-box','brand-box wine')}" onclick="showDialog('brandPageContent', true);showContent('{!brand.id}', 'null');centerDialog();" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                            <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                                            <apex:outputPanel rendered="{!if(brand.Innovation_Logo__r.Content_Version_Id__c != '','true','false')}">
+                                                                <img src="/sfc/servlet.shepherd/version/download/{!brand.Innovation_Logo__r.Content_Version_Id__c}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!IF(brand.Innovation_Logo__r.Content_Version_Id__c == '', 'true','false')}">               
+                                                                <img src="{!IF(siteTheme == 'Spirits' , URLFOR($Resource.PIL, 'images/defaultbottle.png') , URLFOR($Resource.PIL, 'images/defaultwine.png') )}" class="brand-box-bottle" style="padding: 0px !important;"/><br/>
+                                                                <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </apex:repeat>  
+                                                    <div class="clear-float"></div>
+                                                </div>
+                                            </div>
+                                        </div>                      
+                                        
+                                    </apex:outputpanel>
+                                    
+                                    
+                                    <div class="box-header box-header1">
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Wine' , 'true','false')}">                                                
+                                            <apex:outputpanel rendered="{!IF(heritageBrands.size > 6 , 'true','false')}">
+                                            <span class="mslide left heritage pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Heritage&nbsp; <span class="mslide right heritage pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!IF(heritageBrands.size <= 6 , 'true','false')}">
+                                                Heritage
+                                            </apex:outputpanel>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Spirits' , 'true','false')}">
+                                            Core Trademarks
+                                        </apex:outputpanel>
+                                        
+                                    </div>                                  
+                                    <div class="box-header box-header2">
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Wine' , 'true','false')}">                                                
+                                            <apex:outputpanel rendered="{!IF(lifestyleBrands.size > 6 , 'true','false')}">
+                                                <span class="mslide left lifestyle pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Lifestyle&nbsp; <span class="mslide right lifestyle pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!IF(lifestyleBrands.size <= 6 , 'true','false')}">
+                                                Lifestyle
+                                            </apex:outputpanel>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Spirits' , 'true','false')}">
+                                            Reserve Brands 
+                                        </apex:outputpanel>
+                                    </div>                                  
+                                    <div class="box-header box-header3">
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Wine' , 'true','false')}">                                                
+                                            <apex:outputpanel rendered="{!IF(luxuryBrands.size > 6 , 'true','false')}">
+                                            <span class="mslide left luxury pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Luxury&nbsp; <span class="mslide right luxury pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!IF(luxuryBrands.size <= 6 , 'true','false')}">
+                                                Luxury
+                                            </apex:outputpanel>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Spirits' , 'true','false')}">
+                                            Reserve Brands 
+                                        </apex:outputpanel>
+                                    </div>                               
+                                    <div class="box-header box-header4">
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Spirits' , 'true','false')}">    
+                                            <apex:outputpanel rendered="{!IF(innovationBrands.size > 10 , 'true','false')}">
+                                            <!-- Case 00004352   
+            								Modified By - Rahul Chitkara [Appirio Jaipur]
+             								Date  - 11th March 2013
+                                              <span class="mslide left innovation pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Innovation&nbsp; <span class="mslide right innovation pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>  -->
+                                            <!-- Case 0004729
+                                            Modified By - Mark Ellis 
+                                            Date- 22 April 2013
+                                            <span class="mslide left innovation pointer "><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Innovation&nbsp; <span class="mslide right innovation pointer "><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span> -->
+                                            <span class="mslide left innovation pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Innovation&nbsp; <span class="mslide right innovation pointer "><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!IF(innovationBrands.size <= 10 , 'true','false')}">
+                                                Innovation 
+                                            </apex:outputpanel>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!IF(siteTheme == 'Wine' , 'true','false')}">
+                                            <apex:outputpanel rendered="{!IF(innovationBrands.size > 6 , 'true','false')}">
+                                            	<!-- Changes done by Jai Gupta [Appirio Jaipur] for case #00003413 on 10th Dec 2012 -->
+                                            	<!-- Case 00004352   
+            									Modified By - Rahul Chitkara [Appirio Jaipur]
+             									Date  - 11th March 2013
+                                             	<span class="mslide left wine innovation pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Innovation&nbsp; <span class="mslide right wine innovation pointer noVisible"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>  -->
+                                             	<!-- Case 0004729
+                                                Modified By - Mark Ellis 
+                                                Date- 22 April 2013
+                                            	<span class="mslide left wine innovation pointer "><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Innovation&nbsp; <span class="mslide right wine innovation pointer"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span> -->
+                                            	<span class="mslide left wine innovation pointer noVisible "><apex:image url="{!URLFOR($Resource.PIL, 'images/innovLeft.png')}"/></span> &nbsp;Innovation&nbsp; <span class="mslide right wine innovation pointer"><apex:image url="{!URLFOR($Resource.PIL, 'images/innovRight.png')}"/></span>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!IF(innovationBrands.size <= 6 , 'true','false')}">
+                                                Innovation
+                                            </apex:outputpanel>
+                                        </apex:outputpanel>
+                                                                            
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Additional brands screen -->
+                            <apex:repeat value="{!additionalBrandsPage}" var="pageNumber">
+                                <div class="horizontal-slider-content additionalScreen">
+                                    <apex:outputPanel rendered="{!if(pageNumber == 1 ,'true', 'false')}">
+                                        <div class="left-arrow core-arrow"><apex:image url="{!URLFOR($Resource.PIL, 'images/left_arrow.png')}"/><br/><br/><img src="{!URLFOR($Resource.PIL, 'images/core.png')}" style="margin-left: -7px;"/></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!if(pageNumber != 1 ,'true', 'false')}">
+                                        <div class="left-arrow additional-arrow"><apex:image url="{!URLFOR($Resource.PIL, 'images/left_arrow.png')}"/><br/><br/><img src="{!URLFOR($Resource.PIL, 'images/addb.png')}" style="margin-left: -7px;"/></div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!if(pageNumber != additionalBrandsPage.size ,'true', 'false')}">
+                                        <div class="right-arrow additional-arrow"><apex:image url="{!URLFOR($Resource.PIL, 'images/right_arrow.png')}"/><br/><br/><img src="{!URLFOR($Resource.PIL, 'images/addb.png')}" style="margin-left: -7px;"/></div>
+                                    </apex:outputPanel>
+                                    <div class="box shelfBackground">
+                                        
+                                        <apex:variable value="{!0}" var="bc"/>
+                                        <apex:repeat value="{!additionalBrandsMap[pageNumber]}" var="brand">
+                                            <apex:outputPanel rendered="{!if(bc == 0,'true','false')}">
+                                                <div class="clear-float"></div>
+                                                <div class="float-left alignBox" style="width: {!IF(siteTheme == 'Spirits' , '10' , '40')}px;">&nbsp;</div>                                         
+                                            </apex:outputPanel>
+                                            <div class="{!IF(siteTheme == 'Spirits' , 'brand-box extra-bottle-margin' , 'brand-box extra-bottle-margin wine')}" onclick="showContent('{!brand.id}', 'null');showDialog('brandPageContent');" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">
+                                                <apex:outputPanel rendered="{!IF(len(bottleImgMap[brand.Id])  > 0, 'true','false')}">               
+                                                    <img src="/sfc/servlet.shepherd/version/download/{!bottleImgMap[brand.Id]}" class="brand-box-bottle" style="{!IF(siteTheme == 'Spirits' , '' , 'padding:0px !important;' )}"/><br/>
+                                                    <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!IF(len(bottleImgMap[brand.Id]) == 0, 'true','false')}">               
+                                                    <img src="{!IF(siteTheme == 'Spirits' , URLFOR($Resource.PIL, 'images/defaultbottle.png') , URLFOR($Resource.PIL, 'images/defaultwine.png') )}" class="brand-box-bottle" style="{!IF(siteTheme == 'Spirits' , '' , 'padding:0px !important;' )}"/><br/>
+                                                    <div class="bottleShadow" style="{!IF(siteTheme == 'Spirits' , '' , 'display: none !important;' )}"></div>
+                                                </apex:outputPanel>
+                                                <div class="brand-box-description" style="{!IF(siteTheme == 'Spirits' , '' , 'width: 120px;' )}">{!brand.Name}</div>
+                                            </div>
+                                            <apex:variable value="{!IF(siteTheme == 'Spirits' , mod(bc+1,10) , mod(bc+1,6) )}" var="bc"/>
+                                        </apex:repeat>
+                                        <div class="clear-float"></div>
+                                        <div class="box-header box-header1">
+                                            Additional Brands
+                                        </div>                                  
+                                        <div class="box-header box-header2">
+                                            Additional Brands 
+                                        </div>                                  
+                                        <div class="box-header box-header3">
+                                            Additional Brands 
+                                        </div>                                  
+                                        <div class="box-header box-header4">
+                                            Additional Brands
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:repeat>
+                            <div class="horizontal-slider-clear"></div>
+                        </div>                      
+                    </div>
+                    <div class="clear-float"></div>
+                    <div class="horizontal-slider-navigation">
+                        <div class="horizontal-slider-navigation-wrapper">
+                            <div class="horizontal-slider-navigation-button search-button"></div>
+                            <div class="horizontal-slider-navigation-button core-button horizontal-slider-navigation-button-active"></div>
+                            <apex:repeat value="{!additionalBrandsPage}" var="pageNumber">
+                                <div class="horizontal-slider-navigation-button additional-button"></div>
+                            </apex:repeat>
+                            <div class="clear-float"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="brandPageContent" class="hidden dialog pilDialog">
+                    <apex:outputPanel id="brandPageContent">
+                        <apex:outputPanel rendered="{!NOT(ISNULL(detailId))}">
+                            <div class="moreInfoWrapper">
+                                <div class="brand-details">
+                                    <div class="brand-details-header" style="{!brandHeaderStyle}">
+                                        <div class="brand-details-logo-wrapper">
+                                            <apex:outputPanel rendered="{!IF(detailPageLogoId != '', 'true', 'false') }">
+                                                <img src="/sfc/servlet.shepherd/version/download/{!detailPageLogoId}" class="brand-details-logo"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(detailPageLogoId == '', 'true', 'false') }">
+                                                {!brandDetails.Name}
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="brand-details-close close">&nbsp;</div>
+                                        <apex:outputPanel rendered="{!NOT(ISNULL(currentSection))}">
+                                            <div class="brand-details-naviagation" style="{!IF(siteTheme == 'Wine' , 'width: 665px;', '')}">
+                                                <apex:repeat value="{!sectionsOrder}" var="section">
+                                                    <div class="section-button {!if(sections[section] = currentSection, 'section-button-active','')}" onclick="switchSection('{!sections[section]}'); pageViewed('Product Images and Logos - {!sections[section]}');">{!sections[section]}</div>
+                                                </apex:repeat>  
+                                                <div class="clear-float"></div>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="brand-details-content {!IF( AND(NOT(ISNULL(currentSection)),currentSection != 'Family Shots'), 'noPaddingDialog', '') }" style="position: relative;">
+                                        <apex:outputPanel rendered="{!ISNULL(currentSection)}">
+                                            <apex:repeat value="{!sectionsOrder}" var="section">
+                                                <div class="section-button-box section-button-box-{!section}" onclick="switchSection('{!sections[section]}'); pageViewed('Product Images and Logos - {!sections[section]}');"><br/><br/><br/><br/>{!sections[section]}</div>
+                                            </apex:repeat>
+                                            <div class="clear-float"></div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!NOT(ISNULL(currentSection))}">
+                                                <div class="pagination-right-bottom">
+                                                    <div class="float-right" style="margin-right: 14px;">
+                                                        <div style="position: relative; width: 90px; height: 50px;">
+                                                            <div style="position: absolute; top: 0px; right: 0px">
+                                                                <c:selectList width="80" options="{!NumberOfItemsPerPageList}"  value="{!numberOfItemsOnPage}" onchange="changeNumberOfItemPerPage();" />
+                                                            </div>
+                                                        </div>                                                          
+                                                    </div>
+                                                    <div class="float-right defaultTheme pagination-text-result" style="font-size: 11px !important;">
+                                                        Showing {!showFromIndex+1}-{!showToIndex} of total {!numberOfItems} documents
+                                                    </div>
+                                                    <div class="clear-float"></div>
+                                                    <c:pagination totalNumberOfPages="{!numberOfPages}" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="{!numberOfCurrentPage}" />
+                                                </div>
+                                                <div class="float-left {!IF(showLeftMenu == true,'','hidden')} leftBrandMenu" >
+                                                    <apex:outputPanel rendered="{!showLeftMenu}">
+                                                        <div class="float-left" style="width: 250px; height: 544px;">
+                                                            <div class="bold left-menu-header">Brand Variants</div>
+                                                            <div class="variant-wrapper">
+                                                                <apex:repeat value="{!variantBrands}" var="variantBrand">
+                                                                    <div class="variant-brand-box {!IF( brandTranlations[variantBrand.Brand_Variant_Grouping__c] = currentSubBrandGroup,'bold', '')} {!IF(AND(contains(selectedBrandIds,variantBrand.Id), brandSubMenuExist[brandTranlations[variantBrand.Brand_Variant_Grouping__c]] != true), 'variant-brand-box-selected', '')} {!if(brandSubMenuExist[brandTranlations[variantBrand.Brand_Variant_Grouping__c]] != true, '','withExtraSubmenu')}" id="{!variantBrand.id}" name="{!brandTranlations[variantBrand.Brand_Variant_Grouping__c]}">
+                                                                        <span class="sub-group-name">{!variantBrand.Brand_Variant_Grouping__c}</span>
+                                                                        <apex:outputPanel rendered="{!brandSubMenuExist[brandTranlations[variantBrand.Brand_Variant_Grouping__c]]}">
+                                                                            &nbsp;<apex:image url="{!URLFOR($Resource.PIL, 'images/morebrands.png')}"/>
+                                                                        </apex:outputPanel>
+                                                                    </div>
+                                                                </apex:repeat>
+                                                            </div>
+                                                        </div>
+                                                        <div class="float-left" style="width: 250px; height: 544px;">
+                                                            <apex:outputPanel rendered="{!flExist}">
+                                                                <div class="bold left-menu-header"><span class="flavors-header"><apex:outputText value="{!currentSubBrandGroupName}"/></span></div>
+                                                                <apex:repeat value="{!flavorsBrands}" var="flavorsBrandsGroup">
+                                                                    <div id="sub-group-{!flavorsBrandsGroup}" class="{!if(contains(currentSubBrandGroup,flavorsBrandsGroup) , '','hidden')} extraSubmenu">
+                                                                        <div class="flavor-wrapper">
+                                                                            <apex:repeat value="{!flavorsBrands[flavorsBrandsGroup]}" var="variantBrand">
+                                                                                <div class="variant-brand-box {!IF(contains(selectedBrandIds,variantBrand.Id), 'variant-brand-box-selected', '')} extraVariant" id="{!variantBrand.id}" name="{!brandTranlations[variantBrand.Brand_Variant_Grouping__c]}">
+                                                                                    {!variantBrand.Name}
+                                                                                </div>
+                                                                            </apex:repeat>
+                                                                        </div>
+                                                                    </div>
+                                                                </apex:repeat>
+                                                            </apex:outputPanel>                                                             
+                                                        </div>
+                                                        <div class="clear-float"></div>
+                                                        <apex:inputHidden value="{!selectedBrandIds}" id="selectedBrandIds"/>
+                                                        <apex:inputHidden value="{!currentSubBrandGroup}" id="currentSubBrandGroup"/>
+                                                    </apex:outputPanel>
+                                                </div>
+                                                <div class="corner-button-holder {!IF(AND(!ISNULL(content),content.size!=0), '','hidden')}">
+                                                    <apex:outputPanel rendered="{!AND(!ISNULL(content),content.size!=0)}">
+                                                        <div class="float-right">
+                                                            <div onclick="renderAsBox();" class="show-as-box-button {!if(displayAsList != true, 'show-as-list-box-button-active','')}">
+                                                                <apex:image styleClass="list-box-img" url="{!URLFOR($Resource.PIL, 'images/boxView.png')}"/>                                    
+                                                            </div>                              
+                                                            <div onclick="renderAsList();" class="show-as-list-button {!if(displayAsList = true, 'show-as-list-box-button-active','')}">
+                                                                <apex:image styleClass="list-box-img" url="{!URLFOR($Resource.PIL, 'images/listView.png')}"/>
+                                                            </div>
+                                                            <div class="clear-float"></div>
+                                                        </div>
+                                                        <div class="downloadAllButton action-button float-right">
+                                                            <div class="action-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/downloadArrow.png')}"/></div>
+                                                            <div class="action-button-description">Download / Share Multiple Files</div>
+                                                        </div>
+                                                        <div class="clear-float"></div>
+                                                    </apex:outputPanel>                            
+                                                </div>
+                                                <apex:outputpanel rendered="{!IF(siteTheme == 'Spirits' , 'true','false')}">
+                                                    <div class="float-left {!IF(showTopMenu != true, 'hidden','')}" style="font-size: 11px; margin: 5px; width: 450px;">
+                                                        <apex:selectCheckboxes value="{!selectedbottleSizes}" onclick="refreshPageContent();">
+                                                            <apex:selectOptions value="{!bottleSizes}" />
+                                                        </apex:selectCheckboxes>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                
+                                                <div class="float-left result-content-wrapper" style="width: {!IF(showLeftMenu == true,'456','940')}px; height: 370px; overflow: hidden;">
+                                                    <apex:outputPanel rendered="{!OR(ISNULL(content),content.size=0)}">
+                                                        <div class="content-no-items-msg">No items.</div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!AND(!ISNULL(content),content.size!=0)}">
+                                                        <apex:repeat value="{!contentHolder}" var="contentItem">
+                                                            <apex:outputPanel rendered="{!if(displayAsList != true,'true','false')}">
+                                                                <c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!contentItem}" width="{!IF(showLeftMenu == true,'209','219')}" height="{!IF(showLeftMenu == true,'112','124')}" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true" isPil="true"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!if(displayAsList = true,'true','false')}">
+                                                                <c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!contentItem}" showButons="false" renderAsList="true" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true" isPil="true" />
+                                                            </apex:outputPanel> 
+                                                        </apex:repeat>
+                                                        <div class="clear-float"></div>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </apex:outputPanel>
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </div>
+            </apex:form>
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+
+    <apex:form >
+        <apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>  
+        
+        <apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        
+        <apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentBasketItemsNo, brandPageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+
+    <div id="downloadAllInfo" class="hidden dialog" >
+        <apex:outputPanel id="downloadAllDialog">
+            <c:downloadAll content="{!content}"/>
+        </apex:outputPanel>
+    </div>
+
+    <div id="moreInfo" class="hidden dialog" >
+        <apex:outputPanel id="overviewDialog">
+            <c:overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+        </apex:outputPanel>        
+    </div>
+
+    <div id="shareInfo" class="hidden dialog">
+        <apex:outputPanel id="shareDialog">
+            <c:share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div>   
+    
+    <c:ajaxLoader beforeStop="bindFilterJs();"/>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            hideDialog('startingLoader');
+            hideDialog('startingLoaderOverlayDisable');
+            jQuery("body").css("overflow","auto");
+            jQuery("html").css("overflow","auto");
+        });     
+        var dummyBottleImg = '{!URLFOR($Resource.PIL, 'images/defaultbottle.png')}';
+        var dummyBottleWineImg = '{!URLFOR($Resource.PIL, 'images/defaultwine.png')}';
+        
+        var sliderWidth = 940;
+        var currentScreen = 1;
+        var currentInnovation = 0;
+        var maxInnovationBrandsSlide = 0;
+        var defaultBottleDim = {width: 66, height: 96};
+        var middleBottleDim = {width: 68, height: 100};
+        var hoverBottleDim = {width: 78, height: 115};
+        var defaultWineBoxWidth = 120;
+        
+        var defaultWineDim = {width: 66, height: 94};
+        var middleWineDim = {width: 68, height: 104};
+        var hoverWineDim = {width: 82, height: 118};
+        
+        var currentSearchValue = '';        
+        
+        var currentHeritage = 0;
+        var maxHeritageBrandsSlide = 0;
+        
+        var currentLuxury = 0;
+        var maxLuxuryBrandsSlide = 0;
+        
+        var currentLifestyle = 0;
+        var maxLifestyleBrandsSlide = 0;
+
+        jQuery('.brandNameSearch').keydown(function(e) {
+            if (e.keyCode === 13) {
+                return false;
+            }
+        });
+        
+        jQuery(document).keydown(function(e) {
+            if(!jQuery('.pilDialog').hasClass('hidden')){
+                return;
+            }
+            var element = e.target.nodeName.toLowerCase();
+            if (element != 'input' && element != 'textarea') {
+                currentScreenWrapper = jQuery('.horizontal-slider-content:eq('+currentScreen+')');
+                if (e.keyCode === 39) { // slide right
+                    arrowButton = currentScreenWrapper.find('.right-arrow');
+                    if(arrowButton.length == 1){
+                        arrowButton.trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 37) { // slide left
+                    arrowButton = currentScreenWrapper.find('.left-arrow');
+                    if(arrowButton.length == 1){
+                        arrowButton.trigger('click');
+                    }
+                    return false;
+                } else if ((e.keyCode >= 48 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+                    
+                    searchInput = jQuery('.brandNameSearch');
+                    if(!searchInput.hasClass('usertypeing')){
+                        searchInput.val('');
+                    }
+                    searchInput.addClass('usertypeing');
+                    if(currentScreen != 0){
+                        currentValue = searchInput.val();
+                        searchInput.val(currentValue+String.fromCharCode(e.keyCode).toLowerCase());
+                        slider = jQuery('.horizontal-slider').find('.horizontal-slider-container');
+                        if(slider.length == 1){
+                            scrollToPosition = 0;
+                            jQuery('.left-arrow, .right-arrow').addClass('hidden');
+                            slider.stop().animate({scrollLeft: scrollToPosition }, 1000, function(){
+                                currentScreen = 0;
+                                jQuery('.left-arrow, .right-arrow').removeClass('hidden');
+                                jQuery('.horizontal-slider-navigation-button-active').removeClass('horizontal-slider-navigation-button-active');
+                                jQuery('.search-button').addClass('horizontal-slider-navigation-button-active');
+                                searchInput.removeClass('usertypeing');
+                                searchInput.focus();
+                                jQuery('.brandNameSearch').autocomplete('search', jQuery('.brandNameSearch').val());
+                            });
+                        }
+                    } else {
+                        searchInput.focus();
+                        searchInput.removeClass('usertypeing');
+                        jQuery('.brandNameSearch').autocomplete('search', jQuery('.brandNameSearch').val());
+                    }
+                }
+            }
+        });
+           
+        function reorganizeSearchView(){
+            resultHolder = jQuery('.searchResult');
+            shCenter = resultHolder.find('.alignBox').last();
+            if(shCenter.length != 0){
+                bottles = shCenter.nextAll('.brand-box').size();
+                if(resultHolder.hasClass('wine')){
+                    if(bottles < 6){
+                        centerOffset = ((6 - bottles) * defaultWineBoxWidth)/2 + 40;
+                        shCenter.css('width', centerOffset);
+                        shCenter.html('&nbsp');
+                    } else {
+                        shCenter.css('width', 40);
+                        shCenter.html('&nbsp;');
+                    }
+                }else{
+                    if(bottles < 10){
+                        centerOffset = ((10 - bottles) * 78)/2 + 10;
+                        shCenter.css('width', centerOffset);
+                        shCenter.html('&nbsp');
+                    } else {
+                        shCenter.css('width', 10);
+                        shCenter.html('&nbsp;');
+                    }
+                }               
+                
+            }           
+        }
+           
+        function bindAutoSuggest(){
+            jQuery('.brandNameSearch').autocomplete({
+                source: function( request, response ) {
+                    try {
+                        if(jQuery('.searchResult').hasClass('rerendering')){
+                            return false;
+                        }
+                        tempSearchValue = request.term;
+                        if(currentSearchValue == tempSearchValue){
+                            return;
+                        }
+                        currentSearchValue = tempSearchValue;
+                        jQuery('.searchResult').addClass('rerendering');
+                        showDialog('ajaxLoader');       
+                        jQuery('.searchResult').delay(400).stop().animate({opacity: 0.0}, 500, function(){
+                            Controller_BaseRemote.searchPILBrand(request.term, function(data, event){
+                                if (event.status) {
+                                    orgBrandNames = {};
+                                    validBrandNames = {};
+                                    brands = [];
+                                    //sucess
+                                    bottlehtml = unescape(''+data.bottlehtml.replace(/\+/g, " "));
+                                    response( jQuery.map( data.brands, function( item ) {
+                                        if(!!item.Name){
+                                            bName = item.Name;
+                                        } else {
+                                            bName = 'No name';
+                                        }
+                                        return {
+                                            label: bName,
+                                            value: bName
+                                        }
+                                    }));
+
+                                    jQuery(bottlehtml).find('img.dummyBottle').attr('src',dummyBottleImg);
+                                    jQuery(bottlehtml).find('img.dummyBottleWine').attr('src',dummyBottleWineImg);
+                                    
+                                    jQuery('.searchResult').html(bottlehtml);
+                                    jQuery('.searchResult').find('img.dummyBottle').attr('src',dummyBottleImg);
+                                    jQuery('.searchResult').find('img.dummyBottleWine').attr('src',dummyBottleWineImg);
+                                    
+                                    jQuery('.brand-box').each(function(){
+                                        if(jQuery(this).hasClass('wine')){
+                                            jQuery(this).find('img').css({'left' : (defaultWineBoxWidth - defaultWineDim.width)/2 });
+                                        }               
+                                    });
+                                    
+                                    jQuery.each(data.brands, function(index, item){
+                                        orgBrandNames[data.brandValidNames[item.Id]] = item.Name;
+                                        validBrandNames[item.Name] = data.brandValidNames[item.Id];
+                                        
+                                        var brand = {
+                                            orgBrandName: item.Name,
+                                            validBrandName: data.brandValidNames[item.Id]
+                                        }
+                                        brands.push(brand);
+                                    });
+                                    
+                                    reorganizeSearchView();
+                                    
+                                } else if (event.type === 'exception') {
+                                    alert(event.message);
+                                    jQuery('.searchResult').html('');
+                                } else {
+                                    alert(event.message);
+                                    jQuery('.searchResult').html('');
+                                }
+                                jQuery('.searchResult').animate({opacity: 1.0}, 500);
+                                hideDialog('ajaxLoader');
+                                jQuery('.searchResult').removeClass('rerendering');
+                            }, {escape:true});
+                        });
+                    } catch(e){
+                        alert('Error during search!');
+                        hideDialog('ajaxLoader');
+                        orgBrandNames = {};
+                        validBrandNames = {};
+                        brands = [];
+                        jQuery('.searchResult').html('');
+                        jQuery('.searchResult').animate({opacity: 1.0}, 500);
+                        jQuery('.searchResult').removeClass('rerendering');
+                    }
+                },
+                search: function() {
+                
+                    // custom minLength
+                    var term = this.value;
+                    if ( term.length < 1 ) {
+                        return false;
+                    }
+                },
+                close: function(event, ui) {
+                    var searchForName = jQuery('.brandNameSearch').val();
+                    if(orgBrandNames[searchForName]){
+                        jQuery('.brandNameSearch').val(orgBrandNames[searchForName]);
+                    }
+                    if(searchForName != '{!defaultSearchBrand}'){
+                        jQuery('.searchScreen').find('.brand-box').each(function(index,elem){
+                            if(jQuery(elem).attr('name').toLowerCase() == searchForName.toLowerCase()){
+                                jQuery(elem).trigger('click');
+                            }
+                        });
+                    }
+                    jQuery('.brandNameSearch').autocomplete('search', jQuery('.brandNameSearch').val());
+                }
+            });
+        }
+        
+        function calculateBoxHeight(){
+             jQuery("div.content-item").each(function(i, elem){
+                    var bottomValue = jQuery("div.item-description", elem).height()-jQuery("div.content-item-menu div", elem).height() - 5;
+                    jQuery("div.item-description", elem).css('bottom', -bottomValue+"px");
+                    jQuery("div.item-description", elem).trigger('mouseleave');
+                });
+        }
+        
+        function bindFilterJs(){
+            calculateBoxHeight();
+            if(!jQuery('.result-content-wrapper').hasClass('scroller-bnd')){
+                jQuery('.result-content-wrapper').addClass('scroller-bnd');
+                jQuery('.result-content-wrapper').jScrollPane();
+            }
+            if(!jQuery('.variant-wrapper').hasClass('scroller-bnd')){
+                jQuery('.variant-wrapper').addClass('scroller-bnd');
+                jQuery('.variant-wrapper').jScrollPane();
+            }
+            if(!jQuery('.extraSubmenu').not('.hidden').find('.flavor-wrapper').hasClass('scroller-bnd')){
+                jQuery('.extraSubmenu').not('.hidden').find('.flavor-wrapper').addClass('scroller-bnd');
+                jQuery('.extraSubmenu').not('.hidden').find('.flavor-wrapper').jScrollPane();
+            }
+            jQuery('.extraSubmenu').find('.variant-brand-box').each(function(){
+                var subSectionId = jQuery(this).attr('name');
+                if(jQuery(this).hasClass('variant-brand-box-selected')){
+                    jQuery('div.withExtraSubmenu[name="'+subSectionId+'"]').addClass('sub-variant-brand-box-selected');
+                }
+            });
+        }
+
+        function centerDialog(){
+            jQuery('#brandPageContent').css('top', -1000);
+
+            var actualWindowWidth = jQuery(window).width();
+            var actualWindowHeight = jQuery(window).height();
+            var verticalScrollPosition = jQuery(document).scrollTop();
+            var horizontalScrollPosition = jQuery(document).scrollLeft();
+            
+            var left = horizontalScrollPosition + (actualWindowWidth/2) - (480);
+            var top = verticalScrollPosition + (actualWindowHeight/2) - (308);
+
+            if(top<0) top = 0;
+            if(left<0) left = 0;
+            
+            jQuery('#brandPageContent').css('top', top);
+            jQuery('#brandPageContent').css('left', left);          
+
+        }
+
+        function intro(){
+            slider = jQuery('.horizontal-slider');
+            slider.css('opacity', 0);
+            jQuery('.horizontal-slider-container').scrollLeft(currentScreen*sliderWidth);
+            jQuery('.box-content-container').scrollLeft(0);         
+            
+            jQuery('.box-content-slide').each(function(){
+                if(jQuery(this).hasClass('wine')){
+                    var widthTmp = jQuery(this).find('.brand-box').size() * (defaultWineBoxWidth) + 40;                 
+                    if(widthTmp < 760) { 
+                        widthTmp = 760;
+                    }                   
+                }else{
+                    var widthTmp = jQuery(this).find('.brand-box').size() * 82;
+                    if(widthTmp < 760) { 
+                        widthTmp = 760;
+                    }
+                }
+                jQuery(this).css('width', widthTmp);
+                                
+            });
+
+    		/*Case 00004352   
+            Modified By - Rahul Chitkara [Appirio Jaipur]
+             Date  - 11th March 2013 
+            jQuery('.mslide.left').addClass('noVisible'); */      
+            jQuery('.mslide.left').addClass('noVisible');   
+            jQuery('.mslide.right').removeClass('noVisible');           
+            
+            jQuery('.alignBox.onMainPage').each(function(){
+                if(jQuery(this).parents().hasClass('wine')){
+                    if(jQuery(this).hasClass('onMainPage')){
+                        bottles = jQuery(this).nextAll('.brand-box').size();                        
+                        if(bottles < 6){
+                            centerOffset = ((6 - bottles) * (defaultWineBoxWidth))/2 + 30;
+                            jQuery(this).css('width', centerOffset);
+                            jQuery(this).html('&nbsp');
+                        } else {
+                            jQuery(this).css('width', 30);
+                            jQuery(this).html('&nbsp');
+                        }
+                    }
+                }else{          
+                    if(jQuery(this).hasClass('onMainPage')){
+                        bottles = jQuery(this).nextAll('.brand-box').size();
+                        if(bottles < 10){
+                            centerOffset = ((10 - bottles) * 78)/2;
+                            jQuery(this).css('width', centerOffset);
+                            jQuery(this).html('&nbsp');
+                        } else {
+                            jQuery(this).css('width', 0);
+                            jQuery(this).html('&nbsp');
+                        }
+                    }
+                }               
+            });
+            
+            jQuery('.brand-box').each(function(){
+                if(jQuery(this).hasClass('wine')){
+                    jQuery(this).find('img').css({'left' : (defaultWineBoxWidth - defaultWineDim.width)/2 });
+                }               
+            });
+            
+            jQuery('.additionalScreen').each(function(){
+                shCenter = jQuery(this).find('.alignBox').last();
+                if(shCenter.length != 0){
+                    bottles = shCenter.parent().nextAll('.brand-box').size();
+                    if(jQuery(this).find('.wine').length != 0){
+                        if(bottles < 6){
+                            centerOffset = ((6 - bottles) * (defaultWineBoxWidth))/2 + 40;
+                            shCenter.css('width', centerOffset);
+                            shCenter.html('&nbsp');
+                        } else {
+                            shCenter.css('width', 40);
+                            shCenter.html('&nbsp;');
+                        }
+                    }else{
+
+                        if(bottles < 10){
+                            centerOffset = ((10 - bottles) * 78)/2 + 10;
+                            shCenter.css('width', centerOffset);
+                            shCenter.html('&nbsp');
+                        } else {
+                            shCenter.css('width', 10);
+                            shCenter.html('&nbsp;');
+                        }
+                    }
+                    
+                }
+            });
+            shCenter = jQuery('.searchResult').find('.alignBox').last();
+            if(shCenter.length != 0){
+                bottles = shCenter.parent().nextAll('.brand-box').not('.hidden').size();
+                if(jQuery('.searchResult').hasClass('wine')){
+                    if(bottles < 6){
+                        centerOffset = ((6 - bottles) * defaultWineBoxWidth)/2 + 40;
+                        shCenter.css('width', centerOffset);
+                        shCenter.html('&nbsp');
+                    } else {
+                        shCenter.css('width', 40);
+                        shCenter.html('&nbsp;');
+                    }
+                }else{
+                    if(bottles < 10){
+                        centerOffset = ((10 - bottles) * 78)/2 + 10;
+                        shCenter.css('width', centerOffset);
+                        shCenter.html('&nbsp');
+                    } else {
+                        shCenter.css('width', 10);
+                        shCenter.html('&nbsp;');
+                    }
+                }
+            }
+            slider.animate({opacity: 1}, 600);
+
+        }
+        
+        jQuery(document).ready(function() {
+        	// Changes done by Jai Gupta [Appirio Jaipur] for case #00003413 on 10th Dec 2012
+            if(jQuery('.box-content-slide.innovation').hasClass('wine')){
+                maxInnovationBrandsSlide = jQuery('.box-content-slide.innovation').find('.brand-box').size()-6;
+                if(maxInnovationBrandsSlide < 0){
+                    maxInnovationBrandsSlide = 0;
+                }
+            }else{
+                maxInnovationBrandsSlide = jQuery('.box-content-slide.innovation').find('.brand-box').size()-10;
+                if(maxInnovationBrandsSlide < 0){
+                    maxInnovationBrandsSlide = 0;
+                }
+            }           
+        
+            maxHeritageBrandsSlide = jQuery('.box-content-slide.heritage').find('.brand-box').size()-6;
+            if(maxHeritageBrandsSlide < 0){
+                maxHeritageBrandsSlide = 0;
+            }
+            
+            maxLifestyleBrandsSlide = jQuery('.box-content-slide.lifestyle').find('.brand-box').size()-6;
+            if(maxLifestyleBrandsSlide < 0){
+                maxLifestyleBrandsSlide = 0;
+            }
+            
+            maxLuxuryBrandsSlide = jQuery('.box-content-slide.luxury').find('.brand-box').size()-6;
+            if(maxLuxuryBrandsSlide < 0){
+                maxLuxuryBrandsSlide = 0;
+            }       
+            
+            for(var i=0; i < brands.length; i++){
+                 if(jQuery('.searchScreen').find('div.brand-box[name="'+brands[i].validBrandName+'"]').length != 0){
+                    brands[i].elem = jQuery('div.brand-box[name="'+brands[i].validBrandName+'"]')[0];
+                 }
+            }
+
+            bindAutoSuggest();      
+            
+            jQuery('.brandNameSearch').live('focusout', function(){
+                if(jQuery(this).val() == ''){
+                    jQuery(this).val('{!defaultSearchBrand}');
+                }
+            });
+
+            jQuery('.brandNameSearch').live('focusin', function(){
+                if(jQuery(this).val() == '{!defaultSearchBrand}'){
+                    jQuery(this).val('');
+                }
+            });
+            jQuery('li.ui-menu-item').live('mouseenter', function() {
+                brandName = jQuery(this).children().first().html();
+
+                if(jQuery('.searchScreen').find('div.brand-box[name="'+validBrandNames[brandName]+'"]').length != 0){
+                    jQuery('.searchScreen').find('div.brand-box[name="'+validBrandNames[brandName]+'"]').trigger('mouseenter');
+                }
+            });
+            jQuery('li.ui-menu-item').live('mouseleave', function() {
+                brandName = jQuery(this).children().first().html();
+                if(jQuery('.searchScreen').find('div.brand-box[name="'+validBrandNames[brandName]+'"]').length != 0){
+                    jQuery('.searchScreen').find('div.brand-box[name="'+validBrandNames[brandName]+'"]').trigger('mouseleave');
+                }
+            });
+            jQuery('li.ui-menu-item').live('click', function() {
+                brandName = jQuery(this).children().first().html();
+                if(jQuery('.searchScreen').find('div.brand-box[name="'+validBrandNames[brandName]+'"]').length != 0){
+                    jQuery('.searchScreen').find('div.brand-box[name="'+validBrandNames[brandName]+'"]').trigger('click');
+                }
+            });
+            
+            jQuery('.horizontal-slider-navigation-button').live('click', function(){
+                if(jQuery(this).hasClass('horizontal-slider-navigation-button-active')){
+                    return
+                }
+                if(jQuery('.left-arrow, .right-arrow').hasClass('scrolling')){
+                    return;
+                }
+                that = jQuery('.left-arrow').first();
+                that.addClass('scrolling');
+                slider = jQuery('.horizontal-slider-container');
+                if(slider.length == 1){
+                    scrollToPosition = null;
+                    currentScreen = jQuery(this).index();
+                    jQuery('.horizontal-slider-navigation-button-active').removeClass('horizontal-slider-navigation-button-active');
+                    jQuery(this).addClass('horizontal-slider-navigation-button-active');
+                    scrollToPosition = currentScreen*sliderWidth;
+                    if(scrollToPosition != null){
+                        jQuery('.left-arrow, .right-arrow').addClass('hidden');
+                        slider.stop().animate({scrollLeft: scrollToPosition }, 1000, function(){
+                            jQuery('.left-arrow, .right-arrow').removeClass('hidden');
+                            that.removeClass('scrolling');
+                        });
+                    }
+                }
+            });
+            
+            jQuery('.mslide').live('click', function(){
+                                
+                if(jQuery(this).hasClass('scrolling')){
+                    return;
+                }
+                jQuery(this).addClass('scrolling');
+                
+                if(jQuery(this).hasClass('heritage')){
+                    
+                    if(jQuery(this).hasClass('left')){
+                        currentHeritage = currentHeritage - 6;
+                    }else if(jQuery(this).hasClass('right')){
+                        currentHeritage = currentHeritage + 6;
+                    }
+                    
+                    if(currentHeritage <= 0){
+                        currentHeritage = 0;
+                        jQuery('.mslide.left.heritage').addClass('noVisible');
+                        jQuery('.mslide.right.heritage').removeClass('noVisible');                  
+                    }
+                
+                    if(maxHeritageBrandsSlide <= currentHeritage){
+                        currentHeritage = maxHeritageBrandsSlide;
+                        jQuery('.mslide.left.heritage').removeClass('noVisible');
+                        jQuery('.mslide.right.heritage').addClass('noVisible');
+                    }
+                
+                    heritageSlider = jQuery('.box-content-container.heritage');
+                    if(heritageSlider.length == 1){
+                        heritageSlider.addClass("scrl");                                
+                        heritageSlider.animate({scrollLeft: currentHeritage*defaultWineBoxWidth }, 1000, function(){
+                            jQuery('.mslide.left.heritage, .mslide.right.heritage').removeClass('scrolling');
+                            heritageSlider.removeClass("scrl");
+                        });                                         
+                    }           
+                }else if(jQuery(this).hasClass('innovation')){
+               
+                    if(jQuery(this).hasClass('wine')){
+                   
+                        if(jQuery(this).hasClass('left')){
+                            currentInnovation = currentInnovation - 6;
+                        }else if(jQuery(this).hasClass('right')){
+                            currentInnovation = currentInnovation + 6;
+                        }
+                    
+                        if(currentInnovation <= 0){
+                            currentInnovation = 0;
+                         /* Case 00004352   
+                         Modified By - Rahul Chitkara [Appirio Jaipur]
+                         Date  - 11th March 2013 
+                         jQuery('.mslide.left.innovation').addClass('noVisible'); */
+                         jQuery('.mslide.right.innovation').removeClass('noVisible');                    
+                        }
+
+                        /* Case 00004729   
+                        Created By - Mark Ellis
+                        Date  - 22nd April 2013 */
+                        if(currentInnovation > 1){
+                        currentInnovation = currentInnovation;
+                        jQuery('.mslide.left.innovation').removeClass('noVisible');
+                        }
+             
+                        
+                        if(currentInnovation < 1){
+                        currentInnovation = currentInnovation;
+                        jQuery('.mslide.left.innovation').addClass('noVisible');
+                        }
+                        
+                        if(currentInnovation >= maxInnovationBrandsSlide){
+                        currentInnovation = currentInnovation;
+                        jQuery('.mslide.right.innovation').addClass('noVisible');
+                        }
+                        
+                        if(currentInnovation < maxInnovationBrandsSlide){
+                         currentInnovation = currentInnovation;
+                         jQuery('.mslide.right.innovation').removeClass('noVisible');
+                         }
+                    
+                        
+                        if(maxInnovationBrandsSlide < currentInnovation){
+                            currentInnovation = maxInnovationBrandsSlide;
+                            jQuery('.mslide.left.innovation').removeClass('noVisible');
+                            /*Case 00004352   
+                        	 Modified By - Rahul Chitkara [Appirio Jaipur]
+                         	 Date  - 11th March 2013
+                             jQuery('.mslide.right.innovation').addClass('noVisible');*/
+                        } 
+                        
+                      
+                        
+                        
+                        innovationSlider = jQuery('.box-content-container.innovation');
+                        if(innovationSlider.length == 1){                   
+                            innovationSlider.addClass("scrl");                              
+                            innovationSlider.animate({scrollLeft: currentInnovation*defaultWineBoxWidth }, 1000, function(){
+                                jQuery('.mslide.left.innovation, .mslide.right.innovation').removeClass('scrolling');
+                                innovationSlider.removeClass("scrl");
+                            });                                         
+                        }           
+                    }else{            
+                        if(jQuery(this).hasClass('left')){
+                      
+                            currentInnovation = currentInnovation - 10;
+                        }else if(jQuery(this).hasClass('right')){
+                        
+                            currentInnovation = currentInnovation + 10;
+                        }
+                    
+                        if(currentInnovation <= 0){
+                            currentInnovation = 0;
+                            /*Case 00004352   
+                         	Modified By - Rahul Chitkara [Appirio Jaipur]
+                         	Date  - 11th March 2013 
+                            jQuery('.mslide.left.innovation').addClass('noVisible'); */
+                            jQuery('.mslide.right.innovation').removeClass('noVisible');                    
+                        }
+                        
+                         /* Case 00004729   
+                         Created By - Mark Ellis
+                         Date  - 22nd April 2013  */
+                         if(currentInnovation > 1){
+                            currentInnovation = currentInnovation;
+                            jQuery('.mslide.left.innovation').removeClass('noVisible');
+                           }
+                         
+                          
+                         if(currentInnovation < 1){
+                         currentInnovation = currentInnovation;
+                         jQuery('.mslide.left.innovation').addClass('noVisible');
+                         }
+                         
+                         if(currentInnovation >= maxInnovationBrandsSlide){
+                         currentInnovation = currentInnovation;
+                         jQuery('.mslide.right.innovation').addClass('noVisible');
+                         }
+                         
+                         if(currentInnovation < maxInnovationBrandsSlide){
+                         currentInnovation = currentInnovation;
+                         jQuery('.mslide.right.innovation').removeClass('noVisible');
+                         }
+                         
+                        
+                
+                        if(maxInnovationBrandsSlide <= currentInnovation){
+                            currentInnovation = maxInnovationBrandsSlide;
+                           jQuery('.mslide.left.innovation').removeClass('noVisible');
+                           /*Case 00004352   
+                         	Modified By - Rahul Chitkara [Appirio Jaipur]
+                         	Date  - 11th March 2013
+                            jQuery('.mslide.right.innovation').addClass('noVisible'); */
+                        }
+                
+                        innovationSlider = jQuery('.box-content-container.innovation');
+                        if(innovationSlider.length == 1){                   
+                            innovationSlider.addClass("scrl");                              
+                            innovationSlider.animate({scrollLeft: currentInnovation*78 }, 1000, function(){
+                                jQuery('.mslide.left.innovation, .mslide.right.innovation').removeClass('scrolling');
+                                innovationSlider.removeClass("scrl");
+                            });                                         
+                        }
+                    }           
+                }else if(jQuery(this).hasClass('luxury')){
+                    if(jQuery(this).hasClass('left')){
+                        currentLuxury = currentLuxury - 6;
+                    }else if(jQuery(this).hasClass('right')){
+                        currentLuxury = currentLuxury + 6;
+                    }
+                    
+                    if(currentLuxury <= 0){
+                        currentLuxury = 0;
+                        jQuery('.mslide.left.luxury').addClass('noVisible');
+                        jQuery('.mslide.right.luxury').removeClass('noVisible');                    
+                    }
+                
+                    if(maxLuxuryBrandsSlide <= currentLuxury){
+                        currentLuxury = maxLuxuryBrandsSlide;
+                        jQuery('.mslide.left.luxury').removeClass('noVisible');
+                        jQuery('.mslide.right.luxury').addClass('noVisible');
+                    }
+                
+                    luxurySlider = jQuery('.box-content-container.luxury');
+                    if(luxurySlider.length == 1){                   
+                        luxurySlider.addClass("scrl");                              
+                        luxurySlider.animate({scrollLeft: currentLuxury*defaultWineBoxWidth  }, 1000, function(){
+                            jQuery('.mslide.left.luxury, .mslide.right.luxury').removeClass('scrolling');
+                            luxurySlider.removeClass("scrl");
+                        });                                         
+                    }   
+                }else if(jQuery(this).hasClass('lifestyle')){
+                    if(jQuery(this).hasClass('left')){
+                        currentLifestyle = currentLifestyle - 6;
+                    }else if(jQuery(this).hasClass('right')){
+                        currentLifestyle = currentLifestyle + 6;
+                    }
+                    
+                    if(currentLifestyle <= 0){
+                        currentLifestyle = 0;
+                        jQuery('.mslide.left.lifestyle').addClass('noVisible');
+                        jQuery('.mslide.right.lifestyle').removeClass('noVisible');                 
+                    }
+                
+                    if(maxLifestyleBrandsSlide <= currentLifestyle){
+                        currentLifestyle = maxLifestyleBrandsSlide;
+                        jQuery('.mslide.left.lifestyle').removeClass('noVisible');
+                        jQuery('.mslide.right.lifestyle').addClass('noVisible');
+                    }
+                
+                    lifestyleSlider = jQuery('.box-content-container.lifestyle');
+                    if(lifestyleSlider.length == 1){                    
+                        lifestyleSlider.addClass("scrl");                               
+                        lifestyleSlider.animate({scrollLeft: currentLifestyle*defaultWineBoxWidth }, 1000, function(){
+                            jQuery('.mslide.left.lifestyle, .mslide.right.lifestyle').removeClass('scrolling');
+                            lifestyleSlider.removeClass("scrl");
+                        });                                         
+                    }   
+                }           
+
+            });
+            jQuery('.left-arrow, .right-arrow').live('click', function(){
+                if(jQuery('.left-arrow, .right-arrow').hasClass('scrolling')){
+                    return;
+                }
+                that = jQuery(this);
+                that.addClass('scrolling');
+                slider = that.parents('.horizontal-slider').find('.horizontal-slider-container');
+                if(slider.length == 1){
+                    scrollToPosition = null;
+                    if(that.hasClass('left-arrow')){
+                        currentScreen--;
+                        currentIndicator = jQuery('.horizontal-slider-navigation-button-active');
+                        currentIndicator.prev().addClass('horizontal-slider-navigation-button-active');
+                        currentIndicator.removeClass('horizontal-slider-navigation-button-active');
+                    } else if(that.hasClass('right-arrow')){
+                        currentScreen++;
+                        currentIndicator = jQuery('.horizontal-slider-navigation-button-active');
+                        currentIndicator.next().addClass('horizontal-slider-navigation-button-active');
+                        currentIndicator.removeClass('horizontal-slider-navigation-button-active');
+                    }
+                    scrollToPosition = currentScreen*sliderWidth;
+                    if(scrollToPosition != null){
+                        jQuery('.left-arrow, .right-arrow').addClass('hidden');
+                        slider.stop().animate({scrollLeft: scrollToPosition }, 1000, function(){
+                            jQuery('.left-arrow, .right-arrow').removeClass('hidden');
+                            that.removeClass('scrolling');
+                        });
+                    }
+                }
+            });
+            
+            jQuery(".brand-box").live('mouseenter', function() {
+                img = jQuery(this).find('.brand-box-bottle');
+                jQuery(this).addClass('bottle-hover');
+                if(img.length == 1){
+                    if(jQuery(this).hasClass('wine')){
+                        img.stop().animate({'width': hoverWineDim.width, 'height': hoverWineDim.height, 'left' : (defaultWineBoxWidth - hoverWineDim.width)/2}, 300);
+                    }else{
+                        img.stop().animate({'width': hoverBottleDim.width, 'height': hoverBottleDim.height, 'left': ((defaultBottleDim.width - hoverBottleDim.width)/2)}, 300);
+                    }
+                }
+                if(jQuery(this).prevAll('.brand-box:not(.hidden)').length != 0){
+                    bottle = jQuery(this).prevAll('.brand-box:not(.hidden)').first();
+                    imgPrev = bottle.find('.brand-box-bottle');
+                    if(imgPrev.length == 1 && bottle.next().not(this).length == 0){
+                        if(jQuery(this).hasClass('wine')){
+                            imgPrev.stop().animate({'width': middleWineDim.width, 'height': middleWineDim.height, 'left' : (defaultWineBoxWidth - middleWineDim.width)/2}, 300);
+                        }else{
+                            imgPrev.stop().animate({'width': middleBottleDim.width, 'height': middleBottleDim.height, 'left': ((defaultBottleDim.width - middleBottleDim.width)/2)}, 300);
+                        }
+                    }
+                }
+                if(jQuery(this).nextAll('.brand-box:not(.hidden)').length != 0){
+                    bottle = jQuery(this).nextAll('.brand-box:not(.hidden)').first();
+                    imgNext = bottle.find('.brand-box-bottle');
+                    if(imgNext.length == 1 && bottle.prev().not(this).length == 0){
+                        if(jQuery(this).hasClass('wine')){
+                            imgNext.stop().animate({'width': middleWineDim.width, 'height': middleWineDim.height, 'left' : (defaultWineBoxWidth - middleWineDim.width)/2}, 300);
+                        }else{
+                            imgNext.stop().animate({'width': middleBottleDim.width, 'height': middleBottleDim.height, 'left': ((defaultBottleDim.width - middleBottleDim.width)/2)}, 300);
+                        }
+                    }
+                }
+                jQuery(this).stop().animate({'color': '#7E0C3A'}, 300);
+            });
+
+            jQuery(".brand-box").live('mouseleave', function() {
+                img = jQuery(this).find('.brand-box-bottle');
+                jQuery(this).removeClass('bottle-hover');
+                if(img.length == 1){
+                    if(jQuery(this).hasClass('wine')){
+                        img.stop().animate({'width': defaultWineDim.width, 'height': defaultWineDim.height, 'left': (defaultWineBoxWidth - defaultWineDim.width)/2 }, 300); 
+                    }else{
+                        img.stop().animate({'width': defaultBottleDim.width, 'height': defaultBottleDim.height, 'left': 0}, 300);
+                    }           
+                }
+                if(jQuery(this).prevAll('.brand-box:not(.hidden)').length != 0){
+                    bottle = jQuery(this).prevAll('.brand-box:not(.hidden)').first();
+                    imgPrev = bottle.find('.brand-box-bottle');
+                    if(imgPrev.length == 1 && !imgPrev.hasClass('bottle-hover')){
+                        if(jQuery(this).hasClass('wine')){
+                            imgPrev.stop().animate({'width': defaultWineDim.width, 'height': defaultWineDim.height, 'left': (defaultWineBoxWidth - defaultWineDim.width)/2}, 300);
+                        }else{
+                            imgPrev.stop().animate({'width': defaultBottleDim.width, 'height': defaultBottleDim.height, 'left': 0}, 300);
+                        }
+                    }
+                }
+                if(jQuery(this).nextAll('.brand-box:not(.hidden)').length != 0){
+                    bottle = jQuery(this).nextAll('.brand-box:not(.hidden)').first();
+                    imgNext = bottle.find('.brand-box-bottle');
+                    
+                    if(imgNext.length == 1 && !imgNext.hasClass('bottle-hover') ){
+                        if(jQuery(this).hasClass('wine')){
+                            imgNext.stop().animate({'width': defaultWineDim.width, 'height': defaultWineDim.height, 'left': (defaultWineBoxWidth - defaultWineDim.width)/2}, 300);
+                        }else{
+                            imgNext.stop().animate({'width': defaultBottleDim.width, 'height': defaultBottleDim.height, 'left': 0}, 300);
+                        }
+                    }
+                }
+                jQuery(this).stop().animate({'color': '#000000'}, 300);
+            });     
+
+            jQuery('.variant-brand-box').live('mouseenter',function(){
+                if(jQuery(this).hasClass('withExtraSubmenu')){
+                    var subSectionId = jQuery(this).attr('name');
+                    var subSectionName = jQuery(this).find('.sub-group-name').html();
+                    jQuery('.extraSubmenu').addClass('hidden');
+                    jQuery('#sub-group-'+subSectionId).removeClass('hidden');
+                    if(!jQuery('#sub-group-'+subSectionId).find('.flavor-wrapper').hasClass('scroller-bnd')){
+                        jQuery('#sub-group-'+subSectionId).find('.flavor-wrapper').addClass('scroller-bnd');
+                        jQuery('#sub-group-'+subSectionId).find('.flavor-wrapper').jScrollPane();
+                    }                   
+                    jQuery('.leftBrandMenu').find('input[type=hidden]').each(function(index, elem){
+                        if(jQuery(elem).attr('id') !== undefined){
+                            if(jQuery(elem).attr('id').search('currentSubBrandGroup') != -1){
+                                jQuery(elem).val(subSectionId);
+                                return;
+                            }
+                        }
+                    });
+                    jQuery('.flavors-header').html(subSectionName);
+                    jQuery('.withExtraSubmenu').removeClass('bold');
+                    jQuery(this).addClass('bold');
+                } else {
+                    if(!jQuery(this).hasClass('extraVariant')){
+                        jQuery('.extraSubmenu').addClass('hidden');
+                        jQuery('.flavors-header').html('');
+                    }
+                }       
+            });
+
+            jQuery('.variant-brand-box').live('click',function(){
+                if(!jQuery(this).hasClass('withExtraSubmenu')){
+                    if(jQuery(this).hasClass('variant-brand-box-selected')){
+                        jQuery(this).removeClass('variant-brand-box-selected');
+                    } else {
+                        jQuery(this).addClass('variant-brand-box-selected');
+                    }
+                    if(jQuery(this).parents('.extraSubmenu').length != 0){
+                        var subSectionId = jQuery(this).attr('name');
+                        if(jQuery(this).parent().find('.variant-brand-box-selected').length != 0){
+                            jQuery('div.withExtraSubmenu[name="'+subSectionId+'"]').addClass('sub-variant-brand-box-selected');
+                        } else {
+                            jQuery('div.withExtraSubmenu[name="'+subSectionId+'"]').removeClass('sub-variant-brand-box-selected');
+                        }
+                    }
+                }
+
+                selectedBrandIdsString = '';
+                jQuery('.variant-brand-box-selected').each(function(index, elem){
+                    if(jQuery(elem).attr('id').length != 0){
+                        if(selectedBrandIdsString == '' || selectedBrandIdsString == null){
+                            selectedBrandIdsString = ''+jQuery(elem).attr('id');
+                        } else {
+                            selectedBrandIdsString += ','+jQuery(elem).attr('id');
+                        }
+                    }
+                });
+                jQuery('.leftBrandMenu').find('input[type=hidden]').each(function(index, elem){
+                    if(jQuery(elem).attr('id') !== undefined){
+                        if(jQuery(elem).attr('id').search('selectedBrandIds') != -1){
+                            jQuery(elem).val(selectedBrandIdsString);
+                            return;
+                        }
+                    }
+                });
+                if(!jQuery(this).hasClass('withExtraSubmenu')){
+                    refreshPageContent();
+                }
+            });
+            
+            jQuery(".variant-brand-box").live('mouseenter', function(){
+                jQuery(this).addClass('over');
+            });
+            jQuery(".variant-brand-box").live('mouseleave', function(){
+                jQuery(this).removeClass('over');
+            });
+            intro();
+
+        });
+    </script>
+</apex:page>

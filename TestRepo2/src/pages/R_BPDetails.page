@@ -1,0 +1,119 @@
+<!--
+    Name            : R_BPDetails.page
+    Author          : Randy Wandell (Appirio)
+    Created Date    : 12 July, 2013 
+    Task Ref        : 
+    Usage           : Blog Post detail page 
+-->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo Blogs" controller="Controller_BlogPost" action="{!initBPDetails}">
+<body class="blog-home"> 
+    <script type="text/javascript">
+        function showComments(showHide){
+            if(showHide == "Show"){
+                document.getElementById("showCommentsBlock").style.display = "none";
+                document.getElementById("j_id0:j_id179:commentBlock").style.display = "block";
+            }else{
+                document.getElementById("showCommentsBlock").style.display = "block";
+                document.getElementById("j_id0:j_id179:commentBlock").style.display = "none";
+            }
+        }
+        
+        jQuery(document).ready(function() {
+            jQuery("h3 a.toggleable").click(function() {
+                var div = jQuery(this).parent().next();
+                div.slideToggle();
+            });
+        });        
+    </script>
+    <div class="wrapper">
+        <div class="container">
+        
+            <!-- PAGE HEADER -->
+            <c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}"/>
+                    
+            <script type="text/javascript">
+                pageViewed('Blog Posts - Detail Page');
+            </script>
+            
+	        <!-- BREADCRUMB -->
+	        <apex:outputPanel id="beadcrumblinks">
+	            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+	        </apex:outputPanel>
+	            
+            <!-- PAGE CONTENT -->
+            <div class="content clearfix" style="text-align: left;">
+                
+                <apex:form >              
+                    <div class="main columns" >
+                        <!-- <c:BlogItem /> -->
+                        <!-- START : BlogItem.component's Code -->
+                        <div class="blog clearfix" style="float: left;">
+                            <h2>{!blogItem.Name}</h2>
+                            <div class="info clearfix">
+                                Posted By : <a href="javascript:;" class="link">{!blogItem.CreatedBy.Name}</a>
+                                &nbsp;|&nbsp;<apex:outputField value="{!blogItem.CreatedDate}"/>
+                                &nbsp;|&nbsp;<a href="javascript:;" class="link">{!blogItem.Comment__r.size} Comments</a>
+                            </div>
+                                            
+                            <div class="image columns clearfix">
+                            </div>
+                            <div class="detail">
+                                <apex:outputText styleClass="_summaryText" value="{!blogItem.Detail__c}" escape="false"/>
+                            </div>
+                            <h3>Tags</h3>
+                            <div class="tags">
+                                <apex:repeat value="{!blogItem.Blog2Tag__r}" var="tg">
+                                    <a href="javascript:;">{!tg.Tag__r.Name}&nbsp;</a>
+                                </apex:repeat>
+                            </div>
+                            <h3><a href="javascript:;" class="toggleable">{!blogItem.Comment__r.size} Comments</a></h3>
+                            <div class="comments" id="existingComments">
+                                <apex:repeat value="{!blogItem.Comment__r}" var="cm">
+                                    <div class="comment" style="float: left; width: 100%;">
+                                        <div class="image columns"></div>
+                                            <div class="summary">
+                                            <p><apex:outputText value="{!cm.Comment__c}" escape="false"/></p>
+                                            <div class="info">
+                                                    Posted By : <a href="javascript:;" class="link">{!cm.CreatedBy.Name} </a> | &nbsp; <apex:outputField value="{!cm.CreatedDate}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:repeat>                     
+
+                                <div class="comment" style="float: left;">
+                                    <div style="float: left;">
+                                        <apex:inputField value="{!newComment.Comment__c}" style="height: 100px;"/>
+                                        <!-- START : Changed for DE564 : Basant -->
+                                        <!-- <input type="button" value="post" OnClick="postComment()" class="btn" style="position: relative; top: -60px; left: 500px;" /> -->
+                                        <button class="go_btn" onclick="postComment(); return false;">post</button>
+                                        <!-- END : Changed for DE564 : Basant -->
+                                    </div>
+                                    <apex:actionFunction name="postComment" action="{!postComment}">
+                                    </apex:actionFunction>
+                                    
+                                </div>
+                                                                                             
+                            </div>
+                        </div>
+                        <!-- END : BlogItem.component's Code -->
+                    </div>
+                    <div class="sidebar columns" >
+                        <a href="R_BlogHome" class="big-button">Blog Home</a>
+                        <c:BlogSideTile />
+                    </div> 
+                    
+                    <!-- Filter by Tag -->
+                    <apex:actionFunction action="{!switchToTag}" name="showForTag">
+                        <apex:param id="aparam2" name="tag" value="" assignTo="{!filterByTag}"/>
+                    </apex:actionFunction>
+                                                      
+                </apex:form>
+            </div>
+        </div>
+        
+        <!-- PAGE FOOTER -->
+        <c:R_pageFooter isInternal="{!isInternalUser}" />
+    
+    </div>
+</body>
+</apex:page>

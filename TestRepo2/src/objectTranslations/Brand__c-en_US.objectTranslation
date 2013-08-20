@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Brand</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Brands</value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand Description --></label>
+        <name>Brand_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand ID --></label>
+        <name>Brand_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Order --></label>
+        <name>Brand_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Priority --></label>
+        <name>Brand_Priority__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Brand Type --></label>
+        <name>Brand_Type__c</name>
+        <picklistValues>
+            <masterLabel>Generic</masterLabel>
+            <translation><!-- Generic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual</masterLabel>
+            <translation><!-- Individual --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Brand Variant Grouping --></label>
+        <name>Brand_Variant_Grouping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Calendar large logo --></label>
+        <name>Calendar_large_logo__c</name>
+        <relationshipLabel><!-- Brands (Calendar large logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Calendar small logo --></label>
+        <name>Calendar_small_logo__c</name>
+        <relationshipLabel><!-- Brands (Calendar small logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Catalyst --></label>
+        <name>Catalyst__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Gin</masterLabel>
+            <translation><!-- Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Irish</masterLabel>
+            <translation><!-- Irish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liqueur</masterLabel>
+            <translation><!-- Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Alcoholic</masterLabel>
+            <translation><!-- Non Alcoholic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready to Serve</masterLabel>
+            <translation><!-- Ready to Serve --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rum</masterLabel>
+            <translation><!-- Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scotch</masterLabel>
+            <translation><!-- Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequila</masterLabel>
+            <translation><!-- Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodka</masterLabel>
+            <translation><!-- Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whiskey - NAW</masterLabel>
+            <translation><!-- Whiskey - NAW --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+        <picklistValues>
+            <masterLabel>Beer</masterLabel>
+            <translation><!-- Beer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOT DEFINED</masterLabel>
+            <translation><!-- NOT DEFINED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Alcoholic Beverage</masterLabel>
+            <translation><!-- Non-Alcoholic Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBA</masterLabel>
+            <translation><!-- TBA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trading Goods (Non Beverage)</masterLabel>
+            <translation><!-- Trading Goods (Non Beverage) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Content Description --></label>
+        <name>Content_Description__c</name>
+        <relationshipLabel><!-- Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Core Trademarks Logo --></label>
+        <name>Core_Trademarks_Logo__c</name>
+        <relationshipLabel><!-- Brands (Core Trademarks Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Core Trademarks --></label>
+        <name>Core_Trademarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter Order --></label>
+        <name>Filter_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filtering logo --></label>
+        <name>Filtering_logo__c</name>
+        <relationshipLabel><!-- Brands (Filtering logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard - Display --></label>
+        <name>Gold_Standard_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard - Distribution --></label>
+        <name>Gold_Standard_Distribution__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard - Image --></label>
+        <name>Gold_Standard_Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard - Shelf --></label>
+        <name>Gold_Standard_Shelf__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gold Standard - Text Area test --></label>
+        <name>Gold_Standard_Text_Area_test__c</name>
+    </fields>
+    <fields>
+        <label><!-- Heritage Logo --></label>
+        <name>Heritage_Logo__c</name>
+        <relationshipLabel><!-- Brands (Heritage Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Heritage --></label>
+        <name>Heritage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Innovation Logo --></label>
+        <name>Innovation_Logo__c</name>
+        <relationshipLabel><!-- Brands (Innovation Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Innovation --></label>
+        <name>Innovation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lifestyle Logo --></label>
+        <name>Lifestyle_Logo__c</name>
+        <relationshipLabel><!-- Brands (Lifestyle Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Lifestyle --></label>
+        <name>Lifestyle__c</name>
+    </fields>
+    <fields>
+        <label><!-- Luxury Logo --></label>
+        <name>Luxury_Logo__c</name>
+        <relationshipLabel><!-- Brands (Luxury Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Luxury --></label>
+        <name>Luxury__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento Id --></label>
+        <name>Magento_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Migration ID --></label>
+        <name>Migration_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- PIL Logo --></label>
+        <name>PIL_Logo__c</name>
+        <relationshipLabel><!-- Brands (PIL Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Parent Brand --></label>
+        <name>Parent_Brand__c</name>
+        <relationshipLabel><!-- Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Portfolio Brand --></label>
+        <name>Portfolio_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reserve Brand Logo --></label>
+        <name>Reserve_Brand_Logo__c</name>
+        <relationshipLabel><!-- Brands (Reserve Brand Logo) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Reserve Brand --></label>
+        <name>Reserve_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- WBS Level 3 --></label>
+        <name>WBS_Level_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- WBS Level 5 --></label>
+        <name>WBS_Level_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Direct Visible --></label>
+        <name>diageo_direct_visible__c</name>
+    </fields>
+    <fields>
+        <label><!-- font color --></label>
+        <name>font_color__c</name>
+    </fields>
+    <fields>
+        <label><!-- gradient bottom color --></label>
+        <name>gradient_bottom_color__c</name>
+    </fields>
+    <fields>
+        <label><!-- gradient top color --></label>
+        <name>gradient_top_color__c</name>
+    </fields>
+    <fields>
+        <label><!-- stroke color --></label>
+        <name>stroke_color__c</name>
+    </fields>
+    <layouts>
+        <layout>Brand Layout</layout>
+        <sections>
+            <label><!-- Brand Detail --></label>
+            <section>Brand Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Gold Standards --></label>
+            <section>Gold Standards</section>
+        </sections>
+        <sections>
+            <label><!-- Shelf Images --></label>
+            <section>Shelf Images</section>
+        </sections>
+    </layouts>
+    <namedFilters>
+        <errorMessage><!-- Must be an &quot;Individual&quot; Brand Type --></errorMessage>
+        <name>nf_01IA00000024gWEMAY_00NA0000009Yt5XMAS</name>
+    </namedFilters>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The Parent Brand cannot be changed once the Brand is created --></errorMessage>
+        <name>Parent_Brand</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only one brand can be marked as &quot;Portfolio Brand&quot; --></errorMessage>
+        <name>Prevent_Portfolio_Brand_Creation</name>
+    </validationRules>
+</CustomObjectTranslation>

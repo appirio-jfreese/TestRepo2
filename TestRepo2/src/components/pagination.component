@@ -1,0 +1,70 @@
+<apex:component >
+   	<apex:attribute name="pageNumbers" description="" type="List" required="true"/>
+   	<apex:attribute name="totalNumberOfPages" description="" type="Integer" required="false"/>
+    <apex:attribute name="numberOfCurrentPage" description="" type="Integer" required="true"/>
+    <apex:attribute name="isNewContent" description="" type="Boolean" required="false"/>    
+    <apex:attribute name="showPager" description="" type="Boolean" required="false" default="true"/>    
+    <apex:attribute name="showNewContentMsg" description="" type="Boolean" required="false" default="true"/> 
+        	
+            <div class="float-left paginate msg-paginate" style="text-align: left !important; float: left; width: 40%;">      
+                <apex:outputPanel rendered="{! IF(isNewContent != false && showNewContentMsg , 'true', 'false')}">
+                    <span class="defaultTheme" style="line-height: 25px;"><span class="bold">*</span> Uploaded since your last visit</span> 
+                </apex:outputPanel>
+            </div> 
+            
+            	<div class="float-right If(showPager==true,'','hidden')" >  	
+				<apex:outputPanel rendered="{! if( 0 < totalNumberOfPages, 'true','false' )}">
+	    			<div class="paginate">
+		    			<div class="pagerWrapper">
+				        	<div class="pagerLabel"></div>
+	                            <!-- page number button -->
+	                            
+	                            <!-- first button -->
+	                            <apex:outputPanel rendered="{! if( numberOfCurrentPage != 1, 'true','false' )}">
+	                                <div class="pagerButton"><a onclick="showFirstPage()">first</a></div>
+	                            </apex:outputPanel> 
+	                                
+	                            <!-- prev button -->
+	                            <apex:outputPanel rendered="{! if( numberOfCurrentPage != 1, 'true','false' )}">
+	                                <div class="pagerButton"><a onclick="showPrevPage()">prev</a></div>
+	                            </apex:outputPanel>
+	                                                 
+	                            <apex:repeat value="{!pageNumbers}" var="pageNumber">
+	                                <apex:outputPanel rendered="{! if( numberOfCurrentPage != pageNumber, 'true','false' )}">
+	                                    <div class="pagerButton"><a onclick="showPageRequested({!pageNumber})">{!pageNumber}</a></div>
+	                                </apex:outputPanel> 
+	                                <apex:outputPanel rendered="{! if( numberOfCurrentPage == pageNumber, 'true','false' )}">
+	                                    <div class="pagerButton currentPage">{!pageNumber}</div>
+	                                </apex:outputPanel> 
+	                            </apex:repeat>
+	                                           
+	    						<!-- last page number -->
+	    						<apex:outputPanel rendered="{! if( numberOfCurrentPage < totalNumberOfPages-1, 'true','false' )}">
+									<div class="pagerButton">...</div>
+	    							<div class="pagerButton">
+	    								<a onclick="showLastPage()">
+											<apex:outputText id="lPage" value="{0, number, integer}">
+			    								<apex:param value="{!totalNumberOfPages}" />
+											</apex:outputText>
+										</a>
+									</div>
+								</apex:outputPanel>
+								
+								
+	                            <!-- next button -->
+	                            <apex:outputPanel rendered="{! if( totalNumberOfPages > 1 && numberOfCurrentPage + 1 <= totalNumberOfPages, 'true','false' )}">
+	                                <div class="pagerButton"><a onclick="showNextPage()">next</a></div>
+	                            </apex:outputPanel> 
+	                                
+	                            <!-- last button -->
+	                            <apex:outputPanel rendered="{! if( totalNumberOfPages > 1 && numberOfCurrentPage < totalNumberOfPages, 'true','false' )}">
+	                                <div class="pagerButton"><a onclick="showLastPage()">last</a></div>
+	                            </apex:outputPanel>
+	                            
+	                            <div class="pagerClear"></div>
+	                        </div>
+	                        <div class="pagerClear"></div>
+	                    </div>
+	            </apex:outputPanel>
+			</div>
+</apex:component>

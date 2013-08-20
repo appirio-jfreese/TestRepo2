@@ -1,0 +1,12 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Preview">
+        <!-- PAGE CONTENT -->
+        <div class="content2">
+            <div class="">
+                <c:videoPlayer videoId="{!videoId}" width="620" height="346" rendered="{!!isnull(videoId)}"/>
+                <apex:outputpanel rendered="{!isnull(videoId)}">Wrong link</apex:outputpanel>
+            </div>
+            <div>
+                <a href="{!$Page.VideoDownload}?videoid={!videoId}&videodesc={!URLENCODE('download link')}">download link</a>
+            </div>
+       </div>
+</apex:page>

@@ -1,0 +1,48 @@
+<apex:page controller="MLAMB_ContentSOSLPOCController">
+  <apex:sectionHeader title="Content SOSL Search Proof Of Concept"/>
+  <apex:form id="theForm">
+    <apex:pageBlock title="Search POC" id="theBlock">
+      <apex:pageBlockSection title="Enter your search term" columns="1" collapsible="false" id="searchSection">
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Search Term" />
+          <apex:inputText value="{!searchTerm}" onkeypress="return doGo();" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="buttonSectionItem">
+          <apex:outputLabel value="" />
+          <apex:commandButton value="Go" action="{!doSOSLSearch}" reRender="theBlock" id="goButton">
+            <apex:param name="searchParam" value="{!searchTerm}" />
+          </apex:commandButton>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+      <apex:pageBlockSection title="Results" columns="1" collapsible="false" id="resultsSection">
+        <apex:pageBlockTable value="{!cvResults}" var="cv" rendered="{!haveResults}" width="100%">
+          <apex:column headerValue="DocumentName" width="50%">
+            <apex:outputLink value="/{!cv.ContentDocumentId}" target="_href">{!cv.Title}</apex:outputLink>
+          </apex:column>
+          <apex:column value="{!cv.ContentSize}" />
+          <apex:column value="{!cv.ContentUrl}" />
+          <apex:column value="{!cv.FileType}" />
+          <apex:column value="{!cv.VersionNumber}" />
+          <apex:column value="{!cv.PositiveRatingCount}" />
+          <apex:column value="{!cv.NegativeRatingCount}" />
+          <apex:column value="{!cv.ReasonForChange}" />
+        </apex:pageBlockTable>
+      </apex:pageBlockSection>
+    </apex:pageBlock>
+  </apex:form>
+  <script>
+      function doGo() 
+      {
+         if (window.event && window.event.keyCode == 13)
+         {
+            var ele=document.getElementById('{!$Component.theForm.theBlock.searchSection.buttonSectionItem.goButton}');
+            ele.click();
+            return false;
+         }
+         else
+         {
+            return true;
+         }
+      }
+  </script>
+</apex:page>

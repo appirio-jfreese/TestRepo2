@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Action__c$State_Abbreviation__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Account__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$RecordType</field>
+    </columns>
+    <columns>
+        <field>Action__c$Name</field>
+    </columns>
+    <columns>
+        <field>Action__c$Goal__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Action_Product_Links__r$Generic_Brand__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$BrandBottle_Size__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Date_Finished__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Status__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Comments__c</field>
+    </columns>
+    <description>Focus Week Reporting with Brand Capabilities.</description>
+    <filter>
+        <criteriaItems>
+            <column>Action__c$Goal__c</column>
+            <operator>contains</operator>
+            <value>Focus Week</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Owner</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Focus Week Reporting with Brand</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Actions_with_Action_Brands__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Action__c$Date_Finished__c</dateColumn>
+        <endDate>2013-02-11</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-02-08</startDate>
+    </timeFrameFilter>
+</Report>

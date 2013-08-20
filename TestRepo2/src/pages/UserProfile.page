@@ -1,0 +1,322 @@
+<!------------------------------------------------------------------------------
+Name				: UserProfile.page
+
+Updated By 	: Basant Kumar Verma (Appirio OffShore)
+Date 				: 15/6/2013
+Story/Task 	: US79/DE594
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_UserProfile">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SearchResultPage, 'style'+siteTheme+'.css')}"/>  
+    
+    <style type="text/css">
+        .content {
+            overflow: visible !important;
+        }
+        .profile-table {
+            width: 920px;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-spacing: 0px; 
+            border-collapse:collapse;
+        }
+        .profile-table input {
+            border: 1px solid #aaaaaa;
+        }
+        .profile-table td {
+            border-bottom: 1px dotted #555555;
+        }
+        .profile-table tr {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .profile-table td {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .profile-table td.label {
+            padding-left: 10px;
+            width: 240px;
+        }
+        .profile-table td.options {
+            width: 150px;
+            color: #44ADC3;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: right;
+            padding-right: 20px;
+        }
+        .t-value{
+            color: #497B85;
+            font-weight: bold;
+        }
+        .profile-table td.value {
+            color: #497B85;
+            width: 500px;
+            font-weight: bold;
+        }
+        .profile-table td.no-border {
+            border: none !important;
+        }
+        .edit-button, .save-button, .cancel-button{
+            cursor: pointer;
+        }
+        .active-row{
+            background-color: #E8E8E8;
+        }
+        
+    </style>    
+
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+        <script type="text/javascript">
+            pageViewed('User Profile');
+        </script>
+
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks"> 
+            <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left" style="text-align:left; overflow: visible !important;">
+            <div class="sub-header">
+                Profile
+            </div>
+            <apex:outputPanel id="pageContent">
+            <apex:form id="theForm">
+                    <apex:outputPanel id="messages">
+                        <apex:messages styleClass="errorMessagesList" />
+                    </apex:outputPanel>
+                    <apex:actionFunction status="ajax-status" name="updateUserRecord" action="{!updateUserRecord}" rerender="pageContent, beadcrumblinks"/>
+                    <apex:actionFunction status="ajax-status" name="cancelEdit" action="{!cancelEdit}" rerender="pageContent, beadcrumblinks"/>
+
+                    <table class="profile-table">
+                        <tr>
+                            <td class="label">Account</td>
+                            <td class="value"><apex:outputfield value="{!userRecord.Contact.Account.Name}" /></td>
+                            <td class="options"></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Username</td>
+                            <td class="value"><apex:outputfield value="{!userRecord.Username}" /></td>
+                            <td class="options"></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Name</td>
+                            <td class="value"><apex:outputfield value="{!userRecord.Name}" /></td>
+                            <td class="options"></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Time Zone</td>
+                            <td style="padding-top: 4px; padding-bottom: 4px;" class="timezone-holder">
+                                <div class="e-value hidden">
+                                    <div style="position: relative; z-index: 3; width: 100%; height: 50px;"><div style="position: absolute; top: 0px; left: 0px;"><c:selectList width="480" trim="false" options="{!Timezones}" value="{!userRecord.TimeZoneSidKey}"/></div></div>
+                                </div>
+                                <div class="t-value">
+                                    <apex:outputText value="{!userRecord.TimeZoneSidKey}" />
+                                </div>
+                            </td>
+                            <td class="options editable">
+                                <div class="edit-option hidden"><span class="edit-button">Edit</span></div>
+                                <div class="save-option hidden"><span class="save-button">Save</span> | <span class="cancel-button">Cancel</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">Phone Number</td>
+                            <td class="value">
+                                <div class="e-value hidden">
+                                    <apex:inputField value="{!userRecord.Phone}" />
+                                </div>
+                                <div class="t-value">
+                                    <apex:outputText value="{!userRecord.Phone}" />
+                                </div>
+                            </td>
+                            <td class="options editable">
+                                <div class="edit-option hidden"><span class="edit-button">Edit</span></div>
+                                <div class="save-option hidden"><span class="save-button">Save</span> | <span class="cancel-button">Cancel</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">Alternate Email</td>
+                            <td class="value">
+                                <div class="e-value hidden">
+                                    <apex:inputField value="{!userRecord.Alternate_Email__c}" style="width: 300px;"/>
+                                </div>
+                                <div class="t-value">
+                                    <apex:outputText value="{!userRecord.Alternate_Email__c}" />
+                                </div>
+                            </td>
+                            <td class="options editable">
+                                <div class="edit-option hidden"><span class="edit-button">Edit</span></div>
+                                <div class="save-option hidden"><span class="save-button">Save</span> | <span class="cancel-button">Cancel</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">Result Per Page</td>
+                            <td style="padding-top: 4px; padding-bottom: 4px;">
+                                <div class="e-value hidden">
+                                    <div style="position: relative; z-index: 2; width: 100%; height: 50px;"><div style="position: absolute; top: 0px; left: 0px;"><c:selectList width="80" options="{!NumberOfItemsPerPageList}" value="{!userRecord.Number_of_items_per_page__c}"/></div></div>
+                                </div>
+                                <div class="t-value">
+                                    <apex:outputText value="{!userRecord.Number_of_items_per_page__c}" />
+                                </div>
+                            </td>
+                            <td class="options editable">
+                                <div class="edit-option hidden"><span class="edit-button">Edit</span></div>
+                                <div class="save-option hidden"><span class="save-button">Save</span> | <span class="cancel-button">Cancel</span></div>
+                            </td>
+                        </tr>
+                        <!-- Start : Changes for US79/DE594 - Basant Verma-->
+                        <tr>
+                            <td class="label">Site Theme</td>
+                            <td style="padding-top: 4px; padding-bottom: 4px;">
+                                <div class="e-value hidden">
+                                    <div style="position: relative; z-index: 1; width: 100%; height: 50px;"><div style="position: absolute; top: 0px; left: 0px; "><c:selectList options="{!SiteThemes}" value="{!userRecord.Diageo_Direct_Theme__c}"/></div></div>
+                                </div>
+                                <div class="t-value">
+                                    <apex:outputText value="{!userRecord.Diageo_Direct_Theme__c}" />
+                                </div>
+                            </td>
+                            <td class="options editable">
+                                <div class="edit-option hidden"><span class="edit-button">Edit</span></div>
+                                <div class="save-option hidden"><span class="save-button">Save</span> | <span class="cancel-button">Cancel</span></div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="label no-border">Content Notification Frequency</td>
+                            <td class="no-border" style="padding-top: 4px; padding-bottom: 4px;">
+                                <div class="e-value hidden">
+                                    <div style="position: relative; z-index: 1; width: 100%; height: 50px;"><div style="position: absolute; top: 0px; left: 0px; ">
+                                    <c:selectList options="{!NotificationFrequency}" value="{!userRecord.Content_Notification_Frequency__c}"/></div></div>
+                                </div>
+                                <div class="t-value">
+                                    <apex:outputText value="{!userRecord.Content_Notification_Frequency__c}" />
+                                </div>
+                            </td>
+                            <td class="options editable no-border">
+                                <div class="edit-option hidden"><span class="edit-button">Edit</span></div>
+                                <div class="save-option hidden"><span class="save-button">Save</span> | <span class="cancel-button">Cancel</span></div>
+                            </td>
+                        </tr>
+                        <!-- End : Changes for US79/DE594 - Basant Verma -->
+                    </table>
+            </apex:form>
+            </apex:outputPanel>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <c:ajaxLoader />
+    <script type="text/javascript">
+
+    jQuery(document).ready(function() {
+    
+        var isiPad = navigator.userAgent.match(/iPad/i) != null;        
+        if( isiPad == true){  
+            jQuery('table.profile-table tr').live('touchstart',function(event){
+                if ( !(jQuery(event.target).hasClass("save-button") || jQuery(event.target).hasClass("edit-button") || jQuery(event.target).hasClass("cancel-button"))){
+                    if(jQuery('.edit-in-progress').length == 0){
+                        jQuery('table.profile-table tr').removeClass('active-row');
+                        jQuery('.edit-option').addClass('hidden');                  
+                        jQuery(this).find('.save-option').addClass('hidden');
+                        jQuery(this).find('.edit-option').removeClass('hidden');
+                        jQuery(this).addClass('active-row');
+                    }
+                }
+            });
+            
+            jQuery('.edit-button').live('touchstart',function(){
+                if(jQuery(this).parents('.editable').length != 0){
+                    var editable = jQuery(this).parents('.editable').first();
+                    editable.addClass('edit-in-progress');
+                    editable.find('.save-option').removeClass('hidden');
+                    editable.find('.edit-option').addClass('hidden');
+                    editable.parent().find('.t-value').addClass('hidden');
+                    editable.parent().find('.e-value').removeClass('hidden');
+                    jQuery('.custom-select-box-values').jScrollPane();
+                }               
+            });
+    
+            jQuery('.cancel-button').live('touchstart',function(){
+                var editable = jQuery(this).parents('.editable').first();
+                editable.removeClass('edit-in-progress');           
+                editable.find('.save-option').addClass('hidden');
+                editable.find('.edit-option').removeClass('hidden');
+                editable.parent().find('.e-value').addClass('hidden');
+                editable.parent().find('.t-value').removeClass('hidden');
+                cancelEdit();           
+            });
+    
+            jQuery('.save-button').live('touchstart',function(){
+                if(jQuery(this).parents('.editable').length != 0){
+                    var editable = jQuery(this).parents('.editable').first();
+                    editable.removeClass('edit-in-progress');
+                    editable.find('.save-option').addClass('hidden');
+                    editable.find('.edit-option').removeClass('hidden');
+                    editable.parent().find('.e-value').addClass('hidden');
+                    editable.parent().find('.t-value').removeClass('hidden');
+                    updateUserRecord();
+                }
+            }); 
+        }else{
+            jQuery('table.profile-table tr').live('mouseenter',function(){
+                if(jQuery('.edit-in-progress').length == 0){
+                    jQuery(this).find('.save-option').addClass('hidden');
+                    jQuery(this).find('.edit-option').removeClass('hidden');
+                    jQuery(this).addClass('active-row');
+                }
+            });
+            jQuery('table.profile-table tr').live('mouseleave',function(){
+                if(!jQuery(this).find('.editable').hasClass('edit-in-progress')){
+                    jQuery(this).find('.edit-option').addClass('hidden');
+                    jQuery(this).find('.save-option').addClass('hidden');
+                    jQuery(this).removeClass('active-row');
+                }
+            });             
+        
+            jQuery('.edit-button').live('click',function(){
+                if(jQuery(this).parents('.editable').length != 0){
+                    var editable = jQuery(this).parents('.editable').first();
+                    editable.addClass('edit-in-progress');
+                    editable.find('.save-option').removeClass('hidden');
+                    editable.find('.edit-option').addClass('hidden');
+                    editable.parent().find('.t-value').addClass('hidden');
+                    editable.parent().find('.e-value').removeClass('hidden');
+                    jQuery('.custom-select-box-values').jScrollPane();
+                }
+            });
+    
+            jQuery('.cancel-button').live('click',function(){
+                if(jQuery(this).parents('.editable').length != 0){
+                    var editable = jQuery(this).parents('.editable').first();
+                    editable.removeClass('edit-in-progress');
+                    editable.find('.save-option').addClass('hidden');
+                    editable.find('.edit-option').removeClass('hidden');
+                    editable.parent().find('.e-value').addClass('hidden');
+                    editable.parent().find('.t-value').removeClass('hidden');
+                    cancelEdit();
+                }
+            });
+    
+            jQuery('.save-button').live('click',function(){
+                if(jQuery(this).parents('.editable').length != 0){
+                    var editable = jQuery(this).parents('.editable').first();
+                    editable.removeClass('edit-in-progress');
+                    editable.find('.save-option').addClass('hidden');
+                    editable.find('.edit-option').removeClass('hidden');
+                    editable.parent().find('.e-value').addClass('hidden');
+                    editable.parent().find('.t-value').removeClass('hidden');
+                    updateUserRecord();
+                }
+            });
+        }   
+
+    });
+    </script>
+</apex:page>

@@ -1,0 +1,7 @@
+<apex:page sidebar="false"
+		   showHeader="false">
+		   
+	<c:ActionCompleteDashboard mode="dir"
+							   chart="west"/>
+						
+</apex:page>

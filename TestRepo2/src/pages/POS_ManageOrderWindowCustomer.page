@@ -1,0 +1,89 @@
+<apex:page standardController="Order_Window_Customer__c"  extensions="POS_OrderWindowCustomerController">
+<script>
+function checkAllRecords(cb) {
+    var inputElem = document.getElementsByTagName("input");
+    for(var i=0; i<inputElem.length; i++) {
+        if(inputElem[i].id.indexOf("recordselection")!=-1) {
+            if(!inputElem[i].disabled) {
+                inputElem[i].checked = cb.checked;
+            }
+        }
+    }
+}  
+
+function checkRecordSelection(cb){
+    if(cb.checked) return; // processing done only when one of the records are unchecked
+    var inputElem = document.getElementsByTagName("input");
+    for(var i=0; i<inputElem.length; i++) {
+        if(inputElem[i].id.indexOf("selectALLrecords")!=-1) {
+            inputElem[i].checked = cb.checked;
+        }
+    }
+} 
+</script>
+ 
+    <apex:pageblock >
+       <apex:pageBlockSection title="Order Window Detail" collapsible="false" columns="2" id="owDetail" showHeader="true"> 
+               <apex:outputField value="{!orderWindow.Name}"/>
+               <apex:outputField value="{!orderWindow.Status__c}"/>
+               <apex:outputField value="{!orderWindow.Type__c}"/>
+               <apex:outputField value="{!orderWindow.Fiscal_Year__c}"/>
+    </apex:pageBlockSection>    
+    <apex:form > 
+       <apex:pageBlockSection title="Search Users" collapsible="false" columns="3" id="searchSection" showHeader="true"> 
+             <apex:inputText value="{!name}" label="User Name"/>
+             <apex:inputText value="{!accountName}" label="Account Name"/>             
+            <apex:selectList value="{!selectedProfile}" multiselect="false" size="1" label="Profile">
+            <apex:selectOptions value="{!items}"/>
+            </apex:selectList>  
+            <apex:outputText value="" style="width:100%;"/> 
+            <apex:outputPanel style="float: left;">
+            <apex:commandButton value="    Search    " action="{!searchUsers}" id="findButton" rerender="resultsSection" status="resultStatus"></apex:commandButton>
+            &nbsp;&nbsp;
+            <apex:commandButton value="Clear" onclick="this.form.reset(); return false;"/>  
+            &nbsp;&nbsp;
+            <apex:actionStatus startText="requesting..." id="resultStatus"/> 
+            </apex:outputPanel>
+      </apex:pageBlockSection>
+    </apex:form> 
+    <apex:form >        
+    <apex:pageBlockSection title="Manage User Assignment" collapsible="false" rendered="{!availableCustomers.size > 0}" id="resultsSection" columns="1">    
+        <apex:pageMessages />  
+        <apex:outputPanel style="float: left;">
+        <apex:commandButton value="Save User Assignment" action="{!saveOWCAssignments}" disabled="{!ISNULL(availableCustomers)}"/>
+        <apex:commandButton value="Reset" disabled="{!ISNULL(availableCustomers)}" onclick="this.form.reset(); return false;"/>
+        <apex:commandButton action="{!back}" value="Cancel"/>  
+        </apex:outputPanel>     
+        <apex:pageBlockTable value="{!availableCustomers}" var="t">
+            <apex:column >
+                <apex:facet name="header"> <apex:inputCheckbox id="selectALLrecords" label="Select" disabled="false" onclick="checkAllRecords(this)"/> </apex:facet>
+                <apex:inputCheckbox value="{!t.checked}" id="recordselection" disabled="{!(t.checked && openAndBeyond)}" onclick="checkRecordSelection(this)"/>           
+            </apex:column> 
+            <apex:column headerValue="User Name">
+                {!t.usr.Name}
+            </apex:column>   
+            <apex:column headerValue="Account Name">
+                {!t.usr.Contact.Account.Name}
+            </apex:column>    
+            <apex:column headerValue="Account State">
+                {!t.usr.Contact.Account.ShippingState}
+            </apex:column>             
+            <apex:column headerValue="User Profile">
+                {!t.usr.Profile.Name}          
+            </apex:column>   
+            <apex:column headerValue="Open For Shopping">
+            <apex:outputText value="{!if(t.canShop, 'Yes', 'No')}"/>
+            </apex:column>              
+            <apex:column headerValue="Portal Enabled">
+            <apex:outputText value="{!if(t.usr.IsPortalEnabled, 'Yes', 'No')}"/>
+            </apex:column>                               
+        </apex:pageBlockTable>
+        <apex:outputPanel style="float: left;">
+        <apex:commandButton value="Save User Assignment" action="{!saveOWCAssignments}" disabled="{!ISNULL(availableCustomers)}"/>
+        <apex:commandButton value="Reset" disabled="{!ISNULL(availableCustomers)}" onclick="this.form.reset(); return false;"/>
+        <apex:commandButton action="{!back}" value="Cancel"/>
+        </apex:outputPanel>
+     </apex:pageBlockSection>
+    </apex:form> 
+   </apex:pageBlock>
+</apex:page>

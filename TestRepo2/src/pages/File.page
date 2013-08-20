@@ -1,0 +1,309 @@
+<apex:page standardController="File__c" extensions="ControllerFile">
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+    <style type="text/css">
+        .selectBox {
+            height: 200px;
+            min-width: 260px;
+        }
+        
+        .panelAdd {
+            float: left;
+        }
+        
+        .bEditBlock.bPageBlock .detailList tr td.arrowsPanel {
+            vertical-align: middle;
+        }
+        
+        .errorMessagesList{
+            padding:    10px;
+            margin:     0px;
+            text-align:     left;
+            font-weight:    bold;
+            color:          #dd0000;
+            list-style-type: none;
+            font-size:      12px;
+        }
+        
+        .FLL{
+            overflow-y: scroll;
+            height: 210px !important;
+            display: block;
+            width: 400px !important;
+        }
+                        
+    </style>
+    <script type="text/javascript">
+          jQuery(document).ready(function() {
+                bindEvents();
+                bindEventsOU();
+            });
+            
+            var fireChange = true;
+            var bindEventsOU = function(){
+                jQuery('.addOrganizationUnitButton').live('click', function() {
+                    jQuery('.OL option:selected').remove().appendTo('.OL_Selected');
+                    refreshHiddenFieldsOU();
+                    return false;
+                });
+                 jQuery('.removeOrganizationUnitButton').live('click', function() {
+                    jQuery('.OL_Selected option:selected').remove().appendTo('.OL');
+                    refreshHiddenFieldsOU();
+                    return false;
+                });
+                fireChange = false;
+                refreshHiddenFieldsOU();
+                fireChange = true;
+            }
+            
+            var refreshHiddenFieldsOU = function(){
+                var selectedOrganizationUnitsIds = '';
+                
+                var nodes = jQuery('.OL_Selected option');
+                var glue = '';
+                for(i=0; i < nodes.length; i++){
+                    selectedOrganizationUnitsIds += glue + nodes[i].value;
+                    glue = ';';
+                }
+                
+                jQuery('input[id*=selectedOrganizationUnitsIds]').val(selectedOrganizationUnitsIds);
+                
+                refreshFolderListSelect(selectedOrganizationUnitsIds);
+                
+                jQuery(".OL_Selected").addClass('ie-fixer'); 
+                jQuery(".OL_Selected").removeClass('ie-fixer');
+            }
+            
+            var bindEvents = function(){
+                jQuery('.FLL input[type=checkbox]').live('click',function() {   
+                    refreshHiddenFields();                  
+                });   
+                jQuery('.addDistributorButton').live('click',function() {
+                    jQuery('.DL option:selected').remove().appendTo('.DL_Selected');
+                    refreshHiddenFields();
+                    return false;
+                });
+                 jQuery('.removeDistributorButton').live('click',function() {
+                    jQuery('.DL_Selected option:selected').remove().appendTo('.DL');
+                    refreshHiddenFields();
+                    return false;
+                });
+                
+                jQuery('.addBrandButton').live('click',function() {
+                    jQuery('.BL option:selected').remove().appendTo('.BL_Selected');
+                    refreshHiddenFields();
+                    return false;
+                });
+                 jQuery('.removeBrandButton').live('click',function() {
+                    jQuery('.BL_Selected option:selected').remove().appendTo('.BL');
+                    refreshHiddenFields();
+                    return false;
+                });
+                
+                refreshHiddenFields();
+            }
+            
+            var refreshHiddenFields = function(){
+                var selectedDistributorIds = '';
+                var selectedFolderIds = '';
+                var selectedBrandIds = '';
+                
+                var nodes = jQuery('.DL_Selected option');
+                var glue = '';
+                for(i=0; i < nodes.length; i++){
+                    selectedDistributorIds += glue + nodes[i].value;
+                    glue = ';';
+                }
+                jQuery('input[id*=selectedDistributorIds]').val(selectedDistributorIds);
+                
+                var nodes = jQuery('.FLL input:checked');
+                                
+                var glue = '';
+                for(i=0; i < nodes.length; i++){
+                    selectedFolderIds += glue + nodes[i].value;
+                    glue = ';';
+                }
+                          
+                var el = jQuery('input[id*=selectedFolderIds]').val(selectedFolderIds);
+                                
+                var nodes = jQuery('.BL_Selected option');
+                var glue = '';
+                
+                for(i=0; i < nodes.length; i++){
+                    selectedBrandIds += glue + nodes[i].value;
+                    glue = ';';
+                }
+                jQuery('input[id*=selectedBrandIds]').val(selectedBrandIds);
+                
+                jQuery(".FL_Selected").addClass('ie-fixer'); 
+                jQuery(".FL_Selected").removeClass('ie-fixer');
+                
+                jQuery(".BL_Selected").addClass('ie-fixer'); 
+                jQuery(".BL_Selected").removeClass('ie-fixer');
+                
+                jQuery(".DL_Selected").addClass('ie-fixer'); 
+                jQuery(".DL_Selected").removeClass('ie-fixer');
+            }
+            
+            var hideDistributors = function(){
+                jQuery('#DL').hide();
+                refreshHiddenFields();
+            }
+    </script>
+    <apex:sectionHeader title="File" subtitle="{!File__c.name}"/> 
+        <apex:outputPanel id="messages">
+            <apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+        <apex:form >
+            <apex:actionFunction name="refreshFolderList" action="{!refreshFolderList}" rerender="formSection, messages" oncomplete="bindEvents()"/>
+            <apex:actionFunction name="setOnlyForInternalUser" action="{!setOnlyForInternalUser}" rerender="formSection, messages" oncomplete="bindEvents()"/>
+            <apex:actionFunction name="refreshFolderListSelect" action="{!refreshFolderList}" rerender="formSection, messages" >
+                <apex:param name="selectedOus" assignTo="{!selectedOus}" value=""/>
+            </apex:actionFunction>
+           	<apex:actionFunction name="changeTheme" action="{!changeTheme}" rerender="formSection, messages" />
+           	
+            <apex:inputHidden value="{!File__c.Folders__c}" id="selectedFolderIds"/>
+            <apex:inputHidden value="{!File__c.Distributors__c}" id="selectedDistributorIds"/>
+            <apex:inputHidden value="{!File__c.Brands__c}" id="selectedBrandIds"/>
+            <apex:pageBlock title="File Edit" mode="edit">
+                <apex:pageMessages />
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Save" action="{!save}"/>
+                    <apex:commandButton value="Cancel" action="{!cancel}"/>
+                </apex:pageBlockButtons> 
+                <apex:pageBlockSection title="Information" collapsible="false" id="formSection" columns="1"> 
+                    <apex:outputField value="{!File__c.Name}"/>
+                    <apex:outputField value="{!File__c.Content_ID__c}"/>
+                    <apex:outputField value="{!File__c.Title__c}"/>
+                    <apex:outputField value="{!File__c.Description__c}"/>
+                    <apex:inputField value="{!File__c.Page_Section__c}" required="true" onchange="refreshFolderList()" />
+					<apex:inputField value="{!File__c.Classification__c}" rendered="{!isMulticlassificationAllowed}"/>
+                    <apex:PageBlockSectionItem rendered="{!NOT(isMulticlassificationAllowed)}">  
+                    	<apex:outputLabel value="Classification"/>
+	                    <apex:selectList value="{!File__c.Classification__c}" size="1" onchange="changeTheme()">
+		                    <apex:selectOptions value="{!Themes}"/>              
+		                </apex:selectList>
+		            </apex:PageBlockSectionItem>
+                    
+                    <!-- ORG UNITS -->
+                    <apex:PageBlockSectionItem rendered="{!showOrganizationUnits}" id="organizationUnitsMultiselect">
+                        <apex:outputLabel value="Organization Units" />
+                        <apex:outputPanel id="OL">
+                            <apex:inputText style="visibility:hidden;float:right" value="{!File__c.OrgUnits__c}" id="selectedOrganizationUnitsIds" onchange="getOrgUnits();"/>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="selectBox OL" size="10" multiple="true">
+                                            <apex:repeat value="{!OrganizationUnits}"  var="d">
+                                                <option value="{!d.value}"> {!d.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                    <td class="arrowsPanel" multiple="true">
+                                        <img width="17" height="17" border="0" align="texttop" title="Add" style="cursor:pointer;" alt="Add" src="/img/arrow2_picklist_right.gif" class="addOrganizationUnitButton" />
+                                        <br /><br />
+                                        <img width="17" height="17" border="0" align="texttop" title="Remove" style="cursor:pointer;" alt="Remove" src="/img/arrow2_picklist_left.gif" class="removeOrganizationUnitButton" />
+                                    </td>
+                                    <td>
+                                        <select class="selectBox OL_Selected" size="10" multiple="true">
+                                            <apex:repeat value="{!OrganizationUnitsSelected}"  var="d">
+                                                <option value="{!d.value}"> {!d.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- FOLDERS -->
+                    <apex:PageBlockSectionItem >  
+                            <apex:outputLabel value="{!$ObjectType.File__c.fields.Folder_Names__c.label}" />
+                            <apex:outputPanel id="FL" styleClass="FLL">                             
+                                <apex:repeat value="{!Folders}"  var="f">
+                                    <span style="padding-left: {!folderDeepth[f.value]*2}0px;">
+                                        <apex:outputPanel rendered="{! IF(folderChecked[f.value] == true, 'true', 'false')}">                               
+                                            <input type="checkbox" value="{!f.value}" name="checkfolders[{!f.value}]" checked="checked"/><label>{!f.label}</label><br />                            
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{! IF(folderChecked[f.value] == false, 'true', 'false')}">                              
+                                            <input type="checkbox" value="{!f.value}" name="checkfolders[{!f.value}]"/><label>{!f.label}</label><br />                          
+                                        </apex:outputPanel>
+                                    </span>
+                                </apex:repeat>                                                                                      
+                            </apex:outputPanel>
+                    </apex:PageBlockSectionItem>
+                    
+                    <!-- DISTRIBUTORS -->
+                    <apex:PageBlockSectionItem rendered="{!isDistributorsSelectionVisible}">
+                        <apex:outputLabel value="{!$ObjectType.File__c.fields.Distributor_Names__c.label}" />
+                        <apex:outputPanel id="DL">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="selectBox DL" size="10" multiple="true">
+                                            <apex:repeat value="{!Distributors}"  var="d">
+                                                <option value="{!d.value}"> {!d.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                    <td class="arrowsPanel" multiple="true">
+                                        <img width="17" height="17" border="0" align="texttop" title="Add" style="cursor:pointer;" alt="Add" src="/img/arrow2_picklist_right.gif" class="addDistributorButton" />
+                                        <br /><br />
+                                        <img width="17" height="17" border="0" align="texttop" title="Remove" style="cursor:pointer;" alt="Remove" src="/img/arrow2_picklist_left.gif" class="removeDistributorButton" />
+                                    </td>
+                                    <td>
+                                        <select class="selectBox DL_Selected" size="10" multiple="true">
+                                            <apex:repeat value="{!DistributorsSelected}"  var="d">
+                                                <option value="{!d.value}"> {!d.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <!-- BRANDS -->
+                    <apex:PageBlockSectionItem rendered="{!isBrandSelectionVisible}">
+                        <apex:outputLabel value="{!$ObjectType.File__c.fields.Brand_Names__c.label}" />
+                        <apex:outputPanel id="BL">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <select class="selectBox BL" size="10" multiple="true">
+                                            <apex:repeat value="{!Brands}"  var="b">
+                                                <option value="{!b.value}"> {!b.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                    <td class="arrowsPanel" multiple="true">
+                                        <img width="17" height="17" border="0" align="texttop" title="Add" style="cursor:pointer;" alt="Add" src="/img/arrow2_picklist_right.gif" class="addBrandButton" />
+                                        <br /><br />
+                                        <img width="17" height="17" border="0" align="texttop" title="Remove" style="cursor:pointer;" alt="Remove" src="/img/arrow2_picklist_left.gif" class="removeBrandButton" />
+                                    </td>
+                                    <td>
+                                        <select class="selectBox BL_Selected" size="10" multiple="true">
+                                            <apex:repeat value="{!BrandsSelected}"  var="b">
+                                                <option value="{!b.value}"> {!b.label}</option>
+                                            </apex:repeat>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputField value="{!File__c.Calendar__c}" rendered="{!isCalendarVisible}"/>
+                    <apex:inputField value="{!File__c.Start_Date__c}" rendered="{!areDatesVisible}"/>
+                    <apex:inputField value="{!File__c.End_Date__c}" rendered="{!areDatesVisible}"/>
+                    <apex:inputField value="{!File__c.Tags__c}"/>
+                    <apex:inputField value="{!File__c.Available_Until__c}" />
+                    <apex:outputField value="{!File__c.Image_Resolution__c}" />
+                    <apex:inputField value="{!File__c.Is_Video__c}" />
+                    <apex:inputField value="{!File__c.Video_Id__c}" />
+                    <apex:inputField value="{!File__c.filetype__c}" />
+                    <apex:outputField value="{!File__c.RTS__c}" />
+                    <apex:outputField value="{!File__c.Portfolio__c}" />
+                    <apex:inputField value="{!File__c.Only_For_Internal_User__c}" onclick="setOnlyForInternalUser()" rendered="{!isOnlyForInternalVisible}"/>
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

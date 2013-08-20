@@ -1,0 +1,45 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Auth">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.LoginPage, 'style.css')}"/>
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <div class="header">
+            <div class="logotype">&nbsp;</div>            
+        </div>  
+        <!-- PAGE CONTENT -->
+        <div class="content left">
+            <div class="login-holder">
+            
+                <div class="login-error">
+                    <apex:outputPanel id="messages">
+                        <apex:messages styleClass="errorLogin" />
+                    </apex:outputPanel>
+                </div>
+				<div class="login-box-center">
+					<div class="login-message-wrapper login-message-wrapper-max">
+						<apex:outputText value="{!$Label.forgotUsername}" escape="false" />
+						<apex:form forceSSL="true" styleClass="form-forgot">
+		                    <apex:actionFunction name="forgotUsername" action="{!forgotUsername}"/>
+		                    <div class="user-password-forgot">
+		                        {!$Label.UserEmail}<br/>
+		                        <apex:inputText value="{!userEmail}" styleClass="forceSubmit"/>
+		                    </div>
+		                    <div class="login-button-forgot">
+		                    	<button onclick="forgotUsername();return false;" class="green">SUBMIT</button>
+		                    </div>
+		                    <div class="login-help-forgot">
+		                        <apex:outputLink value="{!$Page.Login}">
+		                            return to Login
+		                        </apex:outputLink>                  
+		                    </div>                  
+		                </apex:form>
+					</div>
+				</div>
+            </div>
+        </div>
+        <!-- PAGE FOOTER -->
+        <div class="login-footer">
+			<a href="">&copy; Diageo 2011</a>
+		</div>
+    </div>
+</apex:page>

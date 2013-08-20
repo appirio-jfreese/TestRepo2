@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>POS Magento Configuration</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>POS Magento Configuration</value>
+    </caseValues>
+    <fields>
+        <label><!-- BRAND_CATEGORY --></label>
+        <name>BRAND_CATEGORY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Overage Amount --></label>
+        <name>Budget_Overage_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Budget Overage Percent --></label>
+        <name>Budget_Overage_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Spirits District --></label>
+        <name>Diageo_Spirits_District__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Spirits Responsible --></label>
+        <name>Diageo_Spirits_Responsible__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Wine District --></label>
+        <name>Diageo_Wine_District__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Wine Responsible --></label>
+        <name>Diageo_Wine_Responsible__c</name>
+    </fields>
+    <fields>
+        <label><!-- IDP Url --></label>
+        <name>IDP_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item URL --></label>
+        <name>Item_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento API Key --></label>
+        <name>Magento_API_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento_Catalog_Path --></label>
+        <name>Magento_Catalog_Path__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento Endpoint --></label>
+        <name>Magento_Endpoint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento WS Username --></label>
+        <name>Magento_WS_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monthly Ordering URL --></label>
+        <name>Monthly_Ordering_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- ORDERWINDOW_CATEGORY --></label>
+        <name>ORDERWINDOW_CATEGORY__c</name>
+    </fields>
+    <fields>
+        <label><!-- PROGRAM_CATEGORY --></label>
+        <name>PROGRAM_CATEGORY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portal Redirect URL --></label>
+        <name>Portal_Redirect_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Stored the server path to the media folder where Product Images on Magento are stored --></help>
+        <label><!-- ProductImage_FolderPath --></label>
+        <name>ProductImage_FolderPath__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quarterly Ordering URL --></label>
+        <name>Quarterly_Ordering_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Salesforce apexrest uri --></label>
+        <name>Salesforce_apexrest_uri__c</name>
+    </fields>
+    <fields>
+        <label><!-- TYPE_BRAND --></label>
+        <name>TYPE_BRAND__c</name>
+    </fields>
+    <fields>
+        <label><!-- TYPE_ORDER_WINDOW --></label>
+        <name>TYPE_ORDER_WINDOW__c</name>
+    </fields>
+    <fields>
+        <label><!-- TYPE_PROGRAM --></label>
+        <name>TYPE_PROGRAM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tangerine URL --></label>
+        <name>Tangerine_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Thumbnail URL --></label>
+        <name>Thumbnail_URL__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

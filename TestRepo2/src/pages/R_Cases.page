@@ -1,0 +1,98 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : R_Cases.page
+
+Created By  : Randy Wandell (Appirio)   
+Date 		: 6/27/13
+Story/Task	: US584
+------------------------------------------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Cases">
+
+<body class="contact-case-page">
+
+<div class="wrapper">
+    <div class="container">
+
+        <!-- PAGE HEADER -->
+        <c:R_PageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        <script type="text/javascript">
+            pageViewed('Home Page');
+        </script>
+                
+        <!-- content -->
+        <div class="content clearfix">
+	<!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+        	<c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+
+            <h2>
+                <span class="title">
+                    Welcome to Diageo Direct Support
+                </span>
+                <span class="right">
+                    E-mail: <span>diageodirect@diageo.com</span><br />
+                    Phone: <span>1.800.377.8919</span>
+                </span>
+            </h2>
+
+            <div class="button-line two-btns">
+                <a href="contact-new-case.html" class="active">Submit New Case</a>
+                <a href="contact-my-cases.html" class="last">My Cases</a>
+            </div>
+
+            <div class="form">
+                <h4>Case Information</h4>
+                <p>To help us serve you better, please complete all fields below with specific details:</p>
+                <div class="form-line">
+                    <label>Support Type<span class="required">*</span></label>
+                    <select>
+                        <option>Broken Links/Page</option>
+                        <option>Sharing/Uploading/Downloading</option>
+                        <option>Finding Information</option>
+                        <option>Other</option>
+                    </select>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-line">
+                    <label>Application<span class="required">*</span></label>
+                    <select>
+                        <option>Diageo Direct</option>
+                        <option>POS</option>
+                    </select>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-line">
+                    <label>Title<span class="required">*</span></label>
+                    <input type="text" class="text noTransform"/>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-line">
+                    <label>Description<span class="required">*</span></label>
+                    <textarea></textarea>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-line">
+                    <label>Attachment</label>
+                    <input type="text" class="text noTransform"/>
+                    <a href="javascript:;" class="button upload-btn">Select File</a>
+                    <input type="file" class="file"/>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="contact-my-cases.html" class="button submit-case-btn">
+                    <span>Submit New Case</span>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+       <!-- end of content -->
+    <c:R_pageFooter isInternal="{!isInternalUser }" />
+</div>
+</body>
+</apex:page>

@@ -1,0 +1,9 @@
+<apex:component >
+    <div id="startingLoader">
+    	<div id="startingLoaderBox" class="startingLoaderBox sectionBackground sectionBorder">
+   		
+   			<br/>Loading<br/><span class="startingLoaderMoreInfo">Please wait...</span>
+		</div>    		
+    </div>
+    <div id="startingLoaderOverlayDisable"></div>
+</apex:component>

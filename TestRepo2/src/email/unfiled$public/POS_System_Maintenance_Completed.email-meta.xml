@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>POS: System Maintenance Completed</name>
+    <style>none</style>
+    <subject>POS System Maintenance Completed</subject>
+    <textOnly>To All,
+
+The POS portal maintenance to improve the overall speed and shopping experience is complete.  You can log into Diageo Direct and access the POS tile to submit your order.  However, if you have started your order on a spreadsheet  and wish to continue using that method, you can submit your order via spreadsheet.  All orders need to be submitted by end of day October 31st to your MD for approval.  MD’s need to approve and forward orders to michelle.parenti@diageo.com no later than end of day November 2nd . 
+
+Thank you for your patience.
+
+http://diageodirect.com
+
+Thank you,
+
+POS Team
+Michelle Parenti
+Margaret M. Parshenov
+Kim Maciejewski</textOnly>
+    <type>custom</type>
+</EmailTemplate>

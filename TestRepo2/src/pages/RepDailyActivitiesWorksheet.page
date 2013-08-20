@@ -1,0 +1,153 @@
+<apex:page controller="Controller_RepDailyActiviesWorksheet" renderAs="pdf">
+	<head>
+		<style>
+			@page {
+				/* Landscape orientation */
+				size:landscape;
+				
+				@bottom-left {
+			    	content: "{!footerValue}";
+			        background-image: url("{!$Resource.RepFooterImage}");
+			        vertical-align: top;
+			        background-repeat: no-repeat;
+			        background-position: 10px 0px;
+			        text-align: left;
+			        font-size: 11px;
+			        padding: 0px 10px 0px 50px;
+				}
+			}
+			
+			.paddingClass {
+			    padding-right:.5em;
+			    vertical-align:middle;
+			}
+			
+			.blockDiv {
+				width: 100%;
+				border-top: 1px solid black;
+			}
+			
+			.subBlock {
+				page-break-inside: avoid;
+			}
+			
+		</style>
+	</head>
+
+	<hr/>
+	
+	<h1>
+		<apex:outputText value="{0,date,MM/dd/yyyy} - Route Plan" style="float: left; font-size: 14pt;font-type:strong">
+    		<apex:param value="{!dateValue}" />
+		</apex:outputText>
+		<apex:outputLabel value="{!OwnerName}" style="float:right; font-size: 14pt;font-type:strong"/>
+	</h1>
+	<br/>
+ 	<apex:repeat value="{!wrapperList}" var="e">
+		<div class="blockDiv">
+			<div>&nbsp;</div>
+			<span style="padding-right:1em">
+				<apex:outputLabel value="Time:"/>
+			</span>
+			<apex:outputField value="{!e.eventRecord.StartDateTime}" />
+			<span style="padding-left:7em;padding-right:0.5em">
+				<apex:outputLabel value="Account Name:"/>
+			</span>
+	    	<b>
+	    		<apex:outputText value="{!e.eventRecord.Account.name}"/>
+	    	</b>
+	    	<apex:outputLabel value=", {!e.eventRecord.Account.billingstreet}"/>
+	    	
+	    	<apex:pageBlock rendered="{!e.showBlock}">
+		    	<apex:repeat value="{!e.ActionList}" var="a"> 
+		    		<div class="subBlock">
+			      		<div>&nbsp;</div>
+			        	<div>
+			      			<span class="paddingClass">
+			      				<span style="font-size: 120%; font-weight: bold; float: left;">
+			          				{!a.Goal__r.name} - {!a.goal__r.recordType.name}
+			          			</span>
+			          			<span style="font-size: 120%; font-weight: bold; float:right;">
+			          				<apex:outputLabel value="Due Date: " />
+			          				<apex:outputField value="{!a.Due_Date__c}" />
+			          			</span>
+			   				</span>
+			   			</div>
+			   			<div style="clear: left;">&nbsp;</div>
+			   			<div>
+				        	<span class="paddingClass">
+				            	Status:
+				            </span>
+				            <span class="paddingClass">
+				            	<apex:image url="{!$Resource.Checkbox}"/>
+				            	Open
+				            </span>
+				            <span class="paddingClass">
+				            	<apex:image url="{!$Resource.Checkbox}"/>
+				            	Closed-Complete
+				            </span>
+				            <span class="paddingClass">
+				            	<apex:image url="{!$Resource.Checkbox}"/>
+				            	Closed-Not Sold
+				            </span>
+				      		<span class="paddingClass">
+				            	<apex:image url="{!$Resource.Checkbox}"/>
+				            	Closed-Not Pitched
+				            </span>
+						</div>
+						<div>&nbsp;</div>
+						<div style="font-size: 100%">
+							<span class="paddingClass">Date Start: ________ </span>
+				        	<span class="paddingClass">Date Finish: ________</span>
+				          	<span class="paddingClass">SKU: ________________________________</span>
+				          	<span class="paddingClass">Sugg. $*: ________</span>
+				          	<apex:image url="{!$Resource.Checkbox}"/>
+				          	Photo
+				      	</div>
+				      	<div>
+				        	&nbsp;
+				      	</div>
+				       	<div style="display:block">
+					    	<table>
+					        	<tr>
+					        		<td>&nbsp;</td>
+					        		<td rowspan="2">
+					        			<apex:image value="{!$Resource.TextArea}" width="800" height="100"/>
+					       			</td>
+					       		</tr>
+					        	<tr>
+					        		<td>
+					        			<apex:outputLabel value="Comments:"/>
+					        		</td>
+						        	<td>
+						        	</td>
+						       	</tr>
+					    	</table>
+						</div>
+			    	<div>&nbsp;</div>
+					</div>
+			    </apex:repeat>
+			</apex:pageBlock>
+ 
+			<apex:pageBlock rendered="{!NOT(e.ShowBlock)}">
+			 	<div style="display:block;">
+			    	<table>
+			        	<tr>
+			        		<td>&nbsp;</td>
+			        		<td rowspan="2">
+			        			<apex:image value="{!$Resource.TextArea}" width="800" height="100"/>
+			        		</td>
+			        	</tr>
+			        	<tr>
+			        		<td>
+			        			<apex:outputLabel value="Comments:"/>
+			        		</td>
+			        		<td></td>
+			        	</tr>
+			    	</table>
+				</div>
+			</apex:pageBlock>
+		
+		</div>   
+	</apex:repeat>
+</apex:page>

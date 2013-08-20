@@ -1,0 +1,37 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : NarrowBlogList.component
+
+Updated By  : Randy Wandell (Appirio)
+Date        : 6/12/13
+Story/Task  : US503
+------------------------------------------------------------------------------------------------------------------->
+<apex:component controller="Controller_BlogPost" id="blogPostComponent">
+    <script type="text/javascript">
+        function openDetails(id) {
+            location.href="R_BPDetails?blogId=" + id;
+        }
+    </script>
+    
+    <apex:attribute name="isLoggedIn" type="Boolean" required="true" description="" />
+    <apex:attribute name="url" type="String[]" default="" required="false" assignTo="{!blogUrls}" description=""/>
+    <apex:attribute name="singleTag" type="String" default="" required="false" assignTo="{!blogTag}" description=""/>
+    <apex:attribute name="tagList" type="String[]" default="" required="false" assignTo="{!blogTags}" description=""/>
+    <apex:attribute name="smartTag" type="String" default="" required="false" assignTo="{!blogSTag}" description=""/>
+    <apex:attribute name="maxAllowdBlogs" type="Integer" default="5" required="false" assignTo="{!blogCount}" description="" />
+    <apex:attribute name="format" type="String" default="TitlesAndShortDesc" required="false" assignTo="{!blogFormat}" description="format for blog post, possible values (Titles, TitlesAndShortDesc, TitlesAndLongDesc)" />
+
+    <apex:outputPanel rendered="{!OR(blogPosts != null, blogPosts.size != 0)}">
+        <apex:repeat value="{!blogPosts}" var="bp">
+                    <a href="javascript:;" class="pdf">
+                            <apex:outputLabel style="font-weight: bold; color: #99a30d; cursor: pointer;" onclick="openDetails('{!bp.Id}');">
+                                    {!bp.Name}
+                            </apex:outputLabel>
+                    </a>
+        </apex:repeat>
+    </apex:outputPanel>
+        
+    <apex:outputPanel rendered="{!OR(blogPosts == null, blogPosts.size == 0)}">
+        <div class="no-items">No Items.</div>
+     </apex:outputPanel>
+
+</apex:component>

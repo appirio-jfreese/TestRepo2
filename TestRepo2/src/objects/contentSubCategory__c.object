@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Sub categories for content objects.</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Parent_Category__c</fullName>
+        <description>The parent category/categories of this sub category. Should be comma delimited if more than one parent.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The parent category/categories of this sub category. Should be comma delimited if more than one parent.</inlineHelpText>
+        <label>Parent Category</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sort_Order__c</fullName>
+        <description>Order to display on UI</description>
+        <externalId>false</externalId>
+        <label>Sort Order</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Content Sub Category</label>
+</CustomObject>

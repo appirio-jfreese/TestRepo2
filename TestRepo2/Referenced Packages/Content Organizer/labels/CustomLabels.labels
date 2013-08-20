@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>COSearchDefaultFields</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>COSearchDefaultFields</shortDescription>
+        <value>Tag,Owner,Size,Last Modified</value>
+    </labels>
+    <labels>
+        <fullName>COSearchResultFields</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>COSearchResultFields</shortDescription>
+        <value>Tag,Owner,Size,Last Modified,File Type,Origin,Publish Status,Created Date</value>
+    </labels>
+    <labels>
+        <fullName>Enable_Filter_Clouds</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Enable Filter Clouds</shortDescription>
+        <value>Collapsed</value>
+    </labels>
+    <labels>
+        <fullName>Enable_Library_Tag_Browsers</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Enable Library Tag Browsers</shortDescription>
+        <value>Display</value>
+    </labels>
+    <labels>
+        <fullName>Slideshow_Browser_Order_Criteria</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Slideshow Browser Order Criteria</shortDescription>
+        <value>Alphabetical</value>
+    </labels>
+</CustomLabels>

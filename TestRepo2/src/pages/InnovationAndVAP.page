@@ -1,0 +1,335 @@
+<!------------------------------------------------------------------------------
+Name        : InnovationAndVAP.page
+
+Updated By  : Basant Verma (Appirio Offshore)   
+Date 				: 6/14/13
+Story/Task	: US503/TA1011
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_InnovationAndVAP">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.InnovationAndVAP, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery, 'customDatePicker.css')}"/>    
+    <style type="text/css">
+        div.ui-datepicker-buttonpane {
+            text-align:center;        
+        }
+        
+        table.ui-datepicker-calendar {
+            display:none;
+        }
+        
+         body, html{
+            overflow: hidden;
+        }
+        
+        div.tooltip-info-header a{
+            color: #FFFFFF !important;
+            text-decoration: none;
+        }
+    </style>
+    
+    <c:loader />
+    
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        
+        <script type="text/javascript">
+            pageViewed('Innovation, Sustainovation and VAP');
+        </script>
+        
+        <!-- BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+            <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient {!if(ISNULL(siteTheme),'hidden','')}">
+        <apex:form >
+            <apex:actionFunction name="refreshContent" action="{!refreshContent}" rerender="ivapData, beadcrumblinks" status="ajax-status"/> 
+            <apex:actionFunction name="selectSalesDriver" action="{!selectSalesDriver}" rerender="ivapData, beadcrumblinks" status="ajax-status">
+                <apex:param name="salesDriver" assignTo="{!salesDriver}" value="" />
+            </apex:actionFunction>
+                <apex:actionFunction name="setStartDateValue" action="{!setStartDateValue}" rerender="ivapData, beadcrumblinks" status="ajax-status">
+                    <apex:param name="startFromDate" assignTo="{!startFromDate}" value="" />
+                </apex:actionFunction>
+            <apex:actionFunction name="nextMonth" action="{!nextMonth}" rerender="ivapData, beadcrumblinks" status="ajax-status"/>
+            <apex:actionFunction name="previousMonth" action="{!previousMonth}" rerender="ivapData, beadcrumblinks" status="ajax-status"/>
+
+                <apex:pageBlock id="ivapData">
+                    <div class="sub-title-with-menu-wrapper">
+                        <apex:pageBlock rendered="{!currentSectionBool}"><div id="ivap-title" class="ivap-title" style="font-size:19px;">Innovation,<br/>Sustainovation &amp; VAP</div></apex:pageBlock>
+                        <apex:pageBlock rendered="{!NOT(currentSectionBool)}"><div id="ivap-title" class="ivap-title" style="font-size:18px;">Innovation, Sustainovation &amp; <br/>Vintage Transition</div></apex:pageBlock>
+                        <div class="title-import" style="right:350px;">
+                            <apex:outputPanel id="pdfButton">
+                                <div class="download-pdf-button float-left">
+                                    <div class="download-pdf-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-PDF"/></div>
+                                    <div class="download-pdf-button-description"><a href="{!pdfPath}" target="new">DOWNLOAD AS PDF</a></div>
+                                </div>
+                            </apex:outputPanel>
+                            <div class="clear-float"></div>
+                        </div>
+                        <div class="title-menu" style="right:225px;">
+                            <c:checkboxList width="150" useSectionTheme="true" options="{!themeOptions}" noOfOptions="{!noOfThemesAvailable}" onchange="refreshContent()" />
+                        </div>
+                        <div class="title-menu">
+                            <c:selectList options="{!timePeriods}"  value="{!timePeriod}" onchange="refreshContent()" useSectionTheme="true" />
+                        </div>
+                    </div>        
+                    <table class="ivap-data">
+                        <thead>
+                            <tr>
+                                <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                                    <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                        <th class="ivap_program{!salesDriversToShowCount}"><button class="back" onclick="selectSalesDriver('All');return false;">Back</button><span class="ivap-program-name-wrapper">{!salesdrivername}</span></th>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!salesDriversToShowCount!=1}">
+                                        <th class="ivap_program{!salesDriversToShowCount}" onclick="selectSalesDriver('{!salesdrivername}')" style="cursor:pointer;"><a href="#">{!salesdrivername}</a></th>
+                                    </apex:outputText>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="displayCalendar" value="{!1}"/>
+                            <apex:repeat value="{!months}" var="month"> 
+                                <!-- month box -->
+                                <tr class="ivap-month">
+                                    <td colspan="{!salesDriversToShowCount}" class="month">
+                                        <img src="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" alt="Next Month" class="month-next" style="display:{!month.showArrows};"/><img src="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" alt="Previous Month" class="month-previous" style="display:{!month.showArrows};"/><apex:inputText rendered="{!displayCalendar==1}" value="{!startFromDate}" styleClass="jumpToDate" style="opacity:0.0; filter:alpha(opacity=0);"/>{!month.name} <apex:inputText rendered="{!displayCalendar==1}" value="{!startFromDate}" styleClass="jumpToDate"/>
+                                    </td>
+                                </tr>
+                                <tr class="month-data month{!span}">
+                                    <apex:repeat value="{!salesDriversToShow}" var="program">
+                                        <td >
+                                            <apex:repeat value="{!calendarData[month.data][program]}" var="programData">
+                                                <div id="tooltip-{!programData.id}" class="hidden tooltipShadow {!programData.showTooltip}">
+                                                    <div class="tooltip-info-header sectionBackground">
+                                                        {!programData.startDate} - {!programData.endDate}
+                                                    </div>
+                                                    <div class="tooltip-info-body">
+                                                        <span class="bold">Planned Ship Date: </span> {!programData.shipDate}<br/>
+                                                        <span class="bold">Launch Date: </span> {!programData.launchDate}
+                                                    </div>
+                                                </div>
+                                                <div id="{!programData.id}" class="month{!span} ivap-general {!if( programData.showTooltip != 'disableTooltip','tooltip','')} ivap_program{!salesDriversToShowCount}" style="{!programData.styleBackgroundColor}{!programData.styleTextColor}; width: auto !important;" onclick="window.location='{!detailPagePath}&id={!programData.id}'">
+                                                <a href="#"></a>
+                                                    <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                                        <div class="month{!span}-sep1-desc">
+                                                            <apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext>
+                                                        </div>
+                                                    </apex:outputText>          
+                                                    <div class="month{!span}-sep month{!span}-sep{!salesDriversToShowCount}" style="{!programData.styleBackgroundImage}; {!IF(isCalendarThemeMixed, 'background-size: 116px 36px;', 'background-size: 145px 45px;')})">
+                                                        <div style="{!programData.styleTextColor}; {!IF(isCalendarThemeMixed, 'font-size: 11px;', '')})">{!programData.label}</div>
+                                                    </div>
+                                                </div>
+                                            </apex:repeat>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                                <apex:variable var="displayCalendar" value="{!0}"/>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                    
+                    <table class="gu-data">
+                        <thead>
+                            <tr><td>General Updates</td></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>
+                                <!-- Start of US503 (Randy Wandell 6/12/13) -->
+                                <div class="general-updates-title">News</div>     
+                								<!-- END : Changes for US503/TA1011 : Comment Blog Code - Basant Verma -->
+                								<!-- 
+                                    <c:NarrowBlogList format="Titles" isLoggedIn="{!isLoggedIn}" url="" singleTag="Location:innovation" id="blogPostComp" />
+                                -->     
+                								<!-- END : Changes for US503/TA1011 : Comment Blog Code - Basant Verma -->
+                                <!-- End of US503 -->
+                                <div class="general-updates-title">Performance Updates</div>
+                                    
+                                        <apex:outputPanel rendered="{!OR(ISNULL(performanceUpdates),performanceUpdates.size=0)}">No items.</apex:outputPanel>
+                                        <apex:outputPanel rendered="{!OR(ISNULL(performanceUpdates),performanceUpdates.size!=0)}" styleClass="left">
+                                            <ul class="general-updates-list first-list">                    
+                                                <apex:repeat value="{!performanceUpdates}" var="pu">
+                                                    <li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!pu['fileType']}"/><span class="list-description"><a href="/sfc/servlet.shepherd/version/download/{!pu['cvid']}">{! IF (len(pu['description'])>17, LEFT(pu['description'], 20)+'...', pu['description'])}</a></span></li>
+                                                </apex:repeat>
+                                            </ul>
+                                        </apex:outputPanel>
+                                    
+                                <div class="general-updates-title">Planning Calendars</div>
+                                    <apex:outputPanel rendered="{!OR(ISNULL(planningCalendars),planningCalendars.size=0)}">No items.</apex:outputPanel>
+                                    <apex:outputPanel rendered="{!OR(ISNULL(planningCalendars),planningCalendars.size!=0)}" styleClass="left">
+                                        <ul class="general-updates-list">                   
+                                            <apex:repeat value="{!planningCalendars}" var="pc">
+                                                <li><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!pc['fileType']}"/><span class="list-description"><a href="/sfc/servlet.shepherd/version/download/{!pc['cvid']}">{! IF (len(pc['description'])>17, LEFT(pc['description'], 20)+'...', pc['description'])}</a></span></li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:outputPanel>                             
+                            </td></tr>
+                        </tbody>                            
+                    </table>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function() {
+                            jQuery('.month-previous').click(previousMonth);
+                            jQuery('.month-next').click(nextMonth);
+                            jQuery('.jumpToDate').datepicker({
+                                showOtherMonths: true,
+                                changeMonth: true,
+                                changeYear: true,
+                                closeText: 'Close',
+                                showButtonPanel :true,
+                                selectOtherMonths: true,
+                                dateFormat: 'yy-mm-dd',
+                                beforeShow: function( input ) {
+                                    setTimeout(function() {  
+                                        var buttonPane = jQuery(input).datepicker("widget").find( ".ui-datepicker-buttonpane" );   
+                                        var btn = jQuery('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Select</button>');  
+                                        btn.unbind("click").bind("click", function () {  
+                                            var selectedDate = jQuery.datepicker._formatDate(jQuery.datepicker._getInst(input)); 
+                                            jQuery.datepicker.selectedDay;  
+                                            setStartDateValue(selectedDate);
+                                            jQuery.datepicker._hideDatepicker();
+                                        });  
+                                        btn.appendTo( buttonPane );
+                                        buttonPane.find('button').addClass('update-filter').css('margin-bottom', 5);
+                                    }, 1 );  
+                                },
+                                onChangeMonthYear: function(year, month, inst ) {  
+                                    var input = inst.input[0];
+                                    setTimeout(function() {  
+                                        var buttonPane = jQuery(input).datepicker("widget").find( ".ui-datepicker-buttonpane" );   
+                                        var btn = jQuery('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Select</button>');  
+                                        btn.unbind("click").bind("click", function () {  
+                                            var selectedDate = jQuery.datepicker._formatDate(jQuery.datepicker._getInst(input)); 
+                                            setStartDateValue(selectedDate);
+                                            jQuery.datepicker._hideDatepicker();
+                                        });  
+                                        btn.appendTo( buttonPane );
+                                        buttonPane.find('button').addClass('update-filter').css('margin-bottom', 5);
+                                    }, 1 );  
+                                }
+                            });              
+                            
+                            var isiPad = navigator.userAgent.match(/iPad/i) != null;        
+                            
+                            if( isiPad == true){                                                    
+                                jQuery(".tooltip").bind('touchstart', function(){ 
+                                    var offset = jQuery(this).offset()
+                                
+                                    var tooltContentBefore = '<div id="tooltip" style="display: none; left: '+ (offset.left + 80) +'px; right: auto; top: '+ (offset.top + 50) +'px;">'
+                                                        +'<h3 style="display: none;"></h3>'
+                                                        +'<div class="body">';
+                                                        
+                                    var tooltContentAfter = '</div><div class="url" style="display: none;"></div></div>';                                                               
+                                    
+                                    if(jQuery(this).attr('id').length!=0 ){
+                                            tooltipId = jQuery(this).attr('id');
+                                            if(!jQuery('#tooltip-'+tooltipId).hasClass('disableTooltip')){
+                                                tooltContent = jQuery('#tooltip-'+tooltipId).html();
+                                                jQuery('#tooltipIpad').html(tooltContentBefore + tooltContent + tooltContentAfter);
+                                                jQuery('#tooltipIpad').find('#tooltip').show();
+                                            } else {
+                                                return false;
+                                            }
+                                    } else {
+                                        return false;
+                                    }                               
+                                }); 
+                                
+                                jQuery(".tooltip").bind('touchend', function(){
+                                    jQuery('#tooltipIpad').find('#tooltip').hide();
+                                });
+                                                                            
+                            }else{                   
+                                jQuery('.tooltip').tooltip({ 
+                                    bodyHandler: function() { 
+                                        if(jQuery(this).attr('id').length!=0 ){
+                                            tooltipId = jQuery(this).attr('id');
+                                            if(!jQuery('#tooltip-'+tooltipId).hasClass('disableTooltip')){
+                                                return jQuery('#tooltip-'+tooltipId).html();
+                                            } else {
+                                                return false;
+                                            }
+                                        } else {
+                                            return false;
+                                        }
+                                    }, 
+                                    showURL: false,
+                                    track: true,
+                                    fade: 250 
+                                });
+                            }
+                            
+                            
+                        });
+                    </script>   
+                </apex:pageBlock>
+            </apex:form>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+        <div id="tooltipIpad"></div>
+        </div>
+    <c:ajaxLoader afterStop="bindJs(); " />
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.tooltip.min.js')}"></script>
+    <script type="text/javascript">
+    
+    function bindJs(){
+        if(!jQuery('.general-updates-list').hasClass('jsbinded')){
+            jQuery('.general-updates-list').jScrollPane();
+            jQuery('.general-updates-list').addClass('jsbinded');
+        }
+    }
+    jQuery(document).ready(function() {
+        hideDialog('startingLoader');
+        hideDialog('startingLoaderOverlayDisable');
+        jQuery("body").css("overflow","auto");
+        jQuery("html").css("overflow","auto");
+        //calculating max height of the second general updates list 
+        var lists = jQuery('.general-updates-list');
+        var firstList = jQuery('.general-updates-list.first-list');
+        if(firstList.length > 0){
+            if(lists.length > 1){
+                var height = firstList.height();
+                var calculateHeight = 392 - height;
+                jQuery(lists[1]).css('max-height', calculateHeight+'px');
+            }
+        }
+        
+        bindJs();
+        
+        jQuery(document).keydown(function(e) {
+            var element = e.target.nodeName.toLowerCase();
+            if (element != 'input' && element != 'textarea' && element != 'select') {
+            
+                if(jQuery('#ajaxLoader').length != 0 && !jQuery('#ajaxLoader').hasClass('hidden') ){
+                    return false;
+                }
+                            
+                if (e.keyCode === 39) { // right
+                    if(jQuery('.month-next').length != 0){
+                        jQuery('.month-next').first().trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 37) { // left
+                    if(jQuery('.month-previous').length != 0){
+                        jQuery('.month-previous').first().trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 38) { //up
+                    if(jQuery('.title-menu').find('.custom-select-box-values').find('.current').prev().length == 1){
+                        jQuery('.title-menu').find('.custom-select-box-values').find('.current').prev().trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 40) { // down
+                    if(jQuery('.title-menu').find('.custom-select-box-values').find('.current').next().length == 1){
+                        jQuery('.title-menu').find('.custom-select-box-values').find('.current').next().trigger('click');
+                    }
+                    return false;
+                }
+            }
+        });         
+    });
+    </script>
+</apex:page>

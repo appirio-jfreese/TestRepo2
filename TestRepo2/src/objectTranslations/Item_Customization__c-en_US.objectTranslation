@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item Customization</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Item Customizations</value>
+    </caseValues>
+    <fields>
+        <label><!-- Custom Attribute Length --></label>
+        <name>Custom_Attribute_Length__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Item Customizations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Magento ID --></label>
+        <name>Magento_ID__c</name>
+    </fields>
+    <layouts>
+        <layout>POS Item Customization Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <namedFilters>
+        <errorMessage><!-- The Item Customization selected must belong to the Cart Item&apos;s related Item --></errorMessage>
+        <name>nf_01IZ00000000IRTMA2_00NZ0000000IIo5MAG</name>
+    </namedFilters>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please provide a valid custom attribute length --></errorMessage>
+        <name>Valid_Custom_Attribute_Length</name>
+    </validationRules>
+</CustomObjectTranslation>

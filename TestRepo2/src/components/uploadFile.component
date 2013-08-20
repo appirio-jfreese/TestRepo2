@@ -1,0 +1,307 @@
+<apex:component controller="Service_UploadFile" allowDML="true">
+  	
+    <apex:attribute name="distributorId" description="Distributor Id" type="ID" required="false" assignTo="{!distributorId}"/>
+    <apex:attribute name="distributorName" description="Distributor Name" type="String" required="false" assignTo="{!distributorName}"/>
+    <apex:attribute name="organizationalUnitId" description="Organizational unit" type="String" required="false" assignTo="{!organizationalHierarchyId}"/>
+    <apex:attribute name="organizationalUnitName" description="Organizational unit" type="String" required="false" assignTo="{!organizationalHierarchyName}"/>
+
+    <apex:attribute name="folderId" description="Folder Id" type="ID" required="false" assignTo="{!folderId}"/>
+    <apex:attribute name="folderName" description="Folder Name" type="String" required="false"/>
+	<apex:attribute name="afterUploadRedirectTo" description="Url" type="String" required="false" assignTo="{!afterUploadRedirectTo}"/>
+	<apex:attribute name="isInternal" description="is user internal" type="Boolean" required="false" assignTo="{!isInternal}" />
+ 
+    <div class="moreInfoWrapper {!if(isError,'showUploadDialog','')} dialogUploadContentDiv">
+        <div class="moreInfoDescriptionWrapper sectionBackground" style="width: 700px;">
+            <div class="moreInfoDescription">Upload File(s)</div>
+            <div class="moreInfoClose close">&nbsp;</div>
+        </div>
+		<div class="moreInfoError" style="width: 700px;">
+			<apex:outputPanel id="moreInfoError">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+		</div>        
+		<div class="moreInfoContentWrapper" style="width: 700px;">
+			<apex:form >
+				<div class="shareRecipientInformation" style="width: 680px;">
+					<!-- file area -->
+					<apex:inputText value="{!fileIndexes}" styleClass="fileIndexHolder hidden"/>
+					<div class="all-file-wrapper">
+						<apex:variable value="{!0}" var="idx" />
+						<div class="one-file-descr">
+							<div class="float-left" style="width: 340px;">
+								File Name
+							</div>
+							<div class="float-left" style="width: 340px;">
+								Description
+							</div>
+							<div class="clear-float"></div>
+						</div>
+						<div class="file-scroller">
+						
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(0,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file0.versionData}" fileName="{!file0.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file0.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(1,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file1.versionData}" fileName="{!file1.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file1.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(2,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file2.versionData}" fileName="{!file2.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file2.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(3,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file3.versionData}" fileName="{!file3.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file3.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(4,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file4.versionData}" fileName="{!file4.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file4.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(5,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file5.versionData}" fileName="{!file5.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file5.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+							
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(6,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file6.versionData}" fileName="{!file6.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file6.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(7,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file7.versionData}" fileName="{!file7.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file7.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(8,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file8.versionData}" fileName="{!file8.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file8.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+							<div class="one-file-wrapper {!if(contains(fileIndexes, text(round(9,0))), '','hidden' )}">
+								<div class="float-left" style="width: 340px; margin-top: -10px;">
+									<apex:inputFile value="{!file9.versionData}" fileName="{!file9.pathOnClient}" styleClass="fileinput" style="width: 220px !important;"/>
+								</div>
+								<div class="float-left" style="width: 340px; position: relative;">
+									<apex:inputText value="{!file9.Description}" styleClass="fDescription"/>
+									<div class="removeFile blackClose">&nbsp;</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>		
+							<div class="clear-float"></div>
+
+						</div>
+					</div>
+					<div class="float-right" style="margin-bottom: 10px;">
+						<button class="grey addFile" onclick="return false;">Add Another File</button>
+					</div>
+					<div class="clear-float"></div>
+					<!-- end file area -->
+
+					<!-- info area -->
+					<div class="info-file-wrapper">
+						<div class="availableUntilHolder">
+							<div class="availableUntilLabel">
+								Available until:
+							</div>
+							<div class="availableUntilValue">
+								<div class="availableUntilInput">
+									<apex:inputText value="{!availableUntilText}" styleClass="dateInput availableUntil" />
+								</div>
+								<div class="availableUntilCalendar calendarIconUpload"></div>
+							</div>
+						</div>
+						Your Post (optional): <span style="color: #aaaaaa; font-size: 10px;">Limited to 1000 characters</span><br/>
+						<apex:inputTextarea value="{!comment}" styleClass="uploadComment"/><br/>				
+					</div>
+					<!-- end info area -->
+
+					<!-- select destination area -->
+					<div class="select-destination-wrapper" style="width: 675px;">
+						<div class="select-destination-stage-one hidden">
+							<div class="step-header">Step 1 of 2 - Select Distributor</div>
+							<div class="step-area" style="height: 85px">
+								<div class="float-left" style="width: 326px; margin-right: 3px;">
+									&nbsp;Geography
+									<div style="position: relative; z-index: 30;">
+										<div style="position: absolute; top: 0px; left: 0px;" id="geographyUpload">
+											<c:selectList bindToController="false" options="{!orgUnitsOptions}" value="{!organizationalHierarchyIdSelected}" trim="false" width="325" onchange="" />
+										</div>
+									</div>
+								</div>
+								<div class="float-left" style="width: 322px; margin-left: 3px;">
+									&nbsp;Distributor<br/>
+									<div style="position: relative; z-index: 30;">
+										<div style="position: absolute; top: 0px; left: 0px;" id="distributorUpload">
+											<c:selectList bindToController="false" options="{!DistributorsForOrgUnit}" value="{!distributorIdSelected}" trim="false" width="325" onchange="" />
+										</div>
+									</div>
+								</div>
+								<div class="clear-float"></div>
+							</div>
+							<div class="float-right" style="margin: 10px;">
+								<span class="closeAddingDestination defaultTheme pointer">cancel</span>&nbsp;&nbsp;&nbsp;<button class="green addFolder" onclick="return false;">Add</button>
+							</div>
+							<div class="clear-float"></div>
+						</div>
+						<div class="clear-float"></div>
+						<div class="select-destination-stage-two hidden">
+							<div class="step-header">Step 2 of 2 - Select Folder</div>
+							<div class="step-area folderAreaToScroll">
+								<div class="folder-upload-tree-wrapper">
+								<ul id="folder-upload-tree" class="folder-section">
+									<apex:repeat value="{!foldersOptions}" var="folder">
+										<li>
+											<span class="folder main-folders" id="{!folder.value}">{!folder.label}</span>
+											<ul class="folder-section">
+												<apex:repeat value="{!folder.children}" var="subfolder">
+													<li>
+														<span class="folder main-folders" id="{!subfolder.value}">{!subfolder.label}</span>
+														<ul class="folder-section">
+															<apex:repeat value="{!subfolder.children}" var="subsubfolder">
+																<li>
+																	<span class="folder main-folders" id="{!subsubfolder.value}">{!subsubfolder.label}</span>
+																	<ul class="folder-section">
+																		<apex:repeat value="{!subsubfolder.children}" var="subsubsubfolder">
+																			<li>
+																				<span class="folder main-folders" id="{!subsubsubfolder.value}">{!subsubsubfolder.label}</span>
+																				<ul class="folder-section">
+																					<apex:repeat value="{!subsubsubfolder.children}" var="subsubsubsubfolder">
+																						<li>
+																							<span class="folder main-folders" id="{!subsubsubsubfolder.value}">{!subsubsubsubfolder.label}</span>
+																						</li>
+																					</apex:repeat>
+																				</ul>
+																			</li>
+																		</apex:repeat>
+																	</ul>
+																</li>
+															</apex:repeat>
+														</ul>
+													</li>
+												</apex:repeat>
+											</ul>
+										</li>
+									</apex:repeat>
+								</ul>
+								</div>
+							</div>
+							<div class="float-right" style="margin: 10px;">
+								<span class="closeAddingDestination defaultTheme pointer">cancel</span>&nbsp;&nbsp;&nbsp;<button class="green addDestination" onclick="return false;">Add</button>
+							</div>
+							<div class="clear-float"></div>
+						</div>
+						<div class="clear-float"></div>
+					</div>
+					<!-- select destination area -->
+
+					<!-- destination area -->
+					<div class="gradientDestinationTop"></div>
+					<div class="dest-file-wrapper">
+						<div class="destination-navigation">
+							<span class="addDistributor defaultTheme">Add Folder Destination</span>
+						</div>
+						File will be uploaded to: <br/><br/>
+						<apex:inputText value="{!destinationIndexes}" styleClass="destinationIndexHolder hidden"/>
+						<apex:variable value="{!0}" var="idxDes" />
+						<div class="destinations-holder">
+							<apex:repeat value="{!destinations}" var="d">
+								<div class="one-destination-wrapper {!if(contains(destinationIndexes, text(round(idxDes,0))), '','hidden' )}">
+									<div class="one-destination-info">
+										<div class="hidden uploadInformation">
+											<apex:inputText value="{!d.orgUnitId}" styleClass="orgUnitId"/><br/>
+											<apex:inputText value="{!d.orgUnitName}" styleClass="orgUnitName"/><br/>
+											<apex:inputText value="{!d.distributorId}" styleClass="distributorId"/><br/>
+											<apex:inputText value="{!d.distributorName}" styleClass="distributorName"/><br/>
+											<apex:inputText value="{!d.foldersIds}" styleClass="foldersIds"/><br/>
+											<apex:inputText value="{!d.foldersNames}" styleClass="foldersNames"/><br/>
+										</div>
+										<div class="one-destination-description"><span class="ddname">{!d.distributorName}</span>/<span class="dfname">{!d.foldersNames}</span></div>
+										<div class="removeDestination whiteClose">&nbsp;</div>
+									</div>
+									<apex:variable value="{!idxDes + 1}" var="idxDes" />
+								</div>
+							</apex:repeat>
+						</div>
+					</div>
+					<!-- destination info area -->
+					
+					<!-- commit area -->
+					<div class="float-right" style="margin-top: 10px;">
+						<span class="close defaultTheme">cancel</span>&nbsp;&nbsp;&nbsp;<button class="green uploadButton" onclick="return false;">Upload</button><apex:commandbutton action="{!upload}" value="upload" styleClass="green uploadButtonReal hidden"/>
+					</div>
+					<div class="clear-float"></div>
+					<!-- end commit area -->
+				</div>
+			</apex:form>
+		</div>
+	</div>
+</apex:component>

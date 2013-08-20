@@ -1,0 +1,930 @@
+<apex:component controller="Service_FilterSection">
+
+<apex:attribute name="pSiteTheme" description="Site Theme " type="string" required="true"/>
+<apex:attribute name="pageCls" description="Pages class " type="string" required="true"/>
+<apex:attribute name="showBrandFilter" description="Brand Filter" type="Boolean" required="false" default="true"/>
+<apex:attribute name="showBVFilter" description="Brand Variant Filter" type="Boolean" required="false" default="true"/>
+<apex:attribute name="showTimePeriodFilter" description="Time Period Filter" type="Boolean" required="false" default="true"/>
+<apex:attribute name="showSMFilter" description="Sales Materials Filter" type="Boolean" required="false" default="true"/>
+<apex:attribute name="p_selectedChildBrandIds" assignTo="{!selectedChildBrandIds}" description="Selected ChildBrandIds" type="string" required="true"/>
+<apex:attribute name="p_selectedBrandIds"  assignTo="{!selectedBrandIds}" description="Selected BrandIds" type="string" required="true"/>
+<apex:attribute name="p_selectedTimePeriods" assignTo="{!selectedTimePeriods}" description="Selected TimePeriod" type="string" required="true"/>
+<apex:attribute name="p_selectedClassificationItemsRow1" assignTo="{!selectedClassificationItemsRow1}" description="Selected BrandIds" type="string[]" required="true"/>
+<apex:attribute name="p_selectedClassificationItemsRow2" assignTo="{!selectedClassificationItemsRow2}" description="Selected BrandIds" type="string[]" required="true"/>
+<apex:attribute name="p_classificationItemsRow1" description="Selected BrandIds" type="SelectOption[]" required="true"/>
+<apex:attribute name="p_classificationItemsRow2" description="Selected BrandIds" type="SelectOption[]" required="true"/>
+<apex:attribute name="p_selectedRTS"   description="Selected RTS" type="string" required="true"/>
+<apex:attribute name="p_selectedPortfolio"  description="Selected Portfolio" type="string" required="true"/>
+<apex:attribute name="applyFilter" description=" Method for apply filter" type="String" required="true"/>
+
+<apex:attribute name="resetFilter" description=" Method for Reset filter" type="String" required="true"/>
+<script>
+var isShowTimePeriodFilter = {!showTimePeriodFilter};
+</script>
+<apex:actionFunction status="ajax-status" name="updateVariantBrands" action="{!updateVariantBrands}" onComplete="reRenderFilterJS();reloadBrandVarient();" rerender="messages, variantBrands">
+	<apex:param name="parentId" assignTo="{!parentId}" value="" />
+</apex:actionFunction>
+<apex:actionFunction status="ajax-status" name="resetFilters" action="{!resetFilter}" />	                
+<apex:actionFunction status="ajax-status" name="previousPeriodC" action="{!previousPeriodComp}" onComplete="loadFilterJs();" rerender="messages, timeFilterItem, parentBrands, variantBrands, smFilterItem">
+	<apex:param name="isMonthOrQuarterPrev" assignTo="{!monthOrQuarterRender}" value="" />
+</apex:actionFunction>
+<apex:actionFunction status="ajax-status" name="nextPeriodC" action="{!nextPeriodComp}" onComplete="loadFilterJs();" rerender="messages, timeFilterItem, parentBrands, variantBrands, smFilterItem">
+	<apex:param name="isMonthOrQuarterNxt" assignTo="{!monthOrQuarterRender}" value="" />
+</apex:actionFunction>												  
+                				                                
+
+
+	<apex:outputpanel layout="block" id="filters" styleClass="content">
+	             <a class="result-filter" href="javascript:;">
+	                <span class="title">Filter your Results</span>
+	                <span class="icon"></span>
+	            </a>
+	
+	            <div class="button-line hide four-btns filter-buttons" style="display:none;">
+	            	<apex:outputPanel layout="none" rendered="{!showBrandFilter}" >
+	                <a href="javascript:;" class="{!pageCls}" data-related="brand-filter">
+	                    Filter By Brand
+	                </a>
+	                </apex:outputPanel>
+	                <apex:outputPanel layout="none" rendered="{!showBVFilter}" >
+	                <a href="javascript:;" class="{!pageCls}" data-related="bv-filter">
+	                    Brand Variants
+	                </a>
+	                </apex:outputPanel>
+	                <apex:outputPanel layout="none" rendered="{!showTimePeriodFilter}" >
+	                <a href="javascript:;" class="{!pageCls}" data-related="time-filter">
+	                    Filter By Time Period
+	                </a>
+	                </apex:outputPanel>
+	                <apex:outputPanel layout="none" rendered="{!showSMFilter}" >
+	                <a href="javascript:;" class="{!pageCls} last" data-related="sm-filter">
+	                    Selling Materials
+	                </a>
+	                </apex:outputPanel>
+	            </div>
+	
+				<apex:outputPanel layout="block" id="parentBrands" styleClass="result-filter-layer brand-filter hide" rendered="{!showBrandFilter}">
+	            	<a href="javascript:;" class="close-btn"></a>
+	                <p>
+	                    Select one or more brands. Brand Variants can be specified only when one brand is selected.
+	                    <a href="javascript:;" onclick="selectALLBrands(this);return false;">Select All</a>
+	                </p>
+	                <div class="brands">
+	                    <apex:repeat value="{!parentBrandList}" var="brand" rows="{!brandBoxToRender}">
+		                    <apex:outputPanel rendered="{!IF(brand.Filtering_logo__r.Content_Version_Id__c != '', 'true', 'false') }">
+                                <a href="javascript:;" class="{!IF(contains(selectedBrandIds,brand.Id) ,'selected','')}" id="{!brand.id}">
+                                <img src="/sfc/servlet.shepherd/version/download/{!brand.Filtering_logo__r.Content_Version_Id__c}" style="max-width: 144px; max-height: 46px;"/>
+                                </a>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(brand.Filtering_logo__r.Content_Version_Id__c == '', 'true', 'false') }">
+		                     <a href="javascript:;" id="{!brand.id}" class="text {!if(Len(brand.Name)>13,'two-lines','')} {!IF(contains(selectedBrandIds,brand.Id) ,'selected','')}">
+	                        	{!brand.Name} 
+	                    	</a>
+		                    </apex:outputPanel>                               
+                        </apex:repeat>  
+	                    <apex:outputPanel rendered="{!IF(pSiteTheme != 'Wine' ,'true','false')}">
+	                    <a href="javascript:;" id="RTS">
+	                        <img src="{!URLFOR($Resource.CommonPage, 'images/rts.png')}"/>
+	                    </a>
+	                    <a href="javascript:;" id="Portfolio">
+	                        <img src="{!URLFOR($Resource.CommonPage, 'images/portfolio.png')}"/>
+	                    </a>
+	                    </apex:outputPanel>
+	                    <apex:outputPanel rendered="{!IF(parentBrandList.size <= brandBoxToRender ,'false','true')}">
+	                    <a href="javascript:;" class="other-btn" id="ADB">
+	                        <img src="{!URLFOR($Resource.CommonPage, 'images/adb.png')}"/>
+	                    </a>
+	                    </apex:outputPanel>
+	                    <div class="clear"></div>
+	                </div>
+	                
+	                <div class="other hide" >
+	                    <p>
+	                        Additional Brands
+	                    </p>
+	                    <script>
+	                    //console.log('{!additionalBrandList}');
+	                    //console.log('{!p_selectedClassificationItemsRow1}');
+	                    </script>
+	                    <apex:repeat value="{!additionalBrandList}" var="brand">
+                            <div class="other-brand {!if(Len(brand.Name)>13,'two-lines','')}" id="{!brand.id}" name="{!brand.Name}">
+                                <apex:outputPanel rendered="{!IF(contains(selectedBrandIds,brand.Id), true, false)}">
+                                    <input type="checkbox" checked="checked" />
+                                </apex:outputPanel> 
+                                <apex:outputPanel rendered="{!NOT(IF(contains(selectedBrandIds,brand.Id),true, false))}">
+                                    <input type="checkbox" />
+                                </apex:outputPanel>
+                                <span class="name">{!brand.Name}</span>
+                            </div>
+                        </apex:repeat>
+	                    <div class="clear"></div>
+	                </div>
+					
+	           		<div class="buttons">
+	                    <a href="javascript:;" onclick="preResetFilter('brand'); return false;" class="clear-btn">Clear Filters</a>
+	                    <a href="javascript:;" onclick="preApplyFilters(); return false;" class="apply-btn button {!pageCls}">Apply</a>
+	            	</div>
+	            </apex:outputPanel>
+	            <div class="result-filter-layer bv-filter hide" style="display:{!IF(childBrandList.size>0,'none' ,'block')};">
+				
+	                <a href="javascript:;" class="close-btn"></a>
+	                
+	                <div class="inner default">
+	                    <input type="checkbox" disabled="true"/>
+	                    <label>Use Brand Variant</label>
+	                    <div class="clear"></div>
+	                </div>
+	                
+	            </div>    
+				<apex:outputPanel layout="block" id="variantBrands" rendered="{!showBVFilter }" style="display:{!IF(childBrandList.size>0,'block','none') };" styleClass="result-filter-layer bv-ok-filter hide">
+	                
+	                <a href="javascript:;" class="close-btn"></a>
+	                <p>Select one or more of the filters listed below.</p>
+		             <div class="select-filter-all">
+	                    <label>
+	                        Select All
+	                    </label>
+	                    <input type="checkbox"/>
+	                </div>
+	                <div class="inner ok">
+	                	<apex:repeat value="{!childBrandList}" var="childBrand">
+						  <div class="form-left" id="{!childBrand.id}" name="{!childBrand.Name}" >
+							<apex:outputPanel rendered="{!IF(contains(selectedChildBrandIds,childBrand.Id), true, false)}">
+								<input type="checkbox" checked="checked" />
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{!NOT(IF(contains(selectedChildBrandIds,childBrand.Id),true, false))}">
+								<input type="checkbox" />
+							</apex:outputPanel>
+							<label class="{!if(LEN(childBrand.Name)>14,'two-lines','')}">{!childBrand.Name}</label>
+							<div class="clear"></div>
+						  </div>
+						</apex:repeat>
+	                    <div class="clear"></div>
+	                </div>
+	            	<div class="buttons">
+	                    <a href="javascript:;" onclick="preResetFilter('bv'); return false;" class="clear-btn">Clear Filters</a>
+	                    <a href="javascript:;" onclick="preApplyFilters(); return false;" class="apply-btn button {!pageCls}">Apply</a>
+	            	</div>
+				</apex:outputPanel>
+	
+	            <apex:outputPanel id="timeFilterItem" rendered="{!showTimePeriodFilter}" style="display:none;" styleClass="result-filter-layer time-filter hide">
+	                <script>
+	                	jQuery('.result-filter-layer').find('input[type=hidden]').each(function(){
+		    	        	var elemId = jQuery(this).attr('id');
+		    	        	if( elemId != undefined){
+			        	    	if(elemId.search('monthShift') != -1){
+			            			jQuery(this).val('{!monthShift}'); 
+			            		}
+			            		if(elemId.search('monthOrQuarterRender') != -1){
+			            			jQuery(this).val('{!monthOrQuarterRender}'); 
+			            		}
+			            		if(elemId.search('quarterShift') != -1){
+			            			jQuery(this).val('{!quarterShift}');
+			            		}
+		            		}
+		            	});
+	            	</script>
+	                <a href="javascript:;" class="close-btn"></a>
+	                <apex:outputPanel rendered="{!NOT(monthOrQuarterRender)}">
+						<p>Select one or more of the months listed below. View different months by clicking on the right or left arrows.</p>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!monthOrQuarterRender}">
+						<p>Select one or more of the quarters listed below. View different quarters by clicking on the right or left arrows.</p>
+					</apex:outputPanel>
+	                <div class="button-line two-btns">
+	                    <a href="javascript:;" class="{!pageCls} {!IF(monthOrQuarterRender,'','active')}" data-related="monthly">
+	                        Monthly
+	                    </a>
+	                    <a href="javascript:;" class="{!pageCls} {!IF(monthOrQuarterRender,'active','')} last" data-related="quarterly">
+	                        Quarterly
+	                    </a>
+	                    
+	                </div>
+	                <script>
+	                console.log('quarterViewsList:::{!quarterViewsList}');
+	                </script>
+	                <div class="date-selector quarterly">
+	                	<ul class="slides">
+	                		<apex:variable var="qtrShft" value="{!-4}" />
+	                		<apex:repeat value="{!quarterViewsList}" var="option">
+	                    	<li>
+	                            <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,option['value']) ,'selected','')}" name="{!qtrShft}">
+	                            	<apex:outputPanel styleClass="month" rendered="{!if(option['className'] = 'jfm', true, false)}">
+	                                    <span>January</span><br></br>
+	                                    <span>February</span><br></br>
+	                                    <span>March</span>
+	                                </apex:outputPanel>
+	                                <apex:outputPanel styleClass="month" rendered="{!if(option['className'] = 'amj', true, false)}">
+	                                    <span>April</span><br></br>
+	                                    <span>May</span><br></br>
+	                                    <span>June</span>
+	                                </apex:outputPanel>
+	                                <apex:outputPanel styleClass="month" rendered="{!if(option['className'] = 'jas', true, false)}">
+	                                    <span>July</span><br></br>
+	                                    <span>August</span><br></br>
+	                                    <span>Semptember</span>
+	                                </apex:outputPanel>
+	                                <apex:outputPanel styleClass="month" rendered="{!if(option['className'] = 'ond', true, false)}">
+	                                    <span>October</span><br></br>
+	                                    <span>November</span><br></br>
+	                                    <span>December</span>
+	                                </apex:outputPanel>
+	                                <span class="year"> {!option['year']} </span>
+	                            </a>
+	                        </li>
+	                        <apex:variable var="qtrShft" value="{!qtrShft+1}" />
+	                        </apex:repeat>
+	                    </ul>
+	                    
+	                </div>
+	
+	                <div class="date-selector monthly hide">
+	                    <ul class="slides">
+	                        <apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <li>
+							<apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered="{!if(counter < 4,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']} </span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 3 && counter < 7 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 6 && counter < 10 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 9 && counter < 13 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 12 && counter < 16 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 15 && counter < 19 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 18 && counter < 22 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 21 && counter < 25 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 24 && counter < 28 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 27 && counter < 31 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 30 && counter < 34 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                        <li>
+							<apex:variable var="counter" value="{!1}" />
+	                        <apex:variable var="mnthShift" value="{!-12}" />
+	                        <apex:repeat value="{!monthViewsList}" var="option">
+							<apex:outputpanel layout="none" rendered ="{!if(counter > 33 && counter < 37 ,true,false)}" >
+							    <a href="javascript:;" class="{!IF(contains(selectedTimePeriods,','+option['value']+',') ,'selected','')}" name="{!mnthShift}">
+	                                <span class="month">
+	                                    <span>{!option['monthName']}</span>
+	                                </span>
+	                                <span class="year">{!option['year']}</span>
+	                            </a>
+	                        </apex:outputpanel>
+	                        <apex:variable var="mnthShift" value="{!mnthShift+1}" />
+	                        <apex:variable var="counter" value="{!counter+1}" />
+	                        </apex:repeat>
+	                        </li>
+	                    </ul>
+	                    
+	                </div>
+	             	<div class="buttons">
+	             	    <a href="javascript:;" onclick="preResetFilter('time'); return false;" class="clear-btn">Clear Filters</a>
+	                    <a href="javascript:;" onclick="preApplyFilters(); return false;" class="apply-btn button {!pageCls}">Apply</a>
+	            	</div>
+	            </apex:outputPanel>
+				
+				
+	</apex:outputpanel>
+<script type="text/javascript">
+	    jQuery(document).ready(function() {
+	    	jQuery(".result-filter").click(function() {
+		            var a = jQuery(this);
+		            a.toggleClass("open");
+		            a.next().slideToggle(100);
+		        });
+		
+	    	loadFilterJs();
+	    	
+       	});
+       	function reRenderFilterJS(){
+        	jQuery(".result-filter-layer").hide();
+		        jQuery(".result-filter-layer .other").jqTransform();
+		        jQuery(".result-filter-layer .inner").jqTransform();
+		        jQuery(".result-filter-layer .select-filter-all").jqTransform();
+				jQuery(".content > .button-line a").each(function() {
+				var a = jQuery(this);
+				if(a.hasClass("active")){
+					var related = a.data("related");
+					//console.log('related:::'+related);
+					if(typeof related != "undefined") {
+		                jQuery(".result-filter-layer").hide();
+						if( jQuery(".brand-filter .other-btn").hasClass("selected"))
+	                		jQuery(".brand-filter .other").show();
+	                	else
+	                		jQuery(".brand-filter .other").hide();
+		                
+		                jQuery(".time-filter .button-line a").each(function() {
+	        					var selFilter = jQuery(this);
+	        					var related2 = selFilter.data("related");
+	        					if(selFilter.hasClass("active")){
+			            			//console.log('related2:::'+related2);
+			            			jQuery(".time-filter .date-selector").hide();
+			            			jQuery(".time-filter ."+related2).show();
+			            
+				                    jQuery(".time-filter ."+related2).flexslider({
+				                        animation: "slide",
+				                        animationLoop: false,
+				                        minItems: 1,
+				                        maxItems: 4,
+				                        itemWidth: 215,
+				                        itemMargin: 5,
+				                        slideshow: false,
+				                        after: function() {
+				                        	
+				                        }
+				                    });
+				                    updateSlideNxtPrevBtn(related2);
+			                    }
+		                    });
+		                
+						jQuery("."+related).show();
+		            }
+	            	
+				}
+			});
+			jQuery(".flex-prev").addClass('flex-disabled1');
+			
+        }
+        function reloadBrandVarient(){
+        	jQuery(".bv-ok-filter .select-filter-all input").change(function() {
+		            var input = jQuery(this);
+		            var checked = input.is(":checked");
+		            jQuery(".bv-ok-filter .form-left input").each(function() {
+		                var i = jQuery(this);
+		                if(i.is(":checked") != checked) {
+		                    i.parent().find("a").trigger("click");
+		                }
+		            });
+		        });
+		        jQuery(".result-filter-layer a.close-btn").click(function() {
+		            jQuery(this).parent().hide();
+		            jQuery(".filter-buttons a").removeClass("active");
+		        });
+        }
+        function reloadClassificationFilter(){
+        	jQuery(".result-filter-layer").hide();
+        	updateClassification();
+        	resetFormLeft();
+        	jQuery(".sm-filter").jqTransform();
+        	jQuery(".sm-filter .select-filter-all input").change(function() {
+	            var input = jQuery(this);
+	            var checked = input.is(":checked");
+	            jQuery(".sm-filter .form-left input").each(function() {
+	                var i = jQuery(this);
+	                if(i.is(":checked") != checked) {
+	                    i.parent().find("a").trigger("click");
+	                }
+	            });
+	        });
+		    jQuery(".result-filter-layer a.close-btn").click(function() {
+	            jQuery(this).parent().hide();
+	            jQuery(".filter-buttons a").removeClass("active");
+	        });
+		        
+		}
+        
+       	function loadFilterJs(){
+       		//console.log('in loadFilterJs');
+        	 updateClassification();	
+		     reRenderFilterJS();
+        	 jQuery(".content > .button-line a").click(function() {
+		        	//alert('in .content > .button-line a click' );
+		            var a = jQuery(this);
+		            var related = a.data("related");
+		            if(typeof related != "undefined") {
+		                jQuery(".result-filter-layer").hide();
+		
+		                if(related === 'bv-filter') {
+		                    var len = jQuery(".brand-filter .brands a.selected").length + jQuery(".brand-filter .other .other-brand input:checked").length;
+		                    var bv_ok_len = jQuery(".bv-ok-filter .inner a").length
+		                    if(len > 0 && bv_ok_len >0) related = 'bv-ok-filter';
+		                }
+		                jQuery("."+related).show();
+		                if(related === 'time-filter' && jQuery(".time-filter .quarterly") != "undefined") {
+		                    jQuery(".time-filter .quarterly").flexslider({
+		                        animation: "slide",
+		                        animationLoop: false,
+		                        minItems: 1,
+		                        maxItems: 4,
+		                        itemWidth: 215,
+		                        itemMargin: 5,
+		                        slideshow: false,
+		                        after: function() {
+		                        	
+		                        }
+		                    });
+		                    updateSlideNxtPrevBtn('quarterly');
+		                }
+						else if(related === 'brand-filter') {
+		                    resetBrandClass();
+		                }
+						resetFormLeft();
+		                
+		            }
+		            a.parent().find("a").removeClass("active");
+		            a.addClass("active");
+		            jQuery(".buttons").show();
+		        });
+		        jQuery(".result-filter-layer a.close-btn").click(function() {
+		            jQuery(this).parent().hide();
+		            jQuery(".filter-buttons a").removeClass("active");
+		        });
+		        jQuery(".brand-filter .brands a").click(function() {
+		            var a = jQuery(this);
+		            if(a.hasClass("other-btn")) {
+		                jQuery(".brand-filter .other").toggle();
+		                resetBrandClass();
+		                return false;
+		            }
+		            a.toggleClass("selected");
+		            var brandLen = jQuery(".brand-filter .brands a.selected").not('#Portfolio').not('#RTS').not('#ADB').size();
+	                var othBrandLen = jQuery(".brand-filter .other .other-brand input:checked").length;
+	                if( (othBrandLen == 1 && brandLen ==0) || (othBrandLen == 0 && brandLen == 1)){
+	                	var brandId = (othBrandLen == 1) ? jQuery(".brand-filter .other .other-brand input:checked").parent().parent().parent().attr('id')
+	                									   : jQuery(".brand-filter .brands a.selected").not('#Portfolio').not('#RTS').not('#ADB').first().attr('id');
+		            	//console.log('in brands a click--'+brandId);
+		            	if(brandId!=undefined && brandId.length != 0){
+							updateVariantBrands(''+brandId+'');
+						}
+						//jQuery(".bv-ok-filter .inner
+					} else {
+						//if(jQuery('.bv-ok-filter .inner').not('#Portfolio').not('#RTS').not('#ADB').size() != 0){
+							
+						//}
+						jQuery(".bv-ok-filter .inner").html('');
+						jQuery('#selectedChildBrandIds').val('');
+					}
+		        });
+		        jQuery(".brand-filter .other .other-brand input").change(function() {
+		            var input = jQuery(this);
+		            if(jQuery(".brand-filter .other .other-brand input:checked").length > 0) {
+		                jQuery(".brand-filter .other-btn").addClass("selected");
+		            }
+		            var brandLen = jQuery(".brand-filter .brands a.selected").not('#Portfolio').not('#RTS').not('#ADB').size();
+	                var othBrandLen = jQuery(".brand-filter .other .other-brand input:checked").length;
+	                //console.log('brandLen--'+brandLen+'--othBrandLen--'+othBrandLen);
+	                if( (othBrandLen == 1 && brandLen ==0) || (othBrandLen == 0 && brandLen == 1)){
+	                	var adBrandId = (othBrandLen == 1) ? jQuery(".brand-filter .other .other-brand input:checked").parent().parent().parent().attr('id')
+	                									   : jQuery(".brand-filter .brands a.selected").not('#Portfolio').not('#RTS').not('#ADB').first().attr('id');
+	                	//console.log('in adBrandId a change--'+adBrandId);
+	            		if(adBrandId!=undefined && adBrandId.length != 0){
+							updateVariantBrands(''+adBrandId+'');
+	                	}
+	                }else{
+	                	jQuery(".bv-ok-filter .inner").html('');
+	                	jQuery('#selectedChildBrandIds').val('');
+	                }
+		            
+		        });
+		        jQuery(".sm-filter .select-filter-all input").change(function() {
+		            var input = jQuery(this);
+		            var checked = input.is(":checked");
+		            jQuery(".sm-filter .form-left input").each(function() {
+		                var i = jQuery(this);
+		                if(i.is(":checked") != checked) {
+		                    i.parent().find("a").trigger("click");
+		                }
+		            });
+		        });
+		        
+				jQuery(window).resize(function() {
+		            resetFormLeft();
+		            resetBrandClass();
+		        });
+		        jQuery(".time-filter .button-line a").click(function() {
+		        
+		            var a = jQuery(this);
+		            var buttons = a.parent();
+		            jQuery("a", buttons).removeClass("active");
+		            a.addClass("active");
+		            var related = a.data("related");
+		            var labels = buttons.parent();
+		            if(related == 'quarterly'){
+		            	jQuery("input", buttons).val(true);
+		            	jQuery("p", labels).html('Select one or more of the quarters listed below. View different quarters by clicking on the right or left arrows.');
+		            	
+		            }else{
+		            	jQuery("input", buttons).val(false);
+		            	jQuery("p", labels).html('Select one or more of the months listed below. View different months by clicking on the right or left arrows.');
+		            }
+		            jQuery(".time-filter .date-selector").hide();
+		            jQuery(".time-filter ."+related).show();
+		            jQuery(".time-filter ."+related).flexslider({
+		                animation: "slide",
+		                animationLoop: false,
+		                minItems: 1,
+		                maxItems: 4,
+		                itemWidth: 215,
+		                itemMargin: 5,
+		                slideshow: false,
+		                after: function() {
+		                 }
+		            });
+		           updateSlideNxtPrevBtn(related);
+		
+		        })
+		        jQuery(".time-filter .date-selector .slides a").click(function() {
+		            var a = jQuery(this);
+		            a.toggleClass("selected");
+		        });
+				
+        }
+        function updateSlideNxtPrevBtn(relatedTo){
+        	var isQuarterly = false;
+        	if(relatedTo == 'quarterly') 
+        	 isQuarterly =true ;
+			jQuery("."+relatedTo+" .flex-direction-nav a").each(function() {
+	           var a = jQuery(this);
+	           a.click(function() {
+               		if(a.hasClass("flex-disabled")){
+               			console.log('disabled...');
+               			if(a.hasClass("flex-disabled1")){
+				            if(a.hasClass("flex-prev")){
+			                	console.log('click flex-prev');	
+			                	previousPeriodC(isQuarterly);
+			                }else if(a.hasClass("flex-next") ){
+			                		console.log('click flex-next');	
+				                	nextPeriodC(isQuarterly);
+			                	
+			                }
+			                a.removeClass("flex-disabled1");
+		                }
+		                a.addClass("flex-disabled1");
+	                }
+               });
+               
+           });
+		            
+        }
+        
+        function selectALLBrands(elemnt){
+        	var selEle = jQuery(elemnt);
+        	var isSelect = selEle.hasClass("select");
+        	var brands = jQuery(".brand-filter .brands");
+        	othBrands = jQuery(".brand-filter .other")
+        	//jQuery(".jqTransformCheckbox .jqTransformHidden", othBrands).prop("checked")= isSelect; 
+        	if(!isSelect) {
+                selEle.addClass("select");
+                selEle.html('Unselect All');
+                jQuery("a", brands).addClass("selected");
+                othBrands.show();
+                //jQuery("a", othBrands).addClass("jqTransformChecked");
+              	jQuery(".brand-filter .other .jqTransformCheckboxWrapper a").each(function(){
+	    	        var a = jQuery(this);
+	    	        if(!a.hasClass("jqTransformChecked"))
+	    	        	a.trigger("click");
+    	       });  
+            }else{
+                selEle.removeClass("select");
+                selEle.html('Select All');
+                jQuery("a", brands).removeClass("selected");
+                jQuery(".brand-filter .other .jqTransformCheckboxWrapper a").each(function(){
+	    	        var a = jQuery(this);
+	    	        if(a.hasClass("jqTransformChecked"))
+	    	        	a.trigger("click");
+    	       });
+    	       othBrands.hide();
+                 
+            }
+        }
+        function preApplyFilters(){
+        	var selectedBrandIdsString = '';
+        	var isRTSSelected = false;
+        	var isPortfolioSelected = false;
+			jQuery('.brand-filter a.selected').each(function(){
+				brandId = jQuery(this).attr('id');
+				//console.log('brandId::'+brandId);
+				if(brandId != undefined && brandId != 'RTS' && brandId != 'ADB' &&  brandId != 'Portfolio'){
+					if(selectedBrandIdsString == '' || selectedBrandIdsString == null){
+						selectedBrandIdsString = ''+brandId;
+					} else {
+						selectedBrandIdsString += ','+brandId;
+					}
+				}else if(brandId == 'ADB'){
+					jQuery('.brand-filter .other-brand  a.jqTransformChecked').each(function(){
+						var adBrandId = jQuery(this).parent().parent().parent().attr('id');
+						//console.log('parent---'+adBrandId);
+						if(adBrandId != undefined){
+							if(selectedBrandIdsString == '' || selectedBrandIdsString == null){
+								selectedBrandIdsString = ''+adBrandId;
+							} else {
+								selectedBrandIdsString += ','+adBrandId;
+							}
+						}
+					});
+					
+				}else if(brandId=='RTS'){
+	            	console.log('in RTS');
+	            	isRTSSelected = true;
+	            }else if(brandId=='Portfolio'){
+	            	console.log('in Portfolio');
+	            	isPortfolioSelected = true;
+	            }
+			});
+        	//console.log('selectedBrandIdsString::'+selectedBrandIdsString);
+        	var selectedChildBrandIdsString = '';
+        	jQuery('.bv-ok-filter .inner input:checked').each(function(){
+        		childbrandId = jQuery(this).parent().parent().parent().attr('id');
+        		//console.log('childbrandId:::'+childbrandId);
+				if(childbrandId != undefined){
+					if(selectedChildBrandIdsString == '' || selectedChildBrandIdsString == null){
+						selectedChildBrandIdsString = ''+childbrandId;
+					} else {
+						selectedChildBrandIdsString += ','+childbrandId;
+					}
+				}
+			});
+			//console.log('selectedChildBrandIdsString::'+selectedChildBrandIdsString);
+        	var selectedQuartersString = '';
+        	var a = jQuery('.time-filter .button-line a.active');
+   			var isQuarterly = false;
+   			var timeFilterRelated = a.data("related");
+   			//console.log('timeFilterRelated:::'+timeFilterRelated);
+   			if(timeFilterRelated == 'quarterly')
+     				isQuarterly = true;
+            			
+			jQuery('.time-filter .'+timeFilterRelated+' a.selected').each(function(){
+				timeperName = jQuery(this).attr('name');
+				//console.log('timeperName:::'+timeperName);
+				if(timeperName!= undefined){
+					if(selectedQuartersString == '' || selectedQuartersString == null){
+						selectedQuartersString = ''+timeperName;
+					} else {
+						selectedQuartersString += ','+timeperName;
+					}
+				}
+			});
+			
+			var selClassifiactionRow2 = new Array();
+			//console.log('selectedQuartersString::'+selectedQuartersString);
+        	jQuery('.result-filter-layer').find('input[type=hidden]').each(function(){
+    	        var elemId = jQuery(this).attr('id');
+    	        if( elemId != undefined){
+        	    	if(elemId.search('selectedBrandIds') != -1){
+            			jQuery(this).val(selectedBrandIdsString);
+            		}else if(elemId.search('selectedChildBrandIds') != -1){
+            			jQuery(this).val(selectedChildBrandIdsString);
+            		}
+            		if(isShowTimePeriodFilter){
+	            		if(elemId.search('selectedQuarters') != -1){
+	            			jQuery(this).val(selectedQuartersString);
+	            			console.log('selectedQuartersString:::'+jQuery(this).val());
+	            		}
+	            		else if(elemId.search('monthOrQuarterRender') != -1){
+	            			jQuery(this).val(isQuarterly);
+	            			//console.log('monthOrQuarterRender:::'+jQuery(this).val());
+	            		}
+            		}
+            		if(elemId.search('selectedRTS') != -1){
+            			jQuery(this).val(isRTSSelected);
+            			console.log('selectedRTS:::'+jQuery(this).val());
+            		}else if(elemId.search('selectedPortfolio') != -1){
+            			jQuery(this).val(isPortfolioSelected);
+            			console.log('selectedPortfolio:::'+jQuery(this).val());
+            		}
+             	}
+			});
+            //console.log('befroe applyFilter--'+jQuery('#selectedBrandIds').val());
+			
+			jQuery(".content > .button-line a").removeClass("active");
+			//jQuery(".result-filter").toggleClass("open");
+			jQuery(".result-filter-layer").hide();
+			{!applyFilter};
+			//console.log('before applyfilter selClassifiactionRow2::'+selClassifiactionRow2);
+        	//changeFilter(selClassifiactionRow2);
+			
+        }
+        function preResetFilter(filterSection){
+        	//console.log('in preResetFilter');
+        	if(filterSection=='time'){
+        		jQuery('.time-filter .date-selector a.selected').removeClass("selected");
+        		
+        	}else if(filterSection == 'brand'){
+        		jQuery('.brand-filter .other-brand  a.jqTransformChecked').trigger("click");
+        		jQuery('.brand-filter a.selected').trigger("click");
+        		jQuery('.brand-filter a.select').each(function(){
+                	var selEle = jQuery(this);
+                	selEle.removeClass("select");
+                	selEle.html('Select All');
+                });
+                jQuery('.brand-filter .other').hide();
+        		
+        	}else if(filterSection == 'bv'){
+        		jQuery(".bv-ok-filter input:checked").trigger("click");
+        	}else if(filterSection =='sm'){
+        		jQuery('.sm-filter input:checked').trigger("click");
+        	}
+        	preApplyFilters();
+        	
+        }
+        function updateClassification() {
+        	console.log('---updateClassification');
+        	var classification = jQuery('.sm-filter .inner');
+        	var smCheckBoxes = '';
+        	classification.find('td').each(function(){
+				elem = jQuery(this);
+				smCheckBoxes += '<div class="form-left" >';
+				smCheckBoxes += elem.html();
+				smCheckBoxes += '<div class="cleart" ></div></div>';
+				elem.append('<div class="clear" ></div>');
+			});
+			
+			smCheckBoxes += '<div class="clear"></div>';
+			classification.html(smCheckBoxes);
+		 }
+         function resetFormLeft() {
+            jQuery(".result-filter-layer .form-left label").each(function() {
+                var label = jQuery(this);
+                if(label.height() > 70) {
+                    label.addClass("two-lines");
+                }
+                else if(label.height() < 20) {
+                    label.removeClass("two-lines");
+                }
+            });
+        }
+         function resetBrandClass() {
+            jQuery(".brand-filter .brands a.text").each(function() {
+                var a = jQuery(this);
+                if(a.height() > 50) {
+                    a.addClass("two-lines");
+                }
+                else if(a.height() < 35) {
+                    a.removeClass("two-lines");
+                }
+            });
+            jQuery(".brand-filter .other .name").each(function() {
+                var span = jQuery(this);
+                console.log('in resetBrandClass other brand:: '+span.height());
+                if(span.height() > 50) {
+                    span.parent().addClass("two-lines");
+                }
+                else if(span.height() < 35) {
+                    span.parent().removeClass("two-lines");
+                }
+            });
+        }
+        
+    </script>
+    
+</apex:component>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item Brand</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Item Brands</value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Item Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Item Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Primary --></label>
+        <name>Primary__c</name>
+    </fields>
+    <layouts>
+        <layout>POS Item Brand Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- The associated brand must match the brand associated with the item&apos;s program, except when it&apos;s a portfolio brand or generic brand --></errorMessage>
+        <name>Brand</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A primary Item Brand must be related to an individual brand --></errorMessage>
+        <name>Primary_Brand</name>
+    </validationRules>
+</CustomObjectTranslation>

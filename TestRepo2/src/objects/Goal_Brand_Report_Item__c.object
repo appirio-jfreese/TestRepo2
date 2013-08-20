@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>API_Level__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Product_Classification__c != null, &apos;Product_Classification__c&apos;,
+IF(Product_Group__c != null, &apos;Product_Group__c&apos;,
+IF(Generic_Brand__c != null, &apos;Generic_Brand__c&apos;,
+IF(Sub_Brand__c != null, &apos;Sub_Brand__c&apos;,
+IF(Individual_Brand__c != null, &apos;Individual_Brand__c&apos;,
+IF(Size__c != null, &apos;Size__c&apos;,
+IF(Report_Brand__c != null, &apos;Report_Brand__c&apos;,
+IF(Ind_Brand_Size__c != null, &apos;Ind_Brand_Size__c&apos;,
+&apos;&apos;))))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>API Level</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Brand_Priority__c</fullName>
+        <externalId>false</externalId>
+        <formula>Generic_Brand__c + &quot; - &quot; +  text(Goal__r.Priority__c)</formula>
+        <label>Brand Priority</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Completed_Actions_Local__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TEXT(Goal__r.Priority__c) = &apos;Local&apos;, Completed_Actions__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Completed Actions - Local</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Completed_Actions_National__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TEXT(Goal__r.Priority__c) = &apos;National&apos;, Completed_Actions__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Completed Actions - National</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Completed_Actions__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Completed Actions - Total</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Completed_National__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+	AND(
+		!ISBLANK(
+			Completed_Actions_National__c),
+		National_new__c !=0),
+			(Completed_Actions_National__c/National_new__c),0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>% Completed - National</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Dave_Flag__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Dave Flag</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Generic_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Generic Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Goal__r.Name</formula>
+        <label>Goal Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>Goal</label>
+        <referenceTo>Goal__c</referenceTo>
+        <relationshipLabel>Goal Brand Report Items</relationshipLabel>
+        <relationshipName>Goal_Brand_Report_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Ind_Brand_Size__c</fullName>
+        <externalId>false</externalId>
+        <label>Ind. Brand / Size</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Individual_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Individual Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Label__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Product_Classification__c != null, Product_Classification__c,
+IF(Product_Group__c != null, Product_Group__c,
+IF(Generic_Brand__c != null, Generic_Brand__c,
+IF(Sub_Brand__c != null, Sub_Brand__c,
+IF(Individual_Brand__c != null, Individual_Brand__c,
+IF(Size__c != null, Size__c,
+IF(Report_Brand__c != null, Report_Brand__c,
+IF(Ind_Brand_Size__c != null, Ind_Brand_Size__c,
+&apos;&apos;))))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Label</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Level__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Product_Classification__c != null, &apos;Product Classification&apos;,
+IF(Product_Group__c != null, &apos;Product Group&apos;,
+IF(Generic_Brand__c != null, &apos;Generic Brand&apos;,
+IF(Sub_Brand__c != null, &apos;Sub Brand&apos;,
+IF(Individual_Brand__c != null, &apos;Individual Brand&apos;,
+IF(Size__c != null, &apos;Size&apos;,
+IF(Report_Brand__c != null, &apos;Report Brand&apos;,
+IF(Ind_Brand_Size__c != null, &apos;Ind. Brand / Size&apos;,
+&apos;&apos;))))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Level</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Local_new__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Text(Goal__r.Priority__c) = &quot;Local&quot;, Goal__r.Minimum_of_Accounts__c,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Local</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>National_new__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Text(Goal__r.Priority__c) = &quot;National&quot;, Goal__r.Minimum_of_Accounts__c,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>National</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Premise_Activity_Brand__c</fullName>
+        <externalId>false</externalId>
+        <formula>Goal__r.Premise_Activity_Type__c + &quot; - &quot; + Generic_Brand__c</formula>
+        <label>Premise/Activity/Brand</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Classification__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Classification</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Group</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Size__c</fullName>
+        <externalId>false</externalId>
+        <label>Size</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sub_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_new__c</fullName>
+        <externalId>false</externalId>
+        <formula>Local_new__c + National_new__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Goal Brand Report Item</label>
+    <nameField>
+        <displayFormat>GBRI-{00000000}</displayFormat>
+        <label>Goal Brand Report Item Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Goal Brand Report Items</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

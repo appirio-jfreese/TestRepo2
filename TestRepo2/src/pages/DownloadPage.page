@@ -1,0 +1,25 @@
+<apex:page showheader="false" sidebar="false">
+    <script type="text/javascript">
+        window.onload= function() {
+        
+	        if (location.search != "")
+			{
+				var x = location.search.substr(1).split(";")
+				for (var i=0; i<x.length; i++)
+				{
+					var y = x[i].split("=");
+					if(y[0]=='link')
+					{
+						document.getElementById('downloadlink').href = y[1];
+					}
+				}
+			}
+        
+            window.location= document.getElementById('downloadlink').href;
+        }
+    </script>
+    <p>
+        Your download will begin shortly. If it doesn't,
+        <a id="downloadlink" href="">click here</a>.
+    </p>
+</apex:page>

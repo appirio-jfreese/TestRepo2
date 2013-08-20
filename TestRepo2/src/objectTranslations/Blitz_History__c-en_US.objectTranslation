@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Blitz History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Blitz History</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Blitz History --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blitz Brand --></label>
+        <name>Blitz_Brand__c</name>
+        <picklistValues>
+            <masterLabel>Blackhaus</masterLabel>
+            <translation><!-- Blackhaus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Goldschlager</masterLabel>
+            <translation><!-- Goldschlager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rumple Minze</masterLabel>
+            <translation><!-- Rumple Minze --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Blitz Details --></label>
+        <name>Blitz_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blitz Program --></label>
+        <name>Blitz_Program__c</name>
+        <picklistValues>
+            <masterLabel>Shot Heard Around the World</masterLabel>
+            <translation><!-- Shot Heard Around the World --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date Finished --></label>
+        <name>Date_Finished__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF Link --></label>
+        <name>PDF_Link__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Inactive Blitz --></label>
+        <name>Inactive_Blitz</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

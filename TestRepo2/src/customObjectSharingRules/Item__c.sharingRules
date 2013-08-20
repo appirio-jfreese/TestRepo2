@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <criteriaBasedRules>
+        <fullName>All_Items_Portal_Role_Diageo_NA_and_Subordinates</fullName>
+        <sharedTo>
+            <roleAndSubordinates>DiageoNorthAmerica</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value>NULL</value>
+        </criteriaItems>
+        <accessLevel>Read</accessLevel>
+        <name>All Items - Portal Role Diageo NA and Subordinates</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>CM_Administrator</fullName>
+        <sharedTo>
+            <role>POS_CM_Administrator</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value>NULL</value>
+        </criteriaItems>
+        <accessLevel>Edit</accessLevel>
+        <name>CM Administrator</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>IMS_Production_Agency_Item</fullName>
+        <sharedTo>
+            <role>POS_Production_Agency_IMS</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Agency_Name_Sharing_Rule__c</field>
+            <operation>equals</operation>
+            <value>IMS Production Agency</value>
+        </criteriaItems>
+        <accessLevel>Edit</accessLevel>
+        <name>IMS Production Agency Item</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Tangerine_Production_Agency_Item</fullName>
+        <sharedTo>
+            <role>POS_Production_Agency_Tangerine</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>Agency_Name_Sharing_Rule__c</field>
+            <operation>equals</operation>
+            <value>Tangerine Production Agency</value>
+        </criteriaItems>
+        <accessLevel>Edit</accessLevel>
+        <name>Tangerine Production Agency Item</name>
+    </criteriaBasedRules>
+</CustomObjectSharingRules>

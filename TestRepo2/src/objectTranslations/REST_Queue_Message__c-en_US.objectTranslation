@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>REST Queue Message</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>REST Queue Message</value>
+    </caseValues>
+    <fields>
+        <label><!-- Failed Count --></label>
+        <name>FailedCount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Name --></label>
+        <name>FieldName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Processed Time --></label>
+        <name>LastProcessedTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Id --></label>
+        <name>ObjectId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Name --></label>
+        <name>ObjectName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Body --></label>
+        <name>RequestBody__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request apiArguments --></label>
+        <name>Request_apiArguments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request apiPath --></label>
+        <name>Request_apiPath__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Body --></label>
+        <name>Response_Body__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed-3-Attempts</masterLabel>
+            <translation><!-- Failed-3-Attempts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processed-Failed</masterLabel>
+            <translation><!-- Processed-Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processed-Successfully</masterLabel>
+            <translation><!-- Processed-Successfully --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready-to-Process</masterLabel>
+            <translation><!-- Ready-to-Process --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

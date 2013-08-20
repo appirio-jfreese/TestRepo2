@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>IF(Action__c.Local_Goal_Director__c:SUM &gt; 0, Action__c.Local_Completed_Actions_Director__c:SUM / Action__c.Local_Goal_Director__c:SUM, 0)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Local % Complete</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(Action__c.National_Goal_Director__c:SUM &gt; 0, Action__c.National_Completed_Actions_Director__c:SUM / Action__c.National_Goal_Director__c:SUM, 0)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA2</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>National % Complete</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(AND(!ISBLANK(Action__c.Local_Completed_Actions_Director__c:SUM + Action__c.National_Completed_Actions_Director__c:SUM),
+	Action__c.Local_Goal_Director__c:SUM + Action__c.National_Goal_Director__c:SUM !=0),
+		(Action__c.Local_Completed_Actions_Director__c:SUM + Action__c.National_Completed_Actions_Director__c:SUM)/(Action__c.Local_Goal_Director__c:SUM + Action__c.National_Goal_Director__c:SUM), 0)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA3</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>Total % Complete</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Action__c$National_Goal_Director__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Action__c$National_Completed_Actions_Director__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Action__c$Local_Goal_Director__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Action__c$Local_Completed_Actions_Director__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Action__c$Total_Goal_Director__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Action__c$Total_Completed_Actions_Director__c</field>
+    </columns>
+    <columns>
+        <field>Action__c$Name</field>
+    </columns>
+    <columns>
+        <field>Action__c.Action_Product_Links__r$Name</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Action__c$Due_Date__c</column>
+            <operator>equals</operator>
+            <value>LAST_MONTH</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c$State_Abbreviation__c</column>
+            <operator>equals</operator>
+            <value>PA</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$State_Abbreviation__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Goal_For_Director__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Premise_Activity_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c.Action_Product_Links__r$Generic_Brand__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Scott Test</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Actions_with_Goals_Brands__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Action__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

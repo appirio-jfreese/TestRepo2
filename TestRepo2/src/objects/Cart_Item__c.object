@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>POS Project: junction object that represents the many-to-many relationship between Carts and Items</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Account_Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Ship_To__r.Account__r.Spirits_Hierarchy__c)), &quot;Spirits&quot;, IF(NOT(ISBLANK(Ship_To__r.Account__r.Wine_Hierarchy__c)), &quot;Wines&quot;, &quot;&quot;))</formula>
+        <label>Account Hierarchy</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Account__r.Name</formula>
+        <label>Account Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carrier__c</fullName>
+        <externalId>false</externalId>
+        <label>Carrier</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cart__c</fullName>
+        <externalId>false</externalId>
+        <label>Cart</label>
+        <referenceTo>Cart__c</referenceTo>
+        <relationshipLabel>Cart Items</relationshipLabel>
+        <relationshipName>Carts</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>City__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.City__c</formula>
+        <label>City</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Company_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Company Code</label>
+        <length>4</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Contact_Email__c</formula>
+        <label>Contact Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Attention__c</formula>
+        <label>Contact Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Phone__c</formula>
+        <label>Contact Phone</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Custom_Attribute_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Custom Attribute Value</label>
+        <length>1000</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Division__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Ship_To__r.Account__r.Spirits_Division__c)), Ship_To__r.Account__r.Spirits_Division__c, IF(NOT(ISBLANK(Ship_To__r.Account__r.Wines_Division__c)), Ship_To__r.Account__r.Wines_Division__c, &quot;&quot;))</formula>
+        <label>Division</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Manual_WBS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Manual WBS</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Item_Customization__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item Customization</label>
+        <referenceTo>Item_Customization__c</referenceTo>
+        <relationshipLabel>Cart Items</relationshipLabel>
+        <relationshipName>Cart_Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Item__c</fullName>
+        <externalId>false</externalId>
+        <label>Item</label>
+        <referenceTo>Item__c</referenceTo>
+        <relationshipLabel>Cart Items</relationshipLabel>
+        <relationshipName>Cart_Items</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Market__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Ship_To__r.Account__r.Spirits_Market__c)), Ship_To__r.Account__r.Spirits_Market__c, IF(NOT(ISBLANK(Ship_To__r.Account__r.Wines_Market__c)), Ship_To__r.Account__r.Wines_Market__c, &quot;&quot;))</formula>
+        <label>Market</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packout_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item__r.Packout_Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packout Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Ship_To__r.Account__r.Spirits_Region__c)), Ship_To__r.Account__r.Spirits_Region__c, IF(NOT(ISBLANK(Ship_To__r.Account__r.Wines_Region__c)), Ship_To__r.Account__r.Wines_Region__c, &quot;&quot;))</formula>
+        <label>Region</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ship_To__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Ship To</label>
+        <referenceTo>Ship_To__c</referenceTo>
+        <relationshipLabel>Cart Items</relationshipLabel>
+        <relationshipName>Cart_Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>State_District__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Ship_To__r.Account__r.Spirits_State_District__c)), Ship_To__r.Account__r.Spirits_State_District__c, IF(NOT(ISBLANK(Ship_To__r.Account__r.Wines_State_District__c)), Ship_To__r.Account__r.Wines_State_District__c, &quot;&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>State District</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Ship_To__r.State__c)</formula>
+        <label>State</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Selected</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Processing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shipped</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Street_2__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Street_2__c</formula>
+        <label>Street 2</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Street__c</formula>
+        <label>Street</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Spend__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF((ISPICKVAL(Item__r.Status__c, &quot;Cancelled&quot;) || ISPICKVAL(Item__r.Status__c, &quot;Removed&quot;)), 0, Quantity__c * (Item__r.Current_Price__c + (Item__r.Current_Price__c * Item__r.Estimated_Shipping_Tax__c)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Spend</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tracking_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Tracking Code</label>
+        <length>40</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>WBS__c</fullName>
+        <externalId>false</externalId>
+        <label>WBS</label>
+        <length>40</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zip__c</fullName>
+        <externalId>false</externalId>
+        <formula>Ship_To__r.Zip__c</formula>
+        <label>Zip</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Cart Item</label>
+    <listViews>
+        <fullName>Cart_with_Items_CRT</fullName>
+        <columns>Cart__c</columns>
+        <columns>NAME</columns>
+        <columns>Item__c</columns>
+        <columns>Ship_To__c</columns>
+        <columns>Quantity__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Cart__c</field>
+            <operation>equals</operation>
+            <value>CRT-00001254</value>
+        </filters>
+        <label>Cart with Items - CRT-00001597</label>
+    </listViews>
+    <nameField>
+        <displayFormat>CIT-{0000000000}</displayFormat>
+        <label>Cart Item ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Cart Items</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Item__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Cart__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Quantity__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ship_To__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>WBS__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Carrier__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Tracking_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Item__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Cart__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Quantity__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ship_To__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>WBS__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Carrier__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Tracking_Code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Item__c</searchFilterFields>
+        <searchFilterFields>Cart__c</searchFilterFields>
+        <searchFilterFields>Quantity__c</searchFilterFields>
+        <searchFilterFields>Ship_To__c</searchFilterFields>
+        <searchFilterFields>WBS__c</searchFilterFields>
+        <searchFilterFields>Carrier__c</searchFilterFields>
+        <searchFilterFields>Tracking_Code__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Custom_Attribute_Value_Max_Length</fullName>
+        <active>true</active>
+        <description>Enforces the &quot;Custom Attribute Value&quot; field not to exceed the size specified in the &quot;Custom Attribute Length&quot; field on the related Item Customization</description>
+        <errorConditionFormula>LEN(Custom_Attribute_Value__c) &gt; Item_Customization__r.Custom_Attribute_Length__c</errorConditionFormula>
+        <errorDisplayField>Custom_Attribute_Value__c</errorDisplayField>
+        <errorMessage>The number of characters of the custom attribute value exceeds the maximum size specified on the related Item Customization</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Customizable_Item</fullName>
+        <active>false</active>
+        <description>Enforces the &quot;Custom Attribute Value&quot; field not to have a value if the related Item is not customizable</description>
+        <errorConditionFormula>NOT(ISBLANK(Custom_Attribute_Value__c)) &amp;&amp; NOT(Item__r.RecordType_Name__c = &quot;Customizable&quot;)</errorConditionFormula>
+        <errorDisplayField>Custom_Attribute_Value__c</errorDisplayField>
+        <errorMessage>Please do not provide a custom attribute value. The related item is not customizable</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Item_Customization</fullName>
+        <active>true</active>
+        <description>Enforces having values for Custom Attribute Value and Item Customization at the same time</description>
+        <errorConditionFormula>(NOT(ISBLANK(Custom_Attribute_Value__c)) &amp;&amp; ISBLANK(Item_Customization__c)) || (ISBLANK(Custom_Attribute_Value__c) &amp;&amp; NOT(ISBLANK(Item_Customization__c)))</errorConditionFormula>
+        <errorMessage>You are specifying a customization for this item. Please provide values for both Custom Attribute Value and Item Customization</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Ship_To</fullName>
+        <active>true</active>
+        <description>Enforces the Cart Item to have a related Ship To. Intended for integration via API.</description>
+        <errorConditionFormula>ISBLANK(Ship_To__c)</errorConditionFormula>
+        <errorDisplayField>Ship_To__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Ship To</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Status</fullName>
+        <active>true</active>
+        <description>Enforces the Cart Item to have a Status. Intended for integration via API.</description>
+        <errorConditionFormula>ISPICKVAL(Status__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Status</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Valid_Quantity</fullName>
+        <active>true</active>
+        <description>Enforces the quantity to have a value, and be a valid number (equal to 0 or a multiple of the related item&apos;s packout quantity)</description>
+        <errorConditionFormula>ISBLANK(Quantity__c) || Quantity__c &lt; 0 || MOD(Quantity__c, Item__r.Packout_Quantity__c) &lt;&gt; 0</errorConditionFormula>
+        <errorDisplayField>Quantity__c</errorDisplayField>
+        <errorMessage>The quantity is required, it must be zero or a multiple of the related item&apos;s packout quantity</errorMessage>
+    </validationRules>
+</CustomObject>

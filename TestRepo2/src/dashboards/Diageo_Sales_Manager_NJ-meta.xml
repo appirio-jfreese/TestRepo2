@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DashboardFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Diageo Sales Manager (NJ)</name>
+    <publicFolderAccess>ReadOnly</publicFolderAccess>
+    <sharedTo>
+        <role>Sales_Manager_East_NJ</role>
+        <role>Sales_Specialist_East_NJ</role>
+    </sharedTo>
+</DashboardFolder>

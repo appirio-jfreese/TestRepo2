@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Recipe Generic Ingredient</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Recipe Generic Ingredients</value>
+    </caseValues>
+    <fields>
+        <label><!-- Custom Ingredient --></label>
+        <name>Custom_Ingredient__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Modifier --></label>
+        <name>Custom_Modifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Quantity --></label>
+        <name>Custom_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Unit --></label>
+        <name>Custom_Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Featured Brand --></label>
+        <name>Featured_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+        <picklistValues>
+            <masterLabel>.25</masterLabel>
+            <translation><!-- .25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>.5</masterLabel>
+            <translation><!-- .5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>.75</masterLabel>
+            <translation><!-- .75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.25</masterLabel>
+            <translation><!-- 1.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.5</masterLabel>
+            <translation><!-- 1.5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.75</masterLabel>
+            <translation><!-- 1.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.25</masterLabel>
+            <translation><!-- 2.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.5</masterLabel>
+            <translation><!-- 2.5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.75</masterLabel>
+            <translation><!-- 2.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.25</masterLabel>
+            <translation><!-- 3.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.5</masterLabel>
+            <translation><!-- 3.5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.75</masterLabel>
+            <translation><!-- 3.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.25</masterLabel>
+            <translation><!-- 4.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.5</masterLabel>
+            <translation><!-- 4.5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.75</masterLabel>
+            <translation><!-- 4.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipe Attribute --></label>
+        <name>Recipe_Attribute__c</name>
+        <relationshipLabel><!-- Recipe Generic Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipe Diageo Product --></label>
+        <name>Recipe_Diageo_Product__c</name>
+        <relationshipLabel><!-- Recipe Generic Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipe Modifiers --></label>
+        <name>Recipe_Modifiers__c</name>
+        <relationshipLabel><!-- Recipe Generic Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipe Non-Diageo Product --></label>
+        <name>Recipe_Non_Diageo_Product__c</name>
+        <relationshipLabel><!-- Recipe Generic Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Recipe Generic Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Unit --></label>
+        <name>Unit__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ml.</masterLabel>
+            <translation><!-- ml. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>oz.</masterLabel>
+            <translation><!-- oz. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>tsp.</masterLabel>
+            <translation><!-- tsp. --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

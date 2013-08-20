@@ -1,0 +1,93 @@
+<apex:component controller="Controller_Base">
+    <apex:attribute name="options" description="Select option list" type="list" required="true"/>
+    <apex:attribute name="noOfOptions" description="Number of options available" type="Integer" required="false"/>
+    <apex:attribute name="value" description="Value of select list" type="string" required="false"/>
+    <apex:attribute name="onchange" description="Onchange function name" type="string" required="false"/>
+
+   	<apex:attribute name="width" description="Width" type="string" required="false"/>
+   	<apex:attribute name="darkTheme" description="Theme" type="Boolean" required="false" default="false"/>
+	<apex:attribute name="slim" description="Slim" type="Boolean" required="false" default="false"/>
+	   	
+    <apex:attribute name="useSectionTheme" description="If true then use section color theme" type="boolean" required="false"/>
+	<apex:attribute name="trim" description="Is trim required" type="Boolean" required="false" default="true"/>
+
+	<apex:attribute name="bindToController" description="Bind to controller" type="Boolean" required="false" default="true"/>
+
+    <apex:variable value="{!randomId}" var="selectId"/>
+
+	<apex:outputPanel rendered="{!bindToController}">
+	    <apex:selectList value="{!value}" onchange="{!onchange}" size="1" styleClass="hidden orgSelect-{!selectId}">
+	   	    <apex:selectOptions value="{!options}"/>
+	   	</apex:selectList>
+	</apex:outputPanel>
+
+	<apex:outputPanel rendered="{!NOT(bindToController)}">
+		<select onchange="{!onchange}" size="1" class="hidden orgSelect-{!selectId}">
+	    	<apex:repeat value="{!options}" var="option">
+	    		<apex:outputPanel rendered="{!IF(option['value'] == value, 'true','false')}">
+	   	    		<option value="{!option['value']}" selected="selected">{!option["label"]}</option>
+				</apex:outputPanel>
+	    		<apex:outputPanel rendered="{!IF(option['value'] != value, 'true','false')}">
+	   	    		<option value="{!option['value']}">{!option["label"]}</option>
+				</apex:outputPanel>
+	   		</apex:repeat>
+	   	</select>
+	</apex:outputPanel>
+
+	
+	<style>
+		.custom-select-box-values{
+			width: auto !important;
+		}
+	</style>
+	<apex:outputPanel rendered="{!IF(noOfOptions==1, 'false', 'true')}">
+	    <div class="custom-select-box-holder {!IF(slim, 'custom-select-box-holder-slim','')} {!if(trim=true,'trim','')}" style="width: {!IF(ISNULL(width), '200px', text(value(width))+'px')};">
+	        <div id="{!selectId}" class="custom-select-box {!IF(slim, 'custom-select-box-slim','')}" style="color: {!IF(darkTheme != true, '#575757', '#ffffff')}; border-color: {!IF(darkTheme != true, 'auto', '#676767')};  background: {!IF(darkTheme != true, '#ffffff', '#7A7A7A')} !important;">
+	            <div class="custom-select-box-header {!IF(slim, 'custom-select-box-header-slim','')}">
+	                <div class="custom-select-box-val {!IF(slim, 'custom-select-box-val-slim','')}" style="width: {!IF(ISNULL(width), '135px', text(value(width)-65)+'px')}; color: {!IF(darkTheme != true, 'auto', '#ffffff')};">
+	                    <apex:outputPanel rendered="{!AND(!ISNULL(value), options.size!=0)}">
+	                        <apex:repeat value="{!options}" var="option">
+	                            <apex:outputPanel rendered="{! if( option['value'] == value, 'true', 'false' )}">
+	                            	<apex:outputPanel rendered="{!NOT(trim)}">
+	                            		<span class="custom-select-box-val-holder">{!option["label"]}</span>
+	                            	</apex:outputPanel>
+	                            	<apex:outputPanel rendered="{!trim}">
+	                            		<span class="custom-select-box-val-holder">{! IF (len(option["label"])>18, LEFT(option["label"], 18)+'...', option["label"])}</span>
+	                            	</apex:outputPanel>
+	                            </apex:outputPanel>
+	                        </apex:repeat>
+	                    </apex:outputPanel>
+	                    <apex:outputPanel rendered="{!AND(ISNULL(value), options.size!=0)}">
+	                        {!options[0]["label"]}
+	                    </apex:outputPanel>
+	                </div>
+	                <div class="custom-select-box-button {!IF(slim,'custom-select-box-button-slim','')} {!IF(useSectionTheme == true, 'sectionBackground sectionBorder','')}">
+	                    <div class="custom-select-button">
+	                        <apex:image style="{!IF(slim,'height:18px; width:20px;','')}" url="{!URLFOR($Resource.CommonPage, 'images/selectArrow.png')}"/>
+	                    </div>
+	                </div>
+	            </div>
+	           	<div style="width: {!IF(ISNULL(width), '190px', text(value(width)-10)+'px')} !important;">
+		           	<apex:outputPanel rendered="{!NOT(trim)}">
+			            <div class='custom-select-box-values' style="width: {!IF(ISNULL(width), '190px', text(value(width)-10)+'px')} !important;">
+			            <apex:repeat value="{!options}" var="option">
+			                <div title="{!option['label']}" name='{!option["value"]}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')} {!IF(option['value'] == value, 'current','')}">
+			                    {!option["label"]}
+			                </div>
+			            </apex:repeat>
+			            </div>
+					</apex:outputPanel>
+		            <apex:outputPanel rendered="{!trim}">
+			           <div class='custom-select-box-values' style="width: {!IF(ISNULL(width), '190px', text(value(width)-10)+'px')} !important;">
+			           <apex:repeat value="{!options}" var="option">
+			               <div title="{!option['label']}" name='{!option["value"]}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')} {!IF(option['value'] == value, 'current','')}">
+			                   {! IF (len(option["label"])>22, LEFT(option["label"], 22)+'...', option["label"])}
+			               </div>
+			           </apex:repeat>
+			           </div>
+					</apex:outputPanel>
+				</div>
+	        </div>
+	    </div>
+    </apex:outputPanel>
+</apex:component>

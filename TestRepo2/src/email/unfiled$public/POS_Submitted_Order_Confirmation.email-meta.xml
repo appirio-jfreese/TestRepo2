@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Diageo POS: Confirmation sent to shoppers when an order is submitted</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>POS: Submitted Order Confirmation</name>
+    <style>none</style>
+    <subject>Diageo POS - Your Order {!Cart__c.Name} Has Been Submitted</subject>
+    <textOnly>Dear {!Cart__c.Shopper__c},
+
+
+Thank you for your recent Diageo {!Cart__c.Order_Window__c} POS order! Your order number is {!Cart__c.Name} and has been submitted on {!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())} at {!IF(VALUE(MID(TEXT(NOW()), 12, 2)) &gt; 12, VALUE(MID(TEXT(NOW()), 12, 2)) - 12, VALUE(MID(TEXT(NOW()), 12, 2)))}:{!MID(TEXT(NOW()), 15, 2)} {!IF(VALUE(MID(TEXT(NOW()), 12, 2)) &gt; 12, &quot;PM&quot;, &quot;AM&quot;)} GMT. f you want to review or amend your order, click here: {!IF(Cart__c.Shopper_User_License__c = &quot;Standard&quot;, &quot;https://na7.salesforce.com/apex/POS_OrderHistoryDetail?id=&quot; &amp; Cart__c.Id, &quot;https://diageodirect.force.com/apex/POS_OrderHistoryDetail?id=&quot; &amp; Cart__c.Id)}
+
+Please do not reply to this email.
+
+Thank you,
+
+Your Diageo POS Team
+www.diageodirect.com</textOnly>
+    <type>custom</type>
+</EmailTemplate>

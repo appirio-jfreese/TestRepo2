@@ -1,0 +1,9 @@
+<apex:page controller="ControllerControlMarketCases" contentType="text/csv#Case_List.csv" language="en-US" cache="true">
+    Case Number, Case Contact, State, Username ,"Subject","Age of Case","Case Open Date","Case Close Date","Appirio Request Type","Description", "Last Case Comment"
+    <apex:repeat value="{!WrapperOpenCaseList}" var="c">           
+            {!c.CaseNumber}, {!c.contact}, {!c.state}, {!c.userName},"{!c.subject}","{!c.age}","{!c.openDate}","{!c.closeDate}","{!c.Appirio_Request_Type}","{!c.Description}","{!c.caseComement}"
+    </apex:repeat>  
+            <apex:repeat value="{!WrapperClosedCaseList}" var="c">           
+            {!c.CaseNumber}, {!c.contact}, {!c.state}, {!c.userName},"{!c.subject}","{!c.age}","{!c.openDate}","{!c.closeDate}","{!c.Appirio_Request_Type}","{!c.Description}","{!c.caseComement}"
+            </apex:repeat>      
+</apex:page>

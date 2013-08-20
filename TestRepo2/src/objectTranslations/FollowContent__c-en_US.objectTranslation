@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>FollowContent</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>FollowContents</value>
+    </caseValues>
+    <fields>
+        <label><!-- Content Description --></label>
+        <name>Content_Description__c</name>
+        <relationshipLabel><!-- FollowContents --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- File --></label>
+        <name>File__c</name>
+        <relationshipLabel><!-- FollowContents --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- FollowContents --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Action__c.Goal__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Action__c.Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_$Account.Territory__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Status__c</field>
+    </columns>
+    <description>This report shows all combo reps and the number of actions they have against Account Record Types.</description>
+    <filter>
+        <criteriaItems>
+            <column>FK_ACC_OWNER_NAME</column>
+            <operator>equals</operator>
+            <value>Bob migdal,brian perfilio,Brant Mack,Daryl Wise,Jeff Kalinock</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c.Due_Date__c</column>
+            <operator>greaterThan</operator>
+            <value>12/31/2012</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FK_ACC_RECORDTYPE</column>
+            <operator>equals</operator>
+            <value>Account.Off_Premise_Control</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_ACC_OWNER_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_ACC_RECORDTYPE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Combo Rep Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Action__c@Action__c.Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Action__c.Date_Finished__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

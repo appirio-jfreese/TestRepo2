@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Survey Innovation / Sustainovation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Survey Innovation / Sustainovation</value>
+    </caseValues>
+    <fields>
+        <label><!-- BrandBottle Size --></label>
+        <name>BrandBottle_Size__c</name>
+        <relationshipLabel><!-- Survey Innovation / Sustainovation --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Survey Layout --></label>
+        <name>Survey_Layout__c</name>
+        <relationshipLabel><!-- Survey Innovation / Sustainovation --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

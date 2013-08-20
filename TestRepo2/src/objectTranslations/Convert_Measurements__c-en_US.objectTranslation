@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Convert Measurements</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Convert Measurements</value>
+    </caseValues>
+    <fields>
+        <label><!-- Mils --></label>
+        <name>Mils__c</name>
+    </fields>
+    <fields>
+        <label><!-- 5Mils --></label>
+        <name>X5Mils__c</name>
+    </fields>
+    <fields>
+        <label><!-- fl Oz. --></label>
+        <name>fl_Oz__c</name>
+    </fields>
+    <fields>
+        <label><!-- mL --></label>
+        <name>mL__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

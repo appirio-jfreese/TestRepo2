@@ -1,0 +1,125 @@
+<!------------------------------------------------------------------------------
+Name				: R_OperationLines.component
+
+Created By 	: Basant Kumar Verma (Appirio OffShore)
+Date				: 7/5/13
+Story/Task	: US585/TA1082 
+------------------------------------------------------------------------------->
+<apex:component >
+	<apex:attribute name="pageNamePrefix" description="for responsive Pages" type="String" required="false" default="mep" />
+	<apex:attribute name="allowRemoveBasket" description="for responsive Pages" type="Boolean" required="false" default="false" />
+	<apex:attribute name="allowUnfollow" description="for responsive Pages" type="Boolean" required="false" default="false" />
+	<apex:attribute name="allowAddBasket" description="for responsive Pages" type="Boolean" required="false" default="true" />
+	<apex:attribute name="allowFollow" description="for responsive Pages" type="Boolean" required="false" default="true" />
+	<apex:attribute name="showPages" description="for responsive Pages" type="Boolean" required="false" default="false" />
+	<apex:attribute name="renderAsList" description="for responsive Pages" type="Boolean" required="false" default="true" />
+	<apex:attribute name="pagesStatus" description="for responsive Pages" type="String" required="false" default="" />
+	
+	<apex:attribute name="options" description="Select option list" type="list" required="false"/>
+  <apex:attribute name="value" description="Value of select list" type="string" required="false"/>
+  <apex:attribute name="onchange" description="Onchange function name" type="string" required="false"/>
+  <apex:attribute name="bindToController" description="Bind to controller" type="Boolean" required="false" default="true"/>
+ <apex:attribute name="className" description="Select class name" type="string" required="false"/>
+ <apex:attribute name="R_MultInFollow" description="R_MultInFollow" type="Boolean" required="false"/>
+ <apex:inputText value="{!R_MultInFollow}" id="multiFollow" styleClass="multiFollow" style="display:none"  />
+  <div class="operation-line">
+     <a href="javascript: responsiveDownloadOnly('download');" class="download disabled {!pageNamePrefix}-bg">
+         <span>Download</span>
+     </a>
+     <a href="javascript: operationLine('email');" class="email disabled {!pageNamePrefix}-bg">
+         <span>&nbsp;&nbsp;Share</span>
+     </a>
+     <apex:outputPanel rendered="{!if(allowAddBasket == true, 'true','false')}">
+	     <a href="javascript: operationLine('add');" class="add disabled {!pageNamePrefix}-bg">
+	         <span>Add</span>
+	     </a>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!if(allowRemoveBasket == true, 'true','false')}">
+	     <a href="javascript: operationLine('remove');" class="remove disabled {!pageNamePrefix}-bg">
+	         <span>Remove</span>
+	     </a>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!if(allowFollow == true, 'true','false')}">
+	    <apex:outputPanel rendered="{!AND(R_MultInFollow==false)}">
+           <a href="javascript: operationLine('add-document');" class="add-document disabled {!pageNamePrefix}-bg">
+	       <span>Follow</span>
+	     </a>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(R_MultInFollow==true)}">
+            <a href="javascript: operationLine('unfollow');" class="unfollow disabled {!pageNamePrefix}-bg">
+	       <span>Follow</span>
+	     </a>
+        </apex:outputPanel>
+	   
+	     <!-- <a href="javascript: operationLine('add-document');" class="add-document disabled {!pageNamePrefix}-bg">
+	       <span>Follow</span>
+	     </a> -->
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!if(allowUnfollow == true, 'true','false')}">
+	     <a href="javascript: operationLine('unfollow');" class="unfollow disabled {!pageNamePrefix}-bg">
+	       <span>Unfollow</span>
+	     </a>
+     </apex:outputPanel>
+ 	</div>
+  
+  <!-- START : Modified by Basant : Always Need to show List/Grid view buttons and Select All checkbox. It's visiblity does not depends on showPages param --> 
+ 	<div class="filter">
+	  	<a class="list-mode {!IF(renderAsList, 'active', '')} {!pageNamePrefix}-bg"></a>
+	    <a class="grid-mode {!IF(NOT(renderAsList), 'active', '')} {!pageNamePrefix}-bg"></a>
+ 	    <apex:outputPanel rendered="{!if(showPages == true, 'true','false')}">
+		    <div class="desc">
+		         {!pagesStatus}
+		    </div>
+			 	<apex:outputPanel rendered="{!NOT(ISNULL(options))}">
+				 <c:R_selectList width="80" options="{!options}"  value="{!value}" onchange="{!onchange}" bindToController="{!bindToController}" className="{!className}"/> 
+				</apex:outputPanel> 
+ 	    </apex:outputPanel>
+	    <div class="select-all">
+	    	<label>Select All</label>
+	     	<input type="checkbox" class="checkbox" />
+	    </div>
+	</div>
+	<!-- END : Modified by Basant : Always Need to show List/Grid view buttons and Select All checkbox. It's visiblity does not depends on showPages param -->
+	 	
+	<apex:componentBody />
+    
+  <div class="operation-line">
+     <a href="javascript: responsiveDownloadOnly('download');" class="download disabled {!pageNamePrefix}-bg">
+         <span>Download</span>
+     </a>
+     <a href="javascript: operationLine('email');" class="email disabled {!pageNamePrefix}-bg">
+         <span>&nbsp;&nbsp;Share</span>
+     </a>
+     <apex:outputPanel rendered="{!if(allowAddBasket == true, 'true','false')}">
+	     <a href="javascript: operationLine('add');" class="add disabled {!pageNamePrefix}-bg">
+	         <span>Add</span>
+	     </a>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!if(allowRemoveBasket == true, 'true','false')}">
+	     <a href="javascript: operationLine('remove');" class="remove disabled {!pageNamePrefix}-bg">
+	         <span>Remove</span>
+	     </a>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!if(allowFollow == true, 'true','false')}">
+	     <apex:outputPanel rendered="{!AND(R_MultInFollow==false)}">
+           <a href="javascript: operationLine('add-document');" class="add-document disabled {!pageNamePrefix}-bg">
+	       <span>Follow</span>
+	     </a>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(R_MultInFollow==true)}">
+            <a href="javascript: operationLine('unfollow');" class="unfollow disabled {!pageNamePrefix}-bg">
+	       <span>Follow</span>
+	     </a>
+        </apex:outputPanel>
+	     
+	    <!--  <a href="javascript: operationLine('add-document');" class="add-document disabled {!pageNamePrefix}-bg">
+	       <span>Follow</span>
+	     </a> -->
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!if(allowUnfollow == true, 'true','false')}">
+	     <a href="javascript: operationLine('unfollow');" class="unfollow disabled {!pageNamePrefix}-bg">
+	       <span>Unfollow</span>
+	     </a>
+     </apex:outputPanel>
+ 	</div>
+</apex:component>

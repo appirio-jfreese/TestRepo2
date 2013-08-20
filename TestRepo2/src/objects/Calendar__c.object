@@ -1,0 +1,1229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <content>CloneCalendar</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>Calendar</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Actions_Completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Actions Completed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Archive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Archive</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Background_Color2__c</fullName>
+        <externalId>false</externalId>
+        <label>Background Color2</label>
+        <length>6</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CalendarID_S2S__c</fullName>
+        <externalId>false</externalId>
+        <label>CalendarID(S2S) - delete after migration</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Classification__c</fullName>
+        <externalId>false</externalId>
+        <label>Classification</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Spirits</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wine</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mixed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Consumer_Target_Content_Description__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consumer Target File</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (Consumer Target Content Description)</relationshipLabel>
+        <relationshipName>Calendar5</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consumer_Target_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Consumer Target Text</label>
+        <length>5000</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Description_Content_Description__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Description File</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (Description Content Description)</relationshipLabel>
+        <relationshipName>Calendar7</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description Text</label>
+        <length>5000</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Folder__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Folder</label>
+        <referenceTo>Folder__c</referenceTo>
+        <relationshipLabel>Calendar</relationshipLabel>
+        <relationshipName>Calendar</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>How_it_Works_Content_Description__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>How it Works File</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (How it Works Content Description)</relationshipLabel>
+        <relationshipName>Calendar6</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>How_it_Works_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>How it Works Text</label>
+        <length>5000</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Idea_Content_Description__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Idea File</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (Idea Content Description)</relationshipLabel>
+        <relationshipName>Calendar4</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Idea_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Idea Text</label>
+        <length>5000</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Launch_Date__c</fullName>
+        <description>Launch Date (Innovation, Sustainnovation &amp; VAP calendar)</description>
+        <externalId>false</externalId>
+        <label>Launch Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Logo_Image_Large__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Logo Image (Large)</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (Logo Image (Large))</relationshipLabel>
+        <relationshipName>Calendar1</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Logo_Image_Small__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Logo Image (Small)</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar</relationshipLabel>
+        <relationshipName>Calendar</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Org_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>New Org ID</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Programs__c</fullName>
+        <externalId>false</externalId>
+        <label>Programs</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Brand Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reserve Brand Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Portfolio Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Record_Type_Name__c</fullName>
+        <description>This field is used as part of a workflow rule that adds the value of the record type&apos;s name so that it can be associated with the Diageo/Control Markets/MHUSA Salesforce to Salesforce Integration - Record Type ID&apos;s don&apos;t naturally map over without a workflow rule in place.</description>
+        <externalId>false</externalId>
+        <label>Record Type Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Channel__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Channel</label>
+        <picklist>
+            <picklistValues>
+                <fullName>On Premise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Off Premise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Integrated National Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Display/Visibility</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Innovation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sustainovation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Sizes, Pack/Label Changes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>African American</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hispanic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LGBT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asian American</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pack/Label Changes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vintage Transition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Segment__c</fullName>
+        <externalId>false</externalId>
+        <label>Segment</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AF AM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hispanic/Latino</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GLBT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asian</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mex Am</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On Premise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Off Premise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Ship_Date__c</fullName>
+        <description>Planned Ship Date (Innovation, Sustainnovation &amp; VAP calendar)</description>
+        <externalId>false</externalId>
+        <label>Ship Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Show_tooltip_details__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Show tooltip details</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Situation_Content_Description__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Situation File</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (Situation Content Description)</relationshipLabel>
+        <relationshipName>Calendar3</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Situation_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Situation Text</label>
+        <length>5000</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Specification_Content_Description__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Specification File</label>
+        <referenceTo>Content_Description__c</referenceTo>
+        <relationshipLabel>Calendar (Specification Content Description)</relationshipLabel>
+        <relationshipName>Calendar2</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Specification_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Specification Text</label>
+        <length>5000</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Text_Color__c</fullName>
+        <description>text color in calendar view</description>
+        <externalId>false</externalId>
+        <label>Text Color</label>
+        <length>6</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Theme__c</fullName>
+        <externalId>false</externalId>
+        <label>Calendar Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Monthly Execution Plan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>National Marketing Calendar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current Programming</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Innovation, Sustainnovation &amp; VAP</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Today_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>TODAY() - 62</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Today Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Overview</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sell Sheet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>background_color__c</fullName>
+        <description>background color to display in calendar view</description>
+        <externalId>false</externalId>
+        <label>Background Color</label>
+        <length>6</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Calendar</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>RECORDTYPE</columns>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Sales_Channel__c</columns>
+        <columns>Segment__c</columns>
+        <columns>Priority__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Innovation_Sustainovation_VAP</fullName>
+        <columns>RECORDTYPE</columns>
+        <columns>Sales_Channel__c</columns>
+        <columns>NAME</columns>
+        <columns>Priority__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Archive__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Calendar__c.Innovation_Sustainovation_VAP</value>
+        </filters>
+        <label>Innovation, Sustainovation &amp; VAP</label>
+    </listViews>
+    <listViews>
+        <fullName>Monthly_Execution_Plan</fullName>
+        <columns>RECORDTYPE</columns>
+        <columns>Sales_Channel__c</columns>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Priority__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Archive__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Calendar__c.Monthly_Execution_Plan</value>
+        </filters>
+        <label>Monthly Execution Plan</label>
+    </listViews>
+    <listViews>
+        <fullName>Multicultural</fullName>
+        <columns>RECORDTYPE</columns>
+        <columns>Sales_Channel__c</columns>
+        <columns>NAME</columns>
+        <columns>Priority__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Archive__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Calendar__c.Multicultural</value>
+        </filters>
+        <label>Multicultural</label>
+    </listViews>
+    <listViews>
+        <fullName>Planning</fullName>
+        <columns>RECORDTYPE</columns>
+        <columns>Sales_Channel__c</columns>
+        <columns>NAME</columns>
+        <columns>Priority__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Archive__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Calendar__c.Planning</value>
+        </filters>
+        <label>Planning</label>
+    </listViews>
+    <nameField>
+        <label>Calendar Name</label>
+        <type>Text</type>
+    </nameField>
+    <namedFilters>
+        <fullName>nf_01IA00000024hCtMAI_00NA0000009YyKCMA0</fullName>
+        <active>true</active>
+        <field>Goal__c.Program__c</field>
+        <filterItems>
+            <field>Calendar__c.Sales_Channel__c</field>
+            <operation>equals</operation>
+            <value>Integrated National Program, Distribution, Display/Visibility, Innovation, Sustainovation</value>
+        </filterItems>
+        <filterItems>
+            <field>Calendar__c.Start_Date__c</field>
+            <operation>greaterThan</operation>
+            <valueField>Calendar__c.Today_Date__c</valueField>
+        </filterItems>
+        <isOptional>true</isOptional>
+        <name>Goal_Program</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IK0000000Crc7MAC_00NK0000000UTCqMAO</fullName>
+        <active>true</active>
+        <booleanFilter>(1 AND 3) OR (2 AND 4)</booleanFilter>
+        <field>File__c.Calendar__c</field>
+        <filterItems>
+            <field>Calendar__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Planning</value>
+        </filterItems>
+        <filterItems>
+            <field>Calendar__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Multicultural</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.Page_Section__c</field>
+            <operation>equals</operation>
+            <value>Planning</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.Page_Section__c</field>
+            <operation>equals</operation>
+            <value>Multicultural</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>File_Calendar</name>
+        <sourceObject>File__c</sourceObject>
+    </namedFilters>
+    <pluralLabel>Calendar</pluralLabel>
+    <recordTypes>
+        <fullName>Innovation_Sustainovation_VAP</fullName>
+        <active>true</active>
+        <label>Innovation, Sustainovation &amp; VAP</label>
+        <picklistValues>
+            <picklist>Classification__c</picklist>
+            <values>
+                <fullName>Mixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spirits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Programs__c</picklist>
+            <values>
+                <fullName>Brand Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reserve Brand Program</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Channel__c</picklist>
+            <values>
+                <fullName>Innovation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Sizes%2C Pack%2FLabel Changes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pack%2FLabel Changes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sustainovation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vintage Transition</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segment__c</picklist>
+            <values>
+                <fullName>AF AM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GLBT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hispanic%2FLatino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mex Am</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Off Premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Theme__c</picklist>
+            <values>
+                <fullName>Innovation%2C Sustainnovation %26 VAP</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Overview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sell Sheet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Monthly_Execution_Plan</fullName>
+        <active>true</active>
+        <label>Monthly Execution Plan</label>
+        <picklistValues>
+            <picklist>Classification__c</picklist>
+            <values>
+                <fullName>Mixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spirits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Programs__c</picklist>
+            <values>
+                <fullName>Brand Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reserve Brand Program</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Channel__c</picklist>
+            <values>
+                <fullName>Display%2FVisibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Innovation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated National Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sustainovation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segment__c</picklist>
+            <values>
+                <fullName>AF AM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GLBT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hispanic%2FLatino</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Theme__c</picklist>
+            <values>
+                <fullName>Monthly Execution Plan</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Overview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sell Sheet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Multicultural</fullName>
+        <active>true</active>
+        <label>Multicultural</label>
+        <picklistValues>
+            <picklist>Classification__c</picklist>
+            <values>
+                <fullName>Mixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spirits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Programs__c</picklist>
+            <values>
+                <fullName>Brand Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reserve Brand Program</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Channel__c</picklist>
+            <values>
+                <fullName>African American</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asian American</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hispanic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LGBT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segment__c</picklist>
+            <values>
+                <fullName>AF AM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GLBT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hispanic%2FLatino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mex Am</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Off Premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Theme__c</picklist>
+            <values>
+                <fullName>Current Programming</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Innovation%2C Sustainnovation %26 VAP</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Monthly Execution Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Marketing Calendar</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Overview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sell Sheet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Planning</fullName>
+        <active>true</active>
+        <label>Planning</label>
+        <picklistValues>
+            <picklist>Classification__c</picklist>
+            <values>
+                <fullName>Mixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spirits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Programs__c</picklist>
+            <values>
+                <fullName>Brand Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reserve Brand Program</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Channel__c</picklist>
+            <values>
+                <fullName>Planning</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segment__c</picklist>
+            <values>
+                <fullName>AF AM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asian</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GLBT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hispanic%2FLatino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mex Am</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Off Premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Theme__c</picklist>
+            <values>
+                <fullName>Current Programming</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Innovation%2C Sustainnovation %26 VAP</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Monthly Execution Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Marketing Calendar</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Overview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sell Sheet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>End_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sales_Channel__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>Sales_Channel__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ship_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Launch_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>LaunchDateRequired</fullName>
+        <active>true</active>
+        <description>If calendar record type was set to &apos;Innovation, Sustainnovation &amp; VAP&apos; launch date is required.</description>
+        <errorConditionFormula>AND
+($RecordType.Name = &quot;Innovation, Sustainnovation &amp; VAP&quot;, ISBLANK( Launch_Date__c ) )</errorConditionFormula>
+        <errorDisplayField>Launch_Date__c</errorDisplayField>
+        <errorMessage>Launch Date is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ShipDateRequired</fullName>
+        <active>true</active>
+        <description>If calendar record type was set to &apos;Innovation, Sustainnovation &amp; VAP&apos; ship date is required.</description>
+        <errorConditionFormula>AND
+($RecordType.Name = &quot;Innovation, Sustainnovation &amp; VAP&quot;, ISBLANK( Ship_Date__c ) )</errorConditionFormula>
+        <errorDisplayField>Ship_Date__c</errorDisplayField>
+        <errorMessage>ShipDate is required</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>checkStartEndDates</fullName>
+        <active>true</active>
+        <description>Rule checks if Start Date is lower than End Date</description>
+        <errorConditionFormula>End_Date__c &lt; Start_Date__c</errorConditionFormula>
+        <errorDisplayField>End_Date__c</errorDisplayField>
+        <errorMessage>End date value should always be greater than Start date value.</errorMessage>
+    </validationRules>
+</CustomObject>

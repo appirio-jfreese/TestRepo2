@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Window Customer</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Window Customers</value>
+    </caseValues>
+    <fields>
+        <label><!-- Customer --></label>
+        <name>Customer__c</name>
+        <relationshipLabel><!-- Order Window Customers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Magento Id --></label>
+        <name>Magento_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open for Shopping --></label>
+        <name>Open_For_Shopping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window --></label>
+        <name>Order_Window__c</name>
+        <relationshipLabel><!-- Order Window Customers --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>POS Order Window Customer Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- It is not possible to create or edit an Order Window Customer if the related Order Window is new, completed or archived, except for the &quot;Open for Shopping&quot; field which can always be edited --></errorMessage>
+        <name>Order_Window_Status</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Email_Shoppers --></label>
+        <name>Email_Shoppers</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Manage_Order_Window_Customer_Assignment --></label>
+        <name>Manage_Order_Window_Customer_Assignment</name>
+    </webLinks>
+</CustomObjectTranslation>

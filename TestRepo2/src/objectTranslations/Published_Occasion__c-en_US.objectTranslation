@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Published Occasion</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Published Occasions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Digital Published Asset --></label>
+        <name>Digital_Published_Asset__c</name>
+        <relationshipLabel><!-- Published Occasions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Occasion --></label>
+        <name>Occasion__c</name>
+        <relationshipLabel><!-- Asset - Occasion Use --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Published</masterLabel>
+            <translation><!-- Published --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Suppressed</masterLabel>
+            <translation><!-- Suppressed --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

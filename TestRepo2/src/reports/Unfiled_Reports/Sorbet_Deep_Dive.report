@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This shows the number of completed action by account by state for the national sorbet goal</description>
+    <filter>
+        <criteriaItems>
+            <column>Action__c.Status__c</column>
+            <operator>equals</operator>
+            <value>Closed - Complete</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FK_$Goal__c.Program_Name_Type__c</column>
+            <operator>contains</operator>
+            <value>sorbet</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_$Goal__c.State__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c.Account__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sorbet Deep Dive</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Action__c@Action__c.Goal__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Action__c.Date_Finished__c</dateColumn>
+        <endDate>2013-04-22</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-03-01</startDate>
+    </timeFrameFilter>
+</Report>

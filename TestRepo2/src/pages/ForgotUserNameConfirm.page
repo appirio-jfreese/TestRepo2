@@ -1,0 +1,42 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Auth">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.LoginPage, 'style.css')}"/>
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <div class="header">
+            <div class="logotype">&nbsp;</div>            
+        </div>  
+        <!-- PAGE CONTENT -->
+        <div class="content left">
+            <div class="login-holder">
+
+				<div class="login-error-short">
+					<apex:outputPanel id="messages">
+						<apex:messages styleClass="errorLogin" />
+					</apex:outputPanel>
+				</div>
+				<div class="login-box">
+					
+					<h2><apex:outputText value="{!$Label.Login_welcome_text}" escape="false" /></h2>
+					<p><apex:outputText value="{!$Label.Login_Message}" escape="false" /></p>
+
+					<div class="login-form-wrapper">
+						<apex:form forceSSL="true" id="dataForm">
+		                    <div class="forgot-message">
+		                          <apex:outputText styleClass="title" value="{!$Label.userNameNotificationSent}"/>
+		                    </div>
+		                    <div class="login-help"><apex:outputLink value="{!$Page.Login}">Back to login page</apex:outputLink></div>                  
+		                </apex:form>
+					</div>
+
+				</div>
+			</div>          
+
+        </div>
+        <!-- PAGE FOOTER -->
+        <div class="login-footer">
+			<a href="">&copy; Diageo 2011</a>
+        </div>
+    </div>
+    
+</apex:page>

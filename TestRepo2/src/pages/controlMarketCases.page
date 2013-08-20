@@ -1,0 +1,234 @@
+<apex:page controller="ControllerControlMarketCases">
+    <apex:form >
+    
+    <apex:pageBlock title="Cases"  id="caseList" >
+    <apex:pageBlockButtons >
+     <apex:commandButton value="Export Case List" onclick="location.href='/apex/ExportCsvForControlMarketCase?csv=true';return false;"/>
+    </apex:pageBlockButtons>
+    <apex:pageBlockSection title="Open Cases">
+            <apex:pageBlockTable value="{!WrapperOpenCaseList}" var="c" id="table">
+            <!-- <apex:column value="{!c.CaseNumber}" headerValue="Case Number"/>-->
+             
+             <apex:column >
+                 <apex:facet name="header"> 
+             <apex:commandLink action="{!ViewData}" value="CaseNumber{!IF(sortExpression=='CaseNumber',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort1"   >
+                     <apex:param value="CaseNumber" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+            </apex:facet>
+                 <apex:outputText value="{!c.caseNumber}" />
+               </apex:column>
+            <!-- <apex:column value="{!c.contact}" headerValue="Case Contact"/> <!-- Added for Case 00005400 -->
+            
+               <apex:column >
+                 <apex:facet name="header"> 
+             <apex:commandLink action="{!ViewData}" value="Case Contact{!IF(sortExpression=='Contact.Name',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort2"   >
+                     <apex:param value="Contact.Name" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+              </apex:facet>
+                 <apex:outputText value="{!c.Contact}" />
+               </apex:column>
+             
+                <apex:column >
+                 <apex:facet name="header"> 
+             <apex:commandLink action="{!ViewData}" value="State{!IF(sortExpression=='State__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort3"   >
+                     <apex:param value="State__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+               </apex:facet>
+                 <apex:outputText value="{!c.State}" />
+               </apex:column>
+              
+              
+               <!--<apex:column value="{!c.userName}" headerValue="User name"/>-->
+              
+                 <apex:column >
+                 <apex:facet name="header"> 
+                <apex:commandLink action="{!ViewData}" value="Username{!IF(sortExpression=='Owner.Username',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort4"   >
+                     <apex:param value="Owner.Username" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                 </apex:facet>
+                 <apex:outputText value="{!c.username}" />
+               </apex:column>
+               
+                <!--<apex:column value="{!c.subject}" headerValue="Subject"/>-->
+                
+                   <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Subject{!IF(sortExpression=='Subject',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort5"   >
+                     <apex:param value="Subject" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                 </apex:facet>
+                 <apex:outputText value="{!c.subject}" />
+               </apex:column>
+                
+                <!--<apex:column value="{!c.age}" headerValue="Age"/>-->
+                
+                   <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Age{!IF(sortExpression=='Case_Age__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort6"   >
+                     <apex:param value="Case_Age__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                    </apex:facet>
+                 <apex:outputText value="{!c.age}" />
+               </apex:column>
+                   
+                <apex:column >
+                <!-- Modified By- Rahul Chitkara
+                    case - 00005400 -->
+                 <apex:facet name="header">   
+                   <apex:commandLink action="{!ViewData}" value="Time Opened{!IF(sortExpression=='Case_Age__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort7"   >
+                     <apex:param value="Case_Age__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                 </apex:facet>
+                <!--  <apex:outputLink value="/{!c.Id}" target="_blank">{!c.openDate}</apex:outputLink>  -->
+                 <apex:outputText value="{!c.openDate}" />
+               </apex:column>
+               <!-- Rahul changes End -->
+              <!--   <apex:column value="{!c.openDate}" headerValue="Time Opened">  
+                
+                
+                <!-- <apex:column value="{!c.Appirio_Request_Type}" headerValue="Appirio Request Type"/>-->
+                
+                <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Appirio Request Type{!IF(sortExpression=='Appirio_Request_Type__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort8"   >
+                     <apex:param value="Appirio_Request_Type__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="OpenCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                    </apex:facet>
+                 <apex:outputText value="{!c.Appirio_Request_Type}" />
+               </apex:column>
+                
+                <apex:column value="{!c.Description}" headerValue="Description"/> 
+              
+                
+                <apex:column value="{!c.caseComement}" headerValue="Case Comment"/> 
+                
+                    
+                    
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Closed Cases">
+            <apex:pageBlockTable value="{!WrapperClosedCaseList}" var="c" id="table1">
+            <apex:column >
+                 <apex:facet name="header"> 
+             <apex:commandLink action="{!ViewData}" value="CaseNumber{!IF(sortExpression=='CaseNumber',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort9"   >
+                     <apex:param value="CaseNumber" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+            </apex:facet>
+                 <apex:outputText value="{!c.caseNumber}" />
+               </apex:column>
+            <!-- <apex:column value="{!c.contact}" headerValue="Case Contact"/> <!-- Added for Case 00005400 -->
+            
+               <apex:column >
+                 <apex:facet name="header"> 
+             <apex:commandLink action="{!ViewData}" value="Case Contact{!IF(sortExpression=='Contact.Name',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort10"   >
+                     <apex:param value="Contact.Name" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+              </apex:facet>
+                 <apex:outputText value="{!c.Contact}" />
+               </apex:column>
+             
+                <apex:column >
+                 <apex:facet name="header"> 
+             <apex:commandLink action="{!ViewData}" value="State{!IF(sortExpression=='State__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort11"   >
+                     <apex:param value="State__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+               </apex:facet>
+                 <apex:outputText value="{!c.State}" />
+               </apex:column>
+              
+              
+               <!--<apex:column value="{!c.userName}" headerValue="User name"/>-->
+              
+                 <apex:column >
+                 <apex:facet name="header"> 
+                <apex:commandLink action="{!ViewData}" value="Username{!IF(sortExpression=='Owner.Username',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort12">
+                     <apex:param value="Owner.Username" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                 </apex:facet>
+                 <apex:outputText value="{!c.username}" />
+               </apex:column>
+               
+                <!--<apex:column value="{!c.subject}" headerValue="Subject"/>-->
+                
+                   <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Subject{!IF(sortExpression=='Subject',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort13"   >
+                     <apex:param value="Subject" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                 </apex:facet>
+                 <apex:outputText value="{!c.subject}" />
+               </apex:column>
+                
+                <!--<apex:column value="{!c.age}" headerValue="Age"/>-->
+                
+                   <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Age{!IF(sortExpression=='Case_Age__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort14"   >
+                     <apex:param value="Case_Age__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                    </apex:facet>
+                 <apex:outputText value="{!c.age}" />
+               </apex:column>
+                   
+                <apex:column >
+                <!-- Modified By- Rahul Chitkara
+                    case - 00005400 -->
+                 <apex:facet name="header">   
+                   <apex:commandLink action="{!ViewData}" value="Time Opened{!IF(sortExpression=='Case_Age__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort15"   >
+                     <apex:param value="Case_Age__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                 </apex:facet>
+                <!--  <apex:outputLink value="/{!c.Id}" target="_blank">{!c.openDate}</apex:outputLink>  -->
+                 <apex:outputText value="{!c.openDate}" />
+               </apex:column>
+               <!-- Rahul changes End -->
+              <!--   <apex:column value="{!c.openDate}" headerValue="Time Opened">  
+                
+               <apex:column value="{!c.closeDate}" headerValue="Time Closed"/> -->
+                <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Time Closed{!IF(sortExpression=='ClosedDate',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort16"   >
+                     <apex:param value="ClosedDate" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                    </apex:facet>
+                 <apex:outputText value="{!c.closeDate}" />
+               </apex:column>
+                
+                <!-- <apex:column value="{!c.Appirio_Request_Type}" headerValue="Appirio Request Type"/>-->
+                
+                <apex:column >
+                 <apex:facet name="header"> 
+                 <apex:commandLink action="{!ViewData}" value="Appirio Request Type{!IF(sortExpression=='Appirio_Request_Type__c',IF(sortDirection='ASC','▼','▲'),'')}" id="cmdSort17"   >
+                     <apex:param value="Appirio_Request_Type__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+                     <apex:param value="ClosedCases" name="sortIdentifier" assignTo="{!sortIdentifier}" ></apex:param>
+                   </apex:commandLink>
+                    </apex:facet>
+                 <apex:outputText value="{!c.Appirio_Request_Type}" />
+               </apex:column>
+                
+                <apex:column value="{!c.Description}" headerValue="Description"/> 
+              
+                
+                <apex:column value="{!c.caseComement}" headerValue="Case Comment"/> 
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+     </apex:pageBlock>       
+    </apex:form>        
+</apex:page>

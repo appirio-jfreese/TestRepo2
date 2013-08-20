@@ -1,0 +1,43 @@
+<!------------------------------------------------------------------------------
+Name        : BlogSItem.component
+
+Updated By  : Randy Wandell (Appirio)
+Date        : 06/06/13
+Story/Task  : US503/TA907
+------------------------------------------------------------------------------->
+<apex:component controller="Controller_BlogPost">
+    <div class="blog clearfix" style="float: left;">
+        <h2>{!blogItem.Name}</h2>
+        <div class="info clearfix">
+            Posted By : <a href="javascript:;" class="link">{!blogItem.CreatedBy.Name}</a>
+            &nbsp;|&nbsp;<apex:outputField value="{!blogItem.CreatedDate}"/>
+            &nbsp;|&nbsp;<a href="javascript:;" class="link">{!blogItem.Comment__r.size} Comments</a>
+        </div>
+        
+        <div class="image columns clearfix">
+        </div>
+        <div class="detail">
+            <apex:outputText styleClass="_summaryText" value="{!blogItem.Detail__c}" escape="false"/>
+        </div>
+        <h3>Tags</h3>
+        <div class="tags">
+            <apex:repeat value="{!blogItem.Blog2Tag__r}" var="tg">
+                <a href="javascript:;">{!tg.Tag__r.Name}&nbsp;</a>
+            </apex:repeat>
+        </div>
+        <h3><a href="javascript:;" class="toggleable">{!blogItem.Comment__r.size} Comments</a></h3>
+        <div class="comments">
+            <div class="comment">
+                <div class="image columns"></div>
+                <div class="summary">
+                    <apex:repeat value="{!blogItem.Comment__r}" var="cm">
+                        <p><apex:outputText value="{!cm.Comment__c}" escape="false"/></p>
+                        <div class="info">
+                            Posted By : <a href="javascript:;" class="link">{!cm.CreatedBy.Name} </a> | &nbsp; <apex:outputField value="{!cm.CreatedDate}"/>
+                        </div>
+                    </apex:repeat>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:component>

@@ -1,0 +1,1201 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_NationalAccounts">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SpiritsPlanningPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SpiritsPlanningPage, 'calendarview.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.jquery, 'customDatePicker.css')}"/>
+    <style type="text/css">
+        div.ui-datepicker-buttonpane {
+            text-align:center;        
+        }
+        
+        table.ui-datepicker-calendar {
+            display:none;
+        }
+        
+        body, html{
+        	overflow: hidden;
+        }
+    </style>
+    
+     <c:loader />
+     
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}"/>
+        
+		<script type="text/javascript">
+	    	pageViewed('Planning - National Accounts');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+        	<c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+
+		<apex:outputPanel id="allPageWrapper">
+        <!-- PAGE CONTENT -->
+        <div class="content {!IF(detailId != null , 'intro-page-bg', 'bggradient')} specialContent  {!if(ISNULL(siteTheme),'hidden','')}">
+			<apex:form >	
+                <apex:actionFunction status="ajax-status" name="switchSection" action="{!switchSection}" rerender="messages, allPageWrapper, downloadAllDialog, beadcrumblinks">
+					<apex:param name="switchSection" assignTo="{!currentSection}" value="" />
+                </apex:actionFunction>
+				<apex:actionFunction status="ajax-status" name="resetFilter" action="{!resetFilter}" rerender="messages, standardView, filterInformation, filterBrandItem, variantBrands, timeFilterItem, downloadAllDialog"/>	                
+				<apex:actionFunction status="ajax-status" name="changeFilter" action="{!changeFilter}" rerender="messages, pageContent, downloadAllDialog"/>
+				<apex:actionFunction status="ajax-status" name="renderAsList" action="{!renderAsList}" rerender="messages, pageContent"/>
+				<apex:actionFunction status="ajax-status" name="renderAsBox" action="{!renderAsBox}" rerender="messages, pageContent" oncomplete="calculateBoxHeight()"/>
+				<apex:actionFunction status="ajax-status" name="renderAsListSlider" action="{!renderAsListSlider}" rerender="sliderContentItemsBxLs"/>
+				<apex:actionFunction status="ajax-status" name="renderAsBoxSlider" action="{!renderAsBoxSlider}" rerender="sliderContentItemsBxLs" oncomplete="calculateBoxHeight()"/>
+                <apex:actionFunction status="ajax-status" name="switchToQuarterView" action="{!switchToQuarterView}" rerender="messages, standardView, timeFilterItem"/>
+                <apex:actionFunction status="ajax-status" name="switchToMonthView" action="{!switchToMonthView}" rerender="messages, standardView, timeFilterItem"/>
+
+                <apex:actionFunction status="ajax-status" name="nextPeriod" action="{!nextPeriod}" rerender="messages, timePeriods, timeMonths"/>
+                <apex:actionFunction status="ajax-status" name="previousPeriod" action="{!previousPeriod}" rerender="messages, timePeriods, timeMonths"/>
+                <apex:actionFunction status="ajax-status" name="updateVariantBrands" action="{!updateVariantBrands}" rerender="messages, variantBrands">
+					<apex:param name="parentId" assignTo="{!parentId}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction status="ajax-status" name="clearVariantBrandsSelected" action="{!clearVariantBrandsSelected}" rerender="messages, variantBrands"/>
+                <apex:actionFunction status="ajax-status" name="clearVariantBrands" action="{!clearVariantBrands}" rerender="messages, variantBrands"/>
+				<apex:actionFunction status="ajax-status" name="switchSubSection" action="{!switchSubSection}" rerender="messages, allPageWrapper, downloadAllDialog, beadcrumblinks">
+					<apex:param name="switchSubSection" assignTo="{!currentSubSection}" value="" />
+               	</apex:actionFunction>
+                <apex:actionFunction status="ajax-status" name="changeNumberOfItemPerPage" action="{!changeNumberOfItemPerPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showFirstPage" action="{!showFirstPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showPrevPage" action="{!showPrevPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showNextPage" action="{!showNextPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showLastPage" action="{!showLastPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                <apex:actionFunction status="ajax-status" name="showPageRequested" action="{!showPageRequested}" rerender="messages, pageContent, downloadAllDialog">
+					<apex:param name="requestedPageNumber" assignTo="{!numberOfCurrentPage}" value="" />
+                </apex:actionFunction>
+
+				<apex:outputPanel id="pageContent">
+					<div class="expander-overlay-disable"></div>
+					<div class="section-button-wrapper">
+						<apex:outputPanel rendered="{!IF(sectionFolders.dirs.size > 1, 'true', 'false')}">
+							<div class="section-navigation">
+								<div class="section-wrapper">
+					       			<apex:repeat value="{!sectionFolders.dirs}" var="section">
+					           			<div onclick="switchSection('{!section.folderId}'); hideFilter(); pageViewed('Planning - National Accounts - {!section.folderName}');" class="section-button {!if(section.folderId = currentSection, 'section-button-active','')}"><table class="centerTable"><tr><td>{!section.folderName}</td></tr></table></div>
+						   			</apex:repeat>
+						   			<div class="clear-float"></div>								
+								</div>
+							</div>
+						</apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(subSectionFolders.dirs.size > 0, 'true', 'false')}">
+							<div class="sub-section-navigation">
+								<div class="sub-section-wrapper">
+	                                <apex:repeat value="{!subSectionFolders.dirs}" var="subSection">
+										<div onclick="switchSubSection('{!subSection.folderId}');  hideFilter(); pageViewed('Planning - National Accounts - {!subSection.folderName}');" class="sub-section-button {!if(subSection.folderId = currentSubSection, 'sub-section-button-active','')}"><table class="centerTable"><tr><td>{!subSection.folderName}</td></tr></table></div>	                                
+						   			</apex:repeat>
+						   			<div class="clear-float"></div>								
+								</div>
+							</div>
+						</apex:outputPanel>
+					</div>
+					<div class="filter-holder">
+						<apex:outputPanel rendered="{!OR(filterByBrand,filterByTime)}">
+						<div class="filter-wrapper {!if(expandFilter = true, 'showAllFilter','')}">
+							<div class="filter-content">
+								<div class="filter-header" style="margin-bottom: 10px; margin-top: 5px;"><span class="bold">Filter Section</span></div>
+								<div class="moreInfoClose" onclick="jQuery('div.expander').trigger('click');">&nbsp;</div>
+								
+								<div id="filter-accordion">
+									<h3 class="{!if(filterByBrand != true, 'hidden','')}"><a href="#">Brand Filters</a></h3>
+									<div class="accordion-content brandFilterWrapper {!if(filterByBrand != true, 'hidden','')}">
+										<apex:outputPanel rendered="{!filterByBrand}" id="filterBrandItem">
+											<div class="float-left left" style="width: 80%;">
+												Select one or more brands. Brands variants can be specified only when one brand is selected.
+											</div>
+											<div class="float-left right" style="width: 20%;">
+												<apex:inputCheckbox value="{!selectAllBrands}" styleClass="selectAllBrands"/>
+												Select All											
+											</div>
+											<div class="clear-float"></div>
+											<apex:outputPanel rendered="{!IF(siteTheme != 'Wine' ,'true','false')}">
+												<div class="brand-wrapper">
+													<apex:repeat value="{!parentBrandList}" var="brand" rows="{!brandBoxToRender}">
+														<div class="brand-box {!IF(contains(selectedBrandIds,brand.Id) ,'brand-box-selected','')}" id="{!brand.id}" name="{!brand.Name}">
+															<apex:outputPanel rendered="{!IF(brand.Filtering_logo__r.Content_Version_Id__c != '', 'true', 'false') }">
+																<img src="/sfc/servlet.shepherd/version/download/{!brand.Filtering_logo__r.Content_Version_Id__c}" style="max-width: 144px; max-height: 46px;"/>
+															</apex:outputPanel>
+															<apex:outputPanel rendered="{!IF(brand.Filtering_logo__r.Content_Version_Id__c == '', 'true', 'false') }">
+																<br/>{!brand.Name}
+															</apex:outputPanel>
+														</div>
+													</apex:repeat>
+		                                            <div class="brand-box {!IF(selectedRTS ,'brand-box-selected','')}" id="RTS" name="RTS">
+		                                                <img src="{!URLFOR($Resource.CommonPage, 'images/rts.png')}" style="width: 144px; height: 45px;"/>
+		                                                <apex:inputCheckbox style="visibility:hidden;width:1px;height:1px;" value="{!selectedRTS}" styleClass="RTSCheckbox"/>
+		                                            </div>
+													<div class="brand-box {!IF(selectedPortfolio ,'brand-box-selected','')}" id="Portfolio" name="Portfolio">
+		                                                <img src="{!URLFOR($Resource.CommonPage, 'images/portfolio.png')}" style="width: 144px; height: 45px;"/>
+		                                                <apex:inputCheckbox style="visibility:hidden;width:1px;height:1px;" value="{!selectedPortfolio}" styleClass="PortfolioCheckbox"/>
+		                                            </div>
+		                                            <div class="brand-box {!if(parentBrandList.size<=brandBoxToRender,'hidden','')}" id="ADB" name="ADB">
+			                                        	<img src="{!URLFOR($Resource.CommonPage, 'images/adb.png')}" style="width: 144px; height: 45px;"/>		                         
+			                                        </div>	
+													<div class="clear-float"></div>
+												</div>
+											</apex:outputPanel>
+											<apex:outputPanel rendered="{!IF(siteTheme = 'Wine' ,'true','false')}">
+												<div class="brand-wrapper">
+													<apex:repeat value="{!parentBrandList}" var="brand" rows="{!brandBoxToRender}">
+														<div class="brand-box {!IF(contains(selectedBrandIds,brand.Id) ,'brand-box-selected','')}" id="{!brand.id}" name="{!brand.Name}">
+															<apex:outputPanel rendered="{!IF(brand.Filtering_logo__r.Content_Version_Id__c != '', 'true', 'false') }">
+																<img src="/sfc/servlet.shepherd/version/download/{!brand.Filtering_logo__r.Content_Version_Id__c}" style="max-width: 144px; max-height: 46px;"/>
+															</apex:outputPanel>
+															<apex:outputPanel rendered="{!IF(brand.Filtering_logo__r.Content_Version_Id__c == '', 'true', 'false') }">
+																<br/>{!brand.Name}
+															</apex:outputPanel>
+														</div>
+													</apex:repeat>
+		                                            <div class="brand-box {!if(parentBrandList.size<=brandBoxToRender,'hidden','')}" id="ADB" name="ADB">
+			                                        	<img src="{!URLFOR($Resource.CommonPage, 'images/adb.png')}" style="width: 144px; height: 45px;"/>		                         
+			                                        </div>	
+													<div class="clear-float"></div>
+												</div>
+											</apex:outputPanel>
+	                                        <div id="additional-brands-accordion" class="{!if(parentBrandList.size<=brandBoxToRender,'hidden','')}">
+												<h3 id="showaccordion" style="display:none;"><a class="additionalBrand" href="#">Additional Brands</a></h3>
+												<div class="additional-brand-content">
+													<div class="bold" style="height: 25px; border-bottom: 1px solid #ffffff;">Additional Brands</div>
+													<div>&nbsp;</div> 
+													<apex:repeat value="{!additionalBrandList}" var="brand">
+														<div class="brand-box brand-box-checkbox {!IF(contains(selectedBrandIds,brand.Id) ,'brand-box-selected','')}" id="{!brand.id}" name="{!brand.Name}">
+															<apex:outputPanel rendered="{!IF(contains(selectedBrandIds,brand.Id), true, false)}">
+																<input type="checkbox" checked="checked" />
+															</apex:outputPanel>
+															<apex:outputPanel rendered="{!NOT(IF(contains(selectedBrandIds,brand.Id),true, false))}">
+																<input type="checkbox" />
+															</apex:outputPanel>
+															{!brand.Name}
+														</div>
+													</apex:repeat>
+													<div class="clear-float"></div>
+												</div>
+											</div>
+											<apex:inputHidden value="{!selectedBrandIds}" id="selectedBrandIds"/>
+										</apex:outputPanel>
+									</div>
+									<h3 class="{!if(filterByBrand != true, 'hidden','')}"><a href="#">Brand Variants</a></h3>
+									<div class="accordion-content variantFilterWrapper {!if(filterByBrand != true, 'hidden','')}">
+										<apex:outputPanel id="variantBrands" rendered="{!filterByBrand}">
+											<div class="float-left left" style="width: 80%;">
+												<apex:outputPanel rendered="{!AND(!ISNULL(childBrandList),childBrandList.size!=0)}">
+													Select brand variants for {!selectedBrandName} from list below.
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!OR(ISNULL(childBrandList),childBrandList.size=0)}">
+													<div style="height: 140px;"><span class="disabled"><input type="checkbox" disabled="true"/> Use Brand Variants.</span></div>
+												</apex:outputPanel>												
+											</div>
+											<div class="float-left right" style="width: 20%;">
+												<apex:outputPanel rendered="{!AND(!ISNULL(childBrandList),childBrandList.size!=0)}">
+													<apex:inputCheckbox value="{!selectAllVariants}" styleClass="selectAllChildBrands"/>
+													Select All
+												</apex:outputPanel>
+											</div>
+											<div class="clear-float"></div>
+											<apex:outputPanel rendered="{!AND(!ISNULL(childBrandList),childBrandList.size!=0)}">
+												<div class="child-brand-wrapper">
+													<apex:repeat value="{!childBrandList}" var="childBrand">
+														<div class="child-brand-box {!IF(contains(selectedChildBrandIds,childBrand.Id), 'child-brand-box-selected', '')}" id="{!childBrand.id}" name="{!childBrand.Name}">
+															<apex:outputPanel rendered="{!IF(contains(selectedChildBrandIds,childBrand.Id), true, false)}">
+																<input type="checkbox" checked="checked" />
+															</apex:outputPanel>
+															<apex:outputPanel rendered="{!NOT(IF(contains(selectedChildBrandIds,childBrand.Id),true, false))}">
+																<input type="checkbox" />
+															</apex:outputPanel>
+															{!childBrand.Name}
+														</div>
+													</apex:repeat>
+													<div class="clear-float"></div>													
+												</div>
+											</apex:outputPanel>
+											<apex:inputHidden value="{!selectedChildBrandIds}" id="selectedChildBrandIds"/>
+										</apex:outputPanel>
+									</div>
+									<h3 class="{!if(filterByTime != true, 'hidden','')}"><a href="#">Time Period</a></h3>
+									<div class="accordion-content timeFilterWrapper {!if(filterByTime != true, 'hidden','')}">
+										<apex:outputPanel rendered="{!filterByTime}" id="timeFilterItem">
+												<div class="left">
+													<apex:outputPanel rendered="{!NOT(monthOrQuarterRender)}">
+														Select one or more of the months listed below. View different months by clicking on the right or left arrows.
+													</apex:outputPanel>
+													<apex:outputPanel rendered="{!monthOrQuarterRender}">
+														Select one or more of the quarters listed below. View different quarters by clicking on the right or left arrows.
+													</apex:outputPanel>
+												</div>
+												<div class="right">
+													<apex:outputPanel rendered="{!monthOrQuarterRender}" >
+														<button onclick="switchToMonthView(); return false;" class="monthViewButton green" style="margin-right: 45px;">Monthly</button>
+													</apex:outputPanel>
+													<apex:outputPanel rendered="{!NOT(monthOrQuarterRender)}">
+														<button onclick="switchToQuarterView(); return false;" class="quarterViewButton green" style="margin-right: 45px;">Quarterly</button>
+													</apex:outputPanel>
+												</div>
+												<div class="filter-time-box-conent">
+													<apex:outputPanel id="timePeriods" rendered="{!monthOrQuarterRender}">
+														<table>
+															<tr>
+																<td rowspan="2"><apex:image styleClass="previous-period" url="{!URLFOR($Resource.SpiritsPlanningPage, 'images/timeLeft.png')}"/></td>
+					                        					<apex:repeat value="{!quarterViewsList}" var="option">
+																	<td><div class="label-time-period {!IF(contains(selectedTimePeriods,option['value']) ,'time-box-selected','')}" name="{!option['value']}">
+																		<div class="time-box-qtr float-left">
+																			<apex:outputPanel rendered="{!if(option['className'] = 'jfm', true, false)}">January<br/>February<br/>March</apex:outputPanel>
+																			<apex:outputPanel rendered="{!if(option['className'] = 'ond', true, false)}">October<br/>November<br/>December</apex:outputPanel>
+																			<apex:outputPanel rendered="{!if(option['className'] = 'jas', true, false)}">July<br/>August<br/>September</apex:outputPanel>
+																			<apex:outputPanel rendered="{!if(option['className'] = 'amj', true, false)}">April<br/>May<br/>June</apex:outputPanel>
+																		</div>
+																		<div class="time-box-cy float-left">{!option['year']}</div>
+																		<div class="clear-float"></div>
+																		<div class="time-box-fy">FY {!option['fiscalYear']}</div>
+																	</div></td>
+					                        					</apex:repeat>	
+																<td rowspan="2"><apex:image styleClass="next-period" url="{!URLFOR($Resource.SpiritsPlanningPage, 'images/timeRight.png')}"/></td>
+															</tr>
+														</table>
+													</apex:outputPanel>
+													<apex:outputPanel id="timeMonths" rendered="{!NOT(monthOrQuarterRender)}">
+														<table>
+															<tr>
+																<td></td>
+					                        					<apex:repeat value="{!monthViewsList}" var="option">
+																	<td class="{!if(((option['value'] = '0')||(option['value'] = '3')||(option['value'] = '6')||(option['value'] = '9')), 'visible', 'hidden')}">
+																		<apex:outputPanel rendered="{!if(((option['value'] = '0')||(option['value'] = '3')||(option['value'] = '6')||(option['value'] = '9')), 'true', 'false')}">
+																			<div class="label-time-period {!IF(contains(selectedTimePeriods,','+option['value']+',') ,'time-box-selected','')}" name="{!option['value']}">
+																				<div class="time-box-mth float-left">
+																					<apex:outputPanel >{!option['monthName']}</apex:outputPanel>
+																				</div>
+																				<div class="time-box-cy-mth float-left">{!option['year']}</div>
+																				<div class="clear-float"></div>
+																				<div class="time-box-fy">FY {!option['fiscalYear']}</div>
+																			</div>
+																		</apex:outputPanel>
+																	</td>
+					                        					</apex:repeat>	
+																<td></td>
+															</tr>
+															<tr>
+																<td><apex:image styleClass="previous-period" url="{!URLFOR($Resource.SpiritsPlanningPage, 'images/timeLeft.png')}"/></td>
+					                        					<apex:repeat value="{!monthViewsList}" var="option">
+																	<td class="{!if(((option['value'] = '1')||(option['value'] = '4')||(option['value'] = '7')||(option['value'] = '10')), 'visible', 'hidden')}">
+																		<apex:outputPanel rendered="{!if(((option['value'] = '1')||(option['value'] = '4')||(option['value'] = '7')||(option['value'] = '10')), 'true', 'false')}">
+																			<div class="label-time-period {!IF(contains(selectedTimePeriods,','+option['value']+',') ,'time-box-selected','')}" name="{!option['value']}">
+																				<div class="time-box-mth float-left">
+																					<apex:outputPanel >{!option['monthName']}</apex:outputPanel>
+																				</div>
+																				<div class="time-box-cy-mth float-left">{!option['year']}</div>
+																				<div class="clear-float"></div>
+																				<div class="time-box-fy">FY {!option['fiscalYear']}</div>
+																			</div>
+																		</apex:outputPanel>
+																	</td>
+					                        					</apex:repeat>	
+																<td><apex:image styleClass="next-period" url="{!URLFOR($Resource.SpiritsPlanningPage, 'images/timeRight.png')}"/></td>
+															</tr>
+															<tr>
+																<td></td>
+					                        					<apex:repeat value="{!monthViewsList}" var="option">
+																	<td class="{!if(((option['value'] = '2')||(option['value'] = '5')||(option['value'] = '8')||(option['value'] = '11')), 'visible', 'hidden')}">
+																		<apex:outputPanel rendered="{!if(((option['value'] = '2')||(option['value'] = '5')||(option['value'] = '8')||(option['value'] = '11')), 'true', 'false')}">
+																			<div class="label-time-period {!IF(contains(selectedTimePeriods,','+option['value']+',') ,'time-box-selected','')}" name="{!option['value']}">
+																				<div class="time-box-mth float-left">
+																					<apex:outputPanel >{!option['monthName']}</apex:outputPanel>
+																				</div>
+																				<div class="time-box-cy-mth float-left">{!option['year']}</div>
+																				<div class="clear-float"></div>
+																				<div class="time-box-fy">FY {!option['fiscalYear']}</div>
+																			</div>
+																		</apex:outputPanel>
+																	</td>
+					                        					</apex:repeat>
+																<td></td>
+															</tr>
+														</table>														
+													</apex:outputPanel>
+													<apex:inputHidden value="{!selectedTimePeriods}" id="selectedQuarters"/>
+												</div>
+										</apex:outputPanel>
+									</div>
+								</div>
+								<br/>
+								<div>
+									<div class="float-right reset-filter-button-holder">
+										<a href="#" style="color: #ffffff;"><span id="ResetAllFilters" onclick="resetFilter(); return false;"> Reset Filters</span></a>
+									</div>
+									<div class="float-right update-filter-button-holder">
+										<button id="start-search-button" class="update-filter" onclick="changeFilter();  hideFilter(); return false;">SUBMIT</button>
+									</div>
+									<div class="clear-float"></div>
+								</div>
+							</div>
+							<div class="filter-expander">
+								<div class="expander">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SET FILTERS&nbsp;&nbsp;&nbsp;<img src="{!URLFOR($Resource.SpiritsPlanningPage, 'images/arrow.png')}" class="arrowDown"/><img src="{!URLFOR($Resource.SpiritsPlanningPage, 'images/arrowup.png')}" class="arrowUp hidden"/></div>
+							</div>
+						</div>
+						</apex:outputPanel>
+					</div>
+				
+					<apex:outputPanel id="messages">
+						<apex:messages styleClass="errorMessagesList" />
+					</apex:outputPanel>
+					
+					<!-- View: standard -->
+					<apex:outputPanel rendered="{!NOT(isCalendar)}" id="standardView">
+						<apex:outputPanel id="filterInformation" rendered="{!AND(isFilterSet,OR(filterByBrand,filterByTime))}">
+							<div class="filter-information">
+					        	<div class="float-left left" style="width: 705px; margin-top: 5px;">
+									<span class="filter-information-key">Filters: </span>
+									<span class="filter-information-value">
+									    {!IF(selectedPortfolio==true,'Portfolio Documents, ','')}
+									    {!IF(selectedRTS==true,'RTS ','')}
+										<span class="numberOfSelectedBrands">{! if(ISNULL(selectedBrandName), brandNumberDescription ,'')}</span>
+										{! if(ISNULL(selectedBrandName)," Brands", selectedBrandName) }
+										{!dateRangeDescription}
+									</span>											
+								</div>
+								<!--
+								<div class="float-left right" style="width: 215px;">
+									<button class="reset-filter" onclick="resetFilter(); return false;">Clear Filters</button>
+								</div>
+								-->
+								<div class="clear-float"></div>						
+							</div>
+						</apex:outputPanel>	
+						<apex:outputPanel rendered="{!OR(ISNULL(contentMap),contentSize=0)}">
+							<div class="content-no-items-msg">No items.</div>
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!AND(!ISNULL(contentMap),contentSize!=0)}">
+	                        <div class="corner-button-holder">
+	                        	<div class="pagination-right-top">
+	                        		<div class="float-left defaultTheme pagination-text-result">
+	                        			Showing {!showFromIndex+1}-{!showToIndex} of total {!numberOfItems} documents
+	                        		</div>
+	                        		<div class="float-left">
+										<c:selectList width="80" options="{!NumberOfItemsPerPageList}"  value="{!numberOfItemsOnPage}" onchange="changeNumberOfItemPerPage();" />
+									</div>
+	                        		<div class="clear-float"></div>
+								</div>
+								<div class="float-right">
+									<div onclick="renderAsBox();" class="show-as-box-button {!if(displayAsList != true, 'show-as-list-box-button-active','')}">
+										<apex:image styleClass="list-box-img" url="{!URLFOR($Resource.SellingMaterialsPage, 'images/boxView.png')}"/>									
+									</div>								
+									<div onclick="renderAsList();" class="show-as-list-button {!if(displayAsList = true, 'show-as-list-box-button-active','')}">
+										<apex:image styleClass="list-box-img" url="{!URLFOR($Resource.SellingMaterialsPage, 'images/listView.png')}"/>
+									</div>
+									<div class="clear-float"></div>
+								</div>
+	                            <div class="downloadAllButton action-button float-right">
+	                                <div class="action-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/downloadArrow.png')}"/></div>
+	                                <div class="action-button-description">Download / Share Multiple Files</div>
+	                            </div>
+								<div class="clear-float"></div>                            
+	                        </div>
+	 						
+	 						<apex:repeat value="{!headers}" var="key">
+	 							<div class="sub-header">{!key}</div>
+				            	<apex:repeat value="{!contentHolderMap[key]}" var="contentItem">
+									<apex:outputPanel rendered="{!if(displayAsList != true,'true','false')}">
+				                    	<c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!contentItem}" width="301" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true" />
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!if(displayAsList = true,'true','false')}">
+		       				            <c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!contentItem}" renderAsList="true" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true"/>
+									</apex:outputPanel>	
+								</apex:repeat>
+							</apex:repeat>
+							<div class="clear-float"></div>
+							<c:pagination totalNumberOfPages="{!numberOfPages}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="{!numberOfCurrentPage}" isNewContent="{!isNewContent}"/>
+						</apex:outputPanel>
+					</apex:outputPanel>
+					
+					<!-- View: calendar -->
+					<apex:outputPanel rendered="{!isCalendar}" id="calendarView">
+                		<apex:actionFunction name="refreshPageContent" action="{!refreshPageContent}" rerender="calendarView, beadcrumblinks, messages" status="ajax-status"/>					
+		                <apex:actionFunction name="selectSalesDriver" action="{!selectSalesDriver}" rerender="calendarView, beadcrumblinks, messages" status="ajax-status">
+		                    <apex:param name="salesDriver" assignTo="{!salesDriver}" value="" />
+		                </apex:actionFunction>
+		                <apex:actionFunction name="setStartDateValue" action="{!setStartDateValue}" rerender="calendarView, beadcrumblinks, messages" status="ajax-status">
+		                    <apex:param name="startFromDate" assignTo="{!startFromDate}" value="" />
+		                </apex:actionFunction>
+		                <apex:actionFunction name="nextMonth" action="{!nextMonth}" rerender="calendarView, beadcrumblinks, messages" status="ajax-status"/>
+		                <apex:actionFunction name="previousMonth" action="{!previousMonth}" rerender="calendarView, beadcrumblinks, messages" status="ajax-status"/>
+		                <apex:actionFunction name="showDetails" action="{!showDetails}" rerender="pageHeaderHolder, beadcrumblinks, allPageWrapper, downloadAllCalendarItems, messages" status="ajax-status">
+		                    <apex:param name="detailId" assignTo="{!detailId}" value="" />
+		                </apex:actionFunction>
+		                <apex:actionFunction name="clearDetailsCalendar" action="{!clearDetailsCalendar}" rerender="pageHeaderHolder, allPageWrapper, downloadAllCalendarItems, beadcrumblinks, messages" status="ajax-status"/>
+						<!-- View: main calendar -->
+						<apex:outputPanel rendered="{! if( detailId == null, 'true','false' )}">
+			                <div class="sub-title-with-menu-wrapper">
+			                    <div class="calendar-title">{!requestedFolderName}</div>
+			                    <div class="title-import">
+									<apex:outputPanel id="pdfButton">
+			                        	<div class="download-pdf-button float-left">
+			                            	<div class="download-pdf-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-PDF"/></div>
+			                                <div class="download-pdf-button-description"><a href="{!pdfPath}" target="new">DOWNLOAD AS PDF</a></div>
+			                            </div>
+			                        </apex:outputPanel>
+			                    	<div class="clear-float"></div>
+			                	</div>
+			                	<div class="title-menu" style="right:225px;">
+			            			<c:checkboxList width="150" useSectionTheme="true" options="{!themeOptions}" noOfOptions="{!noOfThemesAvailable}" onchange="refreshPageContent()" />
+			            		</div>
+			                    <div class="title-menu">
+			                    	<c:selectList useSectionTheme="true" options="{!timePeriods}"  value="{!timePeriod}" onchange="refreshPageContent()" />
+								</div>
+			                </div>
+		                    <table class="calendar-data">
+		                        <thead class="{!if(NOT(isExtraCalendar),'hidden','')}">
+		                            <tr>
+		                                <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+		                                    <apex:outputText rendered="{!salesDriversToShowCount==1}">
+		                                        <th class="mep_program{!salesDriversToShowCount}" ><button class="back {!if(totalSalesDrivers == 2, 'hidden','')}" onclick="selectSalesDriver('All');return false;">Back</button><span class="mep-program-name-wrapper" >{!salesdrivername}</span></th>
+		                                    </apex:outputText>
+		                                    <apex:outputText rendered="{!salesDriversToShowCount!=1}">
+		                                        <th class="mep_program{!salesDriversToShowCount}" onclick="selectSalesDriver('{!salesdrivername}')" style="cursor:pointer;"><a href="#">{!salesdrivername}</a> </th>
+		                                    </apex:outputText>
+		                                </apex:repeat>
+	                            	</tr>
+	                        	</thead>
+		                        <tbody>
+		                            <apex:variable var="displayCalendar" value="{!1}"/>
+		                            <apex:repeat value="{!months}" var="month"> 
+		                                <!-- month box -->
+		                                <tr class="mep-month">
+		                                    <td colspan="{!salesDriversToShowCount}" class="month">
+		                                        <img src="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" alt="Next Month" class="month-next" style="display:{!month.showArrows};"/><img src="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" alt="Previous Month" class="month-previous" style="display:{!month.showArrows};"/><apex:inputText rendered="{!displayCalendar==1}" value="{!startFromDate}" styleClass="jumpToDate" style="opacity:0.0; filter:alpha(opacity=0);"/>{!month.name} <apex:inputText rendered="{!displayCalendar==1}" value="{!startFromDate}" styleClass="jumpToDate"/>
+		                                    </td>
+		                                </tr>
+		                                <tr class="month-data month{!span}">
+		                                    <apex:repeat value="{!salesDriversToShow}" var="program">
+		                                        <td>
+		                                            <apex:repeat value="{!calendarData[month.data][program]}" var="programData">
+		                                            	<div class="month{!span} mep-general mep_program{!salesDriversToShowCount}" style="width: auto !important; {!programData.styleBackgroundColor}{!programData.styleTextColor}" onclick="showDetails('{!programData.id}');">
+														<a href="#"></a>
+														
+			                                                <apex:outputText rendered="{!salesDriversToShowCount==1}">
+		                                                        <div class="month{!span}-sep1-desc">
+		                                                            <apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext>
+		                                                        </div>
+		                                                	</apex:outputText>          
+		                                                    <div class="month{!span}-sep month{!span}-sep{!salesDriversToShowCount}" style="{!programData.styleBackgroundImage}">
+		                                                        <div style="{!programData.styleTextColor}">{!programData.label}</div>
+		                                                    </div>
+		                                                
+		                                                </div>
+		                                            </apex:repeat>
+		                                        </td>
+		                                    </apex:repeat>
+		                                </tr>
+		                                <apex:variable var="displayCalendar" value="{!0}"/>
+		                            </apex:repeat>
+		                        </tbody>
+		                    </table>
+		                    <script type="text/javascript">
+		                        jQuery(document).ready(function() {
+		                            jQuery('.month-previous').click(previousMonth);
+		                            jQuery('.month-next').click(nextMonth);
+		                            jQuery('.jumpToDate').datepicker({
+		                                showOtherMonths: true,
+		                                changeMonth: true,
+		                                changeYear: true,
+		                                closeText: 'Close',
+		                                showButtonPanel :true,
+		                                selectOtherMonths: true,
+		                                dateFormat: 'yy-mm-dd',
+		                                beforeShow: function( input ) {  
+		                                    setTimeout(function() {  
+		                                        var buttonPane = jQuery(input).datepicker("widget").find( ".ui-datepicker-buttonpane" );   
+		                                        var btn = jQuery('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Select</button>');  
+		                                        btn.unbind("click").bind("click", function () {  
+		                                            var selectedDate = jQuery.datepicker._formatDate(jQuery.datepicker._getInst(input)); 
+		                                            jQuery.datepicker.selectedDay;  
+		                                            setStartDateValue(selectedDate);
+		                                            jQuery.datepicker._hideDatepicker();
+		                                        });  
+		                                        btn.appendTo( buttonPane );
+		                                        buttonPane.find('button').addClass('update-filter').css('margin-bottom', 5);
+		                                    }, 1 );  
+		                                },
+		                                onChangeMonthYear: function(year, month, inst ) {  
+		                                    var input = inst.input[0];
+		                                    setTimeout(function() {  
+		                                        var buttonPane = jQuery(input).datepicker("widget").find( ".ui-datepicker-buttonpane" );   
+		                                        var btn = jQuery('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Select</button>');  
+		                                        btn.unbind("click").bind("click", function () {  
+		                                            var selectedDate = jQuery.datepicker._formatDate(jQuery.datepicker._getInst(input)); 
+		                                            setStartDateValue(selectedDate);
+		                                            jQuery.datepicker._hideDatepicker();
+		                                        });  
+		                                        btn.appendTo( buttonPane );
+		                                        buttonPane.find('button').addClass('update-filter').css('margin-bottom', 5);
+		                                    }, 1 );  
+		                                }
+		                            });                                
+		                        });
+		                    </script>   
+						</apex:outputPanel>
+						<!-- View: details -->						
+
+						<apex:outputPanel rendered="{! if( detailId != null, 'true','false' )}">
+			                <!-- Slider -->
+			                <div class="horizontal-slider">
+			                	<!-- Slider navigation buttons -->
+								<div class="horizontal-slider-navigation">
+									<button class="reset-filter back-button" onclick="clearDetailsCalendar(); return false;">Back</button>
+									<div class="horizontal-slider-navigation-wrapper">
+										<div class="horizontal-slider-navigation-button horizontal-slider-navigation-button-active"><table class="centerTable"><tr><td><apex:outputText value="Overview"/></td></tr></table></div>
+										<apex:repeat value="{!detailsMapOrder}" var="silderSection">
+											<div class="horizontal-slider-navigation-button"><table class="centerTable"><tr><td>{!detailsMapParser[silderSection]}</td></tr></table></div>
+										</apex:repeat>
+										<div class="horizontal-slider-clear"></div>
+									</div>				
+								</div>		
+								<div class="horizontal-slider-clear"></div>
+		 	               		<div class="brand-header">
+		            	       		<span class="brand-details-name"><apex:outputText value="{!calendarItem.name}"/> </span><br />
+		        	           		<span class="brand-details-subname"><apex:outputText value="{!salesDriverDescription}"/> </span>
+		    	               		<span class="brand-details-date"><apex:outputText value="{!dateDescription}"/> </span>
+		                   		</div>
+								<!-- Slider Previous button -->
+								<div class="horizontal-slider-prev horizontal-slider-button {!if(detailsMap.size = 0, 'hidden','')}"><apex:image url="{!URLFOR($Resource.SpiritsPlanningPage, 'images/left_arrow.png')}"/></div>
+								<!-- Slide area -->
+			                	<div class="horizontal-slider-container">
+			                		<div class="horizontal-slider-content-wrapper">
+										<!-- slider content -->
+										<div class="horizontal-slider-content">
+											<!-- overview section -->
+		                                    <table class="centerTable"><tr><td>
+											  <div class="overview">
+												<apex:outputtext escape="false" value="{!description}"></apex:outputtext>
+												<apex:outputPanel rendered="{!IF(calendarItem.description_content_description__r.Content_Version_Id__c != '', 'true','false')}">
+													<br/><br/><c:downloadButton description="Overview" cvid="{!calendarItem.description_content_description__r.Content_Version_Id__c}" filetype="{!calendarItem.description_content_description__r.filetype__c}"/>
+												</apex:outputPanel>
+											  </div>
+		                                    </td></tr></table>
+											<div class="logo-bg" style="{!styleBackgroundLogoImage}">&nbsp;</div>
+											<!-- end of overview section -->
+										</div>
+										<apex:outputPanel id="sliderContentItemsBxLs">
+											<apex:repeat value="{!detailsMapOrder}" var="silderSection">
+												<div class="horizontal-slider-content">
+													<!-- slider section -->
+													<apex:outputPanel rendered="{!if(detailsMapSize[silderSection] != 0, 'true','false')}">								
+								                        <div class="right" style="margin-right: 44px;">
+															<div class="float-right" style="text-align: center;">
+																<div onclick="renderAsBoxSlider();" class="show-as-box-button {!if(displayAsList != true, 'show-as-list-box-button-active','')}">
+																	<apex:image styleClass="list-box-img" url="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'images/boxView.png')}"/>									
+																</div>								
+																<div onclick="renderAsListSlider();" class="show-as-list-button {!if(displayAsList = true, 'show-as-list-box-button-active','')}">
+																	<apex:image styleClass="list-box-img" url="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'images/listView.png')}"/>
+																</div>
+																<div class="clear-float"></div>
+															</div>	
+								                            <div class="downloadAllButton action-button" id="{!silderSection}">
+								                                <div class="action-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/downloadArrow.png')}"/></div>
+								                                <div class="action-button-description">Download / Share Multiple Files</div>
+								                            </div>
+								                        </div>
+														<div class="content-item-wrapper">
+															<apex:repeat value="{!detailsHolderMap[silderSection]}" var="calendarItm">
+																<apex:outputPanel rendered="{!if(displayAsList != true,'true','false')}">
+																	<c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!calendarItm}" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true" />
+					                                            </apex:outputPanel>
+																<apex:outputPanel rendered="{!if(displayAsList = true,'true','false')}">
+																	<c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!calendarItm}" renderAsList="true" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true"/>
+		                                            			</apex:outputPanel>
+															</apex:repeat>
+															<div class="content-item-clean"></div>
+														</div>
+														<c:pagination totalNumberOfPages="{!numberOfPages}" showPager="false" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="1" />
+													</apex:outputPanel>		
+												</div>
+											</apex:repeat>
+										</apex:outputPanel>
+										<div class="horizontal-slider-clear"></div>
+									</div>						
+								</div>
+								<!-- Slider Next button-->
+								<div class="horizontal-slider-next horizontal-slider-button"><apex:image url="{!URLFOR($Resource.SpiritsPlanningPage, 'images/right_arrow.png')}"/></div>
+								<div class="horizontal-slider-clear"></div>
+							</div>
+						</apex:outputPanel>
+					</apex:outputPanel>
+					
+				</apex:outputPanel>
+			</apex:form>
+        </div>
+        </apex:outputPanel>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+	<apex:form >
+		<apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>     
+		
+		<apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		
+		<apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentBasketItemsNo, pageContent,calendarView, downloadAllDialog">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+	</apex:form>
+
+	<div id="downloadAllInfo" class="hidden dialog" >
+	    <apex:outputPanel id="downloadAllDialog">
+	    	<c:downloadAll content="{!contentList}" isFileObject="true"/>
+	    </apex:outputPanel>
+	</div>
+	
+	<apex:outputPanel id="downloadAllCalendarItems">
+		<apex:repeat value="{!detailsMap}" var="silderSection">
+			<div id="downloadAllInfo-{!silderSection}" class="hidden dialog" >
+				<c:downloadAll content="{!detailsMap[silderSection]}" isFileObject="true"/>
+			</div>	
+		</apex:repeat>
+	</apex:outputPanel>
+
+    <div id="moreInfo" class="hidden dialog" >
+	    <apex:outputPanel id="overviewDialog">
+	    	<c:overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+	    </apex:outputPanel>        
+    </div>
+
+    <div id="shareInfo" class="hidden dialog">
+        <apex:outputPanel id="shareDialog">
+        	<c:share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div>   
+        
+	<c:ajaxLoader beforeStop="bindFilterJs();"/>
+	
+    <script type="text/javascript">
+	//showDialog('ajaxLoader');
+	function calculateBoxHeight(){
+    	 jQuery("div.content-item").each(function(i, elem){
+	        	var bottomValue = jQuery("div.item-description", elem).height()-jQuery("div.content-item-menu div", elem).height() - 5;
+		        jQuery("div.item-description", elem).css('bottom', -bottomValue+"px");
+	        });
+    }
+    
+    function countCheckBrands()
+    {
+    	var counter = jQuery(".additional-brand-content").find('.brand-box-selected').length;
+    	if(counter > 0)
+    	{
+    		jQuery("#ADB").addClass("brand-box-selected");
+    	}else{
+    		jQuery("#ADB").removeClass("brand-box-selected");
+    	}
+    }
+    
+    function bindFilterJs(){
+    	countCheckBrands();
+		jQuery("#filter-accordion").accordion({
+			collapsible: true,
+			autoHeight: false,
+			'accordionchange': function(event, ui) {
+				if(jQuery('.specialContent').height() < jQuery('div.filter-wrapper').height()+100){
+					jQuery('.specialContent').css('min-height', jQuery('div.filter-wrapper').height()+100);
+				} 			
+			},
+			change: function(event, ui){
+				if(jQuery('.specialContent').height() < jQuery('div.filter-wrapper').height()+150){
+					jQuery('.specialContent').css('height', jQuery('div.filter-wrapper').height()+150);
+				} 			
+			}			
+		});
+		jQuery("#additional-brands-accordion").accordion({
+			collapsible: true,
+			autoHeight: false,
+			active: false,
+			'accordionchange': function(event, ui) {
+				if(jQuery('.specialContent').height() < jQuery('div.filter-wrapper').height()+100){
+					jQuery('.specialContent').css('min-height', jQuery('div.filter-wrapper').height()+100);
+				} 			
+			},
+			change: function(event, ui){
+				if(jQuery('.specialContent').height() < jQuery('div.filter-wrapper').height()+150){
+					jQuery('.specialContent').css('height', jQuery('div.filter-wrapper').height()+150);
+				} 			
+			}			
+		});		
+		if(jQuery('div.filter-wrapper').length != 0){
+			filters = jQuery('div.filter-wrapper');
+			
+			if(filters.hasClass('showAllFilter')){
+				if(jQuery('.specialContent').height() < filters.height()+150){
+					jQuery('.specialContent').css('min-height', filters.height()+150);
+				} 
+				filters.addClass('expanded');
+				filters.removeClass('showAllFilter');				
+				filters.stop().animate({top: 0}, 1000);
+				jQuery('.arrowUp').removeClass('hidden');
+				jQuery('.arrowDown').addClass('hidden');
+				jQuery('.expander-overlay-disable').css({height: '100%', opacity: '0'});
+				jQuery('.expander-overlay-disable').stop().animate({opacity: '0.7'}, 1000);				
+			} else {
+				if(!filters.hasClass('expanded')){
+					actualFilterHeight = filters.height();
+					newPosition = -(actualFilterHeight);
+					jQuery('.arrowUp').addClass('hidden');
+					jQuery('.arrowDown').removeClass('hidden');
+					filters.stop().animate({top: newPosition}, 1000, function(){
+	                    jQuery('.specialContent').css('min-height', 400);    
+	                });
+				}
+			}		
+		}
+		
+        // **** DETAIL VIEW ****
+        if(!jQuery('.horizontal-slider').hasClass('jsBind')){
+        	jQuery('.horizontal-slider').addClass('jsBind');
+	        jQuery('.content-item-wrapper').jScrollPane();
+	        jQuery('.horizontal-slider-container').scrollLeft(0);           
+	        jQuery('.horizontal-slider').each(function(){
+				jQuery(this).find('.horizontal-slider-prev').css({'opacity': '0', 'visibility': 'hidden'});
+	            dataContentWidth = jQuery(this).find('.horizontal-slider-content').size();
+	            if(!isNaN(dataContentWidth)){
+	    	        totalWarpperWidth = dataContentWidth * jQuery(this).find('.horizontal-slider-content').first().outerWidth();
+	                jQuery(this).find('.horizontal-slider-content-wrapper').css('width', totalWarpperWidth);
+	            }
+	        });
+        }
+        
+        var isiPad = navigator.userAgent.match(/iPad/i) != null;
+    	    		
+    	if( isiPad == true){
+    		jQuery("div.content-item-list-description").live('touchstart', function(){
+    			jQuery("div.content-item-list-buttons").addClass("hidden");
+    			jQuery(this).parent().find("div.content-item-list-buttons").removeClass("hidden");
+    			return false;
+    		});
+    	} 	
+    }
+
+	function setSelectAllBrandsCheckboxValue(){
+		if(jQuery('.brand-box').not('.hidden').not('.brand-box-selected').length == 0 && jQuery('.brand-box').not('.hidden').length !=0 ){
+			jQuery('.selectAllBrands').attr('checked', true);
+		} else {
+			jQuery('.selectAllBrands').attr('checked', false);
+		}        
+    }
+
+	function setSelectAllChildBrandsCheckboxValue(){
+		if(jQuery('.child-brand-box').length !=0 ){
+			if(jQuery('.child-brand-box').length == jQuery('.child-brand-box-selected').length){
+				jQuery('.selectAllChildBrands').attr('checked', true);
+			} else {
+				jQuery('.selectAllChildBrands').attr('checked', false);
+			}
+		} else {
+			jQuery('.selectAllChildBrands').attr('checked', false);
+		}        
+    }
+ 	function hideFilter(){
+		if(jQuery('div.filter-wrapper').length == 0){
+			return;
+		}
+		
+		filters = jQuery('div.filter-wrapper');
+				
+		if(filters.hasClass('expanded')){
+			filters.removeClass('expanded');
+			jQuery('.arrowUp').addClass('hidden');
+			jQuery('.arrowDown').removeClass('hidden');
+			actualFilterHeight = filters.height();
+			newPosition = -(actualFilterHeight + 50);
+			filters.stop().animate({top: newPosition}, 1000, function(){
+			    jQuery('.specialContent').css('min-height', 400);    
+			});
+			jQuery('.expander-overlay-disable').stop().animate({opacity: '0'}, 1000, function(){
+				jQuery('.expander-overlay-disable').css({height: '0%'});
+			});			
+		}		
+ 	
+ 	}
+
+    jQuery(document).keydown(function(e) {
+        var element = e.target.nodeName.toLowerCase();
+        if (element != 'input' && element != 'textarea' && element != 'select') {
+            if (e.keyCode === 39) {
+                if(jQuery('.horizontal-slider-next').length == 1){
+                    jQuery('.horizontal-slider-next').trigger('click');
+                }
+                return false;
+            } else if (e.keyCode === 37) {
+                if(jQuery('.horizontal-slider-prev').length == 1){
+                	jQuery('.horizontal-slider-prev').trigger('click');
+            	}
+        	    return false;
+    	    }
+	    }
+    });    
+
+    jQuery(document).ready(function() {
+		hideDialog('startingLoader');
+		hideDialog('startingLoaderOverlayDisable');
+		jQuery("body").css("overflow","auto");
+		jQuery("html").css("overflow","auto");
+		jQuery('.jumpToDate').keydown(function(e) {
+			e.preventDefault;
+			return false;
+		});
+		
+		calculateBoxHeight();
+        bindFilterJs();
+
+		// **** STANDARD VIEW & FILTERS ****
+
+		// select brand (select from brand box)
+		jQuery('.brand-box').live('click',function(){
+		    if (jQuery(this).attr('id') == 'Portfolio') {
+                if(jQuery(this).hasClass('brand-box-selected')){
+                    jQuery(this).removeClass('brand-box-selected');
+                } else {
+                    jQuery(this).addClass('brand-box-selected');
+                }
+                jQuery('.PortfolioCheckbox', this).attr('checked', jQuery(this).hasClass('brand-box-selected'));
+                return false;
+		    } else if (jQuery(this).attr('id') == 'RTS') {
+                if(jQuery(this).hasClass('brand-box-selected')){
+                    jQuery(this).removeClass('brand-box-selected');
+                } else {
+                    jQuery(this).addClass('brand-box-selected');
+                }
+                jQuery('.RTSCheckbox', this).attr('checked', jQuery(this).hasClass('brand-box-selected'));
+                return false;
+		    } else if (jQuery(this).attr('id') == 'ADB') {
+		    	jQuery("#showaccordion").trigger('click');
+              	return false;
+              
+		    } else {
+				if(jQuery(this).hasClass('brand-box-selected')){
+					jQuery(this).removeClass('brand-box-selected');
+					if(jQuery(this).find('input[type=checkbox]').length != 0){
+						jQuery(this).find('input[type=checkbox]').attr('checked', false);
+					}
+				} else {
+					jQuery(this).addClass('brand-box-selected');
+					if(jQuery(this).find('input[type=checkbox]').length != 0){
+						jQuery(this).find('input[type=checkbox]').attr('checked', true);
+					}
+				}
+				selectedBrandIdsString = '';
+				jQuery('.brand-box-selected').each(function(index, elem){
+					brandId = jQuery(elem).attr('id');
+					if(brandId.length != 0 && brandId != 'RTS' && brandId != 'ADB' && brandId != 'Portfolio'){
+						if(selectedBrandIdsString == '' || selectedBrandIdsString == null){
+							selectedBrandIdsString = ''+jQuery(elem).attr('id');
+						} else {
+							selectedBrandIdsString += ','+jQuery(elem).attr('id');
+						}
+					}
+				});
+	
+				jQuery('.brandFilterWrapper').find('input[type=hidden]').each(function(index, elem){
+	    	        if(jQuery(elem).attr('id') !== undefined){
+	        	    	if(jQuery(elem).attr('id').search('selectedBrandIds') != -1){
+	            			jQuery(elem).val(selectedBrandIdsString);
+	            			return;
+	            		}
+	            	}
+				});
+			}
+			setSelectAllBrandsCheckboxValue();
+			if(jQuery('.brand-box-selected').not('#Portfolio').not('#RTS').not('#ADB').size() == 1){
+				if(jQuery('.brand-box-selected').not('#Portfolio').not('#RTS').not('#ADB').first().attr('id').length != 0){
+					updateVariantBrands(''+jQuery('.brand-box-selected').not('#Portfolio').not('#RTS').not('#ADB').first().attr('id')+'');
+				}
+			} else {
+				if(jQuery('.child-brand-box').not('#Portfolio').not('#RTS').not('#ADB').size() != 0){
+					clearVariantBrands();
+				}
+			}
+			countCheckBrands();
+		});		// select brand (select from brand box)
+		jQuery('.child-brand-box').live('click',function(){
+			if(jQuery(this).hasClass('child-brand-box-selected')){
+				jQuery(this).removeClass('child-brand-box-selected');
+				jQuery(this).find('input[type=checkbox]').attr('checked', false);
+			} else {
+				jQuery(this).addClass('child-brand-box-selected');
+				jQuery(this).find('input[type=checkbox]').attr('checked', true);
+			}
+			selectedChildBrandIdsString = '';
+			jQuery('.child-brand-box-selected').each(function(index, elem){
+				if(jQuery(elem).attr('id').length != 0){
+					if(selectedChildBrandIdsString == '' || selectedChildBrandIdsString == null){
+						selectedChildBrandIdsString = ''+jQuery(elem).attr('id');
+					} else {
+						selectedChildBrandIdsString += ','+jQuery(elem).attr('id');
+					}
+				}
+			});
+			jQuery('.variantFilterWrapper').find('input[type=hidden]').each(function(index, elem){
+    	        if(jQuery(elem).attr('id') !== undefined){
+        	    	if(jQuery(elem).attr('id').search('selectedChildBrandIds') != -1){
+            			jQuery(elem).val(selectedChildBrandIdsString);
+            			return;
+            		}
+            	}
+			});
+			setSelectAllChildBrandsCheckboxValue();
+		});
+		// select time period
+		jQuery('.label-time-period').live('click',function(){
+			if(jQuery(this).hasClass('time-box-selected')){
+				jQuery(this).removeClass('time-box-selected');
+				jQuery(this).removeClass('time-hover');
+			} else {
+				jQuery(this).addClass('time-box-selected');
+			}
+			selectedQuartersString = '';
+			jQuery('.time-box-selected').each(function(index, elem){
+				if(jQuery(elem).attr('name').length != 0){
+					if(selectedQuartersString == '' || selectedQuartersString == null){
+						selectedQuartersString = ''+jQuery(elem).attr('name');
+					} else {
+						selectedQuartersString += ','+jQuery(elem).attr('name');
+					}
+				}
+			});
+			jQuery('.timeFilterWrapper').find('input[type=hidden]').each(function(index, elem){
+    	        if(jQuery(elem).attr('id') !== undefined){
+        	    	if(jQuery(elem).attr('id').search('selectedQuarters') != -1){
+            			jQuery(elem).val(selectedQuartersString);
+            			return;
+            		}
+            	}
+			});
+		});
+		// select all brand functionality
+		jQuery('.selectAllBrands').live('click', function(){
+			selectedBrandIdsString = '';
+			clearVariantBrands();
+			if(jQuery(this).is(':checked')){
+				jQuery('.brand-box').not('.hidden').each(function(index, elem){
+					if (jQuery(elem).attr('id').length != 0) {
+						if (jQuery(elem).attr('id')!='Portfolio' && jQuery(elem).attr('id')!='RTS' && jQuery(elem).attr('id')!='ADB') {
+							if(selectedBrandIdsString == '' || selectedBrandIdsString == null){
+								selectedBrandIdsString = ''+jQuery(elem).attr('id');
+							} else {
+								selectedBrandIdsString += ','+jQuery(elem).attr('id');
+							}
+						}
+						jQuery(elem).addClass('brand-box-selected');
+					}
+					if(jQuery(elem).find('input[type=checkbox]').length != 0){
+						jQuery(elem).find('input[type=checkbox]').attr('checked', true);
+					}					
+				});
+			} else {
+				jQuery('.brand-box').each(function(index, elem){
+					if(jQuery(elem).attr('id').length != 0){
+						jQuery(elem).removeClass('brand-box-selected');
+					}
+					if(jQuery(elem).find('input[type=checkbox]').length != 0){
+						jQuery(elem).find('input[type=checkbox]').attr('checked', false);
+					}					
+				});
+			}
+			jQuery('.brandFilterWrapper').find('input[type=hidden]').each(function(index, elem){
+    	        if(jQuery(elem).attr('id') !== undefined){
+        	    	if(jQuery(elem).attr('id').search('selectedBrandIds') != -1){
+            			jQuery(elem).val(selectedBrandIdsString);
+            			return;
+            		}
+            	}
+			});		
+		});
+
+		// select all child brand functionality
+		jQuery('.selectAllChildBrands').live('click', function(){
+			selectedChildBrandIdsString = '';
+			if(jQuery(this).is(':checked')){
+				jQuery('.child-brand-box').not('.hidden').each(function(index, elem){
+					if(jQuery(elem).attr('id').length != 0){
+						if(selectedChildBrandIdsString == '' || selectedChildBrandIdsString == null){
+							selectedChildBrandIdsString = ''+jQuery(elem).attr('id');
+						} else {
+							selectedChildBrandIdsString += ','+jQuery(elem).attr('id');
+						}
+						jQuery(elem).addClass('child-brand-box-selected');
+						jQuery(elem).find('input[type=checkbox]').attr('checked', true);
+					}
+				});
+			} else {
+				clearVariantBrandsSelected();
+				jQuery('.child-brand-box').each(function(index, elem){
+					if(jQuery(elem).attr('id').length != 0){
+						jQuery(elem).removeClass('child-brand-box-selected');
+						jQuery(elem).find('input[type=checkbox]').attr('checked', false);
+					}
+				});
+			}
+			jQuery('.variantFilterWrapper').find('input[type=hidden]').each(function(index, elem){
+    	        if(jQuery(elem).attr('id') !== undefined){
+        	    	if(jQuery(elem).attr('id').search('selectedChildBrandIds') != -1){
+            			jQuery(elem).val(selectedChildBrandIdsString);
+            			return;
+            		}
+            	}
+			});		
+		});
+		// expander method
+		jQuery('div.expander').live('click', function(){
+			if(jQuery('div.filter-wrapper').length == 0){
+				return;
+			}
+			filters = jQuery('div.filter-wrapper');
+			if(!filters.hasClass('expanded')){
+				if(jQuery('.specialContent').height() < filters.height()+150){
+					jQuery('.specialContent').css('height', filters.height()+150);
+				} 
+				filters.addClass('expanded');
+				jQuery('.arrowUp').removeClass('hidden');
+				jQuery('.arrowDown').addClass('hidden');				
+				filters.stop().animate({top: 0}, 1000);
+				jQuery('.expander-overlay-disable').css({height: '100%', opacity: '0'});
+				jQuery('.expander-overlay-disable').stop().animate({opacity: '0.7'}, 1000);			
+			} else {
+				filters.removeClass('expanded');
+				jQuery('.arrowUp').addClass('hidden');
+				jQuery('.arrowDown').removeClass('hidden');	
+				actualFilterHeight = filters.height();
+				newPosition = -(actualFilterHeight);
+				filters.stop().animate({top: newPosition}, 1000, function(){
+   					jQuery('.specialContent').css('min-height', 400);    
+				});
+				jQuery('.expander-overlay-disable').stop().animate({opacity: '0'}, 1000, function(){
+					jQuery('.expander-overlay-disable').css({height: '0%'});
+				});			
+			}
+		});
+		
+		
+		// **** CALENDAR VIEW ****
+		jQuery('.previous-period').live('click',previousPeriod);
+        jQuery('.next-period').live('click',nextPeriod);
+        
+        // horizontal slider navigation
+        jQuery('.horizontal-slider-button').live('click',function(){
+	        sliderHolder = jQuery(this).parents('.horizontal-slider');
+            if(sliderHolder.length != 0){
+                slider = sliderHolder.find('.horizontal-slider-container');
+                if(slider.length != 0){
+                    if(slider.find('.horizontal-slider-content').first().length != 0){
+                        if(sliderHolder.find('.horizontal-slider-navigation-button-active').length == 0){
+                            return;
+                        }
+                        scrollToPosition = slider.scrollLeft();
+                        buttonToActivate = null;
+                        if(jQuery(this).hasClass('horizontal-slider-prev')){
+                        	if(sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button').length == 0){
+                                return;
+                            }
+                            if(sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button').prev('.horizontal-slider-navigation-button').length == 0){
+                                sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 0}, 500, function(){
+                                 	jQuery(this).css('visibility','hidden');
+                                });
+                            } else {
+                              	sliderHolder.find('.horizontal-slider-next').css('visibility','');
+                                sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 1}, 500);
+                            }
+                            buttonToActivate = sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button');
+                            scrollToPosition -= slider.find('.horizontal-slider-content').first().outerWidth();
+                        } else if(jQuery(this).hasClass('horizontal-slider-next')){
+                            if(sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button').length == 0){
+                                return;
+                            }
+                            if(sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button').next('.horizontal-slider-navigation-button').length == 0){
+                                sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 0}, 500, function(){
+                                	jQuery(this).css('visibility','hidden');
+                                });
+                            } else {
+                              	sliderHolder.find('.horizontal-slider-prev').css('visibility','');                                
+                                sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 1}, 500);
+                            }
+                            buttonToActivate = sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button');
+                            scrollToPosition += slider.find('.horizontal-slider-content').first().outerWidth();
+                        }
+                        if(!slider.hasClass('scrolling') && buttonToActivate != null){                          
+                            slider.addClass('scrolling');
+                            sliderHolder.find('.horizontal-slider-navigation-button').removeClass('horizontal-slider-navigation-button-active');
+                            buttonToActivate.addClass('horizontal-slider-navigation-button-active');
+                            slider.animate({scrollLeft: scrollToPosition }, 600,function(){
+                                jQuery(this).removeClass('scrolling');
+                            });
+                        }
+                    }
+                }
+            }
+        });
+        jQuery('.horizontal-slider-navigation-button').live('click',function(){
+            sliderHolder = jQuery(this).parents('.horizontal-slider');
+            if(sliderHolder.length != 0){
+                slider = sliderHolder.find('.horizontal-slider-container');
+                if(slider.length != 0){
+                    if(slider.find('.horizontal-slider-content').first().length != 0){
+                        scrollToPosition = jQuery(this).index()*jQuery(slider).find('.horizontal-slider-content').first().outerWidth();
+                        if(!slider.hasClass('scrolling')){
+                            slider.addClass('scrolling');
+                            sliderHolder.find('.horizontal-slider-navigation-button').removeClass('horizontal-slider-navigation-button-active');
+                            jQuery(this).addClass('horizontal-slider-navigation-button-active');
+ 	                        if(sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button').length == 0){
+                                sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 0}, 500, function(){
+                                 	jQuery(this).css('visibility','hidden');                                    
+                               	});
+                            } else {
+                             	sliderHolder.find('.horizontal-slider-next').css('visibility','');
+                                sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 1}, 500);
+                            }
+                            if(sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button').length == 0){
+                                sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 0}, 500, function(){
+                                  	jQuery(this).css('visibility','hidden');
+                                });
+                            } else {
+                             	sliderHolder.find('.horizontal-slider-prev').css('visibility','');
+                                sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 1}, 500);
+                            }
+                            slider.animate({scrollLeft: scrollToPosition }, 600,function(){
+                                jQuery(this).removeClass('scrolling');
+                            });
+                        }
+                    }
+                }
+            }
+	    });
+	    jQuery('.label-time-period').live('mouseenter',function(){
+        	jQuery(this).addClass('time-hover');
+        });
+        jQuery('.label-time-period').live('mouseleave',function(){
+        	jQuery(this).removeClass('time-hover');
+        });   
+    });
+    
+    </script>
+
+</apex:page>

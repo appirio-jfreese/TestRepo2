@@ -1,0 +1,81 @@
+<apex:component controller="Service_FolderComments" allowDML="true">
+  
+    <apex:attribute name="distributorId" description="Distributor Id" type="ID" required="true" assignTo="{!distributorId}"/>
+    <apex:attribute name="distributor" description="Distributor Name" type="String" required="true" assignTo="{!distributor}"/>
+    <apex:attribute name="folderId" description="Folder Id" type="ID" required="true" assignTo="{!folderId}"/>
+    <apex:attribute name="fileId" description="File Id" type="ID" required="true" assignTo="{!fileId}"/>
+    <apex:attribute name="folderName" description="Folder Name" type="String" required="true" assignTo="{!folderName}"/>
+    <apex:attribute name="isInternalUser" description="Is Internal user" type="Boolean" required="true" assignTo="{!isInternalUser}"/>
+        
+    <div class="moreInfoWrapper accWidth">
+        <div class="moreInfoDescriptionWrapper sectionBackground accWidth">
+            <div class="moreInfoDescription">Conversation: 
+            	<b>
+            		<apex:outputPanel rendered="{!OR(fileName == '', fileName == null)}">
+            		    {!folderName}
+            		</apex:outputPanel>
+            		<apex:outputPanel rendered="{!AND(fileName != '', fileName != null)}">
+            			{!fileName}
+            		</apex:outputPanel>	
+            	</b>
+            </div>
+            <div class="moreInfoClose close" onclick="showContent('{!distributorId}','{!distributor}');">&nbsp;</div>
+        </div>
+		<div class="moreInfoError accWidth">
+			<apex:outputPanel id="moreInfoError">
+				<apex:messages styleClass="errorMessagesList blackFont" />
+			</apex:outputPanel>
+		</div>              
+		<div class="moreInfoContentWrapper accWidth accHeight">
+			<apex:form >
+				<apex:actionFunction status="ajax-status" name="showMoreComments" action="{!showMoreComments}" rerender="addComment, moreInfoError"/>
+				<apex:actionFunction status="ajax-status" name="addCommentMsg" action="{!addCommentMsg}" rerender="addComment, moreInfoError"/>
+				<apex:actionFunction status="ajax-status" name="removeCommentMsg" action="{!removeCommentMsg}" rerender="addComment, moreInfoError">
+					<apex:param name="removeCommentId" assignTo="{!removeCommentId}" value="" />
+				</apex:actionFunction>
+				
+				<apex:pageBlock id="addComment">
+					<div class="shareRecipientInformation">
+						Your Post: <span style="color: #aaaaaa; font-size: 10px;">Limited to 1000 characters</span>
+						<apex:inputTextarea value="{!commentBody}" styleClass="accTextAreaWidth accTextAreaHeight"/><br/>
+						<apex:inputHidden value="{!distributorId}"/><apex:inputHidden value="{!folderId}"/>
+						<button class="green" onclick="addCommentMsg(); return false;">ADD</button>
+						<apex:outputPanel >
+	                        <div class="file-comment-wrapper">
+                                <div class="file-comment-holder">
+                                    <apex:outputPanel rendered="{!AND(!ISNULL(commentsToShow),commentsToShow.size!=0)}">
+                                        <apex:repeat value="{!commentsToShow}" var="comment">
+                                            <div class="file-comment-content">
+                                                <span class="bold comment-header">[{!comment.Distributor_Name__r.Name}] {!comment.LastModifiedBy.name}</span> 
+                                                <span class="comment-date">
+                                                    <apex:outputText value="{0,date, MM'/'dd'/'yy, HH:mm}">
+                                                        <apex:param value="{!comment.LastModifiedDate}" />
+                                                    </apex:outputText>
+                                                </span><br/>
+                                                <span class="comment-body">{!comment.Comment_Body__c}</span>
+                                                <apex:outputPanel rendered="{!OR(AND(comment.OwnerID == currentUserId, !isInternalUser), isInternalUser)}">
+                                                	<div class="removeFileComment blackClose" onclick="removeCommentMsg('{!comment.id}');">&nbsp;</div>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!OR(ISNULL(commentsToShow),commentsToShow.size=0)}">
+                                        <div class="content-no-items-msg">No comments.</div>
+                                    </apex:outputPanel>
+                                </div>
+	                        </div>
+						</apex:outputPanel>
+					</div>	
+					<apex:outputPanel rendered="{!hasMoreComments}">
+						<div class="comments-result float-left">
+							<span class="defaultTheme">Showing {!commentsToShow.size} of total {!fileComments.size} comments.</span>
+						</div>
+						<div class="float-right comments-result-button"><button onclick="showMoreComments(); return false;" class="grey">Show More Comments</button></div>
+						<div class="clear-float"></div>
+					</apex:outputPanel>
+				</apex:pageBlock>	
+			</apex:form>
+		</div>
+	</div>
+ 
+</apex:component>

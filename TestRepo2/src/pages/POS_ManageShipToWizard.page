@@ -1,0 +1,225 @@
+<apex:page controller="POS_ManageShipTosController" standardStylesheets="false" showHeader="false" sidebar="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=1138"  /> 
+    <meta name="MobileOptimized" content="1138" /> 
+    <title>Diageo POS</title> 
+    <link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+
+
+    <link href="{!URLFOR($Resource.AddressBookCSS)}" rel="stylesheet" type="text/css" /> 
+    <script src="../../soap/ajax/24.0/connection.js" type="text/javascript"></script>
+    <script type="text/javascript">
+           
+              
+        function confirmDeleteShipTo (shipToId) {
+            if (confirm("Are you sure you want to delete this shipping address?")) {
+                deleteShipTo(shipToId);
+            }
+        }
+        
+        function editShipTo (id,accountGrouping,node) {
+            //Navigate to proper "add address" location
+            //newAddressNode=jQuery(node).parent().parent().children('.ShipToAccount').children('.showNewAddress').children('a')
+            showNewAddress(accountGrouping);
+            
+            //newShipToDiv = document.getElementById('newShipTo');
+            //node.appendChild(newShipToDiv);
+            //newShipToDiv.style.display='block';
+            selectShipToAjax(id);
+        }
+        
+        function goBack () {
+            var checked;
+            jQuery("input:image").each(function(index, image) {
+                if (jQuery(image).attr('state')=='true') { 
+                    checked=true;
+                }
+            });
+            
+            if (checked) {
+                //alert('TEST: {!referer}');
+                document.location.href='{!referer}';
+            }
+            else {
+                alert("You must select at least one address before continuing");
+            }
+        }
+        
+        var blueStarUrl = '{!URLFOR($Resource.stars, 'blue-star-small.png')}';
+        var whiteStarUrl = '{!URLFOR($Resource.stars, 'white-star-small.png')}';
+        
+        var defaultAccount = '{!currentAccount.Id}';
+        
+    </script>
+    <script src="{!URLFOR($Resource.AddressBookJS)}" type="text/javascript"></script>
+    
+</head>
+<body>
+
+    <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+    <div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+    <div class="wrapper">
+        <div class="page"> 
+            <div class="main col-full-layout" id="main">
+                <c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+                <div class="col-main">   
+                    <apex:outputPanel rendered="{!NOT(nowiz)}" layout="block" styleClass="backLink">
+                    Before you can begin adding items to your cart for the first time, you must select a shipping address.<br/>
+                    Once you've added a shipping address from the list below, you can return to the order window and begin adding items.
+                    </apex:outputPanel>
+                
+                    <div class="std" style="padding-top: 10px"> 
+                        <div class="full-content-block">    
+                            
+                            <span id="loadingPanel" style="display: none; margin: 500px;">
+                                <apex:image url="{!$Resource.POS_BWSpinner}" styleClass="toggleSpinner"/>           
+                            </span>
+                            
+                            <div id="responseErrors" style="color: #f00">
+                            
+                            </div>
+                            <apex:form styleClass="display" >
+                            <apex:actionFunction action="{!deleteShipTo}" name="deleteShipTo" rerender="availableShipToList">
+                                <apex:param name="shipToId" assignTo="{!deletedShipTo}" value=""/>
+                            </apex:actionFunction>
+                            <apex:actionFunction action="{!selectShipTo}" name="selectShipToAjax" rerender="shipForm">
+                                <apex:param name="shipToId" assignTo="{!selectedShipTo}" value=""/>
+                            </apex:actionFunction>
+                            <apex:outputPanel styleClass="scrollingTable" layout="block">
+                                Classification :
+                                    <apex:selectList value="{!classification}" id="classificationSelector" size="1">
+                                        <apex:selectOptions value="{!ClassificationTypes}"/>
+                                        <apex:actionSupport event="onchange"  rerender="accountSelector" action="{!updateSelectableShiptos}"/>
+                                    </apex:selectList>
+                            
+                                Account: 
+                                
+                                <apex:selectList value="{!currentAccountId}" id="accountSelector" size="1">
+                                    <apex:selectOptions value="{!accountOptions}"/>
+                                    <apex:actionSupport event="onchange"  rerender="accountShiptoDisplay" action="{!setCurrentAccount}"/>
+                                </apex:selectList>
+                                
+                                <apex:outputPanel id="availableShipToList" layout="block" styleClass="ShipToList">
+                                    
+                                    
+                                
+                                        <apex:outputPanel layout="block" styleClass="accountShipToDiv" id="accountShiptoDisplay">                                        
+                                            <div class="ShipToAccount">
+                                                <apex:outputPanel rendered="{!IF(currentAccountId=='' || currentAccountId=='0',false,true)}" layout="block">
+                                                    {!currentAccount.Name} <span class="showNewAddress">[<a href="javascript:void(0);" onclick="showNewAddress('{!currentAccount.Id}')">Add new address</a>]</span> 
+                                                </apex:outputPanel>
+                                            </div>
+                                          <div class="NewShipTo" id="newShipTo">
+                                <apex:outputPanel id="shipForm">
+                                
+                                    <div class="NewShipToHeader">Address Information<em><strong>*</strong> denotes required fields</em></div><br/>
+                                    <!--  Changes done for case #00003681 by Jai Gupta on 25th Jan,2013 -->
+                                    <apex:inputHidden id="newAddressAccountField" value="{!addedShipTo.Account__c}"/>
+                                    <script type="text/javascript">var accountField=document.getElementById('{!$Component.newAddressAccountField}');
+                                    var addressDiv = document.getElementById('newShipTo');
+                                    </script>    
+                                    <!--document.getElementById('addressPage:shipToForm:newAddressAccountField')-->        
+                                	<!-- End for case #00003681 -->
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">Name*</div>
+                                        <div class="NewShipToFieldValue new_required"><apex:inputField value="{!addedShipTo.Name}"/></div>
+                                    </div>
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">Attn</div>
+                                        <div class="NewShipToFieldValue"><apex:inputField value="{!addedShipTo.Attention__c}"/></div>
+                                    </div>
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">Street*</div>
+                                        <div class="NewShipToFieldValue new_required"><apex:inputField value="{!addedShipTo.Street__c}"/></div>
+                                    </div>
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">City*</div>
+                                        <div class="NewShipToFieldValue new_required"><apex:inputField value="{!addedShipTo.City__c}"/></div>
+                                    </div>
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">State*</div>
+                                        <div class="NewShipToFieldValue new_required"><apex:inputField value="{!addedShipTo.State__c}"/></div>
+                                    </div> 
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">Zip*</div>
+                                        <div class="NewShipToFieldValue new_required"><apex:inputField value="{!addedShipTo.Zip__c}"/></div>
+                                    </div>
+                                    <div class="NewShipToField">
+                                        <div class="NewShipToFieldName">Tel*</div>
+                                        <div class="NewShipToFieldValue new_required"><apex:inputField value="{!addedShipTo.Phone__c}"/></div>
+                                    </div>
+                                    <div class="NewShipToField" id="notes_div">
+                                        <div class="NewShipToFieldName">Notes</div>
+                                        <div class="NewShipToFieldValue"><apex:inputField value="{!addedShipTo.Notes__c}"/></div>
+                                    </div>
+                                    <div class="NewShipToSubmit">
+                                    <apex:commandButton styleClass="addButton" value="Save" action="{!createUpdateShipTo}"/>
+                                    <input class="cancelButton" type="button" value="Cancel" onClick="hideNewAddress(this); return false;"/>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                                             
+                                            <apex:repeat value="{!selectableShipTos}" var="selectableShipTo">
+                                                <apex:outputPanel styleClass="ShipTo" layout="block" rendered="{!IF(currentAccount.Id=selectableShipTo.shipTo.Account__c,true,false)}">
+                                                    <div class="ShipToFunctions">
+                                                        <apex:outputPanel rendered="{!selectableShipTo.selected==true}">
+                                                            <input type="image" src="{!URLFOR($Resource.stars, 'blue-star-small.png')}" class="ShipToCheckbox" value="{!selectableShipTo.selected}" 
+                                                            onClick="toggleShipTo('{!selectableShipTo.shipTo.Id}', this); return false;" state="true"/> 
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!selectableShipTo.selected!=true}">
+                                                            <input type="image" src="{!URLFOR($Resource.stars, 'white-star-small.png')}" class="ShipToCheckbox" value="{!selectableShipTo.selected}" 
+                                                            onClick="toggleShipTo('{!selectableShipTo.shipTo.Id}', this); return false;" state="false"/>
+                                                        </apex:outputPanel>
+                                                    
+                                                        <apex:outputPanel styleClass="ui-icon ui-icon-trash" rendered="{!selectableShipTo.shipTo.CreatedById==$User.Id}" onclick="confirmDeleteShipTo('{!selectableShipTo.shipTo.Id}')"></apex:outputPanel>
+                                                        
+                                                        <apex:outputPanel styleClass="ui-icon ui-icon-pencil" rendered="{!selectableShipTo.shipTo.CreatedById==$User.Id}" onclick="editShipTo('{!selectableShipTo.shipTo.Id}','{!currentAccount.Id}',this.parentNode)"></apex:outputPanel>
+                                                    
+                                                    </div>
+                                                    <div class="ShipToDetails">
+                                                        <div class="ShipToName">{!selectableShipTo.shipTo.Name}</div>
+                                                        <apex:outputPanel layout="block" styleClass="ShipToField" rendered="{!selectableShipTo.shipTo.Attention__c!=null}">Attn: {!selectableShipTo.shipTo.Attention__c}</apex:outputPanel>
+                                                        <div class="ShipToField">{!selectableShipTo.shipTo.Street__c}</div>
+                                                        <div class="ShipToField">{!selectableShipTo.shipTo.City__c}, {!selectableShipTo.shipTo.State__c} {!selectableShipTo.shipTo.Zip__c}</div>
+                                                        <apex:outputPanel layout="block" styleClass="ShipToField" rendered="{!selectableShipTo.shipTo.Phone__c!=null}">Tel: {!selectableShipTo.shipTo.Phone__c}</apex:outputPanel>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                
+                                            </apex:repeat>
+                                                
+                                        </apex:outputPanel>
+                                        
+                                        
+                                    <apex:actionStatus id="toggleSpinner" onStart="waitForUpdate(true,'toggleCheckboxSpinner')" onStop="waitForUpdate(false,'toggleCheckboxSpinner')"/>
+                                    </apex:outputPanel>
+                            </apex:outputPanel>
+                            <div class="ShipToActions">
+                            <apex:actionStatus id="startStyle" startStyle="display:none" stopStyle="display:none" onStart="loading(true,'saveSelectionSpinner')" onStop="loading(false,'saveSelectionSpinner')"/>
+                            </div>
+                        
+                            </apex:form>
+                            
+                        </div>
+                        
+                        <c:POS_Footer />
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div> 
+    
+    
+</body>
+</html>
+</apex:page>

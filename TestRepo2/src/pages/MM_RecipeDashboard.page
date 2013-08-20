@@ -1,0 +1,292 @@
+<apex:page standardstylesheets="false" controller="MM_RecipeDashboardController" sidebar="false" showHeader="false" doctype="XHTML-1.0-Transitional" >
+<html>
+<head>
+    <apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7DashboardCSS}" /></apex:outputpanel>
+    <apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.recipeDashboardPageCSS}" /></apex:outputpanel>
+</head>
+<body>
+    <div class="outerDiv">
+    <div style="height:50px;">
+        <c:DashBoardHeader />
+    </div>
+    <div id="bodyHeader" >
+        <div id="headerInner">
+            <div class="header arrow3">
+            <apex:outputLink value="apex/MM_RecipeDashboard"><apex:image title="Dashboard" value="/resource/1320379988000/home"/>
+            </apex:outputLink>
+        </div> 
+        <!-- <apex:image styleClass="header1 arrow2" title="Home" value="/resource/1320379988000/barrow"/> -->
+        <b><apex:outputText value="Recipe Dashboard" styleClass="header1 arrow"></apex:outputText></b>
+    </div>
+</div>
+<div class="innerDiv">
+<apex:form >
+    <div id="bodyContainerDashboard" align="center" >
+        <!-- Updated By Rishi Khirbat on 17th Dec 2012, T-104880-Add Recently Approved Recipes to MM_RecipeDashboard -->
+        <apex:outputpanel id="recentlyApproveRecipePanel" styleClass="fontClass">
+            <div id="blankRecentlyApprove">
+            </div>
+            <div style="float:left;" class="titleClass">  
+                <apex:outputlabel value="Recently Approved Recipes" style="float:left;"/>
+            </div>
+            <div class="recipeStatusHeader borderBackgroundTop">                 
+                <div class="columnBar">
+                    <div class="nameColumnEditor"><apex:outputlabel value="Recipe Name" styleclass="statusHeaderClass"/></div>
+                    <div class="dateColumnEditor"><apex:outputlabel value="Date of Submission" styleclass="statusHeaderClass"/></div>
+                    <div class="authorColumnEditor"><apex:outputlabel value="Author" styleclass="statusHeaderClass"/></div>
+                    <div class="statusColumnEditor"><apex:outputlabel value="" styleclass="statusHeaderClass"/></div>
+                    <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"/></div>
+                </div>
+            </div>      
+            <div id="recentlyApprovedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+                <div class="approved dashboardSection">
+                    <apex:repeat value="{!recentlyApprovedRecipes}" var="sRecipe">
+                        <div class="dashboardRow">
+                            <div class="nameColumnDataEditor">  
+                                <apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!sRecipe.recipe.Recipe_Title__c}"/> 
+                            </div>
+                            <div class="dateColumnDataEditor">
+                                <apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{0,date,MM/dd/yyyy}">
+                                    <apex:param value="{!sRecipe.recipe.LastModifiedDate}"/>
+                                </apex:outputText>
+                            </div>
+                            <div class="authorColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value="{!sRecipe.authorName}"/></div>
+                            <div class="statusColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value=""/></div>
+                            <apex:commandButton rerender="out" value="View" styleClass="actionButton" action="{!viewRecipe}">
+                                <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                            </apex:commandButton>
+                        </div>
+                    </apex:repeat>
+                    <apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasRecentlyApprovedRecipes}" value="You have no Approved Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>             
+                </div>
+            </div> 
+            <script type='text/javascript'>/** currentEditorValue {!currentApprovedLimitValue} {!currentALimitValue} Rejected-->{!rejectedRecipeCount} Pending-->{!pendingRecipeCount} Archived-->{!archivedRecipeCount} Draft-->{!draftRecipeCount} Approved --> {!approvedRecipeCount} **/</script> 
+            <!-- <div style="width:1000px;height:20px;"> -->
+            <apex:outputpanel rendered="{!If(((currentRecentlyApprovedLimitValue>5 )|| ((recentlyApprovedRecipeCount-currentRecentlyApprovedLimitValue)>0)),true,false)}" styleClass="showLinksPanel"> 
+                <i> <apex:commandLink value="Show 5 less..." rerender="recentlyApproveRecipePanel" action="{!showLessRecentlyApprovedRecipes}" rendered="{!If((currentRecentlyApprovedLimitValue)>5,true,false)}" styleclass="aLink"/></i>
+                <i> <apex:commandLink value="Show 5 more..." rerender="recentlyApproveRecipePanel" action="{!showMoreRecentlyApprovedRecipes}" rendered="{!If((recentlyApprovedRecipeCount-currentRecentlyApprovedLimitValue)>0,true,false)}" styleclass="aLink"/></i>
+            </apex:outputpanel>
+            <!--  </div>-->
+        </apex:outputpanel>
+        <!-- --------------T-104880---------------- -->
+        
+        <apex:outputPanel id="saveRecipePanel" styleClass="fontClass">
+            <br/>
+            <div style="float:left;" class="titleClass"><apex:outputlabel value="Saved Recipes" style="float:left;"></apex:outputlabel> </div>
+            <div id="blank">
+            </div> 
+            <div class="recipeStatusHeader borderBackgroundTop savedHeaderClass">
+               <div class="columnBar">
+                     <div class="nameColumnEditor"><apex:outputlabel value="Recipe Name" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="dateColumnEditor"><apex:outputlabel value="Date of Submission" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="authorColumnEditor"><apex:outputlabel value="Author" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="statusColumnEditor"><apex:outputlabel value="" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                </div>
+            </div>     
+            <div id="savedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+                   <div class="saved dashboardSection">
+                          <apex:repeat value="{!draftRecipes}" var="sRecipe" rows="{!currentEditorLimitValue}">
+                               <div class="dashboardRow">
+                                <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!sRecipe.recipe.Recipe_Title__c}"/></div>
+                                <div class="dateColumnDataEditor"> 
+                                   <apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{0,date,MM/dd/yyyy}">
+                                       <apex:param value="{!sRecipe.recipe.LastModifiedDate}"/>
+                                   </apex:outputText>
+                                </div>
+                                <div class="authorColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value="{!sRecipe.authorName}"/></div>
+                                     <div class="statusColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value=""/></div>
+                                        <apex:commandButton rerender="out" value="Edit" styleClass="actionButton" action="{!editRecipe}">
+                                            <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                                        </apex:commandButton>
+                                    </div>
+                          </apex:repeat>
+                          <apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasDraftRecipes}" value="You have no Saved Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>
+                     </div>
+              </div>
+              <script type='text/javascript'>/** currentEditorValue {!currentApprovedLimitValue} {!currentALimitValue} Rejected-->{!rejectedRecipeCount} Pending-->{!pendingRecipeCount} Archived-->{!archivedRecipeCount} Draft-->{!draftRecipeCount} Approved --> {!approvedRecipeCount} **/</script> 
+              <apex:outputpanel rendered="{!If(((currentEditorLimitValue>5 )|| ((draftRecipeCount-currentEditorLimitValue)>0)),true,false)}" styleClass="showLinksPanel">
+                       <i><apex:commandLink value="Show 5 less..." rerender="saveRecipePanel" action="{!showLessEditor}" rendered="{!If((currentEditorLimitValue)>5,true,false)}" styleclass="aLink" /></i>
+                       <i><apex:commandLink value="Show 5 more..." rerender="saveRecipePanel" action="{!showMoreEditor}" rendered="{!If((draftRecipeCount-currentEditorLimitValue)>0,true,false)}" styleclass="aLink" /></i>
+               </apex:outputpanel>
+        </apex:outputPanel> 
+        <apex:outputpanel id="rejectedRecipePanel" styleClass="fontClass">
+            <div id="blank">
+            </div>           
+            <div style="float:left;" class="titleClass"><apex:outputlabel value="Rejected" style="float:left;font-weight:bold;"></apex:outputlabel> </div>
+            <div class="recipeStatusHeader borderBackgroundTop">               
+               <div class="columnBar">
+                     <div class="nameColumnEditor"><apex:outputlabel value="Recipe Name" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="dateColumnEditor"><apex:outputlabel value="Date of Submission" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="authorColumnEditor"><apex:outputlabel value="Author" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="statusColumnEditor"><apex:outputlabel value="" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"></apex:outputlabel></div>
+               </div>
+            </div>      
+            <div id="rejectedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+                <div class="rejected dashboardSection">
+                <apex:repeat value="{!rejectedRecipes}" var="sRecipe">
+                     <div class="dashboardRow">
+                         <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!sRecipe.recipe.Recipe_Title__c}"/> </div>  
+                         <div class="dateColumnDataEditor">  
+                             <apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{0,date,MM/dd/yyyy}">
+                                 <apex:param value="{!sRecipe.recipe.LastModifiedDate}"/>
+                             </apex:outputText></div>
+                         <div class="authorColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value="{!sRecipe.authorName}"/></div>
+                         <div class="statusColumnDataEditor"> <apex:outputText styleclass="dataContainerClass" value=""/></div>
+                         <script type='text/javascript'>/**editMode[{!sRecipe.recipe.Current_Editor__c}]  editMode[{!currentUser}] rendered1[{!((sRecipe.authorName == currentUser.Name) || (sRecipe.recipe.Current_Editor__c == currentUser.Id))}] rendered2["{!sRecipe.authorName != currentUser.Name && sRecipe.recipe.Current_Editor__c != currentUser}"]**/</script>
+                       <!--T-83194: Rejected recipes can be re-assigned by Reviewers
+                       we can add condition to show this Edit/Resummit button to reviewers-->
+                         <apex:commandButton rerender="out" value="Edit/Resubmit" styleClass="actionButton" action="{!editRecipe}" rendered="{!sRecipe.authorName == currentUser.Name || sRecipe.recipe.Current_Editor__c == currentUser.Id}">
+                             <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                         </apex:commandButton>                           
+                         <apex:commandButton rerender="out" value="View" styleClass="actionButton" action="{!viewRecipe}" rendered="{!sRecipe.authorName != currentUser.Name && sRecipe.recipe.Current_Editor__c != currentUser.Id}">
+                            <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                         </apex:commandButton>          
+                     </div>
+                </apex:repeat>
+               <apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasRejectedRecipes}" value="You have no Rejected Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>    
+            </div>  
+        </div>
+       <script type='text/javascript'>/** currentEditorValue {!currentApprovedLimitValue} {!currentALimitValue} Rejected-->{!rejectedRecipeCount} Pending-->{!pendingRecipeCount} Archived-->{!archivedRecipeCount} Draft-->{!draftRecipeCount} Approved --> {!approvedRecipeCount} **/</script> 
+       <!--  <div style="width:1000px;height:20px;">-->
+       <apex:outputpanel rendered="{!If(((CurrentRejectedLimitValue>5 )|| ((rejectedRecipeCount-currentRejectedLimitValue)>0)),true,false)}" styleClass="showLinksPanel">
+            <i> <apex:commandLink value="Show 5 less..." rerender="rejectedRecipePanel" action="{!showLessRejectedRecipes}" rendered="{!IF((CurrentRejectedLimitValue)>5,true,false)}" styleclass="aLink"/></i>
+            <i> <apex:commandLink value="Show 5 more..." rerender="rejectedRecipePanel" action="{!showMoreRejectedRecipes}" rendered="{!IF((rejectedRecipeCount-currentRejectedLimitValue)>0,true,false)}" styleclass="aLink"/></i>
+       </apex:outputpanel>
+       <!--   </div>-->
+    </apex:outputpanel>
+<apex:outputPanel id="pendingRecipePanel" styleClass="fontClass" >
+       <div id="blank"></div>
+       <!--  <div class="titleClass">-->
+       <div style="float:left;" class="titleClass"> <apex:outputlabel value="Pending Approval" style="float:left;"></apex:outputlabel></div>
+               <div class="recipeStatusHeader borderBackgroundTop">                
+                     <div class="columnBar">
+                        <div class="nameColumnEditor"><apex:outputlabel value="Recipe Name" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="dateColumnEditor"><apex:outputlabel value="Date of Submission" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="authorColumnEditor"><apex:outputlabel value="Author" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="statusColumnEditor"><apex:outputlabel value="Status" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                     </div>    
+               </div>
+          <div id="pendingRecipes" class="recipeStatusContainer borderBackgroundBottom"> 
+               <div class="pending dashboardSection">
+                     <apex:repeat value="{!pendingRecipes}" var="sRecipe">
+                        <div class="dashboardRow">
+                            <div class="nameColumnDataEditor"> <apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!sRecipe.recipe.Recipe_Title__c}"/> </div>  
+                            <div class="dateColumnDataEditor">  
+                            <apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{0,date,MM/dd/yyyy}">
+                                <apex:param value="{!sRecipe.recipe.LastModifiedDate}"/>
+                            </apex:outputText></div>   
+                            <div class="authorColumnDataEditor">  <apex:outputText styleclass="dataContainerClass" value="{!sRecipe.authorName}"/></div>
+                            <div class="statusColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value="{!sRecipe.recipe.Status__c}"/></div>
+                            <apex:commandButton rerender="out" value="View" styleClass="actionButton" action="{!viewRecipe}" rendered="{!sRecipe.authorName == currentUser.Name || sRecipe.recipe.Current_Editor__c == currentUser.Id}">
+                                <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                            </apex:commandButton> <!-- !sRecipe.authorName == currentUser.Name || sRecipe.recipe.Current_Editor__c == currentUser.Id -->
+                            
+                            <!-- T-83190: Modify code to allow users with the Admin role to be able to Review recipes  -->
+                            <apex:commandButton rerender="out" value="Approve" styleClass="actionButton" action="{!viewRecipe}" rendered="{!(isApprover|| isReviewer || isSuperAdmin || isPublisher) && sRecipe.authorName != currentUser.Name &&  sRecipe.recipe.Current_Editor__c != currentUser.Id}">
+                                <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                            </apex:commandButton> 
+                        </div>
+                     </apex:repeat>  
+                     <apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasPendingRecipes}" value="You have No Pending Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>
+          </div>    
+       </div>
+       <script type='text/javascript'>/** currentEditorValue {!currentApprovedLimitValue} {!currentALimitValue} Rejected-->{!rejectedRecipeCount} Pending-->{!pendingRecipeCount} Archived-->{!archivedRecipeCount} Draft-->{!draftRecipeCount} Approved --> {!approvedRecipeCount} **/</script> 
+       <!--  <div style="width:1000px;height:20px;">-->
+       <apex:outputpanel rendered="{!If(((CurrentPendingApprovalLimitValue>5 )|| ((pendingRecipeCount-currentPendingApprovalLimitValue)>0)),true,false)}" styleClass="showLinksPanel"> 
+            <i><apex:commandLink value="Show 5 less..." rerender="pendingRecipePanel" action="{!showLessPendingApprovalRecipes}" rendered="{!If((CurrentPendingApprovalLimitValue)>5,true,false)}" styleclass="aLink"/></i>
+            <i><apex:commandLink value="Show 5 more..." rerender="pendingRecipePanel" action="{!showMorePendingApprovalRecipes}" rendered="{!If((pendingRecipeCount-currentPendingApprovalLimitValue)>0,true,false)}" styleclass="aLink"/></i>
+       </apex:outputpanel>
+       <!--  </div>-->
+</apex:outputPanel> 
+<apex:outputpanel id="approveRecipePanel" styleClass="fontClass">
+       <div id="blank">
+       </div>
+       <!--  <div class="titleClass">-->
+       <div style="float:left;" class="titleClass">  <apex:outputlabel value="Approved" style="float:left;" ></apex:outputlabel></div>
+               <div class="recipeStatusHeader borderBackgroundTop">                 
+                     <div class="columnBar">
+                        <div class="nameColumnEditor"><apex:outputlabel value="Recipe Name" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="dateColumnEditor"><apex:outputlabel value="Date of Submission" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="authorColumnEditor"><apex:outputlabel value="Author" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="statusColumnEditor"><apex:outputlabel value="" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                    </div>
+               </div>      
+       <div id="approvedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+          <div class="approved dashboardSection">
+               <apex:repeat value="{!approvedRecipes}" var="sRecipe">
+                     <div class="dashboardRow">
+                        <div class="nameColumnDataEditor">  <apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!sRecipe.recipe.Recipe_Title__c}"/> </div>
+                        <div class="dateColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{0,date,MM/dd/yyyy}">
+                            <apex:param value="{!sRecipe.recipe.LastModifiedDate}"/>
+                        </apex:outputText></div>
+                        <div class="authorColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value="{!sRecipe.authorName}"/></div>
+                        <div class="statusColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value=""/></div>
+                        <apex:commandButton rerender="out" value="View" styleClass="actionButton" action="{!viewRecipe}">
+                            <apex:param value="{!sRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                        </apex:commandButton>
+                     </div>
+               </apex:repeat>
+               <apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasApprovedRecipes}" value="You have no Approved Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>             
+          </div>
+       </div> 
+       <script type='text/javascript'>/** currentEditorValue {!currentApprovedLimitValue} {!currentALimitValue} Rejected-->{!rejectedRecipeCount} Pending-->{!pendingRecipeCount} Archived-->{!archivedRecipeCount} Draft-->{!draftRecipeCount} Approved --> {!approvedRecipeCount} **/</script> 
+       <!-- <div style="width:1000px;height:20px;"> -->
+       <apex:outputpanel rendered="{!If(((currentApprovedLimitValue>5 )|| ((approvedRecipeCount-currentApprovedLimitValue)>0)),true,false)}" styleClass="showLinksPanel"> 
+            <i> <apex:commandLink value="Show 5 less..." rerender="approveRecipePanel" action="{!showLessApprovedRecipes}" rendered="{!If((currentApprovedLimitValue)>5,true,false)}" styleclass="aLink"/></i>
+            <i> <apex:commandLink value="Show 5 more..." rerender="approveRecipePanel" action="{!showMoreApprovedRecipes}" rendered="{!If((approvedRecipeCount-currentApprovedLimitValue)>0,true,false)}" styleclass="aLink"/></i>
+       </apex:outputpanel>
+        <!--  </div>-->
+</apex:outputpanel> 
+<apex:outputPanel rendered="{!isSuperAdmin}" id="archivedRecipePanel" styleClass="fontClass">
+       <div id="blank">
+       </div>
+       <!--  <div class="titleClass"> -->
+       <apex:outputlabel value="Archived" style="float:left;" styleclass="titleClass"></apex:outputlabel>
+               <div class="recipeStatusHeader borderBackgroundTop">                
+                     <div class="columnBar">
+                        <div class="nameColumnEditor"><apex:outputlabel value="Recipe Name" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="dateColumnEditor"><apex:outputlabel value="Date of Submission" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="authorColumnEditor"><apex:outputlabel value="Author" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="statusColumnEditor"><apex:outputlabel value="" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                        <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"></apex:outputlabel></div>
+                    </div>
+               </div>
+          <div id="archivedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+               <div class="archived dashboardSection">
+               <apex:repeat value="{!archivedRecipes}" var="aRecipe">
+                     <div class="dashboardRow">
+                        <div class="nameColumnDataEditor"> <apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!aRecipe.recipe.Recipe_Title__c}"/> </div> 
+                        <div class="dateColumnDataEditor"> <apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{0,date,MM/dd/yyyy}">
+                        <apex:param value="{!aRecipe.recipe.LastModifiedDate}"/>
+                            </apex:outputText></div>
+                        <div class="authorColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value="{!aRecipe.authorName}"/></div>
+                        <div class="statusColumnDataEditor"><apex:outputText styleclass="dataContainerClass" value=""/></div>
+                        <apex:commandButton rerender="out" value="View" styleClass="actionButton" action="{!editRecipe}">
+                            <apex:param value="{!aRecipe.recipe.Id}" assignto="{!recipeId}" name="recipeId"/>
+                        </apex:commandButton>
+                     </div>    
+               </apex:repeat>
+               <apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasArchivedRecipes}" value="You have No Archived Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>  
+          </div>   
+       </div>
+       <script type='text/javascript'>/** currentEditorValue {!currentApprovedLimitValue} {!currentALimitValue} Rejected-->{!rejectedRecipeCount} Pending-->{!pendingRecipeCount} Archived-->{!archivedRecipeCount} Draft-->{!draftRecipeCount} Approved --> {!approvedRecipeCount} **/</script> 
+       <!-- <div style="width:1000px;height:20px;"> -->
+       <apex:outputpanel rendered="{!If(((currentArchivedLimitValue>5 )|| ((archivedRecipeCount-currentArchivedLimitValue)>0)),true,false)}" styleClass="showLinksPanel"> 
+           <i> <apex:commandLink value="Show 5 less..." rerender="archivedRecipePanel" action="{!showLessArchivedRecipes}" rendered="{!If((currentArchivedLimitValue)>5,true,false)}" styleclass="aLink"/> </i>
+           <i> <apex:commandLink value="Show 5 more..." rerender="archivedRecipePanel" action="{!showMoreArchivedRecipes}" rendered="{!If((archivedRecipeCount-currentArchivedLimitValue)>0,true,false)}" styleclass="aLink"/> </i>
+        </apex:outputpanel>
+        <!--   </div>-->
+</apex:outputPanel>
+</div>
+</apex:form>
+</div>
+</div>
+<div class="clearEnd">
+</div>
+</body>
+</html>
+</apex:page>

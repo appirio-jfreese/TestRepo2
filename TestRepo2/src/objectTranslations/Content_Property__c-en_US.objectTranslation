@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Content Property</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Content Properties</value>
+    </caseValues>
+    <fields>
+        <label><!-- Calendar --></label>
+        <name>Calendar__c</name>
+        <relationshipLabel><!-- Content Properties --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Brand Marketing Information</masterLabel>
+            <translation><!-- Brand Marketing Information --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Development</masterLabel>
+            <translation><!-- Category Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation, Sustainovation &amp; VAP</masterLabel>
+            <translation><!-- Innovation, Sustainovation &amp; VAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation, Sustainovation &amp; Vintage Transition</masterLabel>
+            <translation><!-- Innovation, Sustainovation &amp; Vintage Transition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly Execution Plan</masterLabel>
+            <translation><!-- Monthly Execution Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multicultural</masterLabel>
+            <translation><!-- Multicultural --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Images &amp; Logos</masterLabel>
+            <translation><!-- Product Images &amp; Logos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Materials</masterLabel>
+            <translation><!-- Selling Materials --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Content Description --></label>
+        <name>Content_Description__c</name>
+        <relationshipLabel><!-- Content Properties --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Selling Materials Classification Row 1 --></label>
+        <name>Selling_Materials_Classification_Row_1__c</name>
+        <picklistValues>
+            <masterLabel>Execution Brief</masterLabel>
+            <translation><!-- Execution Brief --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Execution Standards – Monthly Summary</masterLabel>
+            <translation><!-- Execution Standards – Monthly Summary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Execution Standards – Off Premise</masterLabel>
+            <translation><!-- Execution Standards – Off Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Execution Standards – On Premise</masterLabel>
+            <translation><!-- Execution Standards – On Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fact Sheet</masterLabel>
+            <translation><!-- Fact Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Forecasting</masterLabel>
+            <translation><!-- Forecasting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preliminary Long Lead Deck</masterLabel>
+            <translation><!-- Preliminary Long Lead Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Overview</masterLabel>
+            <translation><!-- Program Overview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Sell Sheet</masterLabel>
+            <translation><!-- Program Sell Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Selling Deck</masterLabel>
+            <translation><!-- Program Selling Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Mailer</masterLabel>
+            <translation><!-- Retail Mailer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Deck</masterLabel>
+            <translation><!-- Selling Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trade Ad</masterLabel>
+            <translation><!-- Trade Ad --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Selling Materials Classification Row 2 --></label>
+        <name>Selling_Materials_Classification_Row_2__c</name>
+        <picklistValues>
+            <masterLabel>Display/Visibility</masterLabel>
+            <translation><!-- Display/Visibility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation</masterLabel>
+            <translation><!-- Innovation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integrated National Program</masterLabel>
+            <translation><!-- Integrated National Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sustainovation</masterLabel>
+            <translation><!-- Sustainovation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VAP</masterLabel>
+            <translation><!-- VAP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Category --></label>
+        <name>Sub_Category__c</name>
+        <picklistValues>
+            <masterLabel>Best Practices</masterLabel>
+            <translation><!-- Best Practices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brand Fact Sheets</masterLabel>
+            <translation><!-- Brand Fact Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Development</masterLabel>
+            <translation><!-- Category Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Selling Solutions</masterLabel>
+            <translation><!-- Category Selling Solutions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consumer Info</masterLabel>
+            <translation><!-- Consumer Info --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Current Programming</masterLabel>
+            <translation><!-- Current Programming --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Drink Shots</masterLabel>
+            <translation><!-- Drink Shots --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ease of Shop</masterLabel>
+            <translation><!-- Ease of Shop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fact Sheets</masterLabel>
+            <translation><!-- Fact Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Family Shots</masterLabel>
+            <translation><!-- Family Shots --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General</masterLabel>
+            <translation><!-- General --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Images</masterLabel>
+            <translation><!-- Images --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation</masterLabel>
+            <translation><!-- Innovation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Labels</masterLabel>
+            <translation><!-- Labels --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Logos</masterLabel>
+            <translation><!-- Logos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing Information</masterLabel>
+            <translation><!-- Marketing Information --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Creative</masterLabel>
+            <translation><!-- Other Creative --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Overview</masterLabel>
+            <translation><!-- Overview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance Updates</masterLabel>
+            <translation><!-- Performance Updates --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning Calendars</masterLabel>
+            <translation><!-- Planning Calendars --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Shots</masterLabel>
+            <translation><!-- Product Shots --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Programming</masterLabel>
+            <translation><!-- Programming --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly Programming Materials</masterLabel>
+            <translation><!-- Quarterly Programming Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly Selling Materials</masterLabel>
+            <translation><!-- Quarterly Selling Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Standards</masterLabel>
+            <translation><!-- Retail Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Materials</masterLabel>
+            <translation><!-- Selling Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Standards</masterLabel>
+            <translation><!-- Selling Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Support</masterLabel>
+            <translation><!-- Selling Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shipping Details</masterLabel>
+            <translation><!-- Shipping Details --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success Stories</masterLabel>
+            <translation><!-- Success Stories --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tools</masterLabel>
+            <translation><!-- Tools --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Visibility Tracking</masterLabel>
+            <translation><!-- Visibility Tracking --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine Notes</masterLabel>
+            <translation><!-- Wine Notes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub Sub Category --></label>
+        <name>Sub_Sub_Category__c</name>
+        <picklistValues>
+            <masterLabel>1 L</masterLabel>
+            <translation><!-- 1 L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.75 L</masterLabel>
+            <translation><!-- 1.75 L --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>200 ml</masterLabel>
+            <translation><!-- 200 ml --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>375 ml</masterLabel>
+            <translation><!-- 375 ml --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>50 ml</masterLabel>
+            <translation><!-- 50 ml --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>750 ml</masterLabel>
+            <translation><!-- 750 ml --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allocations</masterLabel>
+            <translation><!-- Allocations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Assortment</masterLabel>
+            <translation><!-- Assortment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Awards</masterLabel>
+            <translation><!-- Awards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brand Fact Sheet</masterLabel>
+            <translation><!-- Brand Fact Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Development</masterLabel>
+            <translation><!-- Category Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Selling Solutions</masterLabel>
+            <translation><!-- Category Selling Solutions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Selling Stories</masterLabel>
+            <translation><!-- Category Selling Stories --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consumer Target</masterLabel>
+            <translation><!-- Consumer Target --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coupons</masterLabel>
+            <translation><!-- Coupons --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Creative</masterLabel>
+            <translation><!-- Creative --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Digital</masterLabel>
+            <translation><!-- Digital --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display &amp; Merchandising</masterLabel>
+            <translation><!-- Display &amp; Merchandising --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ease of Shop</masterLabel>
+            <translation><!-- Ease of Shop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Final Launch Deck</masterLabel>
+            <translation><!-- Final Launch Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flow Charts</masterLabel>
+            <translation><!-- Flow Charts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gin and Cocktails</masterLabel>
+            <translation><!-- Gin and Cocktails --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>How it Works</masterLabel>
+            <translation><!-- How it Works --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Idea</masterLabel>
+            <translation><!-- Idea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation &amp; VAP Selling Materials</masterLabel>
+            <translation><!-- Innovation &amp; VAP Selling Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovations Sell Sheets</masterLabel>
+            <translation><!-- Innovations Sell Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inventory Reports</masterLabel>
+            <translation><!-- Inventory Reports --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Launch Decks</masterLabel>
+            <translation><!-- Launch Decks --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Logo Shots</masterLabel>
+            <translation><!-- Logo Shots --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Long Lead Sell Sheets</masterLabel>
+            <translation><!-- Long Lead Sell Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MKTG</masterLabel>
+            <translation><!-- MKTG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maps</masterLabel>
+            <translation><!-- Maps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing Deck</masterLabel>
+            <translation><!-- Marketing Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media Sell Sheets</masterLabel>
+            <translation><!-- Media Sell Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multicultural</masterLabel>
+            <translation><!-- Multicultural --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off Premise</masterLabel>
+            <translation><!-- Off Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Premise</masterLabel>
+            <translation><!-- On Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Orderability</masterLabel>
+            <translation><!-- Orderability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>POS Reports</masterLabel>
+            <translation><!-- POS Reports --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PR</masterLabel>
+            <translation><!-- PR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Plannograms</masterLabel>
+            <translation><!-- Plannograms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Portfolio Activations</masterLabel>
+            <translation><!-- Portfolio Activations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preliminary Long Lead Deck</masterLabel>
+            <translation><!-- Preliminary Long Lead Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Product Shots</masterLabel>
+            <translation><!-- Product Shots --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program</masterLabel>
+            <translation><!-- Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Brief</masterLabel>
+            <translation><!-- Program Brief --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Execution Standards</masterLabel>
+            <translation><!-- Program Execution Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Overview</masterLabel>
+            <translation><!-- Program Overview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Sell Sheet</masterLabel>
+            <translation><!-- Program Sell Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Selling Deck</masterLabel>
+            <translation><!-- Program Selling Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Selling Materials</masterLabel>
+            <translation><!-- Program Selling Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promotional Strategies</masterLabel>
+            <translation><!-- Promotional Strategies --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Radio</masterLabel>
+            <translation><!-- Radio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Mailers</masterLabel>
+            <translation><!-- Retail Mailers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Standards</masterLabel>
+            <translation><!-- Retail Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rums and Cordials</masterLabel>
+            <translation><!-- Rums and Cordials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Samples</masterLabel>
+            <translation><!-- Samples --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sampling</masterLabel>
+            <translation><!-- Sampling --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scannable UPCs</masterLabel>
+            <translation><!-- Scannable UPCs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sell Sheets</masterLabel>
+            <translation><!-- Sell Sheets --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Deck</masterLabel>
+            <translation><!-- Selling Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Support</masterLabel>
+            <translation><!-- Selling Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf</masterLabel>
+            <translation><!-- Shelf --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Principles</masterLabel>
+            <translation><!-- Shelf Principles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Situation</masterLabel>
+            <translation><!-- Situation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sizzle Reels</masterLabel>
+            <translation><!-- Sizzle Reels --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Source Points</masterLabel>
+            <translation><!-- Source Points --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spec Sheet</masterLabel>
+            <translation><!-- Spec Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Specification</masterLabel>
+            <translation><!-- Specification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sustainovation Materials</masterLabel>
+            <translation><!-- Sustainovation Materials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TV Commercials</masterLabel>
+            <translation><!-- TV Commercials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasting Notes</masterLabel>
+            <translation><!-- Tasting Notes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequilas</masterLabel>
+            <translation><!-- Tequilas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trade Ads</masterLabel>
+            <translation><!-- Trade Ads --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodkas</masterLabel>
+            <translation><!-- Vodkas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whiskies</masterLabel>
+            <translation><!-- Whiskies --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Winemaker Bios</masterLabel>
+            <translation><!-- Winemaker Bios --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub Sub Sub Category --></label>
+        <name>Sub_Sub_Sub_Category__c</name>
+        <picklistValues>
+            <masterLabel>Assortment</masterLabel>
+            <translation><!-- Assortment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Brand Fact Sheet</masterLabel>
+            <translation><!-- Brand Fact Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Business Card / Hot Sheet</masterLabel>
+            <translation><!-- Business Card / Hot Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Category Selling Stories</masterLabel>
+            <translation><!-- Category Selling Stories --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cocktails on Tap</masterLabel>
+            <translation><!-- Cocktails on Tap --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diageo Monthly PR Reports</masterLabel>
+            <translation><!-- Diageo Monthly PR Reports --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display &amp; Merchandising</masterLabel>
+            <translation><!-- Display &amp; Merchandising --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Knowledge and Best Practices</masterLabel>
+            <translation><!-- Knowledge and Best Practices --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Launch Sell Sheet</masterLabel>
+            <translation><!-- Launch Sell Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maps</masterLabel>
+            <translation><!-- Maps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media Selling Support</masterLabel>
+            <translation><!-- Media Selling Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media Training</masterLabel>
+            <translation><!-- Media Training --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Miscellaneous</masterLabel>
+            <translation><!-- Miscellaneous --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly POS Documents</masterLabel>
+            <translation><!-- Monthly POS Documents --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multicultural Selling Support</masterLabel>
+            <translation><!-- Multicultural Selling Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>National Training</masterLabel>
+            <translation><!-- National Training --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preliminary Long Lead Deck</masterLabel>
+            <translation><!-- Preliminary Long Lead Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Process and Governance</masterLabel>
+            <translation><!-- Process and Governance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Execution Brief</masterLabel>
+            <translation><!-- Program Execution Brief --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Execution Standards</masterLabel>
+            <translation><!-- Program Execution Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Overview</masterLabel>
+            <translation><!-- Program Overview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Sell Sheet</masterLabel>
+            <translation><!-- Program Sell Sheet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program Selling Deck</masterLabel>
+            <translation><!-- Program Selling Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promotional Strategies</masterLabel>
+            <translation><!-- Promotional Strategies --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly POS Documents</masterLabel>
+            <translation><!-- Quarterly POS Documents --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Standards</masterLabel>
+            <translation><!-- Retail Standards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retailer Mailer</masterLabel>
+            <translation><!-- Retailer Mailer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selling Deck</masterLabel>
+            <translation><!-- Selling Deck --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Principles</masterLabel>
+            <translation><!-- Shelf Principles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shelf Standards &amp; Planograms</masterLabel>
+            <translation><!-- Shelf Standards &amp; Planograms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Specs</masterLabel>
+            <translation><!-- Specs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasting Notes</masterLabel>
+            <translation><!-- Tasting Notes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trade Ad</masterLabel>
+            <translation><!-- Trade Ad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vision and Strategy</masterLabel>
+            <translation><!-- Vision and Strategy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>World Class 2012</masterLabel>
+            <translation><!-- World Class 2012 --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Content Property Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- End Date is required --></errorMessage>
+        <name>EndDateRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Start Date must be lower than End Date --></errorMessage>
+        <name>StartDateLowerThanEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Start Date is required --></errorMessage>
+        <name>StartDateRequired</name>
+    </validationRules>
+</CustomObjectTranslation>

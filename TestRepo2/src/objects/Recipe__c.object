@@ -1,0 +1,1671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>API_External_ID__c</fullName>
+        <description>External ID to be used for RecipeDB API purposes.</description>
+        <displayFormat>R-{0000}</displayFormat>
+        <externalId>true</externalId>
+        <label>API External ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Image_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Additional Image 1</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Additional Image 1)</relationshipLabel>
+        <relationshipName>Recipes6</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Image_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Additional Image 2</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Additional Image 2)</relationshipLabel>
+        <relationshipName>Recipes7</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Image_3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Additional Image 3</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Additional Image 3)</relationshipLabel>
+        <relationshipName>Recipes8</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Image_4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Additional Image 4</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Additional Image 4)</relationshipLabel>
+        <relationshipName>Recipes9</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Image_5__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Additional Image 5</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Additional Image 5)</relationshipLabel>
+        <relationshipName>RecipesPnfx</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ApprovedBy__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ApprovedBy</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Recipes2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Background_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Background Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Background Image)</relationshipLabel>
+        <relationshipName>RecipesBgrnd</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Brand_Recipe_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Brand Recipe Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Brand Recipe Image)</relationshipLabel>
+        <relationshipName>RecipesBrand</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Check_Profile__c</fullName>
+        <externalId>false</externalId>
+        <label>Check Profile</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CurrentLockedUser__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>A Field that Shows the Current Accessing User</description>
+        <externalId>false</externalId>
+        <label>CurrentLockedUser</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Recipes3</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Current_Editor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Current Editor</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Recipes</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Edit_Notification_To_Publisher_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Edit Notification To Publisher Time</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Edit_Notification_To_Publisher__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>T-120059 - Email When Admin Changes are made on Recipe</description>
+        <externalId>false</externalId>
+        <label>Edit Notification To Publisher?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Flavor_List_String__c</fullName>
+        <externalId>false</externalId>
+        <label>Flavor List String</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Has_Legal_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Has Legal Approval</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Language</label>
+        <picklist>
+            <picklistValues>
+                <fullName>English</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canadian French</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spanish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>LegacyID__c</fullName>
+        <externalId>true</externalId>
+        <label>LegacyID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Locale__c</fullName>
+        <externalId>false</externalId>
+        <label>Locale</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EN-US</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR-CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PT-BR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-MX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-CO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-CL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-AR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-GB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-IN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Main_Drink_Image_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Main_Drink_Image__r.Image__c</formula>
+        <label>Main Drink Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Main_Drink_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Main Drink Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes</relationshipLabel>
+        <relationshipName>Recipes</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Main_Ingredient_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Main Ingredient Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Main Ingredient Image)</relationshipLabel>
+        <relationshipName>Recipes5</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Master_Recipe__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Master Recipe</label>
+        <referenceTo>Master_Recipe__c</referenceTo>
+        <relationshipLabel>Recipes</relationshipLabel>
+        <relationshipName>Recipes</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Menu_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Menu Description</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>12</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Mobile_Drink_Image_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Mobile_Drink_Image__r.Content_URL__c</formula>
+        <label>Mobile Drink Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Drink_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Mobile Drink Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Mobile Drink Image)</relationshipLabel>
+        <relationshipName>Recipes1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mobile_Selected_Image_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Mobile_Selected_Image__r.Content_URL__c</formula>
+        <label>Mobile Selected Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Selected_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Mobile Selected Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Mobile Selected Image)</relationshipLabel>
+        <relationshipName>Recipes2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mobile_Unselected_Image_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Mobile_Selected_Image__r.Content_URL__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Mobile Unselected Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Unselected_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Mobile Unselected Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Mobile Unselected Image)</relationshipLabel>
+        <relationshipName>Recipes3</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NEO_Recipe_Id__c</fullName>
+        <description>An External Id Field That helps during dataload from external system.</description>
+        <externalId>true</externalId>
+        <label>NEO Recipe Id</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Occasion_List_String__c</fullName>
+        <externalId>false</externalId>
+        <label>Occasion List String</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Occasion_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Occasion Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Celebrations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Theme Parties</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Outdoor Gatherings</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Holidays</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Occasion__c</fullName>
+        <externalId>false</externalId>
+        <label>Occasion</label>
+        <picklist>
+            <controllingField>Occasion_Type__c</controllingField>
+            <picklistValues>
+                <fullName>4th of July</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Anniversary</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>April Fool&apos;s Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Award Show Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Baby Shower</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bachelorette Party</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bachelor Party</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BBQ</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Beach Party</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Before the Bar</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Block Party</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Board Game Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bonfire Party</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Book Club</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bridal Shower</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brunch</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Camping</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Carnival Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Casino Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cinco de Mayo</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clambake</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Class Reunion</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cocktail Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cuban Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Day at the Races</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>December Holidays</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dessert Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Draft Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Election Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Engagement Party</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Family Reunion</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Farewell Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Father&apos;s Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Game Day</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Garden Party</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Girls&apos; Night</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Graduation</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Group Birthday</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guys&apos; Night</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Halloween</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Happy Hour at Home</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Her Birthday</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>His Birthday</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Horse Races</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Housewarming Party</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jewelry Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Karaoke Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Labor Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Luau Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mardi Gras</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Memorial Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mexican Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mother&apos;s Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Motor Sports Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Movie Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nautical Theme Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Year&apos;s Eve</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Picnic</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Poker Night</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pool Party</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retirement Party</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rooftop Party</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>St. Patrick&apos;s Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Stock the Bar Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Summer Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Surprise Party</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tailgating</fullName>
+                <controllingFieldValues>Outdoor Gatherings</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tax Day</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Thanksgiving</fullName>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>The Big Game Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tiki/Tropical Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Toga Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tournament Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tv Night/Tv Season Finale Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Valentine&apos;s Day</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <controllingFieldValues>Holidays</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Victory Party</fullName>
+                <controllingFieldValues>Theme Parties</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wedding Reception</fullName>
+                <controllingFieldValues>Celebrations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Preparation_Steps__c</fullName>
+        <externalId>false</externalId>
+        <label>Preparation Steps</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>12</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Recipe_Color_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Color</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Black</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Blue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brown</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clear</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Green</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pink</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Purple</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>White</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Recipe_Flavor_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Flavor</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Almond</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Apple</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Banana</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cherry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chocolate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cinnamon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Citrus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Coconut</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Coffee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cranberry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ginger</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grapefruit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lemon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lime</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mango</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mint</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nutty</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Passion Fruit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Peach</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pineapple</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pistachio</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pomegranate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Raspberry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salty</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sour</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spicy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Strawberry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vanilla</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>White Grape</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Recipe_Tag__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe_Tag</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipe_Tags__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Tags</label>
+        <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Recipe_Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Title</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipe_Type_List_String__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Type List String</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipe_Type_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Beer-Based</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bloody Marys</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cocktails</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Daiquiris</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Frozen Cocktails</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Good for Groups</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hot Drinks</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lower Calorie</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Luxury Drops</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manhattans</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Margaritas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Martinis - Flavored Vodkas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Martinis - Gin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Martinis - Liqueurs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Martinis - Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Martinis - Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mix It</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mojitos</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Neat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-Alcoholic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Old Fashioneds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On the Rocks</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pour It</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shots</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sours</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Stir It</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wine-Based/ Sangria</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Recipe_Version__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe Version</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ReviewedBy__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ReviewedBy</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Recipes1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Search_Recipe_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Search Recipe Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Search Recipe Image)</relationshipLabel>
+        <relationshipName>RecipesSearch</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Short_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Short Description</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Archive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Thumbnail_Drink_Image_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Thumbnail_Drink_Image__r.Content_URL__c</formula>
+        <label>Thumbnail Drink Image URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Thumbnail_Drink_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Thumbnail Drink Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipes (Thumbnail Drink Image)</relationshipLabel>
+        <relationshipName>Recipes4</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>isSaved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isSaved</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>lastModifiedTime__c</fullName>
+        <externalId>false</externalId>
+        <label>lastModifiedTime</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>recordSaved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>recordSaved</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <label>Recipe</label>
+    <listViews>
+        <fullName>All_Recipes</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>API_External_ID__c</columns>
+        <columns>Main_Drink_Image__c</columns>
+        <columns>Background_Image__c</columns>
+        <columns>Status__c</columns>
+        <columns>Locale__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>0.All Recipes</label>
+    </listViews>
+    <listViews>
+        <fullName>Approved_Recipes</fullName>
+        <columns>LegacyID__c</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>Status__c</columns>
+        <columns>Current_Editor__c</columns>
+        <columns>API_External_ID__c</columns>
+        <columns>Locale__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>recordSaved__c</columns>
+        <columns>Has_Legal_Approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>5.Approved Recipes</label>
+    </listViews>
+    <listViews>
+        <fullName>Archive_Recipes</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Archive</value>
+        </filters>
+        <label>3.Archive Recipes</label>
+    </listViews>
+    <listViews>
+        <fullName>Cuervo_Deletes</fullName>
+        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+        <columns>NAME</columns>
+        <columns>API_External_ID__c</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>API_External_ID__c</field>
+            <operation>contains</operation>
+            <value>R-0016,R-0026,R-0057,R-0207,R-0221,R-0242,R-0262,R-0283,R-0286,R-0290,R-0300</value>
+        </filters>
+        <filters>
+            <field>API_External_ID__c</field>
+            <operation>contains</operation>
+            <value>R-0334,R-0382,R-0399,R-0509,R-0513,R-0525,R-0582,R-0717,R-0925,R-0935,R-0941</value>
+        </filters>
+        <filters>
+            <field>API_External_ID__c</field>
+            <operation>contains</operation>
+            <value>R-0949,R-1037,R-1055,R-1076,R-1101,R-1117,R-1199,R-1200,R-1209,R-1288,R-1390</value>
+        </filters>
+        <filters>
+            <field>API_External_ID__c</field>
+            <operation>contains</operation>
+            <value>R-1408,R-1409,R-1412,R-1432,R-1491,R-1493,R-1512,R-1516,R-1574,R-1607,R-1657</value>
+        </filters>
+        <filters>
+            <field>API_External_ID__c</field>
+            <operation>contains</operation>
+            <value>R-1695,R-1716,R-1717,R-1733,R-1770,R-1772,R-1776,R-1852,R-1854,R-1855,R-1860</value>
+        </filters>
+        <filters>
+            <field>API_External_ID__c</field>
+            <operation>contains</operation>
+            <value>R-1880,R-1997,R-2780,R-5481,R-5504,R-5549,R-5574,R-1278</value>
+        </filters>
+        <label>Cuervo-Deletes</label>
+        <sharedTo>
+            <group>RecipeDB_Users</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Draft_Recipes</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>Current_Editor__c</columns>
+        <columns>Locale__c</columns>
+        <columns>Status__c</columns>
+        <columns>API_External_ID__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </filters>
+        <label>1.Draft Recipes</label>
+    </listViews>
+    <listViews>
+        <fullName>Images</fullName>
+        <columns>NAME</columns>
+        <columns>Main_Drink_Image_URL__c</columns>
+        <columns>Menu_Description__c</columns>
+        <columns>Short_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Images</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Locale_Duplicates</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>lastModifiedTime__c</columns>
+        <columns>Comments__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>LegacyID__c</columns>
+        <columns>Main_Drink_Image__c</columns>
+        <columns>Additional_Image_1__c</columns>
+        <columns>Thumbnail_Drink_Image__c</columns>
+        <columns>Background_Image__c</columns>
+        <columns>Status__c</columns>
+        <columns>Locale__c</columns>
+        <columns>recordSaved__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LegacyID__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>LegacyID__c</field>
+            <operation>notContain</operation>
+            <value>a</value>
+        </filters>
+        <label>Locale Duplicates</label>
+    </listViews>
+    <listViews>
+        <fullName>Pending_Review_Apporve</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Review,Pending Approval</value>
+        </filters>
+        <label>2.Pending Review/Pending Apporve</label>
+    </listViews>
+    <listViews>
+        <fullName>Recently_Created</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterOrEqual</operation>
+            <value>9/25/2012 12:00 AM</value>
+        </filters>
+        <label>Recently Created</label>
+    </listViews>
+    <listViews>
+        <fullName>Recently_Created_Recipes</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>10/8/2012 12:00 AM</value>
+        </filters>
+        <label>Recently Created Recipes</label>
+    </listViews>
+    <listViews>
+        <fullName>Rejected_Recipes</fullName>
+        <columns>NAME</columns>
+        <columns>Recipe_Title__c</columns>
+        <columns>NEO_Recipe_Id__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected</value>
+        </filters>
+        <label>4.Rejected Recipes</label>
+    </listViews>
+    <nameField>
+        <displayFormat>RCP-{0}</displayFormat>
+        <label>Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Recipes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Recipe_Title__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Main_Drink_Image__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Recipe_Title__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Main_Drink_Image__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Recipe_Title__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Main_Drink_Image__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Recipe_Title__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchFilterFields>Main_Drink_Image__c</searchFilterFields>
+        <searchResultsAdditionalFields>Recipe_Title__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Main_Drink_Image__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Add_Image</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Add Image</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://na1.salesforce.com/sfc/#workspaceView?selectedWorkspaceId=05830000000M7hi</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Add_Other_Ingredient</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Add Other Ingredient</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://na1.salesforce.com/a0a/e?retURL=%2Fa0a%2Fo</url>
+        <width>600</width>
+    </webLinks>
+    <webLinks>
+        <fullName>Submit_for_Legal_Approval</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submit for Legal Approval</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>alert(&apos;Under construction.&apos;);</url>
+    </webLinks>
+</CustomObject>

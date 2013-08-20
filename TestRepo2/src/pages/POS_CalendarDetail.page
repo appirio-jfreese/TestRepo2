@@ -1,0 +1,8 @@
+<apex:page controller="POS_CalendarDetail" standardStylesheets="false" showHeader="false" sidebar="false" cache="false">
+<script type="text/javascript">
+	if ({!noCalendar}) {
+		alert('No program details are available for this program');
+	}
+	document.location.href="{!destination}";
+</script>
+</apex:page>

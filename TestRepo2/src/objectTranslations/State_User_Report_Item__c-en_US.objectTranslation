@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>State User Report Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>State User Report Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Segmentation --></label>
+        <name>Account_Segmentation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Accounts --></label>
+        <name>Accounts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Called On Accounts --></label>
+        <name>Called_On_Accounts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key --></label>
+        <name>Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Org ID --></label>
+        <name>New_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Premise --></label>
+        <name>Premise__c</name>
+        <picklistValues>
+            <masterLabel>Off</masterLabel>
+            <translation><!-- Off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On</masterLabel>
+            <translation><!-- On --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Primary Demographic --></label>
+        <name>Primary_Demographic__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+        <relationshipLabel><!-- State User Report Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- State User Report Items --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

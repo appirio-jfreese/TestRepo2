@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>BrandBottle Size</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>BrandBottle Sizes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Bottle Size --></label>
+        <name>Bottle_Size__c</name>
+        <relationshipLabel><!-- BrandBottle Sizes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- BrandBottle Sizes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Migration ID --></label>
+        <name>Migration_ID__c</name>
+    </fields>
+    <layouts>
+        <layout>BrandBottle Size Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

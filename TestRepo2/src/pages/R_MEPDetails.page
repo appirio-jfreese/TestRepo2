@@ -1,0 +1,235 @@
+<!------------------------------------------------------------------------------
+Name        : R_MEPDetails.page
+
+Created By  : Basant Kumar Verma (Appirio OffShore)
+Date        : 7/1/13
+Story/Task  : US585/TA1082
+
+
+Updated By  : Basant Kumar Verma (Appirio OffShore)
+Date        : 7/24/13
+Story/Task  : US685/DE679 
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_MEPDetails" action="{!initTheme}">
+    <body class="mep-landing-page mep-page mep-item-page">
+
+    <div class="wrapper">
+        <div class="container">
+            <!-- PAGE HEADER -->
+            <c:R_PageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" /> <!--thisAvatarURL="{!avatarUrl}"-->
+            <script type="text/javascript">
+                pageViewed('Monthly Execution Plan - Detail Page');
+            </script>
+            
+            <!-- content -->
+            <div class="content clearfix">
+                        
+                <!--  BREADCRUMB -->
+                <apex:outputPanel id="beadcrumblinks">
+                    <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+                </apex:outputPanel>
+                
+                <div class="content intro-page-bg left {!if(ISNULL(siteTheme),'hidden','')}">
+                    <apex:form >
+                        <apex:outputPanel id="messages">
+                            <apex:messages styleClass="errorMessagesList" />
+                        </apex:outputPanel>
+                        
+                        <apex:actionFunction name="renderAsListSlider" action="{!renderAsListSlider}" rerender="messages, sliderContentItemsBxLs" onComplete="jqTransformScript(); sectionVisibility();"/>
+                        <apex:actionFunction name="renderAsBoxSlider" action="{!renderAsBoxSlider}" rerender="messages, sliderContentItemsBxLs" onComplete="jqTransformScript(); sectionVisibility();"/>
+                        
+                        <apex:outputPanel rendered="{! if( detailId != null, 'true','false' )}" id="pageContent">
+                            <div class="button-line five-btns">
+                                <!-- START : Added width to make it use full screen size, for US685/DE679 - Basant -->
+                                <a style="width: 23.954514501%" href="javascript:;" class="mep-bg active section-options">Overview</a>
+                                <!-- END : Added width to make it use full screen size, for US685/DE679 - Basant -->
+                                <apex:repeat value="{!detailsMapOrder}" var="silderSection">
+                                		<!-- START : Added width to make it use full screen size, for US685/DE679 - Basant -->
+                                    <a style="width: 23.954514501%" href="javascript:;" class="mep-bg section-options {!if(silderSection == 'Media', 'mediaPage', '')}">{!silderSection}</a>
+                                    <!-- END : Added width to make it use full screen size, for US685/DE679 - Basant -->
+                                </apex:repeat>
+                                <!-- START : Commented for now, for US685/DE679 - Basant -->
+																	<!-- <a href="javascript:;" class="mep-bg last section-options">Goals</a> -->
+                                <!-- EEND : Commented for now, for US685/DE679 - Basant -->
+                            </div>
+                            
+                            <h2 class="with-select with-small">
+                                <span class="title">
+                                    {!mepItem.name}<br/> 
+                                    <small>{!salesDriverDescription} {!dateDescription}</small>
+                                </span>
+                                <a href="{!$Page.R_MonthlyExecutionPlan}" class="mep-bg right-btn back-btn">Back</a>
+                            </h2>
+                            
+                            <!-- Overview section -->
+                            <div class="story overview-Section Overview-Section mep-Section-Blok noContent">
+                                <div class="image">
+                                    <img src="{!styleBackgroundLogoImage}"/>
+                                </div>
+                                <div class="p">
+                                    <apex:outputtext escape="false" value="{!description}"/>
+                                </div>
+                            </div>
+                            <!-- End of Overview section -->
+                            
+                            <!-- slider section -->
+                            <apex:outputPanel id="sliderContentItemsBxLs">
+                            <c:R_OperationLines showPages="false" renderAsList="{!displayAsList}" R_MultInFollow="{!R_MultInFollowWithselAll}" pageNamePrefix="mep" allowRemoveBasket="false" allowAddBasket="true" allowUnfollow="false" allowFollow="true">
+                    <div class="doc-list">
+                        <div class="list-view">
+                            <apex:repeat value="{!detailsMapOrder}" var="silderSection">                    
+                                <apex:outputPanel rendered="{!if(detailsMapSize[silderSection] != 0, 'true','false')}" styleClass="{!silderSection}-Section mep-Section-Blok">
+                                    <apex:variable value="" var="currentSubSubCategory"/>
+                                    <apex:repeat value="{!contentHolderMap[silderSection]}" var="calendarItm">
+                                                    <apex:outputPanel rendered="{!IF(currentSubSubCategory != calendarItm.result['Sub_Sub_Category__c'],'true','false')}">
+                                                        <!-- START : Modified By Basant : Grid view get distorted -->
+                                                        <div class="list-view">
+                                                            <h6>{!calendarItm.result['Sub_Sub_Category__c']}</h6>
+                                                        </div>
+                                                        <!-- END : Modified By Basant : Grid view get distorted -->
+                                                    </apex:outputPanel>
+                                                    
+                                                    <apex:variable value="{!calendarItm.result['Sub_Sub_Category__c']}" var="currentSubSubCategory" rendered="{!!ISNULL(calendarItm.result['Sub_Sub_Category__c'])}"/>
+                                                    <apex:outputPanel styleClass="ListViewContents hidden">
+                                                        <c:R_contentItem pageNamePrefix="mep" followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!calendarItm}" renderAsList="true" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true"/>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel styleClass="GridViewContents hidden">
+                                                        <c:R_contentItem pageNamePrefix="mep" followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!calendarItm}" renderAsList="false" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true"/>
+                                          </apex:outputPanel>
+                                                </apex:repeat>
+                                                <c:R_pagination showPager="false" totalNumberOfPages="{!numberOfPages}" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="{!numberOfCurrentPage}" />
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!if(detailsMapSize[silderSection] == 0, 'true','false')}" styleClass="{!silderSection}-Section mep-Section-Blok noContent">
+                                                <div class="story without-image">
+                                    <div class="p">
+                                        <p>
+                                        No Content
+                                      </p>
+                                    </div>
+                                    </div>
+                                            </apex:outputPanel>
+                                        </apex:repeat>
+                                    </div>
+                                </div>
+                            	</c:R_OperationLines>
+                            </apex:outputPanel>
+                            
+                            
+                            <!-- goals section -->
+                            <!-- START : Commented for now, for US685/DE679 - Basant -->                           
+                            <!-- <div class="story without-image Goals-Section mep-Section-Blok noContent">
+                                <div class="p">
+                                    <p>
+	                                        Program Goals can be found in the Goals folder in <a href="javascript:;">Collaboration</a>.
+                                    </p>
+                                </div>          
+                            </div> -->
+                            <!-- END : Commented for now, for US685/DE679 - Basant -->
+                            <!-- end of goals section -->
+                        </apex:outputPanel>
+                    </apex:form>
+                </div>
+            </div>
+            <c:R_pageFooter isInternal="{!isInternalUser }" />
+        </div>
+    </div>
+    </body>
+    <apex:form >
+    		
+        <apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages" onComplete="bindUserAutoComplete();sectionVisibility();showModalPopup();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages" onComplete="bindUserAutoComplete();sectionVisibility();showModalPopup();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction> 
+        <apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentFollowedItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentFollowedItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentFollowedItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+            <apex:param name="selAll" assignTo="{!R_MultInFollowWithselAll}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentFollowedItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems" onComplete="jqTransformScript(); sectionVisibility();">
+        		<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+            <apex:param name="selAll" assignTo="{!R_MultInFollowWithselAll}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+
+    <div id="moreInfo" class="hidden dialog" >
+        <apex:outputPanel id="overviewDialog">
+            <c:R_overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+        </apex:outputPanel>        
+    </div>
+        
+    <div id="shareInfo">
+        <apex:outputPanel id="shareDialog">         
+            <c:R_share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div> 
+        
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/docKeyDown4DetailPage.js')}"></script>
+    <!-- <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/commonFunctions.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/common4DetailPage.js')}"></script> -->
+    <!-- START : New Script Added -->
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/R_DetailPages.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/contentItemCheckBox.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/sectionOptions.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/contentViewMode.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/contentViewShare.js')}"></script>
+    <script type="text/javascript">
+    /*****************************************************************************
+                START : THIS JAVASCRIPT MUST BE IN PAGE ITSELF
+    *****************************************************************************/
+    /*****************************************************************************
+            MUST BE PROVIDE THIS VARIABLE IN PAGE ITSELF 
+            - IT IS ENABLE US TO USE A COMMON JS FOR MULTIPLE PAGES
+    *****************************************************************************/
+    var pageNamePrefix = "mep";
+    // Add class in Body so Responsive_Base/js/script.js can work on this page
+    //jQuery(document.body).addClass(pageNamePrefix+'-landing-page').addClass(pageNamePrefix+'-page').addClass(pageNamePrefix+'-item-page');
+    /*****************************************************************************
+                END : THIS JAVASCRIPT MUST BE IN PAGE ITSELF
+    *****************************************************************************/
+    </script>
+    <!-- END : New Script Added -->
+    
+    <!-- Start : New CSS Added -->
+    <style type="text/css">
+        .hidden {
+            display: none;
+        }
+        div.moreInfoError{
+            background: #ffffff; /* Old browsers */
+            font-family: Tahoma, Arial; 
+        }
+        
+        
+        .errorMessagesList{
+            padding:    10px;
+            margin:     0px;
+            text-align:     left;
+            font-weight:    bold;
+            color:          #dd0000;
+            list-style-type: none;
+            font-size:      12px;
+        }
+    </style>
+    <!-- End : New CSS Added -->
+    
+    
+</apex:page>

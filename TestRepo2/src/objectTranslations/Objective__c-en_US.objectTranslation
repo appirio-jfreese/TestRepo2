@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Objective</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Objectives</value>
+    </caseValues>
+    <fields>
+        <label><!-- BrandBottle Size --></label>
+        <name>BrandBottle_Size__c</name>
+        <relationshipLabel><!-- Objectives --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cases Displayed --></label>
+        <name>Cases_Displayed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- General Goal --></label>
+        <name>General_Goal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link to Content --></label>
+        <name>Link_to_Content__c</name>
+    </fields>
+    <fields>
+        <help><!-- Optional
+A = Front end cap, main lobby, checkout 
+B = Back of store, isle display, mid end cap 
+C = Others --></help>
+        <label><!-- Location Grade --></label>
+        <name>Location_Grade__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Migration ID --></label>
+        <name>Migration_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Number of Accounts --></label>
+        <name>Minimum_Number_of_Accounts__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Attendees --></label>
+        <name>Number_of_Attendees__c</name>
+    </fields>
+    <fields>
+        <label><!-- Objective Reporting Type --></label>
+        <name>Objective_Reporting_Type__c</name>
+        <picklistValues>
+            <masterLabel>Display</masterLabel>
+            <translation><!-- Display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ease of Shop</masterLabel>
+            <translation><!-- Ease of Shop --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General</masterLabel>
+            <translation><!-- General --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SFA POS Items --></label>
+        <name>SFA_POS_Items__c</name>
+        <picklistValues>
+            <masterLabel>VAP</masterLabel>
+            <translation><!-- VAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>banner</masterLabel>
+            <translation><!-- banner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>case card</masterLabel>
+            <translation><!-- case card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>case card-DGUSA</masterLabel>
+            <translation><!-- case card-DGUSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>case stacker</masterLabel>
+            <translation><!-- case stacker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>case tucker</masterLabel>
+            <translation><!-- case tucker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ceiling dangler</masterLabel>
+            <translation><!-- ceiling dangler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>coasters</masterLabel>
+            <translation><!-- coasters --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>condiment tray</masterLabel>
+            <translation><!-- condiment tray --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>contravision</masterLabel>
+            <translation><!-- contravision --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>corebuff</masterLabel>
+            <translation><!-- corebuff --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>counter card</masterLabel>
+            <translation><!-- counter card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>counter unit</masterLabel>
+            <translation><!-- counter unit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>coupon</masterLabel>
+            <translation><!-- coupon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>decal</masterLabel>
+            <translation><!-- decal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>display</masterLabel>
+            <translation><!-- display --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>glassware</masterLabel>
+            <translation><!-- glassware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>gutter mat</masterLabel>
+            <translation><!-- gutter mat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>hats</masterLabel>
+            <translation><!-- hats --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>key rings</masterLabel>
+            <translation><!-- key rings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>lapel pins</masterLabel>
+            <translation><!-- lapel pins --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>napkin</masterLabel>
+            <translation><!-- napkin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>napkin holder</masterLabel>
+            <translation><!-- napkin holder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>necker</masterLabel>
+            <translation><!-- necker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>one case bin</masterLabel>
+            <translation><!-- one case bin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>other</masterLabel>
+            <translation><!-- other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pennant string</masterLabel>
+            <translation><!-- pennant string --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pens</masterLabel>
+            <translation><!-- pens --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>permanent display piece</masterLabel>
+            <translation><!-- permanent display piece --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pole topper</masterLabel>
+            <translation><!-- pole topper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>poster</masterLabel>
+            <translation><!-- poster --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>premiums</masterLabel>
+            <translation><!-- premiums --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>price spot</masterLabel>
+            <translation><!-- price spot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>print</masterLabel>
+            <translation><!-- print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>promoflex</masterLabel>
+            <translation><!-- promoflex --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>rack</masterLabel>
+            <translation><!-- rack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>shelf strip</masterLabel>
+            <translation><!-- shelf strip --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>shelf talker</masterLabel>
+            <translation><!-- shelf talker --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>shelf violator</masterLabel>
+            <translation><!-- shelf violator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>shelf wobbler</masterLabel>
+            <translation><!-- shelf wobbler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>standee</masterLabel>
+            <translation><!-- standee --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>table tent</masterLabel>
+            <translation><!-- table tent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>take one</masterLabel>
+            <translation><!-- take one --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>tasting card</masterLabel>
+            <translation><!-- tasting card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>tear pads</masterLabel>
+            <translation><!-- tear pads --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>wait staff mat</masterLabel>
+            <translation><!-- wait staff mat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>wearables</masterLabel>
+            <translation><!-- wearables --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Standard Required --></label>
+        <name>Standard_Required__c</name>
+    </fields>
+    <fields>
+        <help><!-- “The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party.” --></help>
+        <label><!-- Suggested Display Price --></label>
+        <name>Suggested_Display_Price__c</name>
+    </fields>
+    <fields>
+        <help><!-- “The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party.” --></help>
+        <label><!-- Suggested Shelf Price --></label>
+        <name>Suggested_Shelf_Price__c</name>
+    </fields>
+    <layouts>
+        <layout>Display Objective</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Display Detail --></label>
+            <section>Display Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distribution Objective</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Distribution Detail --></label>
+            <section>Distribution Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Ease of Shop Objective</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Ease of Shop Detail --></label>
+            <section>Ease of Shop Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>General Objective</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Objective Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Training Objective</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Training Detail --></label>
+            <section>Training Detail</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Display Objective --></label>
+        <name>Display_Objective</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Distribution Objective --></label>
+        <name>Distribution_Objective</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Ease of Shop Objective --></label>
+        <name>Ease_of_Shop_Objective</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- General Objective --></label>
+        <name>General_Objective</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Staff Training Objective --></label>
+        <name>Training_Objective</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

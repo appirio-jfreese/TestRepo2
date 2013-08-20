@@ -1,0 +1,248 @@
+<apex:page standardController="Account" extensions="Controller_ShareReporting" sidebar="false" showHeader="false">
+	<script>
+		function switchMenu(obj,obj1,obj2) {
+		    var el = document.getElementById(obj);                                       
+		    if ( el.style.display != 'none' ) {
+		    el.style.display = 'none';
+		    }
+		    else {
+		    el.style.display = '';
+		    }
+		    var e2 = document.getElementById(obj1);                                       
+		    if ( e2.style.display != 'none' ) {
+		    e2.style.display = 'none';
+		    }
+		    else {
+		    e2.style.display = '';
+		    }
+		     var e3 = document.getElementById(obj2);                                       
+		    if ( e2.style.display != 'none' ) {
+		    e3.style.display = 'none';
+		    }
+		    else {
+		    e3.style.display = '';
+		    }
+		}
+	</script> 
+  
+	<script src="{!URLFOR($Resource.Sortable,'/blue/jquery-latest.js')}"/>
+	<script src="{!URLFOR($Resource.Sortable,'/blue/jquery.tablesorter.min.js')}"/>
+	
+	<style type="text/css">
+	
+	    .totalRow  {
+			text-align:right;
+	    }
+	    .headAlign{
+			text-align:right;
+	    }
+	    .datealign{
+			color: #222222;
+			font-family: Arial,Helvetica,sans-serif;
+			font-size: 75%;
+	    }
+	    .timestampStyle{
+			left: 250px;
+			position: absolute;
+			top: 15px;
+			font-size: 1.1em;
+	    }
+	    .negativeNumeric{
+	    	color: red;
+	    }
+	</style>    
+	     
+	<apex:actionStatus id="theStatus">
+		<apex:facet name="start">
+			<apex:image value="/img/loading.gif" Style="left: 350px;position: absolute;top: 12px;"/>
+		</apex:facet>
+	</apex:actionStatus>
+
+	<apex:form >
+		<apex:pageBlock id="thePageBlock" title="Share Reporting - Top 10">
+		<apex:pageMessages />
+		<span class="timestampStyle">
+			<b>{!monthYear}</b>
+		</span>
+			      
+		<script language="javascript" type="text/javascript">
+		            $(document).ready(function(){
+		                  //important to specify the sorting param otherwise it wont always choose the 'correct' one
+		                  $("table").tablesorter({
+		                    headers: {
+		                        0: {sorter: 'text'},
+		                        1: {sorter: 'digit'},
+		                        2: {sorter: 'digit'},
+		                        3: {sorter: 'digit'},
+		                        4: {sorter: 'digit'},
+		                        5: {sorter: 'digit'}                        
+		                    }
+		                });
+		            });   
+		            
+		</script> 
+		
+		<!-- The FILTER panel -->
+		<apex:outputPanel rendered="{!ShowList}">
+			
+			<!-- VENDOR or CATEGORY -->
+			<apex:outputLabel value="Filter By"/>&nbsp;
+			<apex:selectList size="1" value="{!SelectedGroup}" >
+				<apex:selectOptions value="{!groupByOptions}"/>
+				<apex:actionSupport event="onchange"
+									action="{!setBevTypeToSpirits}"
+									rerender="typePanel"/>
+			</apex:selectList>
+			
+			<!-- TOP 10 or BOTTOM 10 -->
+			<!-- &nbsp;<apex:outputLabel value="Show"/>&nbsp;
+			<apex:selectList size="1" value="{!selectedRecords}" >
+				<apex:selectOptions value="{!selectedRecordsOptions}"/>
+			</apex:selectList> -->
+			
+			<!-- START DATE for date range -->
+			&nbsp;<apex:outputLabel value="Date Start"/>&nbsp;
+			<apex:selectList size="1" value="{!selectedMonth}">
+				<apex:selectOptions value="{!startDateOptions}"/>
+			</apex:selectList>
+			
+			<!-- CURRENT YEAR, FISCAL YEAR or LAST 12 MONTHS -->
+			&nbsp;<apex:outputLabel value="Date Range"/>&nbsp;
+			<apex:selectList size="1" value="{!dateRange}" >
+				<apex:selectOptions value="{!dateRangeOptions}"/>
+			</apex:selectList>
+			
+			<!-- ALL, SPIRITS or WINES -->
+			&nbsp;<apex:outputLabel value="Spirits/Wines"/>&nbsp;
+			<apex:outputPanel id="typePanel">
+				<apex:selectList size="1" value="{!beverageType}" >
+					<apex:selectOptions value="{!BeverageTypeOptions}"/>
+				</apex:selectList>
+			</apex:outputPanel>
+			
+			<!-- VOLUME or SHELF DOLLAR -->
+			&nbsp;<apex:outputLabel value="Dollar/Volume" for="measurementType"/>&nbsp;
+			<apex:selectList id="measurementType" size="1" value="{!measurementType}" label="Dollar/Volume">
+				<apex:selectOptions value="{!measurementOptions}"/>
+			</apex:selectList>
+			
+			<apex:commandButton value="Go" action="{!getData}" rerender="thePageBlock" status="theStatus"/>
+		</apex:outputPanel>
+		
+		<!-- The RESULTS panel -->
+		<apex:pageBlockTable value="{!TableRowlist}" var="BRVar" id="tablesorter" styleclass="tablesorter" rendered="{!ShowList}">
+            <!-- The CATEGORY column.  This column includes children rows. -->
+            <!-- Either this panel or the VENDOR column will be displayed  -->
+            <!-- The logic for both columns is pretty much identical       -->
+			<apex:column rendered="{!showCategory}">
+				<apex:facet name="header" >Category Name</apex:facet>
+				<apex:outputpanel id="plusimage">
+					<apex:image url="{!$Resource.Plus_Image}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.minusimage}','{!$Component.plusimage}')" title="Expand - Team Member's"/> 
+				</apex:outputpanel>
+				<apex:outputpanel id="minusimage" style="display:none;">
+					<apex:image url="{!$Resource.Minus_image}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.plusimage}','{!$Component.minusimage}')" title="Collapse - Team Member's"/>
+				</apex:outputpanel>
+				<apex:outputLabel value="{!BRVar.brandName}"></apex:outputLabel>
+				<apex:outputpanel id="inlinetablesec" style="display:none;">
+					<apex:variable value="{!0}" var="rowNum"/>
+					<apex:repeat var="count" value="{!BRVar.expandedBrandRow}">
+						<apex:variable var="rowNum" value="{!rowNum+1}"/>
+					</apex:repeat>
+					<apex:outputText rendered="{!rowNum=0}">  No Data  </apex:outputText>
+					
+					<apex:pageblocktable value="{!BRVar.expandedBrandRow}" var="tm" rendered="{!rowNum>0}" id="tablesorter" styleclass="tablesorter">
+						<apex:column headerValue="Brand Name" value="{!tm.BrandName}"/>
+						<apex:column headerValue="{!brandExpansionHeader}" value="{!tm.expandedShelfDollardata}" style="text-align:right;" headerClass="headAlign"/>      
+						<apex:column headerValue="% Change" style="text-align:right;" headerClass="headAlign">
+							<apex:outputPanel rendered="{!tm.perCentChange == 100.00}" >NA</apex:outputPanel>
+							<apex:outputPanel rendered="{!tm.perCentChange >= 0 && tm.perCentChange != 100}" >{!TEXT(ROUND(tm.perCentChange,0))}</apex:outputPanel>
+							<apex:outputPanel rendered="{!tm.perCentChange < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(tm.perCentChange,0))}</apex:outputPanel>
+						</apex:column>   
+						<apex:column headerValue="Share" style="text-align:right;" headerClass="headAlign">
+							{!TEXT(Round(tm.share,2))}
+						</apex:column>     
+						<apex:column headerValue="Share Change" style="text-align:right;" headerClass="headAlign">
+							<apex:outputPanel rendered="{!tm.PercentChangeShare >= 0}" >{!TEXT(ROUND(tm.PercentChangeShare,2))}</apex:outputPanel>
+							<apex:outputPanel rendered="{!tm.PercentChangeShare < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(tm.PercentChangeShare,2))}</apex:outputPanel>
+						</apex:column>             
+					</apex:pageblocktable>
+				</apex:outputpanel>   
+				<apex:facet name="footer">Total</apex:facet>
+			</apex:column>
+
+            <!-- The VENDOR column.  This column includes children rows. -->
+            <!-- Either this panel or the CATEGORY column will be displayed  -->
+            <!-- The logic for both columns is pretty much identical       -->
+			<apex:column rendered="{!showCategory==false}">
+				<apex:facet name="header" >Vendor Name</apex:facet>
+				<apex:outputpanel id="plusimage2">
+					<apex:image url="{!$Resource.Plus_Image}" onclick="switchMenu('{!$Component.inlinetablesec2}','{!$Component.minusimage2}','{!$Component.plusimage2}')" title="Expand - Team Member's"/> 
+				</apex:outputpanel>
+				<apex:outputpanel id="minusimage2" style="display:none;">
+					<apex:image url="{!$Resource.Minus_image}" onclick="switchMenu('{!$Component.inlinetablesec2}','{!$Component.plusimage2}','{!$Component.minusimage2}')" title="Collapse - Team Member's"/>
+				</apex:outputpanel>
+				<apex:outputLabel value="{!BRVar.brandName}"></apex:outputLabel>
+				<apex:outputpanel id="inlinetablesec2" style="display:none;">
+					<apex:variable value="{!0}" var="rowNum"/>
+					<apex:repeat var="count" value="{!BRVar.expandedBrandRow}">
+						<apex:variable var="rowNum" value="{!rowNum+1}"/>
+					</apex:repeat>
+					<apex:outputText rendered="{!rowNum=0}">  No Data  </apex:outputText>
+					
+					<apex:pageblocktable value="{!BRVar.expandedBrandRow}" var="tm" rendered="{!rowNum>0}" id="tablesorter2" styleclass="tablesorter">
+						<apex:column headerValue="Brand Name" value="{!tm.BrandName}"/>
+						<apex:column headerValue="{!brandExpansionHeader}" value="{!tm.expandedShelfDollardata}" style="text-align:right;" headerClass="headAlign"/>      
+						<apex:column headerValue="% Change" style="text-align:right;" headerClass="headAlign">
+							<apex:outputPanel rendered="{!tm.perCentChange == 100.00}" >NA</apex:outputPanel>
+							<apex:outputPanel rendered="{!tm.perCentChange >= 0 && tm.perCentChange != 100}" >{!TEXT(ROUND(tm.perCentChange,0))}</apex:outputPanel>
+							<apex:outputPanel rendered="{!tm.perCentChange < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(tm.perCentChange,0))}</apex:outputPanel>
+						</apex:column>   
+						<apex:column headerValue="Share" style="text-align:right;" headerClass="headAlign">
+							{!TEXT(Round(tm.share,2))}
+						</apex:column>     
+						<apex:column headerValue="Share Change" style="text-align:right;" headerClass="headAlign">
+							<apex:outputPanel rendered="{!tm.PercentChangeShare >= 0}" >{!TEXT(ROUND(tm.PercentChangeShare,2))}</apex:outputPanel>
+							<apex:outputPanel rendered="{!tm.PercentChangeShare < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(tm.PercentChangeShare,2))}</apex:outputPanel>
+						</apex:column>             
+					</apex:pageblocktable>
+				</apex:outputpanel>   
+				<apex:facet name="footer">Total</apex:facet>
+			</apex:column>
+
+			<!-- The VOLUME or DOLLAR AMOUNT column -->
+			<apex:column headerValue="{!volumeHeader}"  style="text-align:right;" headerClass="headAlign">
+				<apex:facet name="footer">{!groupedquerytotal}</apex:facet>   
+				{!BRVar.shelfdollardata}
+			</apex:column>
+			
+			<!-- The PERCENT CHANGE column -->
+			<apex:column headerValue="% Change" style="text-align:right;" headerClass="headAlign">
+				<apex:facet name="footer"><!-- {!ROUND(totalPercentChange,2)} -->
+					<apex:outputPanel rendered="{!totalPercentChange == 100.00}" >NA</apex:outputPanel>
+					<apex:outputPanel rendered="{!totalPercentChange != 100}" >{!TEXT(ROUND(totalPercentChange,0))}</apex:outputPanel>
+				</apex:facet>
+				<apex:outputPanel rendered="{!BRVar.perCentChange == 100.00}" >NA</apex:outputPanel>
+				<apex:outputPanel rendered="{!BRVar.perCentChange >= 0 && BRVar.perCentChange != 100.00}" >{!TEXT(ROUND(BRVar.perCentChange,0))}</apex:outputPanel> 
+				<apex:outputPanel rendered="{!BRVar.perCentChange < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(BRVar.perCentChange,0))}</apex:outputPanel>
+			</apex:column>
+			
+			<!-- The SHARE column -->
+			<apex:column headerValue="Share" style="text-align:right;" headerClass="headAlign">
+				{!Round(BRVar.share,2)}
+			</apex:column>
+			
+			<!-- The SHARE CHANGE column -->
+			<apex:column headerValue="Share Change" style="text-align:right;" headerClass="headAlign"> 
+				<apex:outputPanel rendered="{!BRVar.PercentChangeShare < 0}" styleclass="negativeNumeric">{!TEXT(Round(BRVar.PercentChangeShare,2))}</apex:outputPanel>
+				<apex:outputPanel rendered="{!BRVar.PercentChangeShare > 0}">{!TEXT(Round(BRVar.PercentChangeShare,2))}</apex:outputPanel>
+			</apex:column>
+			
+		</apex:pageBlockTable>
+		   
+		<apex:pageBlockSection rendered="{!NOT(ShowList)}">
+		No vendor sharing data found to display.
+		</apex:pageBlockSection>
+		</apex:pageblock>
+	</apex:form>
+	 
+</apex:page>

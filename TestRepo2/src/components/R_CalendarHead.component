@@ -1,0 +1,54 @@
+<!------------------------------------------------------------------------------
+Name        : R_CalendarHead.component
+Modified By : Parul Gupta (Appirio OffShore)
+Date		: 7/8/13
+Description	: Integrated calendarHead widget
+------------------------------------------------------------------------------->
+<apex:component controller="Controller_Base">
+<apex:attribute name="monthName" description="Month name to Display" type="string" required="true"/>
+<apex:attribute name="pageCls" description="Month name to Display" type="string" required="true"/>
+<apex:attribute name="selYear" description="Selected Year in Calendar" type="string" required="true"/>
+<apex:attribute name="selMonth" description="Selected Month in Calendar" type="string" required="true"/>
+<apex:attribute name="mnthCounter" description="Counter used for setting visibility" type="integer" required="true"/>
+
+    <!--  START :: Calendar-Head -->
+    <div class="calendar-head">
+     <a href="javascript:void(0);" onclick="previousMonth();" class="prev {!pageCls}" style="visibility: {!IF(mnthCounter==1,'visibile','hidden')};">
+         <span></span>
+     </a>          
+        <a href="javascript:void(0);" class="date {!IF(mnthCounter==1,'with-dropdown','')}">{!monthName}</a>               
+     <a href="javascript:void(0);" onclick="nextMonth();" class="next {!pageCls}" style="visibility: {!IF(mnthCounter==1,'visibile','hidden')};">
+         <span></span>
+     </a>
+    
+        <!--  START :: Popover Section -->
+        <div class="popover" style="visibility: {!IF(mnthCounter==1,'visibile','hidden')};">
+        <apex:outputPanel id="popoverPanel">
+        
+            <div class="select">
+                <a href="javascript:void(0);" onclick="popoverPrev();" class="">Prev</a>
+                <apex:selectList value="{!selMonth}" size="1" styleClass="selMonth">
+                    <apex:selectOptions value="{!monthOptions}"/>
+                </apex:selectList>
+                <apex:selectList value="{!selYear}" size="1" styleClass="selYear">
+                    <apex:selectOptions value="{!yearOptions}"/>
+                </apex:selectList>                      
+                <a href="javascript:void(0);" onclick="popoverNext();" >Next</a>
+            </div>
+            <div class="buttons">
+                <a href="javascript:;" class="{!pageCls} " onclick="setTodayDate();">Today</a>
+                <a href="javascript:;" class="{!pageCls} close-btn">Close</a>
+                <a href="javascript:;" class="{!pageCls} select-btn" 
+                onclick="setSelectedCalender(this);">
+                Select
+                </a>
+            </div>
+        </apex:outputPanel>
+        </div>
+        <!--  END :: Popover Section -->
+    </div>
+    <!--  END :: Calendar-Head -->
+    
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/CalendarJQ.js')}"></script>
+</apex:component>

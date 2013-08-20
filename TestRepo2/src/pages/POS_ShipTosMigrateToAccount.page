@@ -1,0 +1,20 @@
+<apex:page controller="POS_ShipTosMigrateToAccount">
+
+    <apex:pageBlock title="Move Ship Tos">
+        Ship To(s):
+        <ul>
+            <apex:repeat value="{!shipTos}" var="shipTo">
+                <li>{!shipTo['Name']}</li>
+            </apex:repeat>
+        </ul>
+        <br />
+        <apex:pageMessages />    
+        <apex:form >
+            Select An Account:
+            <apex:inputField value="{!st.Account__c}"/>
+            <br />
+            <apex:commandButton action="{!doTransfers}" value="Move to this account"/>
+        </apex:form>
+        
+    </apex:pageBlock>    
+</apex:page>

@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>POS Project: object that represents catalog items available for shopping</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Agency_Item_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Agency Item ID</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Name_Sharing_Rule__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Name (Sharing Rule)</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Agency__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Agency Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Items</relationshipLabel>
+        <relationshipName>Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Brand_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Program__r.Brand__r.Category__c)</formula>
+        <label>Brand Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Brand_Classification__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Program__r.Brand__r.Classification__c)</formula>
+        <label>Brand Classification</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Brand_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Brand Count</label>
+        <summaryForeignKey>Item_Brand__c.Item__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Brand__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Brand_Count__c &lt; 1, &quot;&quot;, IF(Program__r.Brand__r.Portfolio_Brand__c, &quot;Portfolio&quot;, Program__r.Brand__r.Name))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Brand</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Calendar__c</fullName>
+        <externalId>false</externalId>
+        <formula>Program__r.Calendar__r.Name</formula>
+        <label>Calendar</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Regular</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-Alcohol</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tray Pack</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dummy Bottles</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Channel__c</fullName>
+        <externalId>false</externalId>
+        <label>Channel</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Off-premise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On-premise</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Current_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Price</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Marketing_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Item_Category__r.Customer_Marketing_Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Marketing Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>2000</length>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Estimated_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Price</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Estimated_Shipping_Tax__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Shipping/Tax %</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Gang__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Gang</label>
+        <referenceTo>Gang__c</referenceTo>
+        <relationshipLabel>Items</relationshipLabel>
+        <relationshipName>Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Generic_Brand__c</fullName>
+        <externalId>false</externalId>
+        <formula>Program__r.Brand__r.Generic_Brand__c</formula>
+        <label>Generic Brand</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Incremental_Charges__c</fullName>
+        <externalId>false</externalId>
+        <label>Incremental Charges</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Item_Category_Friendly_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Category__r.Friendly_Name__c</formula>
+        <label>Item Category Friendly Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_Category__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item Category</label>
+        <referenceTo>Item_Category__c</referenceTo>
+        <relationshipLabel>Items</relationshipLabel>
+        <relationshipName>Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Item_ID__c</fullName>
+        <displayFormat>ITM-{00000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Item ID</label>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Kit_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Kit Only</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Magento_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Magento ID</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Magento_Option_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Magento Option ID</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Material_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Category__r.Material_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Material Code</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Minimum Quantity</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>On_Allocation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>On Allocation</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order_Window_Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Program__r.Order_Window__r.Order_Close_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Window Close Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Order_Window_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Program__r.Order_Window__c</formula>
+        <label>Order Window ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Window_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Program__r.Order_Window__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Window Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order_Window_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Program__r.Order_Window__r.Order_Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Window Start Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Order_Window_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Program__r.Order_Window__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Window Status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packout_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Packout Quantity</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent</label>
+        <referenceTo>Item__c</referenceTo>
+        <relationshipLabel>Item Variations</relationshipLabel>
+        <relationshipName>Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Group__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Item_Category__r.Primary_Group__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Primary Group</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Primary_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Item_Category__r.Primary_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Primary Type</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Image_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Image URL</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Product_Image__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Product_Image_URL__c), &quot;&quot;, HYPERLINK(Product_Image_URL__c, IMAGE(Product_Image_URL__c, Name , 60, 60), &quot;_blank&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Image</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Program</label>
+        <referenceTo>Program__c</referenceTo>
+        <relationshipLabel>Items</relationshipLabel>
+        <relationshipName>Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RecordType_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>RecordType Name</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Channel_Group__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(TRIM(IF(INCLUDES(Program__r.Sales_Channel_Group__c , &quot;Execution Plan&quot; ) , &quot;Execution Plan  &quot;, &quot;&quot;) &amp;
+IF(INCLUDES(Program__r.Sales_Channel_Group__c , &quot;Flow Visibility&quot; ) , &quot;Flow Visibility  &quot;, &quot;&quot;) &amp;
+IF(INCLUDES(Program__r.Sales_Channel_Group__c , &quot;Multicultural&quot; ) , &quot;Multicultural  &quot;, &quot;&quot;) &amp;
+IF(INCLUDES(Program__r.Sales_Channel_Group__c , &quot;VAP&quot; ) , &quot;VAP  &quot;, &quot;&quot;)), &quot;  &quot;, &quot;, &quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales Channel Group</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Driver__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Program__r.Sales_Driver__c)</formula>
+        <label>Sales Driver</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Development</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved w/Est Price</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accepted w/Final Price</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Removed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Item</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Product_Image__c</columns>
+        <columns>Item_ID__c</columns>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Brand__c</columns>
+        <columns>Program__c</columns>
+        <columns>Order_Window_Name__c</columns>
+        <columns>Order_Window_Start_Date__c</columns>
+        <columns>Order_Window_Close_Date__c</columns>
+        <columns>Current_Price__c</columns>
+        <columns>Packout_Quantity__c</columns>
+        <columns>Agency_Name__c</columns>
+        <columns>Agency_Item_ID__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>November_WBS_View</fullName>
+        <columns>Program__c</columns>
+        <columns>NAME</columns>
+        <columns>Agency__c</columns>
+        <columns>Channel__c</columns>
+        <columns>Status__c</columns>
+        <columns>Kit_Only__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Order_Window_Name__c</field>
+            <operation>equals</operation>
+            <value>November Monthly Portal - H2 F&apos;13</value>
+        </filters>
+        <label>November WBS View</label>
+    </listViews>
+    <nameField>
+        <label>Item Name</label>
+        <type>Text</type>
+    </nameField>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IQkMAM_00NZ0000000IOPpMAO</fullName>
+        <active>true</active>
+        <errorMessage>The selected parent must be a Roll-Up item</errorMessage>
+        <field>Item__c.Parent__c</field>
+        <filterItems>
+            <field>Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Roll-Up</value>
+        </filterItems>
+        <filterItems>
+            <field>Item__c.Kit_Only__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Item_Parent</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IR4MAM_00NZ0000000I1MIMA0</fullName>
+        <active>true</active>
+        <errorMessage>The related item must be a kit</errorMessage>
+        <field>Kit_Item__c.Kit__c</field>
+        <filterItems>
+            <field>Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Kit</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Kit Item_Kit</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IR4MAM_00NZ0000000I1MNMA0</fullName>
+        <active>true</active>
+        <errorMessage>The related item must be a standard item and cannot be a kit-only item</errorMessage>
+        <field>Kit_Item__c.Item__c</field>
+        <filterItems>
+            <field>Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Kit Item_Item</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IRTMA2_00NZ0000000I1OAMA0</fullName>
+        <active>true</active>
+        <errorMessage>The selected Item cannot be a roll-up or kit-only item</errorMessage>
+        <field>Cart_Item__c.Item__c</field>
+        <filterItems>
+            <field>Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Customizable, Kit, Standard</value>
+        </filterItems>
+        <filterItems>
+            <field>Item__c.Kit_Only__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Cart Item_Item</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IZ00000000JqIMAU_00NZ0000000IInqMAG</fullName>
+        <active>true</active>
+        <errorMessage>The selected Item must be customizable and cannot be a kit-only item</errorMessage>
+        <field>Item_Customization__c.Item__c</field>
+        <filterItems>
+            <field>Item__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Customizable</value>
+        </filterItems>
+        <filterItems>
+            <field>Item__c.Kit_Only__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Item Variation_Item</name>
+    </namedFilters>
+    <pluralLabel>Items</pluralLabel>
+    <recordTypes>
+        <fullName>Customizable</fullName>
+        <active>true</active>
+        <description>Regular item, supports customized text, can be ordered</description>
+        <label>Customizable</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Dummy Bottles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Alcohol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regular</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Tray Pack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>Off-premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On-premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted w%2FFinal Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved w%2FEst Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Development</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Removed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Kit</fullName>
+        <active>true</active>
+        <description>Kit master, groups a set of standard items, can be ordered</description>
+        <label>Kit</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Dummy Bottles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Alcohol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regular</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Tray Pack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>Off-premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On-premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted w%2FFinal Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved w%2FEst Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Development</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Removed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Roll_Up</fullName>
+        <active>true</active>
+        <description>Parent item for item variations, cannot be ordered</description>
+        <label>Roll-Up</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Dummy Bottles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Alcohol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regular</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Tray Pack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>Off-premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On-premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted w%2FFinal Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved w%2FEst Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Development</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Removed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standard</fullName>
+        <active>true</active>
+        <description>Regular item, may be offered as standalone or as part of a kit, can be ordered</description>
+        <label>Standard</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Dummy Bottles</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Alcohol</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regular</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Tray Pack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>Off-premise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On-premise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted w%2FFinal Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved w%2FEst Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Development</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Removed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Item_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Brand__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Program__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Order_Window_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Current_Price__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Packout_Quantity__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Agency_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Item_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Brand__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Program__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Order_Window_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Current_Price__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Packout_Quantity__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Agency_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Item_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Brand__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Program__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order_Window_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Current_Price__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Packout_Quantity__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Agency_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Item_ID__c</searchFilterFields>
+        <searchFilterFields>Brand__c</searchFilterFields>
+        <searchFilterFields>Program__c</searchFilterFields>
+        <searchFilterFields>Order_Window_Name__c</searchFilterFields>
+        <searchFilterFields>Current_Price__c</searchFilterFields>
+        <searchFilterFields>Packout_Quantity__c</searchFilterFields>
+        <searchFilterFields>Agency_Name__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchResultsAdditionalFields>Item_ID__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Brand__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Program__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Order_Window_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Current_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Packout_Quantity__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Agency_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Kit_Only_Item</fullName>
+        <active>true</active>
+        <description>Enforces the record type to be &quot;Standard&quot; if the &quot;Kit Only&quot; field is checked</description>
+        <errorConditionFormula>Kit_Only__c  &amp;&amp; $RecordType.Name &lt;&gt; &quot;Standard&quot;</errorConditionFormula>
+        <errorDisplayField>Kit_Only__c</errorDisplayField>
+        <errorMessage>A &quot;Kit Only&quot; item must be a &quot;Standard&quot; item</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Lock_Pricing_Information</fullName>
+        <active>true</active>
+        <description>Pricing information cannot be manually edited by CM Administrators or POS Agencies once the final pricing of an item is accepted</description>
+        <errorConditionFormula>($Profile.Name = &quot;POS - Production Agency&quot; || $Profile.Name = &quot;POS - CM Administrator&quot;) &amp;&amp; (TEXT(Status__c) = &quot;Accepted w/Final Price&quot;) &amp;&amp; (ISCHANGED(Current_Price__c) || ISCHANGED(Estimated_Price__c) || ISCHANGED(Estimated_Shipping_Tax__c))</errorConditionFormula>
+        <errorMessage>The pricing information cannot be changed since this item is accepted with final price</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Parent_Item_Change</fullName>
+        <active>true</active>
+        <description>The Parent Item cannot be changed once the Item is created since the Magento API sync call does not support updating the Item&apos;s parent id</description>
+        <errorConditionFormula>ISCHANGED(Parent__c)</errorConditionFormula>
+        <errorDisplayField>Parent__c</errorDisplayField>
+        <errorMessage>The Parent Item cannot be changed once the Item is created</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_RecordType_Change</fullName>
+        <active>true</active>
+        <description>Prevents an Item&apos;s record type from being changed</description>
+        <errorConditionFormula>ISCHANGED(RecordTypeId)</errorConditionFormula>
+        <errorMessage>The Item Record Type cannot be changed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Agency</fullName>
+        <active>true</active>
+        <description>Enforces the Item to have a related Agency. Intended for integration via API.</description>
+        <errorConditionFormula>ISBLANK(Agency__c)</errorConditionFormula>
+        <errorDisplayField>Agency__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Agency</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Category</fullName>
+        <active>true</active>
+        <description>Enforces the Item to have a Category. Intended for integration via API.</description>
+        <errorConditionFormula>ISPICKVAL(Category__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Category__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Category</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Description</fullName>
+        <active>true</active>
+        <description>Enforces the Item to have a Description. Intended for integration via API.</description>
+        <errorConditionFormula>ISBLANK(Description__c)</errorConditionFormula>
+        <errorDisplayField>Description__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Description</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Item_Category</fullName>
+        <active>true</active>
+        <description>Enforces the Item to have a related Item Category. Intended for integration via API.</description>
+        <errorConditionFormula>ISBLANK(Item_Category__c)</errorConditionFormula>
+        <errorDisplayField>Item_Category__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Item Category</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Program</fullName>
+        <active>true</active>
+        <description>Please provide a value for the Program</description>
+        <errorConditionFormula>ISBLANK(Program__c)</errorConditionFormula>
+        <errorDisplayField>Program__c</errorDisplayField>
+        <errorMessage>Enforces the Item to have a related Program. Intended for integration via API.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Required_Status</fullName>
+        <active>true</active>
+        <description>Enforces the Item to have a Status. Intended for integration via API.</description>
+        <errorConditionFormula>ISPICKVAL(Status__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Please provide a value for the Status</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Valid_Incremental_Charges</fullName>
+        <active>true</active>
+        <description>Enforces Valid Incremental Charges</description>
+        <errorConditionFormula>Incremental_Charges__c &lt; 0</errorConditionFormula>
+        <errorDisplayField>Incremental_Charges__c</errorDisplayField>
+        <errorMessage>Please provide a valid amount for incremental charges</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Valid_Minimum_Quantity</fullName>
+        <active>true</active>
+        <description>Enforces a valid minimum quantity</description>
+        <errorConditionFormula>(ISBLANK(Minimum_Quantity__c) || Minimum_Quantity__c &lt; 1) &amp;&amp; (Kit_Only__c = FALSE)</errorConditionFormula>
+        <errorDisplayField>Minimum_Quantity__c</errorDisplayField>
+        <errorMessage>Please provide a valid minimum quantity</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Valid_Packout_Quantity</fullName>
+        <active>true</active>
+        <description>Enforces a valid packout quantity</description>
+        <errorConditionFormula>(ISBLANK(Packout_Quantity__c) || Packout_Quantity__c &lt; 1) &amp;&amp; (Kit_Only__c = FALSE)</errorConditionFormula>
+        <errorDisplayField>Packout_Quantity__c</errorDisplayField>
+        <errorMessage>Please provide a valid packout quantity</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Valid_Pricing_Information</fullName>
+        <active>true</active>
+        <description>Enforces valid pricing information for non kit-only items: current price, estimated price and estimated shipping/tax when an Item is not a kit-only Item</description>
+        <errorConditionFormula>(ISBLANK(Current_Price__c) || ISBLANK(Estimated_Price__c) || ISBLANK(Estimated_Shipping_Tax__c) || Current_Price__c &lt; 0 || Estimated_Price__c &lt; 0 || Estimated_Shipping_Tax__c &lt; 0) &amp;&amp; (Kit_Only__c = FALSE)</errorConditionFormula>
+        <errorMessage>Please provide valid pricing information (Current Price, Estimated Price and Estimated Shipping/Tax %)</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>View_in_Store</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>View in Store</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/POS_MagentoRedirect?magentoid={!Item__c.Magento_ID__c}</url>
+    </webLinks>
+</CustomObject>

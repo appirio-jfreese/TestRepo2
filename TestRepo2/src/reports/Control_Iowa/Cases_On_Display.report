@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Account.NABCA_Licensee_State__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Goal__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Cases_Displayed__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>CUST_RECORDTYPE</column>
+            <operator>equals</operator>
+            <value>Action__c.Display_Control</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c.Status__c</column>
+            <operator>equals</operator>
+            <value>Closed - Complete</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Cases On Display</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Action__c@Action__c.Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>FK_$Account.NABCA_Licensee_State__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Action__c.Date_Finished__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

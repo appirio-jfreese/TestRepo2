@@ -1,0 +1,45 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_FAQ">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.FaqPage, 'style'+siteTheme+'.css')}"/>    
+
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        
+		<script type="text/javascript">
+	    	pageViewed('FAQ');
+	    </script>
+	    
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+
+			<!-- FAQ -->
+			<div class="faq-header">
+				<div class="title-text"><apex:outputText value="FAQ"/></div>
+			</div>
+
+			<div class="faq-section">			
+				<div class="faq-map">
+					<div class="header-map">Questions:</div>
+					<apex:repeat value="{!faqs}" var="faq">
+						<div class="question-map"><a href="#{!faq.id}" onclick="pageViewed('FAQ - {!faq.Question__c}');">{!faq.Question__c}</a></div>
+					</apex:repeat>
+				</div>
+            	<apex:repeat value="{!faqs}" var="faq">
+					<div id="{!faq.id}" class="faq-question">{!faq.Question__c}</div>
+					<div class="faq-answer"><apex:outputText value="{!faq.Answer__c}" escape="false"/></div>					
+				</apex:repeat>
+			</div>
+			
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+	<c:ajaxLoader />
+
+</apex:page>

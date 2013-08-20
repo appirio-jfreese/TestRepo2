@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Folder Comment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Folder Comments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comment Body --></label>
+        <name>Comment_Body__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor Access --></label>
+        <name>Distributor_Access__c</name>
+        <relationshipLabel><!-- Folder Comments (Distributor Access) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Distributor Name --></label>
+        <name>Distributor_Name__c</name>
+        <relationshipLabel><!-- Folder Comments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- File --></label>
+        <name>File__c</name>
+        <relationshipLabel><!-- Folder Comments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Folder --></label>
+        <name>Folder__c</name>
+        <relationshipLabel><!-- Folder Comments --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

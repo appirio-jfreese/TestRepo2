@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Blitz__c$Account__c.Territory__c.Sub_Division__c</field>
+    </columns>
+    <columns>
+        <field>Blitz__c$Account__c.Territory__c.State__c</field>
+    </columns>
+    <columns>
+        <field>Blitz__c$Account__c.Territory__c.Manager__c</field>
+    </columns>
+    <columns>
+        <field>Blitz__c$Owner</field>
+    </columns>
+    <columns>
+        <field>Blitz__c$Account__c.Territory__c.Name</field>
+    </columns>
+    <columns>
+        <field>Blitz__c$Blitz_Brand__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Blitz__c$Amount__c</field>
+    </columns>
+    <description>Blitz info for Pivot Table</description>
+    <filter>
+        <criteriaItems>
+            <column>Blitz__c$Blitz_Program__c</column>
+            <operator>equals</operator>
+            <value>Shot Heard Around the World</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Shot Heard Around the World_Bazin</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Blitzes_with_Accounts_Territories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Blitz__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_YESTERDAY</interval>
+    </timeFrameFilter>
+</Report>

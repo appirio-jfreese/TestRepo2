@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Spirit</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Spirits</value>
+    </caseValues>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Spirits --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Spirit Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

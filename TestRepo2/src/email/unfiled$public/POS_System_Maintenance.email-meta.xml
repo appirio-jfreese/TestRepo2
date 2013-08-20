@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>POS: System Maintenance</name>
+    <style>none</style>
+    <subject>POS System Maintenance</subject>
+    <textOnly>To All,
+ 
+Due to an unforeseen technical issue, the POS portal will be undergoing maintenance over the next several days to improve the overall speed and shopping experience.  In the interim, if you need to place your order before these enhancements are implemented then please submit your order by using the spreadsheet found on the POS Portal (POS Tile&gt;AMJ F13 Quarterly Ordering Tile&gt;Download Order Sheet). 
+ 
+As a reminder, please ensure that you have marked your “ship to’s” as favorites before you download the spreadsheet which will pull your addresses into the spreadsheet.  Please note when filling out the spreadsheet that you must only enter in the yellow column (“Unit Qty”).  Do not modify the spreadsheet – it has been customized for you!  Please save spreadsheet in .xls format.
+ 
+All orders need to be submitted by end of day October 31st to your MD for approval.  MD’s need to approve and forward orders to michelle.parenti@diageo.com no later than end of day November 2nd . 
+ 
+The POS team will keep you posted on when the technical issue has been resolved so that you can continue to order online.
+ 
+http://diageodirect.com
+ 
+Thank you,
+ 
+POS Team
+Michelle Parenti
+Margaret M. Parshenov
+Kim Maciejewski</textOnly>
+    <type>custom</type>
+</EmailTemplate>

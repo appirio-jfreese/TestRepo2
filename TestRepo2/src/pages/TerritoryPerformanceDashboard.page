@@ -1,0 +1,63 @@
+<apex:page controller="Controller_TerritoryPerformance" showHeader="false" sidebar="false">
+	
+	<apex:form >
+	
+		<apex:selectList value="{!selectedObjectiveId}" multiselect="false" size="1"
+						 onchange="goToUrlForComboChange(this.options[selectedIndex].value)">
+			<apex:selectOptions value="{!objectiveSelectOptions}" />
+		</apex:selectList>
+		
+	</apex:form>
+	
+	<div id="chartBlock"></div>
+	
+	
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	
+	<script>
+    google.load("visualization", "1", {packages:["corechart"]});
+    	
+    	function goToUrlForComboChange(objectiveid)
+    	{
+    		window.location = '/apex/TerritoryPerformanceDashboard?objectiveId=' + objectiveid ;
+    	}
+    	
+    	
+		function drawChart() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Rep');
+			data.addColumn('number', 'Total Percentage Complete');
+			//data.addColumn({type:'string', role:'toolTip'});
+			//data.addColumn({type:'number', role:'toolTip'});
+			data.addColumn({type:'string', role:'tooltip'});
+			//data.addColumn({type:'string', role:'annotationText'});
+						
+						
+			<apex:repeat var="item" value="{!objectiveDataList}">
+				data.addRows( [["{!item.userName}", {!item.ClosedPercentage}, "{!item.MainLabel}"]] );
+			</apex:repeat>
+			           	
+			data.sort([{column: 1, desc: true}]);
+				        
+			var options = {
+			  width: 400, height: 260, 
+			  legend : {position: 'top', textStyle: {fontSize: 12}}, 
+			  vAxis:{title: 'Reps', textStyle:{fontSize: 12}}, 
+			  hAxis:{title: 'Percent Complete', textStyle:{fontSize: 12},showTextEvery:1,slantedText:true}, 
+			  backgroundColor:{strokeWidth:1}, 
+			  chartArea:{left:80,top:40}
+			};
+				        
+				        
+			var chart = new google.visualization.BarChart(document.getElementById('chartBlock'));
+			chart.draw(data, options);
+		}
+     
+     google.setOnLoadCallback(drawChart);
+    </script>     
+<!--     <apex:outputLink value="#" onclick="window.top.location='/{!if($Profile.Name=='UIS Sales Manager', '00OU0000001OnWK', '00OU0000001OkRz')}?pv1={!if($Profile.Name=='UIS Sales Manager',LEFT($User.Id, 15), ($User.FirstName +' '+ $User.LastName))}'">View Report</apex:outputLink>                                         -->
+	
+	
+	
+	
+</apex:page>

@@ -1,0 +1,43 @@
+<apex:page standardController="Account" extensions="Controller_OppurtunityWhitespace" sidebar="false" showHeader="false">
+
+<style>
+	.timestampStyle{
+		left: 250px;
+		position: absolute;
+		top: 15px;
+		font-size: 1.1em;
+    }
+  .negativeNumeric{
+        color: red;
+      }
+</style>
+
+<apex:form >
+	<span class="timestampStyle">
+		<b>{!monthYear}</b>
+	</span>
+	<apex:pageBlock id="thePageBlock" title="Opportunity Whitespace">
+      <apex:pageBlockTable value="{!NABCAOpportunitylist}" var="BRVar" rendered="{!ShowList}">
+            <apex:column headerValue="Brand" value="{!BRVar.brand__r.Common_Description__c } {!BRVar.brand__r.NABCA_Size_Description__c}"/>
+             <apex:column headerValue="Volume" style="text-align:right;">
+	             <apex:outputText value="{0, number, ###,###,###,###}">
+	                   <apex:param value="{!BRVar.Roll12_9L_Volume__c}" />
+	             </apex:outputText>
+             </apex:column>  
+	
+             <apex:column headerValue="% Change" style="text-align:right;">
+              <apex:outputPanel rendered="{!BRVar.Percent_Change_Last_Year__c < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(BRVar.Percent_Change_Last_Year__c,0))}</apex:outputPanel>
+              <apex:outputPanel rendered="{!BRVar.Percent_Change_Last_Year__c > 0}">{!TEXT(ROUND(BRVar.Percent_Change_Last_Year__c,0))}</apex:outputPanel>
+             </apex:column>  
+   
+             <apex:column headerValue="% Distribution" style="text-align:right;">
+              <apex:outputPanel rendered="{!BRVar.State_Distribution_Percent__c > 0}">{!TEXT(ROUND(BRVar.State_Distribution_Percent__c,0))}</apex:outputPanel>
+            </apex:column>             
+      </apex:pageBlockTable>
+      <apex:pageBlockSection rendered="{!NOT(ShowList)}">
+       <b> No brand data found to display.</b>
+     </apex:pageBlockSection>
+
+   </apex:pageblock>
+ </apex:form>
+</apex:page>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>MobileSession$Owner.UserRole</field>
+    </columns>
+    <columns>
+        <field>MobileSession$Owner</field>
+    </columns>
+    <columns>
+        <field>MobileSession$DeviceModel</field>
+    </columns>
+    <columns>
+        <field>MobileSession$Duration</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>MobileSession$Owner.UserRole</column>
+            <operator>contains</operator>
+            <value>NASW</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>MobileSession$StartedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>MobileSession$Owner.Profile</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Control - Mobile User Logins by Month</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Mobile_Sessions_Report__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>MobileSession$LastRegistrationDate</dateColumn>
+        <interval>INTERVAL_CURFY</interval>
+    </timeFrameFilter>
+</Report>

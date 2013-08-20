@@ -1,0 +1,7 @@
+<apex:page sidebar="false"
+		   showHeader="false">
+		   
+	<c:ActionCompleteDashboard mode="exec"
+							   chart="goalFor"/>
+						
+</apex:page>

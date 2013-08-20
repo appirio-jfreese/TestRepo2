@@ -1,0 +1,268 @@
+<apex:page standardController="Account"
+		   extensions="ShareReporting2Controller"
+		   sidebar="false"
+		   showHeader="false">
+		   
+	<style type="text/css">
+	
+	    .timestampStyle {
+			left: 250px;
+			position: absolute;
+			top: 15px;
+			font-size: 1.1em;
+			font-weight: bold;
+	    }
+	    
+		.filterLabel {
+			margin: 0px 5px 0px 10px;
+	    }
+	    
+	    .leftHeader {
+	    }
+	    
+	    .rightHeader {
+	    	text-align: right;
+	    }
+	    
+	    .rightColumn {
+	    	text-align: right;
+	    }
+	    
+	    .rightFooter {
+	    	text-align: right;
+	    }
+	    
+	    .negativeNumeric{
+	    	color: red;
+	    }
+	    
+	</style>  
+	
+	<apex:actionStatus id="loadStatus">
+		<apex:facet name="start">
+			<apex:image value="/img/loading.gif" Style="left: 350px;position: absolute;top: 12px;"/>
+		</apex:facet>
+	</apex:actionStatus>
+	
+	<apex:form >
+		<apex:pageBlock id="thePageBlock" title="Share Reporting - Top 10">
+			
+			<apex:outputPanel id="messagePanel">
+				<apex:pageMessages />
+			</apex:outputPanel>
+			
+			<span class="timestampStyle">
+				{!latestDataMonthYear}
+			</span>
+			
+			<apex:outputPanel id="filterPanel">
+			
+				<span class="filterLabel">
+					Filter By
+				</span>
+				<apex:selectList value="{!filterBySel}"
+								 size="1">
+					<apex:selectOptions value="{!filterBySOs}"/>
+				</apex:selectList>
+			
+				<span class="filterLabel">
+					Month
+				</span>
+				<apex:selectList value="{!monthSel}"
+								 size="1">
+					<apex:selectOptions value="{!monthSOs}"/>
+				</apex:selectList>
+			
+				<span class="filterLabel">
+					Date Range
+				</span>
+				<apex:selectList value="{!dateRangeSel}"
+								 size="1">
+					<apex:selectOptions value="{!dateRangeSOs}"/>
+				</apex:selectList>
+			
+				<span class="filterLabel">
+					Spirits/Wines
+				</span>
+				<apex:selectList value="{!typeSel}"
+								 size="1">
+					<apex:selectOptions value="{!typeSOs}"/>
+				</apex:selectList>
+			
+				<span class="filterLabel">
+					Dollar/Volume
+				</span>
+				<apex:selectList value="{!valueSel}"
+								 size="1">
+					<apex:selectOptions value="{!valueSOs}"/>
+				</apex:selectList>
+				
+				<apex:commandButton value="Go"
+									action="{!prepareQueryFields}"
+									status="loadStatus"
+									rerender="messagePanel, tablePanel"/>
+			
+			</apex:outputPanel>
+			
+			<apex:outputPanel id="tablePanel">
+				<apex:pageBlockTable value="{!allData}"
+									 var="dataRow">
+									 
+					<apex:column styleClass="leftHeader">
+						<apex:facet name="header">
+							<apex:commandLink action="{!sortData}"
+											  value="{!filterBySel} Name {!IF(sortField=='label', IF(sortDirection='ASC', '▼', '▲'), '')}"
+											  status="loadStatus"
+											  rerender="tablePanel">
+             					<apex:param value="label"
+             								name="column"
+             								assignTo="{!sortField}">
+             					</apex:param>
+           					</apex:commandLink>
+						</apex:facet>
+						
+						<apex:commandLink rendered="{!dataRow.isChild == false && dataRow.isExpanded == false}"
+										  action="{!expandRow}"
+										  status="loadStatus"
+										  rerender="tablePanel">
+							<apex:param value="{!dataRow.label}"
+										name="selectedRowLabel"
+										assignTo="{!selectedRowLabel}"/>
+							<apex:image url="{!$Resource.Plus_Image}"/>
+						</apex:commandLink>
+						
+						<apex:commandLink rendered="{!dataRow.isChild == false && dataRow.isExpanded == true}"
+										  action="{!collapseRow}"
+										  status="loadStatus"
+										  rerender="tablePanel">
+							<apex:param value="{!dataRow.label}"
+										name="selectedRowLabel"
+										assignTo="{!selectedRowLabel}"/>
+							<apex:image url="{!$Resource.Minus_image}"/>
+						</apex:commandLink>
+						
+						<apex:outputPanel rendered="{!dataRow.isChild == false}">
+							{!dataRow.label}
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!dataRow.isChild == true}">
+							<span style="padding-left: 50px">
+								{!dataRow.label}
+							</span>
+						</apex:outputPanel>
+						
+						<apex:facet name="footer">
+							Total
+						</apex:facet>
+					</apex:column>
+					
+					<apex:column headerClass="rightHeader"
+								 styleClass="rightColumn"
+								 footerClass="rightFooter">
+						<apex:facet name="header">
+							<apex:commandLink action="{!sortData}"
+											  value="{!valueSel} {!IF(sortField=='value', IF(sortDirection='ASC', '▼', '▲'), '')}"
+											  status="loadStatus"
+											  rerender="tablePanel">
+             					<apex:param value="value"
+             								name="column"
+             								assignTo="{!sortField}">
+             					</apex:param>
+           					</apex:commandLink>
+						</apex:facet>
+						<apex:outputPanel rendered="{!valueSel == 'Volume'}">
+							{!dataRow.value}
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!valueSel == 'Shelf Dollar'}">
+							<apex:outputText value="{0,number,$#,###,##0.00}">
+								<apex:param value="{!dataRow.value}" />
+							</apex:outputText>
+						</apex:outputPanel>
+						<apex:facet name="footer">
+							{!totalValue}
+						</apex:facet>
+					</apex:column>
+					
+					<!--
+					<apex:column headerClass="rightHeader"
+								 styleClass="rightColumn"
+								 footerClass="rightFooter">
+						<apex:facet name="header">
+							Last
+						</apex:facet>
+						<apex:outputPanel rendered="{!valueSel == 'Volume'}">
+							{!dataRow.lastValue}
+						</apex:outputPanel>
+					</apex:column>
+					-->
+					
+					<apex:column headerClass="rightHeader"
+								 styleClass="rightColumn"
+								 footerClass="rightFooter">
+						<apex:facet name="header">
+							<apex:commandLink action="{!sortData}"
+											  value="% Change in {!valueSel} {!IF(sortField=='valueChange', IF(sortDirection='ASC', '▼', '▲'), '')}"
+											  status="loadStatus"
+											  rerender="tablePanel">
+             					<apex:param value="valueChange"
+             								name="column"
+             								assignTo="{!sortField}">
+             					</apex:param>
+           					</apex:commandLink>
+						</apex:facet>
+						<apex:outputPanel rendered="{!dataRow.valueChangeIsNeg == true}"
+										  styleClass="negativeNumeric">
+							{!dataRow.valueChange}
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!dataRow.valueChangeIsNeg == false}">
+							{!dataRow.valueChange}
+						</apex:outputPanel>
+						<apex:facet name="footer">
+							{!totalValueChange}
+						</apex:facet>
+					</apex:column>
+					
+					<apex:column headerClass="rightHeader"
+								 styleClass="rightColumn">
+						<apex:facet name="header">
+							<apex:commandLink action="{!sortData}"
+											  value="Share {!IF(sortField=='share', IF(sortDirection='DESC', '▼', '▲'), '')}"
+											  status="loadStatus"
+											  rerender="tablePanel">
+             					<apex:param value="share"
+             								name="column"
+             								assignTo="{!sortField}">
+             					</apex:param>
+           					</apex:commandLink>
+						</apex:facet>
+						{!dataRow.share}
+					</apex:column>
+					
+					<apex:column headerClass="rightHeader"
+								 styleClass="rightColumn">
+						<apex:facet name="header">
+							<apex:commandLink action="{!sortData}"
+											  value="Share Change {!IF(sortField=='shareChange', IF(sortDirection='ASC', '▼', '▲'), '')}"
+											  status="loadStatus"
+											  rerender="tablePanel">
+             					<apex:param value="shareChange"
+             								name="column"
+             								assignTo="{!sortField}">
+             					</apex:param>
+           					</apex:commandLink>
+						</apex:facet>
+						<apex:outputPanel rendered="{!dataRow.shareChangeIsNeg == true}"
+										  styleClass="negativeNumeric">
+							{!dataRow.shareChange}
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!dataRow.shareChangeIsNeg == false}">
+							{!dataRow.shareChange}
+						</apex:outputPanel>
+					</apex:column>
+					
+				</apex:pageBlockTable>
+			</apex:outputPanel>
+		
+		</apex:pageBlock>
+	</apex:form>
+		   
+</apex:page>

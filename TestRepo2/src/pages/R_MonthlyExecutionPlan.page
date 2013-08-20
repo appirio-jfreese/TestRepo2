@@ -1,0 +1,196 @@
+<!------------------------------------------------------------------------------
+Name        : R_MonthlyExecutionPlan.page
+Modified By : Parul Gupta (Appirio OffShore)
+Description : Integrated Responsive design with existing MEP functionality
+Date        : 6/28/13
+Story/Task  : US585/TA1081
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_MonthlyExecutionPlan">
+<body class="mep-landing-page mep-page">
+<!-- Randy Wandell (Appirio) 07/17/13 removed quarterly from class these were the values (mep-landing-page mep-page mep-quarterly-page) -->
+<div class="wrapper">
+    <div class="container">
+    
+    <!-- PAGE HEADER -->
+    <c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" /> <!--thisAvatarURL="{!avatarUrl}"-->
+    
+    <script type="text/javascript">
+        pageViewed('Monthly Execution Plan');
+    </script>
+                
+        <!-- CONTENT -->
+        <div class="content clearfix">
+       
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+            
+            <apex:form >
+             
+                <!--  START :: ACTION FUNCTIONS -->
+                
+                <apex:actionFunction name="refreshContent" action="{!refreshContent}" 
+                    onComplete="loadCalenderJs();" rerender="downloadPanel, mepData, beadcrumblinks" /> 
+                <apex:actionFunction name="selectSalesDriver" action="{!selectSalesDriver}" 
+                    onComplete="loadCalenderJs();" rerender="downloadPanel, mepData, beadcrumblinks" >
+                    <apex:param name="salesDriver" assignTo="{!salesDriver}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="setStartDateValue" action="{!setStartDateValue}" rerender="downloadPanel, mepData, beadcrumblinks" onComplete="loadCalenderJs();">
+                    <apex:param name="startFromDate" assignTo="{!startFromDate}" value="" />
+                    <apex:param name="selectedYr" assignTo="{!selectedyear}" value="" />
+                    <apex:param name="selectedMon" assignTo="{!selectedMonth}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="nextMonth" action="{!nextMonth}" rerender="downloadPanel, mepData, beadcrumblinks" onComplete="loadCalenderJs();"/>                  
+                <apex:actionFunction name="previousMonth" action="{!previousMonth}" rerender="downloadPanel, mepData, beadcrumblinks" onComplete="loadCalenderJs();"/>
+                <apex:actionFunction name="popoverPrev" action="{!popOverPrevious}" rerender="popoverPanel" onComplete="loadCalenderJs();"/>                  
+                <apex:actionFunction name="popoverNext" action="{!popOverNext}" rerender="popoverPanel" onComplete="loadCalenderJs();"/>
+                <apex:actionFunction name="setTodayDate" action="{!setTodayDate}" rerender="popoverPanel" onComplete="loadCalenderJs();"/>
+       
+                <!--  END :: ACTION FUNCTIONS -->    
+                <h2 class="with-select">
+                    <span class="title">Monthly Execution Plan</span>    
+                    
+                    <!--  TIME PERIOD SELECT SECTION -->      
+                    <c:R_selectList options="{!timePeriods}"  value="{!timePeriod}" onchange="refreshContent()" /> 
+                    
+                    <!--  INCLUDE SELECT SECTION -->         
+                    <c:R_checkboxList width="150" options="{!themeOptions}" noOfOptions="{!noOfThemesAvailable}" onchange="refreshContent()" />
+                    
+                    <!-- DOWNLOAD SECTION  -->
+                    <apex:outputPanel id="downloadPanel">                   
+                        <a href="{!pdfPath}" target="new" class="btn pdf-btn mep-bg right-btn">
+                            <span>Download as PDF</span>
+                        </a>
+                    </apex:outputPanel>                 
+                </h2>
+                
+                <!--  START :: mepData PAGEBLOCK -->
+                <apex:outputPanel id="mepData" styleClass="{!if(timePeriod == 1, '', 'mep-quarterly-page')}">
+           
+                <!--  START :: plans-header Section - displayed for timePeriod != Monthly -->
+                <apex:outputPanel rendered="{!timePeriod != 1}">                               
+                    <div class="plans plans-header">
+                        <apex:variable var="counter" value="{!1}"/>
+                        <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                            
+                            <apex:outputPanel rendered="{!salesDriversToShowCount==1}">
+                                <div class="plan-header">
+                                <a href="javascript:void(0);" onclick="selectSalesDriver('All');return false;" class="mep-bg btn">Back</a>
+                                <span>{!salesdrivername}</span>
+                            </div>
+                            </apex:outputPanel>
+                             
+                            <apex:outputPanel rendered="{!salesDriversToShowCount!=1}">          
+                                <div class="plan {!IF(counter == salesDriversToShowCount,'last','')}">
+                                    <h3 class="{!IF(counter == 1, 'two-lines', '')} mep-bg">                  
+                                        <a href="javascript:void(0);" onclick="selectSalesDriver('{!salesdrivername}');">                     
+                                           {!salesdrivername}                        
+                                        </a>
+                                    </h3>                                       
+                                    <apex:variable var="counter" value="{!counter + 1}"/>              
+                                </div>
+                            </apex:outputPanel>              
+                        </apex:repeat>
+                    </div>
+                </apex:outputPanel>
+                <!--  END :: plans-header Section - displayed for timePeriod != Monthly -->
+            
+                <apex:variable var="aselYear" value="{!selectedyear}"/>
+                <apex:variable var="aselMonth" value="{!selectedMonth}"/>
+                
+                <apex:variable var="displayCalendar" value="{!1}"/>
+                <apex:variable var="counter" value="{!1}"/>           
+            
+                <!--  START :: Months Loop -->
+                <apex:repeat value="{!months}" var="month">          
+                    
+                    <c:R_CalendarHead monthName="{!month.name}" pageCls="mep-bg" selYear="{!aselYear}" selMonth="{!aselMonth}"  mnthCounter="{!counter}"/> 
+                     
+                    <!--  START :: Main Salesdriver data Section -->
+                    <div class="plans {!IF(timePeriod != 1,'quaterly-plans','')}">
+                    <apex:variable var="counter" value="{!1}"/>
+                    
+                    <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                    
+                        <apex:outputPanel rendered="{!salesDriversToShowCount == 1}">
+                            <apex:outputPanel rendered="{!timePeriod == 1}">
+                            
+                            <div class="plan-header">
+                            <a href="javascript:void(0);" onclick="selectSalesDriver('All');return false;" class="mep-bg btn">Back</a>
+                            <span>{!salesdrivername}</span>
+                            </div>                              
+
+                            </apex:outputPanel>
+                            <apex:variable var="oddEven" value="{!'odd'}"/>                                                     
+                            <apex:repeat value="{!calendarData[month.data][salesdrivername]}" var="programData">
+
+                                   <div class="desc-block" style="{!programData.styleBackgroundColor}; {!programData.styleTextColor}; height: 100px; overflow: hidden;" onClick="window.location='{!detailPagePath}&id={!programData.id}'">
+                                        <h5>{!programData.label}</h5>
+                                        <p><apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext></p>
+                                        </div>  
+
+                            </apex:repeat>
+                        </apex:outputPanel> 
+                        
+                        <apex:outputPanel rendered="{!salesDriversToShowCount != 1}">
+                        <div class="plan {!IF(counter == salesDriversToShowCount,'last','')}" >                         
+                            <h3 class="{!IF(counter == 1, 'two-lines', '')} mep-bg">                  
+                                <a href="javascript:void(0);" onclick="selectSalesDriver('{!salesdrivername}')">                    
+                                    {!salesdrivername}                       
+                                </a>
+                            </h3>
+                          
+                            <apex:repeat value="{!calendarData[month.data][salesdrivername]}" var="programData">                                                                    
+                                
+                                <div align="center" 
+                                 style="background-color:#b9b8b8; width: 100%; {!IF(timePeriod == 1,'height: 77px;', '')} {!programData.styleBackgroundColor}{!programData.styleTextColor}; cursor: pointer; " 
+                                 onClick="window.location='{!detailPagePath}&id={!programData.id}'">                                
+                                    <apex:outputPanel rendered="{!timePeriod == 1}">
+                                        <div style="{!programData.styleBackgroundImage} background-repeat: no-repeat; background-position: center; height: 60%;"></div>
+                                        <div style="height: 2px; width: 100%;"></div>
+                                    </apex:outputPanel>
+                                    <a class="p" href="" style="line-height: 1; {!programData.styleTextColor}; font-weight: bold;">{!programData.label}</a>
+                                </div>
+                                <div style="height: 10px; width: 100%;"></div>                              
+                                                                                                
+                            </apex:repeat>                          
+                            
+                        </div>
+                        </apex:outputPanel>
+                        <apex:variable var="counter" value="{!counter + 1}"/>                       
+                        
+                    </apex:repeat>                   
+                    
+                    </div>
+                    <!--  END :: Main Salesdriver data Section -->
+                              
+                <apex:variable var="displayCalendar" value="{!0}"/>
+                            
+                </apex:repeat>
+                <!--  END :: Months Loop -->
+            
+                </apex:outputPanel>
+                <!--  END :: mepData PAGEBLOCK -->
+                                     
+            </apex:form>
+            
+        </div> <!-- END Content Div -->
+        
+    </div> <!-- END Container Div -->
+
+    <!--  PAGE FOOTER --> 
+    <c:R_pageFooter isInternal="{!isInternalUser }" />
+</div> <!-- END Wrapper Div -->
+</body>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        loadCalenderJs(); 
+	});    
+</script>
+
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/jumpToDateKeyDown.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/docKeyDown4MainPage.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/docReady4MainPage.js')}"></script>
+</apex:page>

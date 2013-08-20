@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Budget</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Budgets</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budget Creator --></label>
+        <name>Budget_Creator__c</name>
+        <relationshipLabel><!-- Budgets (Budget Creator) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Budgeter --></label>
+        <name>Budgeter__c</name>
+        <relationshipLabel><!-- Budgets (Budgeter) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Channel --></label>
+        <name>Channel__c</name>
+        <picklistValues>
+            <masterLabel>Off-premise</masterLabel>
+            <translation><!-- Off-premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-premise</masterLabel>
+            <translation><!-- On-premise --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Item Allocation Quantity --></label>
+        <name>Item_Allocation_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- My Spent Amount --></label>
+        <name>My_Spent_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- My Spent Item Quantity --></label>
+        <name>My_Spent_Item_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- My Spent Overage --></label>
+        <name>My_Spent_Overage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window --></label>
+        <name>Order_Window__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Organizational Unit --></label>
+        <name>Organizational_Unit__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Owner --></label>
+        <name>Owner__c</name>
+        <relationshipLabel><!-- Budgets (Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Parent --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Budgets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Remaining Amount --></label>
+        <name>Remaining_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remaining Item Quantity --></label>
+        <name>Remaining_Item_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shopper --></label>
+        <name>Shopper__c</name>
+        <relationshipLabel><!-- Budgets (Shopper) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Spent Amount --></label>
+        <name>Spent_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spent Item Quantity --></label>
+        <name>Spent_Item_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub-Allocated Amount --></label>
+        <name>Sub_Allocated_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub-Allocated Item Quantity --></label>
+        <name>Sub_Allocated_Item_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unallocated Amount --></label>
+        <name>Unallocated_Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unallocated Item Quantity --></label>
+        <name>Unallocated_Item_Quantity__c</name>
+    </fields>
+    <layouts>
+        <layout>POS Budget Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dollar Allocation --></label>
+            <section>Dollar Allocation</section>
+        </sections>
+        <sections>
+            <label><!-- Item Allocation --></label>
+            <section>Item Allocation</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

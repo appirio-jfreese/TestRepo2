@@ -1,0 +1,1246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>API_External_ID__c</fullName>
+        <description>External ID field for usage in the RecipeDB API.</description>
+        <displayFormat>B-{0000}</displayFormat>
+        <externalId>true</externalId>
+        <label>API External ID</label>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Available__c</fullName>
+        <externalId>false</externalId>
+        <label>Available</label>
+        <picklist>
+            <picklistValues>
+                <fullName>FALSE</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TRUE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Brand_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Brand Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Blended Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bourbon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canadian Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cordials</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rye Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Schnapps</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scotch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tennessee Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Beer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Brand_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>An Image Lookup that can get an Image associated with each brand via Media</description>
+        <externalId>false</externalId>
+        <label>Brand Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Recipe Brands</relationshipLabel>
+        <relationshipName>Recipe_Brands</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Speciality</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Diageo_Brand_External_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Diageo Brand External Id</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Diageo_Brand_Tags__c</fullName>
+        <externalId>false</externalId>
+        <label>Diageo Brand Tags</label>
+        <length>32000</length>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Generic_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Generic Brand</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LegacyID__c</fullName>
+        <externalId>true</externalId>
+        <label>LegacyID</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Locale__c</fullName>
+        <externalId>false</externalId>
+        <label>Locale</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EN-US</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR-CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PT-BR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-MX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-CO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-CL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-AR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-GB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-IN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Long_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Long Description</label>
+        <length>32000</length>
+        <type>Html</type>
+        <visibleLines>12</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SAP_Level_3_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Level 3 Code</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SAP_Level_3_Descr__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Level 3 Description</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Short_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Short Description</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>SubBrand__c</fullName>
+        <externalId>false</externalId>
+        <label>SubBrand</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Vodka 100</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Brand__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub-Brand</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AUTHENTIC JOSE CUERVO LIGHT MARGARITAS® - LIGHT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AUTHENTIC JOSE CUERVO WATERMELON MARGARITAS®</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BAILEYS® Caramel Irish Cream Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BAILEYS® Coffee Irish Cream Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BAILEYS® Mint Chocolate Irish Cream Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BaILEYS® Mudslide Cocktail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Baileys® Original Irish Cream Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BLACK HAUS® Schnapps</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BUCHANAN’S® Deluxe Blended Scotch Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BUCHANAN’S® Special Reserve Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BUCHANAN’S RED SEAL® Blended Scotch Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BULLEIT® Bourbon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BULLEIT® Rye</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bulloch Lade®</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bushmills®  1608 Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bushmills® Black Bush Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bushmills® Malt 10 Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bushmills® Malt 16 Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bushmills®Malt 21 Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BUSHMILLS® Original Irish Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Caol Ila® 18 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Caol Ila 12® Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAPTAIN MORGAN® Original Spiced Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan® Private Stock</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan® Silver Spiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan® Tattoo</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan 100 Proof</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Lime Bite®</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Long Island Iced Tea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Parrot Bay® Coconut</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Parrot Bay® Key Lime Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Parrot Bay® Mango</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Parrot Bay® Passion Fruit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Captain Morgan Parrot Bay® Pineapple</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAPTAIN MORGAN TATTOO® Black Spiced Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ciroc Coconut</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ciroc Red Berry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ciroc Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clynelish® 14 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cragganmore® 12 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cragganmore®  Distillers Edition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CROWN ROYAL® XR® Blended Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CROWN ROYAL BLACK™ Blended Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CROWN ROYAL CASK NO.16® Blended Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CROWN ROYAL Deluxe® Blended Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CROWN ROYAL RESERVE® Blended Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dalwhinnie® 15 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dalwhinnie® Distillers Edition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio® 1942 Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio® Añejo Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio® Blanco Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio® Reposado Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don Julio Real® Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GEORGE DICKEL Barrel Select® Tennessee Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GEORGE DICKEL Cascade Hollow® Tennessee Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GEORGE DICKEL NO. 12® Tennessee Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GEORGE DICKEL NO. 8® Tennessee Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Glenkinchie®12 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Glenkinchie® Distillers Edition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® Caramel Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® Chocolate Infused Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® Chocolate Raspberry Infused Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® Milk Chocolate Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® Mocha Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® Original Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GODIVA® White Chocolate Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GOLDSCHLAGER® Schnapps</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grand Marnier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grand Marnier Cuvée du Centenaire</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GUINNESS® Black Lager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinness®Draught in Bottle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinness® Draught in Can</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinness®  Extra Stout</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HARP® Lager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>J&amp;B RARE® Blended Scotch Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jeremiah Weed Lightning Lemonade (FMB)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jeremiah Weed Roadhouse Tea (FMB)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jeremiah Weed Spiked Cola (FMB)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jeremiah Weed Sweet Tea Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOHNNIE WALKER® BLACK LABEL® Blended Scotch Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOHNNIE WALKER® BLUE LABEL® Blended Scotch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOHNNIE WALKER® GOLD LABEL® Blended Scotch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOHNNIE WALKER® GREEN LABEL® Blended Scotch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOHNNIE WALKER® RED LABEL® Blended Scotch</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO® Light Margarita Mix</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jose Cuervo Authentic Margaritas - Lime</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jose Cuervo Authentic Margaritas - Strawberry Lime</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO BLACK MEDALLION™ Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO ESPECIAL® Gold Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO ESPECIAL® Silver Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jose Cuervo Golden Margarita</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO PLATINO™ Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO RESERVA DE LA FAMILIA® Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>JOSE CUERVO TRADICIONAL® Tequila</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KETEL ONE® Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KETEL ONE CITROEN® Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>KETEL ONE ORANJE® Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lagavulin® 16 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lagavulin® Distillers Edition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lemon Sorbet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MOON MOUNTAIN® Coastal Citrus Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MOON MOUNTAIN® Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MOON MOUNTAIN® Wild Raspberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MYERS’S® Original Dark Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MYERS’S® Platinum White Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MYERS’S LEGEND® Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NUVO® Sparkling Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oban® 14 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oban® Distillers Edition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ORONOCO® Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pampero® Aniversario</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pampero® Blanco Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pampero® Especial Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parrot Bay Mojito</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parrot Bay Pineapple Colada</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parrot Bay Strawberry Daiquiri</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parrot Bay Sunset Surf</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parrot Bay Wave Runner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Peach Qream</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PIMM’S NO. 1® Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RED STRIPE® Lager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RED STRIPE® Light</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rökk® Apple Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rökk® Citrus Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rökk® Orange Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rökk® Raspberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rökk® Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ROMANA SAMBUCA® Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RUMPLE MINZE® Peppermint Schnapps</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEAGRAM’S® SEVEN CROWN® Blended Whisky</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEAGRAM’S® SEVEN CROWN® Dark Honey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEAGRAM’S® SEVEN CROWN® Stone Cherry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEAGRAM’S® VO® Blended Whiskey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Black Cherry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Blueberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Citrus Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Coconut Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Cranberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Fluffed Marshmellow Favored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Grand Cosmopolitan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Green Apple Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Lime Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Melon Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Orange Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Passion Fruit Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Pear Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Pineapple Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Pomegranate Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Pomegranate Martini</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Raspberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Savannah Tea Cocktail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Strawberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Tuscan Lemonade Cocktail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Vanilla Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Vodka Mojito</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Watermelon Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® Whipped Cream Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF® White Grape Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF BLUEBERRY &amp; LEMONADE™ Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF CLASSIC LEMONADE™ Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF CRANBERRY &amp; LIME™ Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Green Apple Bite Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Light Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Mango Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Passion Fruit Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Pomegranate Fusion Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Raspberry Burst Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Strawberry Acai Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Watermelon Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE® Wild Grape Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Smirnoff Ice Party Pack</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF ICE TRIPLE BLACK® Flavored Malt Beverage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Smirnoff Mixed Drinks - Party Pack</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMIRNOFF NO. 21® Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SMITHWICK’S® Ale</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Apple Flavored Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Authentic Grenadine</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Bellini Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Blood Orange Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Bloody Mary Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Clarified Key Lime Juice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Club Soda</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Cosmopolitan Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Dirty Martini</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Espresso Flavored Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Ginger Ale Cocktail Soda</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Ginger Flavored Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Lemonade Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Lemon Drop Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Margarita Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Mojito Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Peach Bellini Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Peach Flavored Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Pina Colada Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Pomegranate Flavored Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Pomegranate Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Red Sangria Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS®  Simple Syrup</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Triple Sec</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Triple Sec Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>STIRRINGS® Watermelon Cocktail Mixer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Strawberry Qream</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Talisker® 10 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Talisker® 18 Year Old</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Talisker® Distillers Edition</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TANQUERAY® London Dry Gin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TANQUERAY NO. TEN® Gin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TANQUERAY RANGPUR® Gin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TGIF Long Island Ice Tea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TGIF Margarita</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TGIF Mudslide</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TGIF Pina Colada</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>THE SINGLETON® Single Malt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>URSUS® Blue Raspberry Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>URSUS® Green Apple Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>URSUS® Punch Flavored Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>URSUS® Vodka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>YUKON JACK® Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zacapa® Centenario 23 Years Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zacapa® Centenario XO Rum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ZWACK® Liqueur</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Recipe Brand</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>API_External_ID__c</columns>
+        <columns>NAME</columns>
+        <columns>Locale__c</columns>
+        <columns>Generic_Brand__c</columns>
+        <columns>Brand_Image__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Recipe Brand Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Recipe Brands</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Brand_Category__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Short_Description__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Brand_Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Short_Description__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

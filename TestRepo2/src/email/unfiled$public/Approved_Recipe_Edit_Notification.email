@@ -1,0 +1,9 @@
+This is an automated notification.
+
+The following recipe has been updated by a Recipe Administrator:
+Title: {!Recipe__c.Recipe_Title__c}
+API ID: {!Recipe__c.API_External_ID__c}
+
+No action is required on your part - this is an informational email.
+
+To view this record, use the following link: https://c.cs11.visual.force.com/apex/MM_RecipeView?recipeId={!Recipe__c.Id}

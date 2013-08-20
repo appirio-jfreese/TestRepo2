@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Select values</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Select values</value>
+    </caseValues>
+    <fields>
+        <label><!-- Parent Select Name --></label>
+        <name>ParentSelectName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Select value --></label>
+        <name>ParentSelectvalue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Select Name --></label>
+        <name>SelectName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Select sub value --></label>
+        <name>SelectSubValue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Select value --></label>
+        <name>SelectValue__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

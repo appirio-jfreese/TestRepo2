@@ -1,0 +1,5 @@
+Your case has been closed due to the time that has elapsed since our last communication on the issue.  If you believe this case has been closed in error, please reply to this email.
+
+Case Number {!Case.CaseNumber} 
+Subject: {!Case.Subject} 
+Description: {!Case.Description}

@@ -1,0 +1,3 @@
+<apex:page controller="POS_ReportRendererController" showHeader="false" ContentType="application/vnd.ms-excel#POS_Report.xls">
+
+</apex:page>

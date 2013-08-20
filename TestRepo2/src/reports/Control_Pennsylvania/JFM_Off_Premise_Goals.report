@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Sales_Channel__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Goal_Type__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Minimum_of_Accounts__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Completed__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Action_Complete__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Goal__c.State__c</column>
+            <operator>equals</operator>
+            <value>PA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c.Goal_Type__c</column>
+            <operator>equals</operator>
+            <value>Off-Premise - Control</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c.Sales_Channel__c</column>
+            <operator>equals</operator>
+            <value>Integrated National Program,Distribution,Display/Visibility,Innovation,Sustainovation,Local</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>JFM Off Premise Goals</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Goal__c@Goal__c.Program__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Goal__c.Due_Date__c</dateColumn>
+        <endDate>2013-03-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-01-01</startDate>
+    </timeFrameFilter>
+</Report>

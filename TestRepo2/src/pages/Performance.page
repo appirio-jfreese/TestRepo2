@@ -1,0 +1,455 @@
+<apex:page controller="PerformanceController">
+
+	<head>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-1.7.2.min.js')}"/>
+	</head>
+
+	<style>
+		
+		.pbLabel {
+			font-weight: bold;
+			font-size: 1.2em;
+			margin-left: 12px;
+		}
+		
+		.pbSubExtra {
+			display: none !important;
+		}
+		
+		.pbSubsection {
+			margin-top: 12px !important;
+		}
+		
+		.resultText {
+			margin: 0px 15px;
+		}
+		
+		.chartDiv {
+			margin: 10px 0px 10px 12px;
+			border: 1px solid black;
+			background-color: white;
+			width: 700px;
+		}
+		
+		.chartDiv tspan{
+			font-size: 1.2em !important;
+		}
+	
+		.chartTitle {
+			font-weight: bold;
+			font-size: 12px;
+			text-align: center;
+			padding: 5px 0px 5px 0px;
+			background-color: #CCC;
+		}
+		
+		.vf-surface {
+			width: 700px;
+			position: relative;
+			left: -10px;
+		}
+		
+		.detailPage .bPageBlock, .editPage .bPageBlock {
+			border-top-width: 0px;
+		}
+		
+	</style>
+	
+	<script>
+	
+		var j$ = jQuery.noConflict();
+		
+		var initialized = false;
+		
+		window.onload = function(){
+			init();
+		};
+		
+		function init(){
+			if(initialized == false){
+				var labels = j$('text').filter(function(){ return j$(this).css('font-size').indexOf('18') > -1 });
+				if(labels.length == 0){
+					setTimeout("init()", 100);
+				} else {
+					initialized = true;
+					adjustAxisLabelCSS();
+				}
+			}
+		}
+		
+		function adjustAxisLabelCSS(){
+			var labels = j$('text').filter(function(){ return j$(this).css('font-size').indexOf('18') > -1 });
+			j$(labels).css('font-size', '12px');
+		}
+		
+	</script>
+					
+	<apex:form >
+	
+		<apex:actionFunction name="dateChanged"
+							 action="{!dateChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="levelChanged"
+							 action="{!levelChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="nameChanged"
+							 action="{!nameChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="bFieldTypeChanged"
+							 action="{!bFieldTypeChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel, bFieldValuePanel, groupByPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="bFieldValueChanged"
+							 action="{!bFieldValueChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+							 
+		<!-- 
+		<apex:actionFunction name="pClassChanged"
+							 action="{!pClassChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="pGroupChanged"
+							 action="{!pGroupChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="gBrandChanged"
+							 action="{!gBrandChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="sBrandChanged"
+							 action="{!sBrandChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="iBrandChanged"
+							 action="{!iBrandChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="sizeChanged"
+							 action="{!sizeChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		 -->
+		 
+		<apex:actionFunction name="typeChanged"
+							 action="{!typeChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="forChanged"
+							 action="{!forChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="priorChanged"
+							 action="{!priorChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="rtChanged"
+							 action="{!rtChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="stateChanged"
+							 action="{!stateChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="groupByChanged"
+							 action="{!groupByChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="sortByChanged"
+							 action="{!sortByChanged}"
+							 rerender="messagePanel, filterPanel, resultPanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+	
+		<apex:pageMessages id="messagePanel"/>
+	
+		<apex:pageBlock mode="edit">
+			
+			<br/>
+			<span class="pbLabel">Performance - Percent Completed to Goal</span>
+			<br/><br/>
+			
+			<apex:outputPanel id="filterPanel">
+				<apex:pageBlockSection title="Main Filters">
+					<apex:pageBlockSectionItem rendered="{!showDueDate}">
+						<apex:outputLabel value="Date Range"/>
+						<apex:selectList value="{!dateSel}"
+										 size="1"
+										 onchange="dateChanged()">
+							<apex:selectOptions value="{!dateSelections}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showLevel}">
+						<apex:outputLabel value="View As"/>
+						<apex:selectList value="{!levelSel}"
+										 size="1"
+										 onchange="levelChanged()">
+							<apex:selectOptions value="{!levelSelections}"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+						
+				<apex:pageBlockSection title="Goal Details">
+					<apex:pageBlockSectionItem rendered="{!showGoalName}">
+						<apex:outputLabel value="Name"/>
+						<apex:outputPanel id="goalNamePanel">
+							<apex:selectList value="{!nameSel}"
+											 size="1"
+											 onchange="nameChanged()">
+								<apex:selectOptions value="{!nameSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showPriority}">
+						<apex:outputLabel value="Priority"/>
+						<apex:outputPanel id="priorPanel">
+							<apex:selectList value="{!priorSel}"
+											 size="1"
+											 onchange="priorChanged()">
+								<apex:selectOptions value="{!priorSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem id="statePanel"
+											   rendered="{!showState}">
+						<apex:outputLabel value="State"/>
+						<apex:outputPanel id="statePanel">
+							<apex:selectList value="{!stateSel}"
+											 size="1"
+											 onchange="stateChanged()">
+								<apex:selectOptions value="{!stateSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showGoalType}">
+						<apex:outputLabel value="Premise"/>
+						<apex:outputPanel id="goalTypePanel">
+							<apex:selectList value="{!typeSel}"
+											 size="1"
+											 onchange="typeChanged()">
+								<apex:selectOptions value="{!typeSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showGoalFor}">
+						<apex:outputLabel value="{!forLabel + ' Name'}"/>
+						<apex:outputPanel id="goalForPanel">
+							<apex:selectList value="{!forSel}"
+											 size="1"
+											 onchange="forChanged()">
+								<apex:selectOptions value="{!forSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem id="recTypePanel"
+											   rendered="{!showRecType}">
+						<apex:outputLabel value="Activity Type"/>
+						<apex:outputPanel id="recTypePanel">
+							<apex:selectList value="{!rtSel}"
+											 size="1"
+											 onchange="rtChanged()">
+								<apex:selectOptions value="{!rtSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showBFieldFilter}">
+						<apex:outputPanel id="bFieldTypePanel">
+							<apex:selectList value="{!bFieldTypeSel}"
+											 size="1"
+											 onchange="bFieldTypeChanged()">
+								<apex:selectOptions value="{!bFieldTypeSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+						<apex:outputPanel id="bFieldValuePanel">
+							<apex:selectList value="{!bFieldValueSel}"
+											 size="1"
+											 onchange="bFieldValueChanged()">
+								<apex:selectOptions value="{!bFieldValueSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<!-- 
+					<apex:pageBlockSectionItem rendered="{!showPClass}">
+						<apex:outputLabel value="Product Class"/>
+						<apex:outputPanel id="pClassPanel">
+							<apex:selectList value="{!pClassSel}"
+											 size="1"
+											 onchange="pClassChanged()">
+								<apex:selectOptions value="{!pClassSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showPGroup}">
+						<apex:outputLabel value="Product Group"/>
+						<apex:outputPanel id="pGroupPanel">
+							<apex:selectList value="{!pGroupSel}"
+											 size="1"
+											 onchange="pGroupChanged()">
+								<apex:selectOptions value="{!pGroupSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showGBrand}">
+						<apex:outputLabel value="Generic Brand"/>
+						<apex:outputPanel id="gBrandPanel">
+							<apex:selectList value="{!gBrandSel}"
+											 size="1"
+											 onchange="gBrandChanged()">
+								<apex:selectOptions value="{!gBrandSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showSBrand}">
+						<apex:outputLabel value="Sub Brand"/>
+						<apex:outputPanel id="sBrandPanel">
+							<apex:selectList value="{!sBrandSel}"
+											 size="1"
+											 onchange="sBrandChanged()">
+								<apex:selectOptions value="{!sBrandSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showIBrand}">
+						<apex:outputLabel value="Individual Brand"/>
+						<apex:outputPanel id="iBrandPanel">
+							<apex:selectList value="{!iBrandSel}"
+											 size="1"
+											 onchange="iBrandChanged()">
+								<apex:selectOptions value="{!iBrandSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem rendered="{!showSize}">
+						<apex:outputLabel value="Size"/>
+						<apex:outputPanel id="sizePanel">
+							<apex:selectList value="{!sizeSel}"
+											 size="1"
+											 onchange="sizeChanged()">
+								<apex:selectOptions value="{!sizeSelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					 -->
+					 
+				</apex:pageBlockSection>
+					
+				<apex:pageBlockSection title="Chart Details">
+					<apex:pageBlockSectionItem id="groupByPanel"
+											   rendered="{!showGroupBy}">
+						<apex:outputLabel value="Group By"/>
+						<apex:outputPanel id="groupByPanel">
+							<apex:selectList value="{!groupBySel}"
+											 size="1"
+											 onchange="groupByChanged()">
+								<apex:selectOptions value="{!groupBySelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem id="sortByPanel"
+											   rendered="{!showSortBy}">
+						<apex:outputLabel value="Sort By"/>
+						<apex:outputPanel id="sortByPanel">
+							<apex:selectList value="{!sortBySel}"
+											 size="1"
+											 onchange="sortByChanged()">
+								<apex:selectOptions value="{!sortBySelections}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+				
+			</apex:outputPanel>
+			
+			<br/>
+			<!-- 
+			<apex:outputPanel id="resultPanel">
+				<div class="resultText">
+					{!resultSize} goal(s) found.
+				</div>
+			</apex:outputPanel>
+			 -->
+			
+			<apex:actionStatus id="filterChangeStatus">
+				<apex:facet name="start">
+						<apex:image value="/img/loading.gif"
+									style="padding: 3px 0px 0px 3px;"/>
+				</apex:facet>
+			</apex:actionStatus>
+				
+			<apex:outputPanel id="chartPanel">				
+				<div class="chartDiv">
+					<div class="chartTitle">
+						{!chartTitle}
+					</div>
+					<br/>
+					<apex:chart data="{!dataToUse}"
+								height="{!chartHeight}"
+								width="700">
+						<apex:axis type="Numeric"
+								   position="bottom"
+								   fields="dispValue"
+								   title="% Completed"
+								   minimum="0"
+								   maximum="100"
+								   steps="3"
+								   grid="true">
+							<apex:chartLabel font="9px Helvetica, sans-serif"/>
+						</apex:axis>
+						<apex:axis type="Category"
+								   position="left"
+								   fields="name"
+								   title="{!leftAxisLabel}">
+							<apex:chartLabel font="9px Helvetica, sans-serif"/>
+						</apex:axis>
+						<apex:barSeries axis="bottom"
+										orientation="horizontal"
+										yfield="name"
+										xfield="dispValue">
+							<apex:chartTips height="50"
+											width="120"
+											labelField="fullName"
+											valueField="tipValue"/>
+						</apex:barSeries>
+					</apex:chart>
+				</div>
+			</apex:outputPanel>
+			
+		</apex:pageBlock>
+		
+	</apex:form>
+
+</apex:page>

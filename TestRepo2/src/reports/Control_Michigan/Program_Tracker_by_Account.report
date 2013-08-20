@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>Goal__c.Action_Complete__c:SUM/Goal__c.Minimum_of_Accounts__c:SUM</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>false</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>% Completed</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <columns>
+        <field>Goal__c$Due_Date__c</field>
+    </columns>
+    <description>This report will show, in a grid, which accounts purchased programs with accounts in rows and programs in columns.</description>
+    <filter>
+        <criteriaItems>
+            <column>Goal__c$Goal_Level__c</column>
+            <operator>equals</operator>
+            <value>Rep</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$Minimum_of_Accounts__c</column>
+            <operator>notEqual</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c.Actions__r$Goal__c</column>
+            <operator>contains</operator>
+            <value>program</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$RecordType</column>
+            <operator>equals</operator>
+            <value>Goal__c.General_Goals</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c.Actions__r$Status__c</column>
+            <operator>equals</operator>
+            <value>Closed - Complete</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal__c.Actions__r$Account__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Program Tracker by Account</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Goals_Actions_Territories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Goal__c$Due_Date__c</dateColumn>
+        <endDate>2013-06-30</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-05-01</startDate>
+    </timeFrameFilter>
+</Report>

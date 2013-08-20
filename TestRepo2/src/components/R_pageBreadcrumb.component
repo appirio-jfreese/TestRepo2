@@ -1,0 +1,176 @@
+<!------------------------------------------------------------------------------
+Name 		 		:	R_pageBreadcrumb.component
+
+Modified By	:	Basant Kumar Verma (Appirio OffShore)
+Date				:	29/07/2013
+Story/Task	: DE705
+------------------------------------------------------------------------------->
+<apex:component >
+    <apex:attribute name="breadcrumbLinks" description="" type="pageLink[]" required="true"/>
+    <apex:attribute name="menuLinks" description="" type="pageLink[]" required="true"/>
+    <apex:attribute name="showExtendedBreancrumbs" description="" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="breadcrumbHolder" description="" type="BreadcrumbsHolder" required="false" />
+
+    <!-- CSS for site navigation dropdown -->
+    <style type="text/css">
+        /*Hide breadcrumb crumbs for screens under 670px, else hrefs turn into tabs*/
+        @media only screen and (max-width: 670px) {
+		.breadcrumb a {
+/*                font-size: 13px;    */
+				line-height: 1.25;
+				padding-top: 10px;
+				margin-bottom: -1px;
+            }
+            
+            h2 span.title {
+            	line-height: 1.25;
+           	}
+           	
+           	h2 a.back-btn {
+           		font-weight: bold;
+           	}          
+        }
+        
+        /*disable images, redefined below in .site-nav*/
+        .breadcrumb .inner {
+            padding: 0 0 0 56px;
+            background: no-repeat;
+            position: relative;
+        }
+        
+        .isv-page .breadcrumb .inner {
+            background: no-repeat;
+        }
+        
+        .sm-page .breadcrumb .inner {
+            background: no-repeat;
+        }
+        
+        .bmi-page .breadcrumb .inner {
+            background: no-repeat;
+        } 
+        
+        .mep-page .breadcrumb .inner {
+            background: no-repeat;
+        } 
+        
+        /* site-nav ~= R_PageHeader desc */
+        .breadcrumb .site-nav {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            line-height: 56px;
+            height: 56px;
+            width: 56px;
+            /*background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon.png) 50% no-repeat;*/
+        }
+        
+        .mep-page .breadcrumb .site-nav {
+            background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon.png) 10px 50% no-repeat;
+        }
+        
+        .isv-page .breadcrumb .site-nav {
+            background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon-isv.png) 10px 50% no-repeat;
+        }
+        
+        .sm-page .breadcrumb .site-nav {
+            background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon-sm.png) 10px 50% no-repeat;
+        }
+        
+        .bmi-page .breadcrumb .site-nav {
+            background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon-bmi.png) 10px 50% no-repeat;
+        }
+
+        .results-page .breadcrumb .site-nav {
+            background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon.png) 10px 50% no-repeat;
+        }
+        
+		.blog-home .breadcrumb .site-nav {
+			background: url({!URLFOR($Resource.Responsive_Base)}/i/breadcrumb-icon.png) 10px 50% no-repeat;
+		}         
+
+        /* nav ~= R_PageHeader name */
+        .breadcrumb .site-nav span.nav {
+            float: left;
+            color: #f40763;
+            font-size: 14px;
+            font-weight: bold; 
+            cursor: pointer;
+            position: relative;
+            padding: 1px 6px 1px 6px;
+            line-height: 15px;
+            overflow: hidden;
+            height: 15px;
+            z-index: 1;
+            left: 10px;
+            top: 46px;
+        }
+        
+        .breadcrumb .click-wrapper span.nav {
+            border: 1px solid #C10755;
+            padding: 0 5px 0 5px;
+            background: #333;
+            min-width: 300px;
+        }
+            .breadcrumb .dropdown {
+                position: relative;
+                left: 0px;
+                top: 0px;
+                display: none;
+            }
+                .breadcrumb .dropdown a {
+                    text-decoration: none;
+                    color: #fff;
+                    display: block;
+                    line-height: 25px;
+                    padding-right: 5px;
+                    text-align: left;
+                    font-weight: normal;
+                }
+                    .breadcrumb .dropdown a:hover {
+                        background: #f40763;
+                    }
+    </style>
+
+    <div class="breadcrumb">
+        <div class="inner">
+            <span class="site-nav-wrapper">
+                <span class="site-nav">
+                    <!-- <img src="{!URLFOR($Resource.Responsive_Base, 'i/breadcrumb-icon.png')}" style="vertical-align: middle;"/> -->
+                    <span class="nav">
+                        <span class="dropdown">
+                            <apex:repeat value="{!menuLinks}" var="menuLink">
+                            
+                                <apex:repeat value="{!menuLink.subLinks}" var="subMenuLink">
+                                    <a href="{!subMenuLink.link}" style="line-height: 1;">{!subMenuLink.linkName}</a> 
+                                </apex:repeat>
+                                                            
+                                <a name="subnavtitle" href="{!menuLink.link}" onlick="{!if(menuLink.subLinks.size==0,'','return false;')}" class="{!if(menuLink.subLinks.size==0,'','topNavRoot')}" target="{!IF(OR(menuLink.linkName == 'DWS', menuLink.linkName == 'diageowines.com'), '_blank', '_self')}">{!menuLink.linkName}</a>
+                            </apex:repeat>
+                        </span>
+                    </span>
+                </span>
+            </span>
+   
+            <a href="{!$Page.R_HomePage}">Home</a>
+            <apex:repeat rows="1" value="{!breadcrumbLinks}" var="breadcrumbLink">
+                >
+                <apex:outputPanel rendered="{!IF(breadcrumbLinks.size = 1,'false','true')}">
+                    <a href="{!breadcrumbLink.link}">{!breadcrumbLink.linkName}</a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(breadcrumbLinks.size = 1,'true','false')}">
+                    {!breadcrumbLink.linkName}
+                </apex:outputPanel>
+            </apex:repeat>
+            <apex:repeat first="1" value="{!breadcrumbLinks}" var="breadcrumbLink">
+                >
+                <apex:outputPanel rendered="{!IF(breadcrumbLinks[breadcrumbLinks.size-1].linkName = breadcrumbLink.linkName && breadcrumbLinks[breadcrumbLinks.size-1].link = breadcrumbLink.link,'false','true')}">
+                    <a href="{!breadcrumbLink.link}">{!breadcrumbLink.linkName}</a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(breadcrumbLinks[breadcrumbLinks.size-1].linkName = breadcrumbLink.linkName && breadcrumbLinks[breadcrumbLinks.size-1].link = breadcrumbLink.link,'true','false')}">
+                    {!breadcrumbLink.linkName}
+                </apex:outputPanel>
+            </apex:repeat>
+        </div>
+    </div>
+</apex:component>

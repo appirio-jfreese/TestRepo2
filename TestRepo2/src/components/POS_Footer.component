@@ -1,0 +1,16 @@
+<apex:component >
+	<!-- <apex:outputPanel styleClass="footer-wrapper" layout="block"> -->        
+		<!-- <div class="footer-container"> -->
+			<div class="footer">
+				<ul class="links">
+					<li>&copy; Diageo 2012</li>
+					<li><a href="{!$Page.TermsAndConditions}">Terms &amp; Conditions</a></li>
+					<li><a href="{!$Page.PrivacyPolicy}">Privacy &amp; Cookies Notice</a></li>
+					<li><a href="{!$Page.Links}">Industry Related Links</a></li>
+					<li><a href="{!$Page.FAQ}">FAQ</a></li>
+					<li><a href="{!$Page.Cases}?caseType=new">Contact Us</a></li>
+				</ul>
+			</div>
+		<!-- </div> -->
+	<!-- </apex:outputPanel> -->
+</apex:component>

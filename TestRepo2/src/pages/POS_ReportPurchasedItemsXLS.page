@@ -1,0 +1,19 @@
+<apex:page controller="POS_ReportPurchasedItems" ContentType="application/vnd.ms-excel#POS_ItemsPurchased.xls" cache="true" action="{!initializerAction}">
+    <apex:messages />
+    <table>
+        <thead>
+            <tr>
+                <th>{!SUBSTITUTE(header,',','</th><th>')}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <apex:repeat value="{!outputLines}" var="xlsl">
+                <apex:repeat value="{!xlsl}" var="l">
+                    <tr>
+                        {!l}
+                    </tr>
+                </apex:repeat>
+            </apex:repeat>
+        </tbody>
+    </table>
+</apex:page>

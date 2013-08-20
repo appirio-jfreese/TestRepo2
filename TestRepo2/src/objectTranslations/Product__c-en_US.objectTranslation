@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Product</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Products</value>
+    </caseValues>
+    <fields>
+        <label><!-- Brand Composite Key --></label>
+        <name>Brand_Composite_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Individual Brand --></label>
+        <name>Individual_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Classification --></label>
+        <name>Product_Classification__c</name>
+        <picklistValues>
+            <masterLabel>Non-Alcoholic Beverage</masterLabel>
+            <translation><!-- Non-Alcoholic Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spirit</masterLabel>
+            <translation><!-- Spirit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Product Group --></label>
+        <name>Product_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report Brand --></label>
+        <name>Report_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Brand --></label>
+        <name>Sub_Brand__c</name>
+    </fields>
+    <layouts>
+        <layout>Product Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

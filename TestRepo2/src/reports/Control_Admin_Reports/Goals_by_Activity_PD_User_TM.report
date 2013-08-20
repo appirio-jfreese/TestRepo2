@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>IF(
+	AND(
+		!ISBLANK(
+			Goal_Account_Report_Item__c.Completed_Actions__c:SUM),
+		Goal_Account_Report_Item__c.User_Called_On_Accounts_PD__c:MAX !=0),
+			(Goal_Account_Report_Item__c.Completed_Actions__c:SUM/Goal_Account_Report_Item__c.User_Called_On_Accounts_PD__c:MAX),0)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>% Completed - Called On</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>IF(
+	AND(
+		!ISBLANK(
+			Goal_Account_Report_Item__c.Completed_Actions__c:SUM),
+			Goal_Account_Report_Item__c.User_Accounts_PD__c:MAX !=0),
+			(Goal_Account_Report_Item__c.Completed_Actions__c:SUM/Goal_Account_Report_Item__c.User_Accounts_PD__c:MAX),0)</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA2</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>% Completed - Total Universe</masterLabel>
+        <scale>0</scale>
+    </aggregates>
+    <columns>
+        <aggregateTypes>Maximum</aggregateTypes>
+        <field>Goal_Account_Report_Item__c$User_Called_On_Accounts_PD__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Maximum</aggregateTypes>
+        <field>Goal_Account_Report_Item__c$User_Accounts_PD__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Goal_Account_Report_Item__c$Completed_Actions__c</field>
+    </columns>
+    <columns>
+        <field>Goal_Account_Report_Item__c$Name</field>
+    </columns>
+    <description>Goals by Activity, Primary Demographic and User - This Month</description>
+    <filter>
+        <criteriaItems>
+            <column>Goal_Account_Report_Item__c$Goal__c.Goal_Type__c</column>
+            <operator>equals</operator>
+            <value>On-Premise - Control,Off-Premise - Control</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal_Account_Report_Item__c$Goal__c.State__c</column>
+            <operator>equals</operator>
+            <value>AL,IA,ID,ME,MI,MS,MT,NC,NH,OH,OR,PA,UT,VA,VT,WV,WY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal_Account_Report_Item__c$Goal__c.Priority__c</column>
+            <operator>equals</operator>
+            <value>National</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal_Account_Report_Item__c$Goal_Due_Date__c</column>
+            <operator>greaterThan</operator>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal_Account_Report_Item__c$Goal__c.Start_Date__c</column>
+            <operator>lessOrEqual</operator>
+            <value>TODAY</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal_Account_Report_Item__c$User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal_Account_Report_Item__c$Primary_Demographic__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal_Account_Report_Item__c$Premise_Activity_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Goal_Account_Report_Item__c$Goal_Name__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Goals by Activity, PD &amp; User - TM</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Goal_Account_Report_Items__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Goal_Account_Report_Item__c$Goal_Due_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

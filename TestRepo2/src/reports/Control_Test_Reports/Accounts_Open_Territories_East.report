@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>USERS.NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>ADDRESS1_STATE</field>
+    </columns>
+    <filter>
+        <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR 6) OR 7</booleanFilter>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>West VA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Central West</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>DEL CHESTER</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Luxury East</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Montgomery OFF</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Pitt MC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Territory__c</column>
+            <operator>equals</operator>
+            <value>Territory 5</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Territory__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Accounts Open Territories East</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2012-07-24</startDate>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>stores all values like API key, User Name, Endpoint etc. required for Magento Integration service</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>BRAND_CATEGORY__c</fullName>
+        <externalId>false</externalId>
+        <label>BRAND_CATEGORY</label>
+        <length>10</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Budget_Overage_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Overage Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Budget_Overage_Percent__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Overage Percent</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Diageo_Spirits_District__c</fullName>
+        <externalId>false</externalId>
+        <label>Diageo Spirits District</label>
+        <length>4</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Diageo_Spirits_Responsible__c</fullName>
+        <externalId>false</externalId>
+        <label>Diageo Spirits Responsible</label>
+        <length>2</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Diageo_Wine_District__c</fullName>
+        <externalId>false</externalId>
+        <label>Diageo Wine District</label>
+        <length>4</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Diageo_Wine_Responsible__c</fullName>
+        <externalId>false</externalId>
+        <label>Diageo Wine Responsible</label>
+        <length>2</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IDP_Url__c</fullName>
+        <description>The URL to the Salesforce IDP initiated SSO</description>
+        <externalId>false</externalId>
+        <label>IDP Url</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Item URL</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Magento_API_Key__c</fullName>
+        <externalId>false</externalId>
+        <label>Magento API Key</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Magento_Catalog_Path__c</fullName>
+        <externalId>false</externalId>
+        <label>Magento_Catalog_Path</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Magento_Endpoint__c</fullName>
+        <externalId>false</externalId>
+        <label>Magento Endpoint</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Magento_WS_Username__c</fullName>
+        <externalId>false</externalId>
+        <label>Magento WS Username</label>
+        <length>25</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Monthly_Ordering_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly Ordering URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ORDERWINDOW_CATEGORY__c</fullName>
+        <externalId>false</externalId>
+        <label>ORDERWINDOW_CATEGORY</label>
+        <length>10</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PROGRAM_CATEGORY__c</fullName>
+        <externalId>false</externalId>
+        <label>PROGRAM_CATEGORY</label>
+        <length>10</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Portal_Redirect_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Redirect URL</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>ProductImage_FolderPath__c</fullName>
+        <description>Stored the server path to the media folder where Product Images on Magento are stored</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stored the server path to the media folder where Product Images on Magento are stored</inlineHelpText>
+        <label>ProductImage_FolderPath</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Quarterly_Ordering_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Quarterly Ordering URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Salesforce_apexrest_uri__c</fullName>
+        <externalId>false</externalId>
+        <label>Salesforce apexrest uri</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TYPE_BRAND__c</fullName>
+        <externalId>false</externalId>
+        <label>TYPE_BRAND</label>
+        <length>10</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TYPE_ORDER_WINDOW__c</fullName>
+        <externalId>false</externalId>
+        <label>TYPE_ORDER_WINDOW</label>
+        <length>10</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TYPE_PROGRAM__c</fullName>
+        <externalId>false</externalId>
+        <label>TYPE_PROGRAM</label>
+        <length>10</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tangerine_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Tangerine URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Thumbnail_URL__c</fullName>
+        <description>The base URL for getting thumbnails from Magento</description>
+        <externalId>false</externalId>
+        <label>Thumbnail URL</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <label>POS Magento Configuration</label>
+</CustomObject>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Digital Published Asset</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Digital Published Assets</value>
+    </caseValues>
+    <fields>
+        <label><!-- API External ID --></label>
+        <name>API_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Default Locale --></label>
+        <name>Default_Locale__c</name>
+        <picklistValues>
+            <masterLabel>DE</masterLabel>
+            <translation><!-- DE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-CA</masterLabel>
+            <translation><!-- EN-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-GB</masterLabel>
+            <translation><!-- EN-GB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-IN</masterLabel>
+            <translation><!-- EN-IN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-US</masterLabel>
+            <translation><!-- EN-US --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-AR</masterLabel>
+            <translation><!-- ES-AR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CL</masterLabel>
+            <translation><!-- ES-CL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CO</masterLabel>
+            <translation><!-- ES-CO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-MX</masterLabel>
+            <translation><!-- ES-MX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR</masterLabel>
+            <translation><!-- FR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR-CA</masterLabel>
+            <translation><!-- FR-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PT-BR</masterLabel>
+            <translation><!-- PT-BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TH</masterLabel>
+            <translation><!-- TH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Publisher --></label>
+        <name>Publisher__c</name>
+        <relationshipLabel><!-- Digital Published Assets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Mobile App</masterLabel>
+            <translation><!-- Mobile App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile Website</masterLabel>
+            <translation><!-- Mobile Website --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Social App</masterLabel>
+            <translation><!-- Social App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Website</masterLabel>
+            <translation><!-- Website --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- URL --></label>
+        <name>URL__c</name>
+    </fields>
+    <layouts>
+        <layout>Digital Published Asset Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

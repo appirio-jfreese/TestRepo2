@@ -1,0 +1,39 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_CodesPolicies">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.BrandMarketingInformationPage, 'style'+siteTheme+'.css')}"/>
+
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+		<script type="text/javascript">
+	    	pageViewed('Codes and Policies');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient"> 
+			<apex:outputPanel id="messages">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+			<div class="main-content-wrapper">
+				<div class="sub-header"><apex:outputText value="Codes & Policies"/></div>
+				<div class="pageContentRichText">
+					<apex:repeat value="{!contentItems}" var="item">
+						<apex:outputText value="{!item['Page_Content_Value__c']}" escape="false" />
+					</apex:repeat>
+					<apex:outputPanel rendered="{!if(attachments.size >  0, true, false)}">		            	
+			            <ol class="attachments-list" style="padding-left: 0px;">
+			            	<apex:repeat value="{!attachments}" var="att">
+			            		<li style="list-style: none;"><a href="{!URLFOR($Action.Attachment.Download, att.id)}" onclick="pageViewed('Codes and Policies - {!att.Name}');">{!att.Name}</a></li>
+			           	 	</apex:repeat>
+			            </ol>
+		            </apex:outputPanel>
+				</div>
+			</div>
+		</div>
+		<c:pageFooter isInternal="{!isInternalUser}" />
+   </div>
+</apex:page>

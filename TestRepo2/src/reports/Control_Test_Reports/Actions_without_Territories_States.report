@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Action__c$Name</field>
+    </columns>
+    <columns>
+        <field>Action__c$Owner</field>
+    </columns>
+    <columns>
+        <field>Action__c$Account_Goal_Name__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Action__c$State_Abbreviation__c</column>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c$Premise_Activity_Type__c</column>
+            <operator>equals</operator>
+            <value>On - Distribution Goals</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$State_Abbreviation__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Actions without Territories/States</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Actions_with_Goals_Brands__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Action__c$Owner</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Action__c$Due_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

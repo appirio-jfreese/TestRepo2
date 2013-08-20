@@ -1,0 +1,157 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : downloadAll.component
+
+Updated By  : Jonathan Freese (Appirio)   
+Date        : 6/6/13
+Story/Task  : US79/TA1007
+------------------------------------------------------------------------------------------------------------------->
+<apex:component >
+
+    <apex:attribute name="content" description="Content to download" type="List" required="true"/>
+	<apex:attribute name="hideShare" description="Is share should be hidden" type="Boolean" required="false" default="false"/>
+	<apex:attribute name="isFileObject" description="Is share should be hidden" type="Boolean" required="false" default="false"/>
+
+	<apex:attribute name="isBasketAction" description="Is add should be hidden" type="Boolean" required="false" default="false"/>
+	<!-- Start : Changes for US79/TA1007 - Jonathan Freese -->
+	<apex:attribute name="isFollowAction" description="Is add should be hidden" type="Boolean" required="false" default="false"/>
+	<!-- End : Changes for US79/TA1007 - Jonathan Freese -->
+
+	
+    <div class="moreInfoWrapper">
+        <div class="moreInfoDescriptionWrapper sectionBackground">
+            <div class="moreInfoDescription">
+            	<apex:outputPanel rendered="{!NOT(hideShare)}">
+					Download / Share Multiple Files
+				</apex:outputPanel>            
+            	<apex:outputPanel rendered="{!hideShare}">
+					Download Multiple Files
+				</apex:outputPanel>            
+
+            </div>
+            <div class="moreInfoClose close">&nbsp;</div>
+        </div>
+		<div class="moreInfoContentWrapper">
+			<div class="downloadAllInfoWrapper left">
+				<table style="width: 100%;"><tr>
+					<td class="left">Select the files you want to include.</td>
+					<td class="right">
+						<input type="checkbox" class="selectAllShareDownloaFilesChckbx"/> Select all					
+					</td>
+					<tr>
+						<td colspan="2">To see more results here, increase the Show per Page setting on the main screen.</td>
+					</tr>
+				</tr></table>
+				<div class="downloadAllFileList defaultTheme">
+					<apex:repeat value="{!content}" var="contentItem">
+						<apex:outputPanel rendered="{!IF(contentItem['is_video'] != true, 'false', 'true')}">
+							<div id="{!contentItem['video_id']}">
+								<input type="checkbox" id="{!contentItem['cvid']}" class="doc {!IF(contentItem['is_video'] != true, '','videofile')}" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+								<label for="{!contentItem['cvid']}">
+									{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} ({!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+								</label>
+							</div>
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!IF(contentItem['is_video'] != true, 'true', 'false')}">
+							<apex:outputPanel rendered="{!NOT(isFileObject)}">
+								<!-- Start : Changes for US79/TA1007 - Jonathan Freese -->
+								<apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),!ISNULL(contentItem['cvidlow']),(contentItem['fileType'] != 'LINK'))}">
+								<!-- End : Changes for US79/TA1007 - Jonathan Freese -->
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} ({!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}) (high res.)
+										</label>
+									</div>
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvidlow']}" class="doc" name="{!if(OR(ISNULL(contentItem['filesize_low']),contentItem['filesize_low'] == ''), '0kB', contentItem['filesize_low'])}" /> 
+										<label for="{!contentItem['cvidlow']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} ({!if(OR(ISNULL(contentItem['filesize_low']),contentItem['filesize_low'] == ''), '0kB', contentItem['filesize_low'])}) (low res.)
+										</label>
+									</div>
+				                </apex:outputPanel>
+				                <apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),ISNULL(contentItem['cvidlow']),contentItem['imageRes']=='High')}">
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} (high res. {!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+										</label>
+									</div>
+				                </apex:outputPanel>
+				                <apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),ISNULL(contentItem['cvidlow']),contentItem['imageRes']=='Low')}">
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} (low res. {!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+										</label>
+									</div>
+				                </apex:outputPanel>
+								<!-- Start : Changes for US79/TA1007 - Jonathan Freese -->
+				                <apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),ISNULL(contentItem['cvidlow']),ISNULL(contentItem['imageRes']),(contentItem['fileType'] != 'LINK'))}">
+								<!-- End : Changes for US79/TA1007 - Jonathan Freese -->
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} ({!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+										</label>
+									</div>
+								</apex:outputPanel>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{!isFileObject}">
+				                <apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),contentItem['imageRes']=='High')}">
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} (high res. {!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+										</label>
+									</div>
+				                </apex:outputPanel>
+				                <apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),contentItem['imageRes']=='Low')}">
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} (low res. {!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+										</label>
+									</div>
+				                </apex:outputPanel>
+								<!-- Start : Changes for US79/TA1007 - Jonathan Freese -->
+				                <apex:outputPanel rendered="{!AND(!ISNULL(contentItem['cvid']),ISNULL(contentItem['imageRes']),(contentItem['fileType'] != 'LINK'))}">
+								<!-- End : Changes for US79/TA1007 - Jonathan Freese -->
+									<div id="">
+										<input type="checkbox" id="{!contentItem['cvid']}" class="doc" name="{!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])}" /> 
+										<label for="{!contentItem['cvid']}">
+											{! IF (len(contentItem['description'])>50, LEFT(contentItem['description'], 50)+'...',contentItem['description'])} ({!if(OR(ISNULL(contentItem['fileSize']),contentItem['fileSize'] == ''), '0kB', contentItem['fileSize'])})
+										</label>
+									</div>
+								</apex:outputPanel>
+							</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:repeat>			
+				</div>
+				<div class="left" style="padding-bottom: 5px;">
+					<table style="width: 100%;"><tr>
+						<td class="left">Total file size: <span class="bold"><span class="totalDownloadSizeValue">0.00</span>MB</span></td>
+						<td class="right">download time: <span class="bold">approx. <span class="totalDownloadTimeValue">0 second</span></span></td>
+					</tr>
+					</table>
+				</div>
+				<button class="green startDownloadAll {! IF (isBasketAction, 'showClearBasketPopup', '')}" onclick="return false;">DOWNLOAD</button>
+				<apex:outputPanel rendered="{!NOT(hideShare)}">
+					<button class="green startShareAll" onclick="return false;">SHARE</button>
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!NOT(isBasketAction)}">
+					<button class="green multiBasketActionButton addToBasket" onclick="return false;">ADD</button>
+				</apex:outputPanel>
+				<button class="green multiBasketActionButton removeFromBasket" onclick="return false;">REMOVE</button>
+				<!-- Start : Changes for US79/TA1007 - Jonathan Freese -->
+				<apex:outputPanel rendered="{!NOT(isFollowAction)}">
+					<button class="green multiFollowActionButton addToFollow" onclick="return false;">FOLLOW</button>
+				</apex:outputPanel>
+				<button class="green multiFollowActionButton removeFromFollow" onclick="return false;">UN-FOLLOW</button>
+				<!-- Start : Changes for US79/TA1007 - Jonathan Freese -->
+
+				<span class="close defaultTheme">cancel</span>
+			</div>
+		</div>
+	</div>
+
+</apex:component>

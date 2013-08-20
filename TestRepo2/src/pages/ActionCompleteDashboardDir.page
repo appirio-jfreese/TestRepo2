@@ -1,0 +1,6 @@
+<apex:page sidebar="false"
+		   showHeader="false">
+		   
+	<c:ActionCompleteDashboard mode="dir"/>
+						
+</apex:page>

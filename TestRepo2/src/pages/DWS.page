@@ -1,0 +1,32 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_DWS">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+		<script type="text/javascript">
+	    	pageViewed('DWS');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+            <!-- Links -->
+            <div class="link-header">
+                <div class="title-text"><apex:outputText value="SSO Links"/></div>
+            </div>
+                <ul class="link-list">
+                	<li><apex:outputLink value="/idp/login?app={!ssoId}&RelayState={!hexDiageowines}" target="_blank" onclick="pageViewed('DWS - go to diageowines.com');">go to diageowines.com</apex:outputLink></li>
+                    <li><apex:outputLink value="/idp/login?app={!ssoId}&RelayState={!hexDwsacademies}" target="_blank" onclick="pageViewed('DWS - go to dwsacademies.com');">go to dwsacademies.com</apex:outputLink></li>
+                </ul>
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <c:ajaxLoader />
+
+</apex:page>

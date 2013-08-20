@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Goal Account Report Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Goal Account Report Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Segmentation --></label>
+        <name>Account_Segmentation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Goal Account Report Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Completed Actions --></label>
+        <name>Completed_Actions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Due Date --></label>
+        <name>Goal_Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Name --></label>
+        <name>Goal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+        <relationshipLabel><!-- Goal Account Report Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- New Org ID --></label>
+        <name>New_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Premise / Activity Type --></label>
+        <name>Premise_Activity_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Demographic --></label>
+        <name>Primary_Demographic__c</name>
+        <picklistValues>
+            <masterLabel>AfAm</masterLabel>
+            <translation><!-- AfAm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asian</masterLabel>
+            <translation><!-- Asian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Market</masterLabel>
+            <translation><!-- General Market --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hispanic</masterLabel>
+            <translation><!-- Hispanic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LGBT</masterLabel>
+            <translation><!-- LGBT --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- State AS SURI --></label>
+        <name>State_AS_SURI__c</name>
+        <relationshipLabel><!-- Goal Account Report Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- State Accounts (AS) --></label>
+        <name>State_Accounts_AS__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Accounts (PD) --></label>
+        <name>State_Accounts_PD__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Called On Accounts (AS) --></label>
+        <name>State_Called_On_Accounts_AS__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Called On Accounts (PD) --></label>
+        <name>State_Called_On_Accounts_PD__c</name>
+    </fields>
+    <fields>
+        <label><!-- State PD SURI --></label>
+        <name>State_PD_SURI__c</name>
+        <relationshipLabel><!-- Goal Account Report Items (State PD SURI) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- User AS SURI --></label>
+        <name>User_AS_SURI__c</name>
+        <relationshipLabel><!-- Goal Account Report Items (User AS SURI) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User Accounts (AS) --></label>
+        <name>User_Accounts_AS__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Accounts (PD) --></label>
+        <name>User_Accounts_PD__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Called On Accounts (AS) --></label>
+        <name>User_Called_On_Accounts_AS__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Called On Accounts (PD) --></label>
+        <name>User_Called_On_Accounts_PD__c</name>
+    </fields>
+    <fields>
+        <label><!-- User PD SURI --></label>
+        <name>User_PD_SURI__c</name>
+        <relationshipLabel><!-- Goal Account Report Items (User PD SURI) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

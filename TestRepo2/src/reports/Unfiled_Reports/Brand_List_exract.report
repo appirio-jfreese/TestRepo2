@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Brand_Variant_Grouping__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Brand_Type__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Brand_Priority__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Brand_Order__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Classification__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Generic_Brand__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Core_Trademarks__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Reserve_Brand__c</field>
+    </columns>
+    <columns>
+        <field>Brand__c.Innovation__c</field>
+    </columns>
+    <description>Brand List exract</description>
+    <format>Tabular</format>
+    <name>Brand List exract</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Brand__c@Brand__c.Parent_Brand__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>FK_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

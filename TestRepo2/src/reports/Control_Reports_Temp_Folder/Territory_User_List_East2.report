@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Territory__c.State__c</field>
+    </columns>
+    <columns>
+        <field>Territory__c.Sub_Division__c</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>CUST_OWNER_NAME</field>
+    </columns>
+    <columns>
+        <field>CUST_ID</field>
+    </columns>
+    <columns>
+        <field>Territory__c.Manager__c</field>
+    </columns>
+    <columns>
+        <field>Territory__c.Director__c</field>
+    </columns>
+    <columns>
+        <field>Territory__c.Broker_SAM__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Territory User List - East</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Territory__c</reportType>
+    <scope>team</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Territory__c.State__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

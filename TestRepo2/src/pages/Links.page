@@ -1,0 +1,64 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Links">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <style type="text/css">
+        ul.link-list a {
+            color: #0000ff;
+        }
+    </style>
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+		<script type="text/javascript">
+	    	pageViewed('Links');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+			<!-- Links -->
+			<div class="link-header">
+				<div class="title-text"><apex:outputText value="Brand Links"/></div>
+			</div>
+			<apex:outputPanel rendered="{!OR(ISNULL(brandLinks),brandLinks.size=0)}"><ul class="link-list"><li>Links not found.</li></ul></apex:outputPanel>
+			<apex:outputPanel rendered="{!OR(ISNULL(brandLinks),brandLinks.size!=0)}">
+				<ul class="link-list">
+			       	<apex:repeat value="{!brandLinks}" var="hl">
+	   					<li><a href="{!hl.URL__c}" target="_blank" onclick="pageViewed('Links - {!hl.Name}');">{!hl.Name}</a></li>
+	   				</apex:repeat>
+				</ul>
+			</apex:outputPanel>
+			<div class="link-header">			
+				<div class="title-text"><apex:outputText value="Industry Links"/></div>
+			</div>				
+			<apex:outputPanel rendered="{!OR(ISNULL(industryLinks),industryLinks.size=0)}"><ul class="link-list"><li>Links not found.</li></ul></apex:outputPanel>
+			<apex:outputPanel rendered="{!OR(ISNULL(industryLinks),industryLinks.size!=0)}">
+				<ul class="link-list">
+			       	<apex:repeat value="{!industryLinks}" var="ind">
+	   					<li><a href="{!ind.URL__c}" target="_blank" onclick="pageViewed('Links - {!ind.Name}');">{!ind.Name}</a></li>
+	   				</apex:repeat>
+				</ul>
+			</apex:outputPanel>			
+            <div class="link-header">
+                <div class="title-text"><apex:outputText value="Facebook Links"/></div>
+            </div>
+            <apex:outputPanel rendered="{!OR(ISNULL(facebookLinks),facebookLinks.size=0)}"><ul class="link-list"><li>Links not found.</li></ul></apex:outputPanel>
+            <apex:outputPanel rendered="{!OR(ISNULL(facebookLinks),facebookLinks.size!=0)}">
+                <ul class="link-list">
+                    <apex:repeat value="{!facebookLinks}" var="dws">
+                        <li><a href="{!dws.URL__c}" target="_blank" onclick="pageViewed('Links - {!dws.Name}');">{!dws.Name}</a></li>
+                    </apex:repeat>
+                </ul>
+            </apex:outputPanel>
+
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+	<c:ajaxLoader />
+
+</apex:page>

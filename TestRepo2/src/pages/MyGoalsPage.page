@@ -1,0 +1,233 @@
+<apex:page controller="MyGoalsController"
+		   sidebar="false">
+
+	<style>
+		#topBar {
+			float: left;
+			width: 100%;
+			padding: 5px 0px 10px 0px;
+		}
+	
+		#titleSpan {
+			float: left;
+			font-size: 1.2em;
+			font-weight: bold;
+			padding-top: 3px ;
+		}
+	
+		#viewSelDiv {
+			float: left;
+			padding-left: 30px;
+		}
+		
+		#buttonDiv {
+			float: right;
+		}
+		
+		.rightAlign {
+			text-align: right;
+		}
+		
+		.loadStatus {
+			position: relative;
+			left: 5px;
+			top: 3px;
+			height: 15px;
+		}
+	
+	</style>
+	
+	<script>
+		
+		function confirmDeletion(){
+			var yes = window.confirm('Are you sure you want to delete this saved goal?');
+			if(yes){
+				deleteConfirmed();
+			}
+		}
+		
+	</script>
+
+	<apex:form >
+		<apex:actionFunction name="deleteConfirmed"
+							 action="{!deleteConfirmed}"
+							 rerender="theTable"
+							 status="viewStatus"/>
+			 
+		<apex:pageMessages id="messagePanel"/>
+	
+		<apex:pageBlock >
+			<div id="topBar">
+				<span id="titleSpan">
+					My Goals
+				</span>
+				<div id="viewSelDiv">
+					<apex:outputLabel value="View: "/>
+					<apex:selectList value="{!viewSel}"
+									 size="1">
+						<apex:selectOptions value="{!viewChoices}"/>
+						<apex:actionSupport event="onchange"
+											action="{!queryGoals}"
+											status="viewStatus"
+											rerender="theTable, messagePanel"/>
+					</apex:selectList>
+					<apex:actionStatus id="viewStatus">
+						<apex:facet name="start">
+							<apex:image value="/img/loading.gif"
+										styleClass="loadStatus"/>
+						</apex:facet>
+					</apex:actionStatus>
+				</div>
+				<div id="buttonDiv">
+					<apex:commandButton value="{!IF(userMode == 'sam' || (userMode == 'mgr' && profName == 'Diageo - Sales Manager'), 'Create New Goal(s)', 'Create New Local Goal(s)')}"
+										rendered="{!userMode != 'rep'}"
+										action="{!createLocalGoal}"/>
+					<apex:commandButton rendered="{!userMode == 'dir/mgr' || (userMode == 'mgr' && profName != 'Diageo - Sales Manager')}"
+										value="Cascade Goals To Reps"
+										action="{!gotoActionAssignment}"/>
+					<apex:commandButton rendered="{!userMode == 'rep'}"
+										value="Accept Goals"
+										action="{!gotoActionAssignment}"/>
+				</div>
+			</div>
+			
+			<br/>
+			<apex:pageBlockTable id="theTable"
+								 value="{!gls}"
+								 var="gl">
+				<apex:column rendered="{!(userMode != 'mgr' && userMode != 'rep' && viewSel != 'subs' && viewSel != 'all') || (userMode == 'mgr' && viewSel == 'saved')}"
+							 style="width: 60px;">
+					<apex:commandLink value="{!gl.resumeOrCascadeLabel}"
+									  action="{!cascadeClicked}"
+									  style="padding-left: 5px;">
+						<apex:param value="{!gl.key}"
+									name="glClicked"
+									assignTo="{!glKeyClicked}"/>
+					</apex:commandLink>
+				</apex:column>
+				<apex:column rendered="{!viewSel == 'saved'}"
+							 style="width: 60px;">
+					<apex:commandLink value="Delete"
+									  action="{!doNothing}"
+									  oncomplete="confirmDeletion();"
+									  style="padding-left: 5px;">
+						<apex:param value="{!gl.key}"
+									name="glClicked"
+									assignTo="{!glKeyClicked}"/>
+					</apex:commandLink>
+				</apex:column>
+				<apex:column value="{!gl.name}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Name {!IF(sortExpression=='name',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="name"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.premString}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Premise(s) {!IF(sortExpression=='premString',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="premString"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.recTypeName}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Activity Type(s) {!IF(sortExpression=='recTypeName',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="recTypeName"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column rendered="{!viewSel == 'subs' || viewSel == 'all'}"
+							 value="{!gl.goalFor}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Goal For{!IF(sortExpression=='goalFor',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="goalFor"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.goalNum}"
+							 styleClass="rightAlign">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Goal {!IF(sortExpression=='goalNum',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="goalNum"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.startDateString}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Start Date {!IF(sortExpression=='startDateString',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="startDateString"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.priority}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Priority {!IF(sortExpression=='priority',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="priority"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.progName}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Program {!IF(sortExpression=='progName',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="progName"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+				<apex:column value="{!gl.goalLevel}">
+					<apex:facet name="header">
+						<apex:commandLink action="{!sortData}"
+										  value="Goal Level {!IF(sortExpression=='goalLevel',IF(sortDirection='ASC','▼','▲'),'')}"
+										  rerender="theTable"
+										  status="tableStatus">
+							<apex:param value="goalLevel"
+										name="column"
+										assignTo="{!sortExpression}"/>
+						</apex:commandLink>
+					</apex:facet>
+				</apex:column>
+			</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+
+</apex:page>

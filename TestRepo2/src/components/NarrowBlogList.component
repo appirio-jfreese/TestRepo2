@@ -1,0 +1,55 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : NarrowBlogList.component
+
+Updated By  : Randy Wandell (Appirio)
+Date        : 6/12/13
+Story/Task  : US503
+------------------------------------------------------------------------------------------------------------------->
+<apex:component controller="Controller_BlogPost" id="blogPostComponent">
+    <apex:stylesheet value="{!URLFOR($Resource.BlogCSS, 'css/layout.css')}" />   
+    
+    <style type="text/css">
+        .blog-wrapper { text-align: left; padding-left: 5px;}
+        .blog-wrapper .blog-item { padding-bottom: 5px; }
+        .blog-wrapper .blog-item .blog-item-title { cursor: auto; }
+        .blog-wrapper .blog-item .blog-item-info { font-size: 75%; }
+        .blog-wrapper .no-items { width: 100%; text-align: center; }
+    </style>
+    
+    <script type="text/javascript">
+        function openDetails(id) {
+            location.href="BPDetails?blogId=" + id;
+        }
+    </script>
+    
+    <apex:attribute name="isLoggedIn" type="Boolean" required="true" description="" />
+    <apex:attribute name="url" type="String[]" default="" required="false" assignTo="{!blogUrls}" description=""/>
+    <apex:attribute name="singleTag" type="String" default="" required="false" assignTo="{!blogTag}" description=""/>
+    <apex:attribute name="tagList" type="String[]" default="" required="false" assignTo="{!blogTags}" description=""/>
+    <apex:attribute name="smartTag" type="String" default="" required="false" assignTo="{!blogSTag}" description=""/>
+    <apex:attribute name="maxAllowdBlogs" type="Integer" default="5" required="false" assignTo="{!blogCount}" description="" />
+    <apex:attribute name="format" type="String" default="TitlesAndShortDesc" required="false" assignTo="{!blogFormat}" description="format for blog post, possible values (Titles, TitlesAndShortDesc, TitlesAndLongDesc)" />
+        
+        <div class="blog-wrapper" id="blog-wrapper">
+            <apex:outputPanel rendered="{!OR(blogPosts != null, blogPosts.size != 0)}">
+                <apex:repeat value="{!blogPosts}" var="bp">
+                    <div class="blog-item">
+                        
+                        <!-- TITLES -->
+                        <div class="blog-item-title">
+                            <apex:outputLabel style="font-weight: bold; color: #99a30d; cursor: pointer;" onclick="openDetails('{!bp.Id}');">
+                                    {!bp.Name}
+                            </apex:outputLabel>
+                        </div>
+                        <div class="blog-item-info">
+                            Posted By : {!bp.CreatedBy.Name}
+                        </div>
+                    </div>
+                </apex:repeat>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!OR(blogPosts == null, blogPosts.size == 0)}">
+                <div class="no-items">No Items.</div>
+            </apex:outputPanel>
+        </div>
+</apex:component>

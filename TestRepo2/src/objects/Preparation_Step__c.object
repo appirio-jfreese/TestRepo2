@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>ActionGroup__c</fullName>
+        <externalId>false</externalId>
+        <label>ActionGroup</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Mix</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pour</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Serve</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Stir</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LegacyID__c</fullName>
+        <externalId>true</externalId>
+        <label>LegacyID</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Preparation_Step_External_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Preparation Step External Id</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipe__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipe</label>
+        <referenceTo>Recipe__c</referenceTo>
+        <relationshipLabel>Preparation Steps</relationshipLabel>
+        <relationshipName>Preparation_Steps</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Step_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Step Number</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Preparation Step</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Description__c</columns>
+        <columns>Recipe__c</columns>
+        <columns>Preparation_Step_External_Id__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Step_Type_Editor</fullName>
+        <columns>Recipe__c</columns>
+        <columns>Step_Number__c</columns>
+        <columns>ActionGroup__c</columns>
+        <columns>Description__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <label>Step Type Editor</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>Prepstep-{000000000}</displayFormat>
+        <label>Step</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Preparation Steps</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>New_Preparation_Step</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Preparation Step</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/*window.open(&apos;/apex/AddStepPage?recipeId=&apos;+&apos;{!Recipe__c.Id}&apos;,&apos;_blank&apos;,&apos;location=1,status=1,scrollbars=1,width=600,height=350&apos;)*/
+
+var popupWin;
+var intId = 0;
+popupWin = window.open(&apos;/apex/AddStepPage?recipeId=&apos;+&apos;{!Recipe__c.Id}&apos;,&apos;_blank&apos;,&apos;location=1,status=1,scrollbars=1,width=600,height=350&apos;);
+checkPopup= function() { 
+if (intId != 0) {
+        if (popupWin.closed) {
+            window.clearInterval(intId);
+            intId = 0;
+            document.location.reload()
+        } 
+    } 
+}
+if(navigator.appName == &apos;Microsoft Internet Explorer&apos;) {
+         intId = window.setInterval(&quot;checkPopup()&quot;,500);
+}</url>
+    </webLinks>
+</CustomObject>

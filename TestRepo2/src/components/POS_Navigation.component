@@ -1,0 +1,184 @@
+<apex:component >
+    <apex:attribute name="menuLinks" description="" type="pageLink[]" required="true"/>
+   <apex:attribute name="breadcrumbs" type="POS_BreadCrumb[]" required="true" description="List of breadcrumbs"/>
+   
+<!-- need to be local to the component to pick up paths to resources -->
+<style>
+	
+	.breadcrumbs {
+		background: transparent;
+		margin-bottom: 5px;
+	}
+	
+	div.breadcrumb {
+	    /*background: url("{!URLFOR($Resource.CommonPage, 'images/page_breadcrumb_bg.png')}") repeat-x scroll 0 0 #FFFFFF;
+	    */
+	    margin:     2px 10px 0px 10px;
+	    padding:    0px;
+	    position:   relative;
+	    z-index:    30;
+	}
+	
+	div.breadcrumb-home {
+		background: url("{!URLFOR($Resource.CommonPage, 'images/page_breadcrumb_home.png')}") no-repeat scroll 0 0 transparent;
+	    height:     17px;
+	    width:      20px;
+	    margin:     5px 7px 0px 10px;
+	    padding:    0px;
+	    float:      left;
+	    cursor:     pointer;
+	}
+	
+	
+	div.breadcrumb-nav {
+	    background:  url("{!URLFOR($Resource.CommonPage, 'images/page_breadcrumb_nav.png')}") no-repeat scroll 0 0 transparent;
+	    height:      28px;
+	    margin:      7px 0px 0px 10px;
+	    padding:     0px;
+	    float:       left;
+	    cursor:      pointer;
+	    font-size:   15px;
+		font-weight: bold;
+	    font-family: Tahoma, Arial;
+	    color:       #FFFFFF;
+	}
+	
+	div.breadcrumb-nav.over {
+	    background:  url("{!URLFOR($Resource.CommonPage, 'images/page_breadcrumb_nav_over.png')}'") no-repeat scroll 0 0 transparent;
+	}
+	
+	div.breadcrumb-sep {
+	    background:  url("{!URLFOR($Resource.CommonPage, 'images/page_breadcrumb_sep.png')}") no-repeat scroll 0 0 transparent;*/
+	    width:      1px;
+	    height:     30px;
+	    padding:    0px;
+	    margin:     0px 2px 0px 2px;
+	    float:      left;
+	}
+	
+	div.breadcrumb-links span {
+	    background:  url("{!URLFOR($Resource.CommonPage, 'images/page_breadcrumb_nav_arrow.png')}") no-repeat scroll 0 center transparent;*/
+	    margin:      0px 5px;
+	    
+	}
+	
+	
+
+</style>    
+
+<script type="text/javascript">
+        jQuery(document).ready(function() {
+            //hover effect for home button
+            jQuery("div.breadcrumb-home").hover(
+                function(){jQuery(this).addClass('over')},
+                function(){jQuery(this).removeClass('over')}
+            );
+            jQuery("div.breadcrumb-nav").hover(
+                function(){jQuery(this).addClass('over')},
+                function(){jQuery(this).removeClass('over')}
+            );
+			jQuery("button").live('mouseenter', function(){
+				jQuery(this).addClass('over');
+			});
+			jQuery("button").live('mouseleave', function(){
+                jQuery(this).removeClass('over');
+			});            
+            //site navigation menu
+            jQuery("ul.topnav span.topNavRoot").live('click',function() {
+                jQuery(this).parent().find("ul.subnav").first().slideDown('fast').show();
+                
+                jQuery(this).parents('ul:first').parent().hover(
+                    function() {},
+                    function() {  
+                        jQuery(this).parent().find("ul.subnav").slideUp('slow');
+                        jQuery('.active-item').removeClass('active-item');
+                    });
+            });
+            jQuery("div.breadcrumb-home").live('click', function(){
+                window.location = "{!$Page.HomePage}";
+            });
+
+            jQuery("ul.topnav a.topNavRoot").live('mouseenter',function() {
+                jQuery(this).parent().find("ul.subnav").first().slideDown('fast').show();
+                jQuery(this).addClass('active-item');
+                jQuery(this).parent().hover(
+                    function() {},
+                    function() {  
+                        jQuery(this).find("ul.subnav").slideUp('slow');
+                        jQuery('.active-item').removeClass('active-item');
+                    });
+            });
+            jQuery("div.breadcrumb-home").live('click', function(){
+                window.location = "{!$Page.HomePage}";
+            });
+        });  
+    </script>
+    <div class="breadcrumb">
+    <table>
+        <tr>
+            <td style="vertical-align:middle;width:45px;"><a href="{!$Page.HomePage}" class="box-link"><div class="breadcrumb-home">&nbsp;</div></a><div class="breadcrumb-sep">&nbsp;</div></td>
+            <td style="vertical-align:middle;width:175px;">
+		        <div class="breadcrumb-nav">
+		            <ul class="topnav">  
+		                <li>
+		                    <ul class="subnav">  
+		                        <apex:repeat value="{!menuLinks}" var="menuLink">
+			                        <li class="{!menuLink.className}">
+			                            <ul class="subnav subnav2">  
+										     <apex:repeat value="{!menuLink.subLinks}" var="subMenuLink">
+										         <li class="{!subMenuLink.className}" ><a href="{!subMenuLink.link}">{!subMenuLink.linkName}</a></li>
+										     </apex:repeat>
+			                            </ul>
+			                            <a name="subnavtitle" href="{!menuLink.link}" onlick="{!if(menuLink.subLinks.size==0,'','return false;')}" class="{!if(menuLink.subLinks.size==0,'','topNavRoot')}">{!menuLink.linkName}</a>
+			                        </li>		                            
+		                        </apex:repeat>
+		                    </ul>  
+		                    <span class="topNavRoot">Site Navigation</span>
+		                </li>  
+		            </ul>  
+		        </div>
+		        <div class="breadcrumb-sep">&nbsp;</div>
+		  </td>
+		 <td style="vertical-align:middle;">
+			 <div class="breadcrumbs">
+			    <ul>
+					<apex:repeat value="{!breadcrumbs}" var="breadcrumb">
+						<li><a href="{!breadcrumb.link}">{!breadcrumb.name}</a></li> 
+					</apex:repeat>
+				</ul>
+			</div>
+		  </td>
+        </tr>
+    </table>
+        
+
+    </div>
+
+<!-- 	
+<apex:attribute name="menuLinks" description="" type="pageLink[]" required="true"/>  
+<a href="POS_OrderWindowView" class="home">home</a>
+<div class="navigation">
+	<span>
+		<a href="#">Site Navigation</a>
+	</span>
+	<div class="drop">
+		<li>
+            <ul class="subnav">  
+                 <apex:repeat value="{!menuLinks}" var="menuLink">
+                  <li class="{!menuLink.className}">
+                      <ul class="subnav subnav2">  
+					     <apex:repeat value="{!menuLink.subLinks}" var="subMenuLink">
+					         <li class="{!subMenuLink.className}" ><a href="{!subMenuLink.link}">{!subMenuLink.linkName}</a></li>
+					     </apex:repeat>
+                      </ul>
+                      <a name="subnavtitle" href="{!menuLink.link}" onlick="{!if(menuLink.subLinks.size==0,'','return false;')}" class="{!if(menuLink.subLinks.size==0,'','topNavRoot')}">{!menuLink.linkName}</a>
+                  </li>		                            
+                 </apex:repeat>
+             </ul>  
+             <span class="topNavRoot">Site Navigation</span>
+         </li>  
+	
+	
+	</div>
+</div>-->
+</apex:component>

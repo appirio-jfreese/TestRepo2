@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Blitz</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Blitzes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Blitzes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blitz Brand --></label>
+        <name>Blitz_Brand__c</name>
+        <picklistValues>
+            <masterLabel>Blackhaus</masterLabel>
+            <translation><!-- Blackhaus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bushmills Honey</masterLabel>
+            <translation><!-- Bushmills Honey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crown Black</masterLabel>
+            <translation><!-- Crown Black --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crown Maple</masterLabel>
+            <translation><!-- Crown Maple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Crown Royal Reserve</masterLabel>
+            <translation><!-- Crown Royal Reserve --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio 1942</masterLabel>
+            <translation><!-- Don Julio 1942 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio Anejo</masterLabel>
+            <translation><!-- Don Julio Anejo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio Blanco</masterLabel>
+            <translation><!-- Don Julio Blanco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio Real</masterLabel>
+            <translation><!-- Don Julio Real --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio Reposado</masterLabel>
+            <translation><!-- Don Julio Reposado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Goldschlager</masterLabel>
+            <translation><!-- Goldschlager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Johnnie Walker Blue</masterLabel>
+            <translation><!-- Johnnie Walker Blue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rumple Minze</masterLabel>
+            <translation><!-- Rumple Minze --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Blitz Details --></label>
+        <name>Blitz_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Blitz Program --></label>
+        <name>Blitz_Program__c</name>
+        <picklistValues>
+            <masterLabel>All for One, One for Me - Additional Bottle</masterLabel>
+            <translation><!-- All for One, One for Me - Additional Bottle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>All for One, One for Me - Feature</masterLabel>
+            <translation><!-- All for One, One for Me - Feature --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>All for One, One for Me - New Distribution</masterLabel>
+            <translation><!-- All for One, One for Me - New Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blitz Week December 3rd</masterLabel>
+            <translation><!-- Blitz Week December 3rd --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cinco De Mayo-Feature Cards</masterLabel>
+            <translation><!-- Cinco De Mayo-Feature Cards --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cinco De Mayo-Menu</masterLabel>
+            <translation><!-- Cinco De Mayo-Menu --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cinco De Mayo-New Distribution</masterLabel>
+            <translation><!-- Cinco De Mayo-New Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shot Heard Around the World</masterLabel>
+            <translation><!-- Shot Heard Around the World --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date FInished --></label>
+        <name>Date_FInished__c</name>
+    </fields>
+    <fields>
+        <label><!-- PDF Link --></label>
+        <name>PDF_Link__c</name>
+    </fields>
+    <layouts>
+        <layout>Blitz Layout</layout>
+        <sections>
+            <label><!-- Blitz Details --></label>
+            <section>Blitz Details</section>
+        </sections>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Active Blitz --></label>
+        <name>Active_Blitz</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

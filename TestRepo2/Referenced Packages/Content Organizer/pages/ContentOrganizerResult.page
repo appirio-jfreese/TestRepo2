@@ -1,0 +1,22 @@
+<apex:page sidebar="false"  standardStylesheets="false"  tabStyle="Content_Organizer__tab" controller="LS_CO.ContentOrganizerHome" action="{!runReport2}" >
+    <apex:form >
+        <apex:outputPanel rendered="{!NOT(batchFlag)}" >   
+            <apex:actionPoller rerender="jobs" interval="5"/>                        
+            <apex:outputPanel id="jobs">                                           
+               <apex:outputPanel rendered="{!NOT(BatchStatus)}">
+                    <center>
+                        <table height="400"><tr><td style="font-size:15px !important;">            
+                        <apex:image url="/apexpages/devmode/img/saveStatus.gif" width="30" style="padding-top:2px;"/>Excecuting Setup... 
+                        </td></tr></table>
+                    </center>
+               </apex:outputPanel>  
+               <apex:outputPanel rendered="{!BatchStatus}"> 
+                    <script>
+                        window.location.href = '/apex/ContentOrganizerResult'; 
+                        window.location.reload();   
+                    </script>    
+              </apex:outputPanel> 
+          </apex:outputPanel>     
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

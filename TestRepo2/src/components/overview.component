@@ -1,0 +1,32 @@
+<apex:component >
+    <apex:attribute name="cvid" description="Id" type="String" required="true"/>
+    <apex:attribute name="description" description="Description" type="String" required="true"/>
+    <apex:attribute name="videoId" description="Video ID" type="String" required="false"/>
+    <apex:attribute name="isVideo" description="Video ID" type="Boolean" required="false"/>
+    <apex:attribute name="previewId" description="Video ID" type="String" required="false"/>
+    <apex:attribute name="isPreview" description="Video ID" type="Boolean" required="false"/>
+   
+    <div class="moreInfoWrapper">
+        <div class="moreInfoDescriptionWrapper sectionBackground">
+            <div class="moreInfoDescription">{! IF (len(description)>30, LEFT(description, 30)+'...',description)}</div>
+            <div class="moreInfoClose close">&nbsp;</div>
+        </div>
+		<div class="moreInfoContentWrapper">
+		
+			<apex:outputPanel rendered="{!isVideo==false}">
+				<apex:outputPanel rendered="{!AND(isPreview==true,!ISNULL(previewId))}">
+					<img src="{!URLFOR($Action.Attachment.Download, previewId)}"/>  
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!OR(isPreview!=true,ISNULL(previewId))}">
+					<apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico120"/>
+				</apex:outputPanel>
+			</apex:outputPanel>
+
+			<apex:outputPanel rendered="{!isVideo==true}">
+				<c:videoPlayer videoId="{!videoId}" width="425" height="280"/>
+			</apex:outputPanel>
+
+		</div>
+	</div>
+ 
+</apex:component>

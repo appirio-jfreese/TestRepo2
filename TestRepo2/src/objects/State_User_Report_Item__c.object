@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>Account_Segmentation__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Segmentation</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accounts__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Accounts</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Called_On_Accounts__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Called On Accounts</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Key__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(State__c != null, Account_Segmentation__c != null), LEFT(State__c, 15) + &apos;|&apos; + Account_Segmentation__c + &apos;|&apos; + TEXT(Premise__c),
+IF(AND(State__c != null, Primary_Demographic__c != null), LEFT(State__c, 15) + &apos;|&apos; + Primary_Demographic__c + &apos;|&apos; + TEXT(Premise__c),
+IF(AND(User__c != null, Account_Segmentation__c != null), LEFT(User__c, 15) + &apos;|&apos; + Account_Segmentation__c + &apos;|&apos; + TEXT(Premise__c),
+IF(AND(User__c != null, Primary_Demographic__c != null), LEFT(User__c, 15) + &apos;|&apos; + Primary_Demographic__c + &apos;|&apos; + TEXT(Premise__c),
+null))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Key</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Org_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>New Org ID</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Premise__c</fullName>
+        <externalId>false</externalId>
+        <label>Premise</label>
+        <picklist>
+            <picklistValues>
+                <fullName>On</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Off</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Demographic__c</fullName>
+        <externalId>false</externalId>
+        <label>Primary Demographic</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>State</label>
+        <referenceTo>State__c</referenceTo>
+        <relationshipLabel>State User Report Items</relationshipLabel>
+        <relationshipName>State_User_Report_Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>State_User_Report_Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <label>State User Report Item</label>
+    <nameField>
+        <displayFormat>SURI-{00000000}</displayFormat>
+        <label>State User Report Item Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>State User Report Items</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

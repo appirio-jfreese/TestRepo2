@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Comment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Comment</value>
+    </caseValues>
+    <fields>
+        <label><!-- Blog --></label>
+        <name>Blog__c</name>
+        <relationshipLabel><!-- Comment --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <layouts>
+        <layout>Comment Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

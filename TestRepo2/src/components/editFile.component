@@ -1,0 +1,72 @@
+<apex:component controller="Service_EditFile" allowDML="true">
+  	
+    <apex:attribute name="distributorId" description="Distributor Id" type="ID" required="true" assignTo="{!distributorId}"/>
+    <apex:attribute name="distributorName" description="Distributor Name" type="String" required="false" assignTo="{!distributorName}"/>
+    <apex:attribute name="organizationalUnitId" description="Organizational unit" type="String" required="false" assignTo="{!organizationalHierarchyId}"/>
+    <apex:attribute name="organizationalUnitName" description="Organizational unit" type="String" required="false" assignTo="{!organizationalHierarchyName}"/>
+
+    <apex:attribute name="folderId" description="Folder Id" type="ID" required="false" assignTo="{!folderId}"/>
+    <apex:attribute name="folderName" description="Folder Name" type="String" required="false"/>
+	<apex:attribute name="afterUploadRedirectTo" description="Url" type="String" required="false" assignTo="{!afterUploadRedirectTo}"/>
+	<apex:attribute name="fileToEdit" description="file id" type="Id" required="true" assignTo="{!fileId}"/>
+	<apex:attribute name="allowComments" description="allow comments" type="Boolean" required="false" default="true" assignTo="{!allowComments}"/>
+       
+    <div class="moreInfoWrapper">
+        <div class="moreInfoDescriptionWrapper sectionBackground">
+            <div class="moreInfoDescription">Edit File</div>
+            <div class="moreInfoClose close" onclick="clearForm();">&nbsp;</div>
+        </div>
+		<div class="moreInfoError">
+			<apex:outputPanel id="moreInfoError">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+		</div>
+		<apex:form >
+			<div id="formDiv">
+				<div class="moreInfoContentWrapper">
+					<apex:actionFunction name="clearForm" action="{!clear}"/>
+					<div class="shareRecipientInformation">
+						Select a file <span style="color: #aaaaaa; font-size: 10px;">Maximum file size is 100MB</span>
+						<div class="one-file-wrapper-edit" style="margin-top: 10px;">
+							<apex:inputFile value="{!file.versionData}" fileName="{!file.pathOnClient}" styleClass="fileinput"/>
+						</div>
+						File description: <apex:inputText required="true" value="{!description}" /><br />
+						File will be placed to: <br/><span class="bold">{!folderName}</span><br/><br/>
+						Your Post (optional): <span style="color: #aaaaaa; font-size: 10px;">Limited to 1000 characters</span><br/>
+						<apex:inputTextarea value="{!commentBody}"/><br/>
+						<br/>
+						<apex:commandbutton action="{!saveFile}" value="save" styleClass="green"/>
+						<apex:commandbutton action="{!replaceFile}" value="replace" styleClass="green"/>
+						<button class="green" id="showDeletePromt">delete</button>
+						<span class="close defaultTheme" onclick="clearForm();">cancel</span>
+					</div>						
+				</div>
+			</div>
+			
+			<div id="formDivPromt" style="display:none;">
+				<div class="moreInfoContentWrapper">
+					<div class="shareRecipientInformation">
+						Are you sure you want to delete this file?<br/><br/>
+						<apex:commandbutton action="{!deleteFile}" value="delete" styleClass="red"/>
+						<span class="close defaultTheme" onclick="clearForm();">cancel</span>
+					</div>		
+				</div>
+			</div>
+		</apex:form>
+	
+	</div>
+	
+
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+    		
+		jQuery('#showDeletePromt').live('click', function (){
+			jQuery('#formDiv').hide();
+			jQuery('#formDivPromt').show();
+			
+			return false;
+		});
+		
+	});
+ 	</script>
+</apex:component>

@@ -1,0 +1,217 @@
+<apex:page standardController="Calendar__c" extensions="ControllerCalendar">
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.ColorPicker, 'script.js')}"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.ColorPicker, 'style.css')}"/>
+    
+	<script type="text/javascript">
+	
+        // update calendar item
+        function updateCalendarColors(){
+        	gradientStyle = "{!styleBackgroundTemplate}";
+        	textColor = '#000000';
+        	startColor = 'B9B8B8';
+        	endColor = 'B9B8B8';
+        	defaultThemeText = 'Default Theme';
+        	if(jQuery('.fColor').val().length == 6){
+        		textColor = '#'+jQuery('.fColor').val();
+        	}
+
+        	if(jQuery('.gtColor').val().length == 6){
+        		startColor = jQuery('.gtColor').val();
+        	}
+        	
+        	if(jQuery('.gbColor').val().length == 6){
+        		endColor = jQuery('.gbColor').val();
+        	}
+
+        	gradientStyle = gradientStyle.replace(new RegExp('START_COLOR', "g"), startColor);
+        	gradientStyle = gradientStyle.replace(new RegExp('END_COLOR', "g"), endColor);
+        	
+			jQuery('.calendarItemText').not('.orginal').css('color', textColor);
+        	jQuery('.small-box').not('.orginal').attr('style', gradientStyle);
+        	jQuery('.big-box').not('.orginal').attr('style', gradientStyle);
+			
+       	}  
+            	
+        // add colorPicker to given selector
+        function bindColorPicker(selector){
+            selector.jPicker({
+                window: 
+                {
+                    title: "Select color",
+                    effects:
+                    {
+                        type: 'fade',
+                        speed:
+                        {
+                            show: 'fast',
+                            hide: 'fast'
+                        }
+                    },
+                    position:
+                    {
+                        x: 4,
+                        y: -2
+                    },
+                    expandable: true,
+                    liveUpdate: false,
+                    updateInputColor: false
+                },
+                color:{
+                    active:new jQuery.jPicker.Color({ahex:'993300ff'})
+                }
+            },
+            function(){
+                updateCalendarColors();        // callback function: update calendar item
+            },
+            function(){
+                updateCalendarColors();        // callback function: update calendar item  
+            },
+            function(){
+                updateCalendarColors();       // callback function: update calendar item
+            }            
+            );
+            selector.attr('readonly', true);
+            selector.attr('maxlength',6);
+            selector.attr('size',6);            
+        }
+	
+		function rebindColorPickers(){
+	        jQuery('input[type=text].colorPick').each(function(i, elem){
+                if(!jQuery(elem).hasClass('colorPickerBind')){
+                    bindColorPicker(jQuery(elem));
+                    jQuery(elem).addClass('colorPickerBind');                   
+	            }
+	        });
+	        updateCalendarColors();
+	        jQuery('.toShow').removeClass('hidden');
+	    }
+    	
+		jQuery(document).ready(function() {
+	        jQuery.fn.jPicker.defaults.images.clientPath = "{!URLFOR($Resource.ColorPicker, 'images')}/";
+	        rebindColorPickers();
+		});
+	</script>
+	<style>
+div.wrapper{
+	width: 200px;
+	padding: 5px;
+	position: relative;
+}
+input.colorPick{
+    height: 16px;
+    padding: 3px;
+    width: 58px;
+}
+div.float-left {
+	float: left;
+}
+div.clear-float {
+	clear: both;
+}
+div.small-box{
+	width: 180px; 
+	height: 15px; 
+	border: 1px solid #000000; 
+	font-weight: bold; 
+	text-align: center;
+}
+div.big-box{
+	width: 180px;
+	height: 80px; 
+	border: 1px solid #000000; 
+	font-weight: bold; 
+	text-align: center;
+}
+div.box-img{
+	background: none no-repeat scroll 50% 0%;
+    height: 50px;
+    margin-top: 10px;
+	width: 180px;
+}
+div.hidden{
+ 	display: none;
+}
+div.large-logo {
+	width: 350px;
+	height: 300px;
+	background: none no-repeat scroll 50% 50%;
+}
+	</style>
+	
+    <apex:detail inlineEdit="true" relatedList="true" title="false" id="details"/>
+	
+	<apex:form >
+    	<apex:pageBlock title="Colors & Logos" id="color-configurator">
+			<apex:pageMessages />
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Set Colors" action="{!updateCalendarColors}"/>
+				<apex:commandButton value="Set Logos" action="{!updateCalendarLogos}"/>
+				<apex:commandButton value="Set All" action="{!updateCalendar}"/>
+            </apex:pageBlockButtons> 
+	    	<div class="float-left" style="width: 250px;">
+	    		<apex:pageMessages />
+	            <apex:actionFunction name="switchTheme" action="{!switchTheme}" rerender="color-configurator" oncomplete="rebindColorPickers();"/>
+				<div class="wrapper">
+					<div style="margin-bottom: 4px;">Brand Theme:</div>
+				    <apex:selectList value="{!currentBrandTheme}" onchange="jQuery('.toShow').addClass('hidden'); switchTheme();" size="1" styleClass="themeSelectBox">
+				   	    <apex:selectOptions value="{!brandThemes}"/>
+				   	</apex:selectList>    	
+	    		</div>
+	    		<div class="wrapper toShow hidden">
+					<div style="margin-bottom: 4px;">Top Gradient Color:</div>
+					<apex:inputText value="{!gradientTop}" styleClass="colorPick gtColor" id="gtColor"/>
+				</div>
+	    		<div class="wrapper toShow hidden">
+	    			<div style="margin-bottom: 4px;">Bottom Gradient Color:</div>
+					<apex:inputText value="{!gradientBottom}" styleClass="colorPick gbColor" id="gbColor"/>
+				</div>
+	    		<div class="wrapper toShow hidden">
+					<div style="margin-bottom: 4px;">Font Color:</div>
+					<apex:inputText value="{!fontColor}" styleClass="colorPick fColor" id="fColor"/>
+				</div>
+			</div>
+			<div class="float-left" style="width: 250px; margin-top: 55px;">
+				<div class="wrapper toShow hidden">
+					<div style="margin-bottom: 4px;">Preview normal box:</div>
+					<div class="big-box">
+						<div style="{!if(calendarImg != '', calendarImg, '')}" class="box-img">&nbsp;</div>
+						<span class="calendarItemText" style="color: #{!fontColor}">{!calendarName}</span>
+					</div>
+				</div>
+				<div class="wrapper toShow hidden">
+					<div style="margin-bottom: 4px;">Preview small box:</div>
+					<div class="small-box">
+						<span class="calendarItemText" style="color: #{!fontColor}">{!calendarName}</span>
+					</div>
+				</div>
+			</div>
+			<div class="float-left" style="width: 200px; margin-top: 55px;">
+				<div class="wrapper toShow hidden">
+					<div style="margin-bottom: 4px;">Preview current normal box:</div>
+					<div class="big-box orginal" style="{!orginalStyleBackground}">
+						<div style="{!if(orginalCalendarImg != '', orginalCalendarImg, '')}" class="box-img">&nbsp;</div>
+						<span class="calendarItemText orginal" style="color: #{!orginalFontColor}">{!calendarName}</span>
+					</div>
+				</div>
+				<div class="wrapper toShow hidden">
+					<div style="margin-bottom: 4px;">Preview current small box:</div>
+					<div class="small-box orginal" style="{!orginalStyleBackground}">
+						<span class="calendarItemText orginal" style="color: #{!orginalFontColor}">{!calendarName}</span>
+					</div>
+				</div>
+			</div>
+			<div class="clear-float"></div>
+			<div class="float-left toShow hidden" style="width: 400px; margin-top: 55px;">
+				<div style="margin-bottom: 4px;">Preview large logo:</div>
+				<div class="large-logo" style="{!calendarImgLarge}">&nbsp;</div>
+			</div>
+			<div class="float-left toShow hidden" style="width: 400px; margin-top: 55px;">
+				<div style="margin-bottom: 4px;">Preview current large logo:</div>
+				<div class="large-logo" style="{!orginalCalendarImgLarge}">&nbsp;</div>				
+			</div>
+			<div class="clear-float"></div>
+	    </apex:pageBlock>
+	</apex:form>
+
+</apex:page>

@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>POS Project: object that represents a period of time in which catalog items are offered and shoppers are allowed to buy them</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Fiscal_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Fiscal Year</label>
+        <length>4</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Icon_Label__c</fullName>
+        <externalId>false</externalId>
+        <label>Icon Label</label>
+        <length>30</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Icon__c</fullName>
+        <externalId>false</externalId>
+        <label>Icon</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Magento_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>Magento Category Id</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>On_Demand_Site_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>On Demand Site URL</label>
+        <required>false</required>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Order_Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Close Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Order_Delivery_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Delivery Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Order_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Start Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <controllingField>Type__c</controllingField>
+            <picklistValues>
+                <fullName>New</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Review</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Budgeting</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>On Demand</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>On Demand</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Archived</fullName>
+                <controllingFieldValues>Monthly</controllingFieldValues>
+                <controllingFieldValues>Quarterly</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Quarterly</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On Demand</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Order Window</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>Order_Start_Date__c</columns>
+        <columns>Order_Close_Date__c</columns>
+        <columns>Order_Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_With_Magento</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>Order_Start_Date__c</columns>
+        <columns>Order_Close_Date__c</columns>
+        <columns>Order_Delivery_Date__c</columns>
+        <columns>Magento_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All With Magento</label>
+    </listViews>
+    <listViews>
+        <fullName>Monthly_Order_Windows</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>Order_Start_Date__c</columns>
+        <columns>Order_Close_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Monthly</value>
+        </filters>
+        <label>Monthly Order Windows</label>
+    </listViews>
+    <listViews>
+        <fullName>On_Demand_Order_Windows</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>Order_Start_Date__c</columns>
+        <columns>Order_Close_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>On Demand</value>
+        </filters>
+        <label>On Demand Order Windows</label>
+    </listViews>
+    <listViews>
+        <fullName>Quarterly_Order_Windows</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>Order_Start_Date__c</columns>
+        <columns>Order_Close_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Quarterly</value>
+        </filters>
+        <label>Quarterly Order Windows</label>
+    </listViews>
+    <nameField>
+        <label>Order Window Name</label>
+        <type>Text</type>
+    </nameField>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IQaMAM_00NZ0000000I1JTMA0</fullName>
+        <active>true</active>
+        <errorMessage>It is not possible to create or edit a Budget if the related quarterly or monthly Order Window is new, in review, completed or archived</errorMessage>
+        <field>Budget__c.Order_Window__c</field>
+        <filterItems>
+            <field>Order_Window__c.Status__c</field>
+            <operation>notEqual</operation>
+            <value>New, In Review, Completed, Archived</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Budget_Order Window</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IRYMA2_00NZ0000000I2MsMAK</fullName>
+        <active>true</active>
+        <errorMessage>It is not possible to create or edit a Cart if the related quarterly or monthly Order Window is new, in review, budgeting, completed or archived</errorMessage>
+        <field>Cart__c.Order_Window__c</field>
+        <filterItems>
+            <field>Order_Window__c.Status__c</field>
+            <operation>notEqual</operation>
+            <value>New, In Review, Budgeting, Completed, Archived</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Cart_Order Window</name>
+    </namedFilters>
+    <namedFilters>
+        <fullName>nf_01IZ00000000ISRMA2_00NZ0000000I1VAMA0</fullName>
+        <active>true</active>
+        <errorMessage>It is not possible to create or edit a Program if the related quarterly or monthly Order Window is completed or archived</errorMessage>
+        <field>Program__c.Order_Window__c</field>
+        <filterItems>
+            <field>Order_Window__c.Status__c</field>
+            <operation>notEqual</operation>
+            <value>Completed, Archived</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Program_Order Window</name>
+    </namedFilters>
+    <pluralLabel>Order Windows</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Order_Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Order_Close_Date__c</customTabListAdditionalFields>
+        <listViewButtons>Recalculate_All_WBS</listViewButtons>
+        <listViewButtons>Recalculate_Missing_WBS</listViewButtons>
+        <lookupDialogsAdditionalFields>Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Order_Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Order_Close_Date__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order_Start_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order_Close_Date__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Type__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchFilterFields>Order_Start_Date__c</searchFilterFields>
+        <searchFilterFields>Order_Close_Date__c</searchFilterFields>
+        <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Order_Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Order_Close_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Edit_Order_Window</fullName>
+        <active>true</active>
+        <description>The Order Window attributes (except status) cannot be modified when the status is closed, completed or archived</description>
+        <errorConditionFormula>(NOT(ISCHANGED(Status__c)) &amp;&amp; (TEXT(Status__c) = &quot;Closed&quot; || TEXT(Status__c) = &quot;Completed&quot; || TEXT(Status__c) = &quot;Archived&quot;)) || 
+((TEXT(PRIORVALUE(Status__c)) = &quot;Closed&quot;) &amp;&amp; (ISCHANGED(Name) || ISCHANGED(OwnerId) || ISCHANGED(Icon__c) || 
+ISCHANGED(Icon_Label__c) || ISCHANGED(Magento_Id__c) || ISCHANGED(On_Demand_Site_URL__c) || ISCHANGED(Order_Close_Date__c) || ISCHANGED(Order_Delivery_Date__c) || ISCHANGED(Order_Start_Date__c) || ISCHANGED(Type__c))) ||
+((TEXT(PRIORVALUE(Status__c)) = &quot;Completed&quot;) &amp;&amp; (ISCHANGED(Name) || ISCHANGED(OwnerId) || ISCHANGED(Icon__c) || ISCHANGED(Icon_Label__c) || ISCHANGED(Magento_Id__c) || ISCHANGED(On_Demand_Site_URL__c) || ISCHANGED(Order_Close_Date__c) || ISCHANGED(Order_Delivery_Date__c) || ISCHANGED(Order_Start_Date__c) || ISCHANGED(Type__c))) ||
+((TEXT(PRIORVALUE(Status__c)) = &quot;Archived&quot;) &amp;&amp; (ISCHANGED(Name) || ISCHANGED(OwnerId) || ISCHANGED(Icon__c) || ISCHANGED(Icon_Label__c) || ISCHANGED(Magento_Id__c) || ISCHANGED(On_Demand_Site_URL__c) || ISCHANGED(Order_Close_Date__c) || ISCHANGED(Order_Delivery_Date__c) || ISCHANGED(Order_Start_Date__c) || ISCHANGED(Type__c)))</errorConditionFormula>
+        <errorMessage>The Order Window attributes (except status) cannot be modified when the status is closed, completed or archived</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Fiscal_Year</fullName>
+        <active>true</active>
+        <description>Fiscal Year is required for Quarterly and Monthly Order Windows</description>
+        <errorConditionFormula>(TEXT(Type__c) = &quot;Quarterly&quot; || TEXT(Type__c) = &quot;Monthly&quot;) &amp;&amp; (ISBLANK(Fiscal_Year__c) || NOT(REGEX(Fiscal_Year__c, &quot;\\d{4}&quot;)))</errorConditionFormula>
+        <errorDisplayField>Fiscal_Year__c</errorDisplayField>
+        <errorMessage>Please provide a valid fiscal year</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>On_Demand_Site_URL</fullName>
+        <active>true</active>
+        <description>If the Order Window type is &quot;On Demand&quot;, an On Demand Site URL must be provided</description>
+        <errorConditionFormula>ISPICKVAL(Type__c, &quot;On Demand&quot;) &amp;&amp; (ISBLANK(On_Demand_Site_URL__c))</errorConditionFormula>
+        <errorDisplayField>On_Demand_Site_URL__c</errorDisplayField>
+        <errorMessage>Please provide a URL for the On Demand site</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_Close_Date</fullName>
+        <active>true</active>
+        <description>Order Close Date must always be greater than Order Start Date</description>
+        <errorConditionFormula>Order_Close_Date__c &lt;= Order_Start_Date__c</errorConditionFormula>
+        <errorDisplayField>Order_Close_Date__c</errorDisplayField>
+        <errorMessage>Order Close Date must be greater than Order Start Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_Delivery_Date</fullName>
+        <active>true</active>
+        <description>Order Delivery Date must always be greater than Order Close Date</description>
+        <errorConditionFormula>Order_Delivery_Date__c &lt;= Order_Close_Date__c</errorConditionFormula>
+        <errorDisplayField>Order_Delivery_Date__c</errorDisplayField>
+        <errorMessage>Order Delivery Date must be greater than Order Close Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_Window_Required_Dates</fullName>
+        <active>true</active>
+        <description>Order Close Date, Order Delivery Date, and Order Start Date are required for quarterly and monthly order windows</description>
+        <errorConditionFormula>(TEXT(Type__c) = &quot;Quarterly&quot; || TEXT(Type__c) = &quot;Monthly&quot;) &amp;&amp; (ISBLANK(Order_Close_Date__c) || ISBLANK(Order_Delivery_Date__c) || ISBLANK(Order_Start_Date__c))</errorConditionFormula>
+        <errorMessage>Please provide an Order Start Date, an Order Close Date, and an Order Delivery Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_On_Demand_Order_Window_Creation</fullName>
+        <active>false</active>
+        <description>Prevents a new On Demand Order Window from being created, when an On Demand Order Window already exists</description>
+        <errorConditionFormula>(ISNEW() &amp;&amp; TEXT(Type__c) = &quot;On Demand&quot;) || ((TEXT(PRIORVALUE(Type__c)) &lt;&gt; &quot;On Demand&quot;) &amp;&amp; (TEXT(Type__c) = &quot;On Demand&quot;))</errorConditionFormula>
+        <errorMessage>Only one Order Window can be setup as &quot;On Demand&quot;</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Budget_Allocation</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Budget Allocation</masterLabel>
+        <openType>noSidebar</openType>
+        <protected>false</protected>
+        <url>/apex/POS_BudgetingGrid?owId={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Download_Ordering_Sheet</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Download Ordering Sheet</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/POS_GenerateOrderingSheet?owId={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Generate_Items_Catalog</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Generate Items Catalog</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/POS_DownloadItemCatalog?owId={!Order_Window__c.Magento_Id__c}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Recalculate_All_WBS</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Recalculate All WBS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>window.open(&apos;/apex/POSRecalculateWBS?calculate=full&apos;,&apos;&apos;,&apos;height=200,width=400&apos;)</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Recalculate_Missing_WBS</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Recalculate Missing WBS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>window.open(&apos;/apex/POSRecalculateWBS?calculate=missing&apos;,&apos;&apos;,&apos;height=200,width=400&apos;)</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Report_All_Orders</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Report: All Orders</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00OA0000004Pofl?pv0={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Report_Associated_Items</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Report: Associated Items</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00OA0000004Pofn?pv0={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Report_Item_Statuses_Percentage</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Report: Item Statuses Percentage</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00OA0000004Pofm?pv0={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Report_Ordered_Items_by_Sales_Channel_Group_and_Category</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Report: Ordered Items by Sales Channel Group and Category</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00OA0000004Pofo?pv0={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Report_Total_Spend_by_Division</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Report: Total Spend by Division</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00OA0000004Pofp?pv0={!Order_Window__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>View_Associated_Items</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>View Associated Items</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/POS_ViewOrderWindowItems?owId={!Order_Window__c.Id}</url>
+    </webLinks>
+</CustomObject>

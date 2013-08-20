@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Diageo Sales Dashboard Reports</name>
+    <publicFolderAccess>ReadOnly</publicFolderAccess>
+    <sharedTo>
+        <role>Sales_Director_East</role>
+        <role>Sales_Manager_East_CT</role>
+        <role>Sales_Manager_East_GA</role>
+        <role>Sales_Manager_East_NJ</role>
+        <role>Sales_Specialist_East_CT</role>
+        <role>Sales_Specialist_East_GA</role>
+        <role>Sales_Specialist_East_NJ</role>
+    </sharedTo>
+</ReportFolder>

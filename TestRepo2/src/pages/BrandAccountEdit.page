@@ -1,0 +1,235 @@
+<apex:page standardController="AccountBrand__c" extensions="Controller_BrandAccountEdit">
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+    <apex:sectionHeader title="Brand Account"/>  
+        <apex:outputPanel id="messages">
+            <apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+        <apex:form >
+            <apex:actionFunction name="reloadLists" action="{!reloadLists}" />
+            <apex:actionFunction name="reloadListsAfterSearch" action="{!reloadListsAfterSearch}" />            
+            <apex:pageBlock >
+	            <apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem >
+	           				<apex:outputLabel value="Brand"/>
+	           				<apex:inputField value="{!accountbrand.Brand__c}" rendered="{!accountEditable}" onchange="reloadLists();"/>	           				        				           			
+	           			</apex:pageBlockSectionItem>
+	           			<apex:pageBlockSectionItem >
+	           				<apex:outputField value="{!accountbrand.Brand__c}" rendered="{!!accountEditable}"/>	  
+	           			</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection>
+            </apex:pageBlock>
+
+			<apex:pageBlock title="Clone" mode="edit" rendered="{!!accountEditable}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Clone From" action="{!cloneRelationsFrom}"/>
+                    <apex:commandButton value="Clone To" action="{!cloneRelationsTo}"/>                    
+                </apex:pageBlockButtons> 
+
+	            <apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem >
+	           				<apex:outputLabel value="Select Brand"/>
+						    <apex:selectList value="{!cloneId}" size="1">
+						   	    <apex:selectOptions value="{!possibleBrands}"/>
+						   	</apex:selectList>    
+						</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection>
+            </apex:pageBlock>  
+                         
+            <apex:pageBlock title="Brand Account List" mode="edit" rendered="{!!accountEditable}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Delete" action="{!deleteRelations}"/>
+                    <apex:commandButton value="Delete All" action="{!deleteAll}"/>
+                </apex:pageBlockButtons> 
+                <div style="padding:12px 0px 12px 12px;">
+	               	<apex:outputLabel value="Search by account name: " for="accountBL"/>&nbsp;
+	             	<apex:inputText id="accountBL" value="{!accountBL}" rendered="{!!accountEditable}"/>
+	             	<button onclick="reloadListsAfterSearch(); return false;">GO</button>
+             	</div>
+                <apex:pageBlockTable value="{!brandAccountList}" var="c" id="listTable">
+                    <apex:column style="width:40px;">
+                    	<apex:facet name="header"><input type="checkbox" id="selectAllAccount"/> Select All</apex:facet>                     
+                        <apex:inputCheckbox value="{!c.selected}" styleClass="accountCheckbox"/>
+                    </apex:column>
+                    <apex:column headerValue="Account">
+                        <apex:outputText value="{!c.cb.Account__r.name}" />
+                    </apex:column>
+                    <apex:column headerValue="Division">                                       
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>                      
+                    </apex:column>
+                    
+                    <apex:column headerValue="Region">
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel> 
+                    </apex:column>
+                    <apex:column headerValue="Market">
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                    </apex:column>
+                    
+                     <apex:column headerValue="State District">
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!c.cb.Account__r.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                    </apex:column>       
+                    <apex:column headerValue="Parent">
+                        <apex:outputText value="{!c.cb.Account__r.Parent.name}" /> 
+                    </apex:column>
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions"> 
+                        <apex:commandLink action="{!first}"    rendered="{!hasPrevious}" rerender="listTable, actions, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="listTable, actions, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!next}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!last}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>
+            <apex:pageBlock title="Available Account List" mode="edit" rendered="{!!accountEditable}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Add" action="{!addRelations}"/>
+                    <apex:commandButton value="Add All" action="{!addAll}"/>
+                </apex:pageBlockButtons> 
+                <div style="padding:12px 0px 12px 12px;">
+	               	<apex:outputLabel value="Search by account name: " for="avaliableS"/>&nbsp;
+	             	<apex:inputText id="avaliableS" value="{!avaliableS}" rendered="{!!accountEditable}"/>
+	             	<button onclick="reloadListsAfterSearch(); return false;">GO</button>
+             	</div>
+            	
+                <apex:pageBlockTable value="{!distribList}" var="b" id="listTable2">
+                    <apex:column style="width:40px;">
+                    	<apex:facet name="header"><input type="checkbox" id="selectAllBrands"/> Select All</apex:facet>                        
+                        <apex:inputCheckbox value="{!b.selected}" styleClass="brandCheckbox"/>
+                    </apex:column>
+                    <apex:column headerValue="Account">
+                        <apex:outputText value="{!b.a.name}" />
+                    </apex:column>
+                     <apex:column headerValue="Division">                                       
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'Division', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>                      
+                    </apex:column>
+                    
+                    <apex:column headerValue="Region">                                       
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'Region', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>                      
+                    </apex:column>
+                    
+                    <apex:column headerValue="Market">                                       
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'Market', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>                      
+                    </apex:column>
+                    
+                    <apex:column headerValue="State District">                                       
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{! IF (b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Label__c = 'State District', 'true', 'false')}">
+                        	<apex:outputText value="{!b.a.Spirits_Hierarchy__r.Parent__r.Parent__r.Parent__r.Name}" />
+                        </apex:outputPanel>                      
+                    </apex:column>
+                    <apex:column headerValue="Parent">
+                        <apex:outputText value="{!b.a.Parent.name}" />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions2"> 
+                        <apex:commandLink action="{!firstB}"    rendered="{!hasPreviousB}" rerender="listTable2, actions2, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previousB}" rendered="{!hasPreviousB}" rerender="listTable2, actions2, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!nextB}"     rendered="{!hasNextB}"     rerender="listTable2, actions2, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!lastB}"     rendered="{!hasNextB}"     rerender="listTable2, actions2, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>    
+    </apex:form>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+		jQuery('#selectAllAccount').live('click', function(){
+			if(jQuery(this).is(':checked')){
+				jQuery('.accountCheckbox').attr('checked', true);
+			} else {
+				jQuery('.accountCheckbox').attr('checked', false);
+			}
+		});
+		jQuery('#selectAllBrands').live('click', function(){
+			if(jQuery(this).is(':checked')){
+				jQuery('.brandCheckbox').attr('checked', true);
+			} else {
+				jQuery('.brandCheckbox').attr('checked', false);
+			}
+		});
+
+    });
+    </script>        
+</apex:page>

@@ -1,0 +1,10 @@
+Dear {!Case.Contact}, 
+
+Your Diageo Support case has been updated with a new comment: 
+
+Case #: {!Case.CaseNumber} 
+Subject: {!Case.Subject} 
+Date Opened: {!Case.CreatedDate} 
+
+Latest Comment: 
+{!Case.Last_Case_Comment}

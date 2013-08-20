@@ -1,0 +1,497 @@
+<apex:page standardstylesheets="false" controller="MM_ViewAllRecipesController" sidebar="false" showHeader="false">
+<html>
+<head>
+<apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-1.6.2.min.js')}"  />
+<apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-ui-1.8.16.custom.min.js')}"  />
+<apex:stylesheet value="{!URLFOR($Resource.jQueryLib, '/css/ui-lightness/jquery-ui-1.8.16.custom.css')}"  />
+<apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7ViewAllRecipesCSS}" /></apex:outputText>
+<apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.viewAllRecipesCSS}" /></apex:outputText>
+<script>
+ $j = jQuery.noConflict();
+ $j(document).ready(function(){
+ 	colorCount = {!colorCounter};
+ 	brandCount = {!brandCounter};
+ 	flavorCount = {!flavorCounter};
+ 	statusCount = {!statusCounter};
+ 	numberCount = {!numberCounter};
+ 	typeCount = {!typeCounter};
+ 	localeCount = {!localeCounter};
+ 	$j('#brandhead').css('visitedClass1');
+ 
+    if($j("#nav")) {
+        $j("#nav dd").hide();
+         $j('#nav dt b').each(function(){
+       			 if(brandCount > 0)
+       			 $j('#brandHead').addClass('visitedClass1');
+       			 if(colorCount > 0)
+       			 $j('#colorHead').addClass('visitedClass1');
+       			 if(flavorCount > 0)
+       			 $j('#flavorHead').addClass('visitedClass1');
+       			 if(statusCount > 0)
+       			 $j('#statusHead').addClass('visitedClass1');
+       			 if(typeCount > 0)
+       			 $j('#typeHead').addClass('visitedClass1');
+       			 if(numberCount > 0)
+       			 $j('#numberHead').addClass('visitedClass1');
+       			 if(localeCount > 0)
+       			 $j('#localeHead').addClass('visitedClass1');	 
+        }); 
+         
+        $j("#nav dt b").click(function() {
+        	//alert('Hello');
+            if(this.className.indexOf("clicked") != -1) {
+                $j(this).parent().next().slideUp(200);
+                $j(this).removeClass("clicked");
+                if(colorCount>0)
+              	$j("#colorHead").addClass('visitedClass1');
+                if(brandCount>0)
+                $j("#brandHead").addClass('visitedClass1');
+                if(flavorCount>0)
+                $j("#flavorHead").addClass('visitedClass1');
+                if(statusCount>0)
+                $j("#statusHead").addClass('visitedClass1');
+                if(numberCount>0)
+                $j("#numberHead").addClass('visitedClass1');
+                if(typeCount>0)
+                $j("#typeHead").addClass('visitedClass1');
+                if(localeCount>0)
+								$j("#localeHead").addClass('visitedClass1');
+            }
+            else {
+                $j("#nav dt b").removeClass();
+                $j(this).addClass("clicked");
+                $j("#nav dd:visible").slideUp(200);
+                $j(this).parent().next().slideDown(500);
+                if(colorCount>0)
+                $j("#colorHead").addClass('visitedClass1');
+                if(brandCount>0)
+                $j("#brandHead").addClass('visitedClass1');
+                if(flavorCount>0)
+                $j("#flavorHead").addClass('visitedClass1');
+                if(statusCount>0)
+                $j("#statusHead").addClass('visitedClass1');
+                if(numberCount>0)
+                $j("#numberHead").addClass('visitedClass1');
+                if(typeCount>0)
+                $j("#typeHead").addClass('visitedClass1');
+                if(localeCount>0)
+				        $j("#localeHead").addClass('visitedClass1');
+            }
+            return false;
+        });
+        
+    }
+     
+}); 
+
+var colorCount;
+var brandCount;
+var statusCount;
+var numberCount;
+var flavorCount;
+var typeCount;
+var localeCount;
+$j(function(){
+
+        $j('#rootPicklist').change(function(){
+       		// alert($j(this).val());
+            // getTypeValue($j(this), $j('#rootRow'));
+        }); 
+          
+        $j('li').click(function(){
+        	var s = $j(this).parent().parent();
+       		if(!$j(this).hasClass('visitedClass1')){
+       		 	$j(this).addClass('visitedClass1');
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'colorHead')
+       		 		colorCount++;  	 
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'brandHead')
+       		 		brandCount++;	
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'flavorHead')
+       		 		flavorCount++;	
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'statusHead')
+       		 		statusCount++;	
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'typeHead')
+       		 		typeCount++;
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'numberHead')
+       		 		numberCount++;
+       		 	if(s.prev('dt').find('b:first').attr('id') == 'localeHead')
+				      localeCount++;			 		
+       		}	 
+        	else{
+         		$j(this).removeClass('visitedClass1');
+         	 	if(s.prev('dt').find('b:first').attr('id') == 'colorHead')
+       				colorCount--;
+       			if(s.prev('dt').find('b:first').attr('id') == 'brandHead')
+       				brandCount--;	
+       			if(s.prev('dt').find('b:first').attr('id') == 'flavorHead')
+       				flavorCount--;
+       			if(s.prev('dt').find('b:first').attr('id') == 'statusHead')
+       				statusCount--;
+       			if(s.prev('dt').find('b:first').attr('id') == 'typeHead')
+       				typeCount--;	
+       			if(s.prev('dt').find('b:first').attr('id') == 'numberHead')
+       				numberCount--;		
+       			if(s.prev('dt').find('b:first').attr('id') == 'localeHead')
+				      localeCount--;	
+         	}
+      	 	if(colorCount>0 && s.prev('dt').find('b:first').attr('id') == 'colorHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(colorCount<1 && s.prev('dt').find('b:first').attr('id') == 'colorHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+        	if(brandCount>0 && s.prev('dt').find('b:first').attr('id') == 'brandHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(brandCount<1 && s.prev('dt').find('b:first').attr('id') == 'brandHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+        	if(flavorCount>0 && s.prev('dt').find('b:first').attr('id') == 'flavorHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(flavorCount<1 && s.prev('dt').find('b:first').attr('id') == 'flavorHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+        	if(typeCount>0 && s.prev('dt').find('b:first').attr('id') == 'typeHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(typeCount<1 && s.prev('dt').find('b:first').attr('id') == 'typeHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1');		
+        	if(statusCount>0 && s.prev('dt').find('b:first').attr('id') == 'statusHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(statusCount<1 && s.prev('dt').find('b:first').attr('id') == 'statusHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1');
+        	if(numberCount>0 && s.prev('dt').find('b:first').attr('id') == 'numberHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(numberCount<1 && s.prev('dt').find('b:first').attr('id') == 'numberHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1');	
+          if(localeCount>0 && s.prev('dt').find('b:first').attr('id') == 'localeHead')
+       			s.prev('dt').find('b:first').addClass('visitedClass1');
+        	else if(localeCount<1 && s.prev('dt').find('b:first').attr('id') == 'localeHead')
+        		s.prev('dt').find('b:first').removeClass('visitedClass1'); 
+            	// getTypeValue($j(this), $j('#rootRow'));     
+            eval($j(this).find('a:first').attr("onclick"));
+        });
+            
+    });
+function checkAll(){
+	
+    var inputElem = document.getElementsByTagName("input");
+   	var i=0;
+    if(inputElem[i].checked == true){
+    	for( i=0; i<inputElem.length; i++){
+       		 inputElem[i].checked = false;
+        }
+    }
+    else{
+        for( i=0; i<inputElem.length; i++){
+        	inputElem[i].checked = true;
+    	}
+    }    	
+}  
+
+function changeColor(s,curId){
+	alert('Heylo'+s);
+	var count = 0;
+	var x =  document.getElementById(s);
+	alert(x);
+	if(x.style.backgroundColor=="white" || x.className == "visitedClass1"){
+		if(x.className == "visitedClass1")
+			x.className="";	
+		x.style.backgroundColor="";
+		count--;
+	}		
+	else{
+		x.style.backgroundColor="white";
+		count++;
+	}	
+}
+
+function sResults(){
+	var sortValue;
+	var cc = document.getElementById("sortResults").options[document.getElementById("sortResults").selectedIndex].value;
+	if(cc == "Alphabetically(A-Z)")
+		sortValue = 'ASC';
+    else if(cc == "Alphabetically(Z-A)")
+		sortValue = 'DESC';
+	
+	sortTypetoDisplay(sortValue);
+	//searchResPanel(cc
+}
+
+
+ </script>
+</head>
+<body>
+<div class="outerDiv">
+<c:DashBoardHeader />
+<div id="bodyHeader" >
+	<div id="headerInner">
+ 		<div class="header arrow3">
+    		<apex:outputLink value="apex/MM_RecipeDashboard"><apex:image title="Dashboard" value="/resource/1320379988000/home"/>
+    		</apex:outputLink></div> 
+    		<apex:image styleClass="header arrow2" title="Home" value="/resource/1320379988000/barrow"/>
+    		<b><apex:outputText value="View All Recipes" styleClass="header arrow"></apex:outputText></b>
+	</div>
+</div>
+<div class="innerDiv">
+<apex:form id="theform" >
+<div class="main">
+	<div class="colmask leftmenu">
+        <div class="col2" id="test" >
+           <div class="whiteText"> <apex:outputLabel value="Filter Your Results" styleClass="whiteText"/> </div>
+           <div class="xclass">
+           		<div class="dlSearchComponent">
+                    <b style="font-size:14px;">Search:</b>
+                    <apex:inputText styleClass="textInput" value="{!searchTerm}"/>
+                    <apex:commandButton styleClass="filterButton filterButtonsClass" value="Search" action="{!filterResults}" status="statusImg1" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <apex:commandButton styleClass="filterButton filterButtonsClass" value="Clear" action="{!clearFilters}" status="statusImg1" />
+                    <apex:actionStatus id="statusImg1">
+                         <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                         <apex:facet name="stop" />
+                    </apex:actionStatus>       
+           		</div>
+          		<hr class="horizontalRuleClass"/>
+           </div>
+           <div class="content">
+           <!-- Column 2 start -->
+           <dl id="nav">
+                   <dt><b id="brandHead" style="padding-left:10px;">BRAND</b>
+                   </dt>
+                   <dd> 
+                      <ul>
+                         <apex:repeat value="{!brands}" var="c" >
+                            <!--  <script type="javascript"> /** CurrentBrand[{!c}] AlreadySelectedBrand[{!brandLast}] x[{!IF(LEN(brandLast)>0,true,false)}] contains[!if('{!brandLast}'.contains('{!c}')), true,false)]  New [{!IF(CONTAINS(brandLast, c), 'visitedClass', 'vClass')}]**/</script> -->
+                                <li class="{!IF(CONTAINS(brandLast,c),'visitedClass1','vClass')}" styleclass="brandStyle">
+                                	<apex:commandLink value="{!c}" shape="left-x:30px;top-y:50px;bottom-y:50px;right-x:50px;" rerender="theForm" action="{!refreshPanel}" status="statusImg" >
+                                    	<apex:param name="currentBrand" value="{!c}" assignTo="{!currentBrand}"/>
+                                    </apex:commandLink>&nbsp;  
+                                    <apex:actionStatus id="statusImg">
+                            		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                	<apex:facet name="stop" />
+                           			 </apex:actionStatus>                        																								
+                                </li>    
+                            </apex:repeat>
+                        </ul>         
+                    </dd> 
+                    <dt><b id="colorHead" style="padding-left:10px;">COLOR</b>
+                    </dt> 
+                    <dd>
+                        <ul>
+                            <apex:repeat value="{!recipeColors}" var="c">
+                            <script>/* * styelName=[{!styleName}] * */  </script>
+                             <script type="javascript"> /** CurrentColor[{!c}] AlreadySelectedBrand[{!colorLast}] colorCounter[{!colorCounter}] colorFilter ---{!colorFilter} colorFilterValues -- {!colorFilterValues} **/</script>
+                            <li class="{!IF(CONTAINS(colorLast,c),'visitedClass1','vClass')}" styleClass="colorStyle">
+                            	<apex:commandLink value="{!c}" rerender="theForm"  action="{!refreshPanel}"  status="statusImgColor" >
+                                        <apex:param name="currentColor" value="{!c}" assignTo="{!currentColor}"/>
+                            	</apex:commandLink>&nbsp;
+                            	<apex:actionStatus id="statusImgColor">
+                                	<apex:facet name="start">&nbsp;&nbsp;&nbsp;&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                	<apex:facet name="stop" />
+                            	</apex:actionStatus>
+                            </li>   
+                            </apex:repeat>
+                        </ul>
+                    </dd>
+                    <dt><b id="flavorHead" style="padding-left:10px;">FLAVOR</b>  
+                    </dt>
+                    <dd>
+                        <ul>
+                            <apex:repeat value="{!recipeFlavors}" var="c">
+                                <li class="{!IF(CONTAINS(flavorLast, c),'visitedClass1','vClass')}" styleClass="flavorStyle">
+                                	<apex:commandLink value="{!c}" rerender="theForm" action="{!refreshPanel}" status="statusImgFlavor">
+                                        <apex:param name="currentFlavor" value="{!c}" assignTo="{!currentFlavor}"/>
+                                    </apex:commandLink>&nbsp;
+                                    <apex:actionStatus id="statusImgFlavor">
+                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                		<apex:facet name="stop" />
+                            		</apex:actionStatus>  
+                            	</li>   
+                            </apex:repeat>
+                        </ul>
+                    </dd>
+                    <dt><b id="typeHead" style="padding-left:10px;">TYPE</b>          
+                    </dt>
+                    <dd>
+                        <ul>
+                            <apex:repeat value="{!types}" var="c">
+                                <li class="{!IF(CONTAINS(typeLast, c),'visitedClass1','vClass')}" styleclass="typeClass">
+                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" status="statusImgType">
+                                        <apex:param name="currentType" value="{!c}" assignTo="{!currentType}"/>
+                                    </apex:commandLink> &nbsp;
+                                    <apex:actionStatus id="statusImgType">
+                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                		<apex:facet name="stop" />
+                            		</apex:actionStatus> 
+                                </li>  
+                            </apex:repeat>
+                        </ul>
+                    </dd>
+                    <dt><b id="statusHead" style="padding-left:10px;">STATUS</b>
+                    </dt>
+                    <dd>
+                        <ul>
+                            <apex:repeat value="{!status}" var="c">
+                                <li class="{!IF(CONTAINS(statusLast, c),'visitedClass1','vClass')}" styleclass="statusStyle">
+                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" status="statusImgStatus">
+                                        <apex:param name="currentStatus" value="{!c}" assignTo="{!currentStatus}"/>
+                                    </apex:commandLink> &nbsp;
+                                    <apex:actionStatus id="statusImgStatus">
+                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                		<apex:facet name="stop" />
+                            		</apex:actionStatus> 
+                                </li>     
+                            </apex:repeat>
+                        </ul>
+                    </dd>
+                             <!-- Locale Filter  -->
+											<dt><b id="localeHead" style="padding-left:10px;">LOCALE</b>
+						                    </dt>
+						                    <dd>
+						                        <ul>
+						                            <apex:repeat value="{!locales}" var="c"> 
+						                                <li class="{!IF(CONTAINS(localeLast, c),'visitedClass1','vClass')}" styleclass="statusStyle">
+						                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" status="localesImgStatus">
+						                                        <apex:param name="currentLocale" value="{!c}" assignTo="{!currentLocale}"/>
+						                                    </apex:commandLink> &nbsp;
+						                                    <apex:actionStatus id="localesImgStatus">
+						                                		<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+						                                		<apex:facet name="stop" />
+						                            		</apex:actionStatus> 
+						                                </li>     
+						                            </apex:repeat>
+						                        </ul>
+						                    </dd>
+						                    
+						                    
+                    <dt><b id="numberHead" style="padding-left:10px;"># OF INGREDIENTS</b>  
+                    </dt>
+                    <dd>
+                        <ul>  
+                            <apex:repeat value="{!ingredientNumbers}" var="c">
+                              <!--  <script>/* * styelName=[{!IF(CONTAINS(numberLast,LEFT(c,1)),'visitedClass1','vClass')}] * */  </script> --> 
+                                <li class="{!IF(CONTAINS(numberLast,LEFT(c,1)),'visitedClass1','vClass')}" styleclass="numberStyle">
+                                	<apex:commandLink value="{!c}"  rerender="theForm" action="{!refreshPanel}" status="statusImgNum">
+                                        <apex:param name="currentIngredientNumber" value="{!c}" assignTo="{!currentIngredientNumber}"/>
+                                    </apex:commandLink>
+                                    <apex:actionStatus id="statusImgNum">
+                            			<apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                		<apex:facet name="stop" />
+                           			</apex:actionStatus>   
+                                </li>                              
+                            </apex:repeat>                    
+                        </ul>
+                    </dd>                                               
+                </dl>
+            <!-- Column 2 end --> 
+         </div>     
+        </div>
+        <apex:outputpanel id="theForm">
+        <div class="col1">
+        <apex:outputpanel rendered="{!If(totalRecords>0,true,false)}">
+            <!-- Column 1 start -->
+             <!--  <apex:outputpanel rendered="{!If(totalRecords>0 ,true,false)}">  -->
+		<div class="topHeaderDiv">	 
+           			<span class="headerDiv">
+                	<span class="actionColTop selectAllCheckBox" ><apex:inputcheckBox onclick="checkAll()" title="Select All" /></span>
+                	<span class="downloadButtonClass">
+                		<apex:commandLink action="{!process}" value="Download Selected" styleClass="filterButton"  target="_blank" rendered="{!IF(((CONTAINS(UserAgent,'Chrome')) || (CONTAINS(UserAgent,'MSIE'))),true, false)}"/>
+                		<apex:commandLink action="{!process}" target="_blank" rendered="{!IF(((CONTAINS(UserAgent,'Chrome')) || (CONTAINS(UserAgent,'MSIE'))),false,true)}">
+                			<apex:image value="{!$Resource.downloadImage}" width="30px;" height="30px;" title="Download Selected"/>
+                		</apex:commandLink>
+                	</span>
+                	</span>  
+                	
+           <div class="sortClass1">
+	            	<div class="sortResults"><apex:outputtext rendered="{!IF(((CONTAINS(UserAgent,'Chrome')) || (CONTAINS(UserAgent,'MSIE'))),true, false)}" >Sort Results:</apex:outputtext></div>
+	            	<div class="sortResults"><apex:outputtext rendered="{!IF(((CONTAINS(UserAgent,'Chrome')) || (CONTAINS(UserAgent,'MSIE'))),false,true)}" >Sort:</apex:outputtext></div>
+	            	<div class="fResults">
+		            <apex:selectList value="{!sortTypeTop}" id="selectedOrder" multiselect="false" size="1" >
+	        			<apex:selectOptions value="{!sortOrderTypes}"></apex:selectOptions>
+	       			 	<apex:actionSupport event="onchange" rerender="theForm" action="{!filterResults}"/>
+	   			    </apex:selectList>&nbsp;&nbsp;
+	   			   </div>
+           </div>
+           <div class="pageClass"> 
+           		Now Viewing &nbsp;:&nbsp;&nbsp;{!currentStartRecord}&nbsp; - &nbsp;{!currentEndRecord}&nbsp;&nbsp;of&nbsp;&nbsp;{!totalRecords}    	
+           <br/> 
+           <apex:outputText value="Page:" style="vertical-align:middle;"/>&nbsp;
+           <apex:commandLink action="{!first}" rendered="{!If(totalRecords>9,true,false)}">
+           		<apex:image value="{!$Resource.FirstArrow}"  style="vertical-align:middle;"/>
+           </apex:commandlink>&nbsp;
+           <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">
+           		<apex:image value="{!$Resource.PreviousArrow}" style="vertical-align:middle;"/>
+           </apex:commandlink>&nbsp;&nbsp;
+           <apex:repeat value="{!pageNumbers}" var="p">
+           		<apex:commandLink action="{!p.pageItems}" styleClass="{!p.Col} nLinks" >{!p.num}<apex:param name="cnt" value="{!p.cnt}"></apex:param></apex:commandlink>&nbsp;
+           </apex:repeat>&nbsp;           
+           <apex:commandLink action="{!next}" rendered="{!hasNext}" >
+            	<apex:image value="{!$Resource.NextArrow}" style="vertical-align:middle;" />
+           </apex:commandlink>&nbsp;
+           <apex:commandLink action="{!last}" rendered="{!If(totalRecords>9,true,false)}" >
+           		<apex:image value="{!$Resource.LastArrow}" style="vertical-align:middle;" />
+           </apex:commandlink>&nbsp;&nbsp;
+       	   </div>	
+        	<!--  </span>  --> 
+           </div>
+        	<!--  </apex:outputpanel>	-->  		
+               <!-- &#x2713; --> 
+           <div id="searchResultsList"> 	
+            	<apex:repeat var="r" value="{!wrapperRecipes}" >
+            		<div class="searchResultRow">
+                    <apex:outputPanel styleClass="mainRow" id="refreshPane" style="height: auto;">
+                        <span class="actionCol">
+                            <apex:inputCheckbox value="{!r.checked}"/>
+                        </span>
+                       
+                        <apex:outputLink value="/apex/MM_RecipeView" > 
+                              <span class="imgCol"> 
+                                <apex:image value="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!r.image}" rendered="{!r.image!=null}"  height="51" styleclass="imageInline"/>
+                                <apex:image value="{!$Resource.DiageoLogo}" rendered="{!r.image==null}" height="51" styleclass="imageInline"/>
+                              </span> 
+                              <span class="textCol">
+                                <apex:outputText styleClass="recipeName" value="{!r.rec.Recipe_Title__c}"/><br/>
+                                <apex:outputText value="by {!authorMap[r.rec.CreatedById].Name} on "/>
+                                <apex:outputText value="{0,date,MM/dd/yyyy}">
+                                    <apex:param value="{!r.rec.LastModifiedDate}"/>
+                                    
+                                </apex:outputText>
+                             </span> 
+                          		
+                          	<span class="statusCol" style="font-weight : bold;"> 
+                               <apex:outputText value="{!r.rec.Locale__c}" /> 
+                             </span> 	
+                             <span class="statusCol"> 
+                               <apex:outputText value="{!r.rec.Status__c}" styleClass="actionButton {!buttonColorMap[r.rec.Status__c]}"/> 
+                             </span>   
+                           		<apex:param assignto="{!recipeId}" value="{!r.rec.Id}" name="recipeId"/>
+                      	   		<apex:param assignto="{!searchTerm}" value="{!searchTerm}" name="searchTerm" /> 
+                      	   		                    	   		
+                      	   		<apex:param assignto="{!currentBrand}" value="{!brandFilterValues}" name="currentBrand" />
+                       	   		<apex:param assignto="{!currentColor}" value="{!colorFilterValues}" name="currentColor" />
+                           		<apex:param assignto="{!currentFlavor}" value="{!flavorFilterValues}" name="currentFlavor" />
+                           		<apex:param assignto="{!currentType}" value="{!typeFilterValues}" name="currentType" />
+                           		<!-- <apex:param assignto="{!currentOccasion}" value="{!occasionFilter}" name="currentOccasion" />-->
+                           		<apex:param assignto="{!currentStatus}" value="{!statusFilter}" name="currentStatus" />
+                           		<apex:param assignto="{!currentIngredientNumber}" value="{!numberFilter}" name="currentIngredientNumber" />  
+                           		<apex:param assignto="{!comingFromViewAllRecipesPage}" value="{!isDetail}" name="comingFromViewAllRecipesPage" />
+                        </apex:outputLink>      
+                    </apex:outputPanel>
+                    </div>                
+            </apex:repeat>
+           </div> 
+          
+         </apex:outputpanel>   
+            <apex:outputPanel styleClass="navPanel navPanelError" rendered="{!If(totalRecords=0,true,false)}" >
+            	<div class="dashboardRow"></div>
+            	<br/>
+        		<div align="center" style="width:800px;">No Recipes Found. Please Refine Your Search Criteria.</div> 
+       	    </apex:outputPanel> 
+       	    <!-- Column 1 end --> 
+        </div>
+        </apex:outputpanel>
+</div>
+</div>
+</apex:form>
+</div>
+</div>
+</body>
+<div></div>
+<style>
+.textCol{width : 40%;}
+</style>
+</html>
+</apex:page>

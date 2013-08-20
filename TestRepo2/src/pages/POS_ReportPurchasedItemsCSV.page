@@ -1,0 +1,8 @@
+<apex:page controller="POS_ReportPurchasedItems" ContentType="text/csv#POS_ItemsPurchased.csv" cache="true" action="{!initializerAction}"><!--
+-->{!header}
+<apex:repeat value="{!outputLines}" var="csvl">
+<apex:repeat value="{!csvl}" var="l">
+{!l}
+</apex:repeat>
+</apex:repeat>
+</apex:page>

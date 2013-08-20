@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cart Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cart Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Hierarchy --></label>
+        <name>Account_Hierarchy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Carrier --></label>
+        <name>Carrier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cart --></label>
+        <name>Cart__c</name>
+        <relationshipLabel><!-- Cart Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Code --></label>
+        <name>Company_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name --></label>
+        <name>Contact_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Phone --></label>
+        <name>Contact_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Custom Attribute Value --></label>
+        <name>Custom_Attribute_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Manual WBS --></label>
+        <name>Is_Manual_WBS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Customization --></label>
+        <name>Item_Customization__c</name>
+        <relationshipLabel><!-- Cart Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Item --></label>
+        <name>Item__c</name>
+        <relationshipLabel><!-- Cart Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Market --></label>
+        <name>Market__c</name>
+    </fields>
+    <fields>
+        <label><!-- Packout Quantity --></label>
+        <name>Packout_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ship To --></label>
+        <name>Ship_To__c</name>
+        <relationshipLabel><!-- Cart Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- State District --></label>
+        <name>State_District__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Processing</masterLabel>
+            <translation><!-- Processing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Selected</masterLabel>
+            <translation><!-- Selected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Shipped</masterLabel>
+            <translation><!-- Shipped --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Street 2 --></label>
+        <name>Street_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street --></label>
+        <name>Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Spend --></label>
+        <name>Total_Spend__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tracking Code --></label>
+        <name>Tracking_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- WBS --></label>
+        <name>WBS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zip --></label>
+        <name>Zip__c</name>
+    </fields>
+    <layouts>
+        <layout>POS Cart Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Item Customization --></label>
+            <section>Item Customization</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The number of characters of the custom attribute value exceeds the maximum size specified on the related Item Customization --></errorMessage>
+        <name>Custom_Attribute_Value_Max_Length</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please do not provide a custom attribute value. The related item is not customizable --></errorMessage>
+        <name>Customizable_Item</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You are specifying a customization for this item. Please provide values for both Custom Attribute Value and Item Customization --></errorMessage>
+        <name>Item_Customization</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Ship To --></errorMessage>
+        <name>Required_Ship_To</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Status --></errorMessage>
+        <name>Required_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The quantity is required, it must be zero or a multiple of the related item&apos;s packout quantity --></errorMessage>
+        <name>Valid_Quantity</name>
+    </validationRules>
+</CustomObjectTranslation>

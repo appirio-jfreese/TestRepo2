@@ -1,0 +1,135 @@
+<apex:page StandardController="Digital_Published_Asset__c" extensions="APPIRIO_ManageAssetController" standardstylesheets="false" sidebar="false" showHeader="false">
+	<html>
+		<head>
+			<apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.viewAllRecipesCSS}" /></apex:outputText>
+            <apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.recipeDashboardPageCSS}" /></apex:outputpanel>
+            <style>
+            	.titleClass {
+					width: 90%;
+					height: 25px;
+					font-weight: bold;
+					font-family: "Arial","Arial","sans-seriff";
+					text-align: left;
+					padding-left: 60px;
+					padding-right: 60px;
+				}
+            </style>
+			<script>
+				function manageRecipe(aId,aName){
+					aName = aName.replace(/ /g,"+");
+					window.open('/apex/APPIRIO_RecipeAssetLinking?aId='+aId+'&aName='+aName,'_self');	
+				}
+				function manageOccasions(aId,aName){
+					aName = aName.replace(/ /g,"+");
+					window.open('/apex/APPIRIO_OccasionsAssetLinking?aId='+aId+'&aName='+aName,'_self');	
+				}
+			</script>
+		</head>
+		<body>
+			<div class="outerDiv">
+				<c:DashBoardHeader />
+				<div id="bodyHeader" >
+					<div id="headerInner">
+			 			<div class="header arrow3">
+			    			<apex:outputLink value="apex/MM_RecipeDashboard"><apex:image title="Dashboard" value="/resource/1320379988000/home"/></apex:outputLink>
+			    		</div> 
+			    		<apex:image styleClass="header arrow2" title="Home" value="/resource/1320379988000/barrow"/>
+			    		<b>
+			    		<apex:outputLink value="/apex/APPIRIO_MyAssets">
+			    			<apex:outputText value="My Assets" styleClass="header arrow"></apex:outputText>
+			    		</apex:outputLink>
+			    		</b>
+			    		<apex:image styleClass="header arrow2" title="My Assets" value="/resource/1320379988000/barrow"/>
+			    		<b><apex:outputText value="{!publishedAsset.Name}" styleClass="header arrow"></apex:outputText></b>
+					</div>
+				</div>
+				<div class="innerDiv">
+					<apex:form id="theform">
+						<div  align="center" id="bodyContainerDashboard">
+							<br/>
+							<apex:outputPanel id="recipesPanel" styleClass="fontClass">
+					       		<div class="titleClass">
+					       			<apex:outputlabel value="Recipes"/>
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			<apex:commandButton styleClass="filterButton filterButtonsClass" style="width: 150px;" value="Manage Recipes" onclick="manageRecipe('{!publishedAsset.Id}','{!publishedAsset.Name}'); return false;"/>
+					       		</div>
+					       		
+					         	<div class="recipeStatusHeader borderBackgroundTop savedHeaderClass">
+						           <div class="columnBar">
+							             <div class="nameColumnEditor"><apex:outputlabel value="Recipe" styleclass="statusHeaderClass"/></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Locale" styleclass="statusHeaderClass"/></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Date" styleclass="statusHeaderClass"/></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Status" styleclass="statusHeaderClass"/></div>
+							        </div>
+					          	</div>     
+					           	<div id="savedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+				                   	<div class="saved dashboardSection">
+				                   		<apex:repeat value="{!PublishedRecipes}" var="pRecipe" id="idPublishedRecipe">
+				                	    	<div class="dashboardRow" >
+			                                	<div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pRecipe.Recipe__r.Recipe_Title__c}"/></div>
+								            	<div class="dateColumnEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pRecipe.Recipe__r.Locale__c}"/></div>
+								            	<div class="dateColumnEditor">
+								            		<apex:outputText value="{0,date,MM/dd/yyyy}" styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important">
+					                                    <apex:param value="{!pRecipe.LastModifiedDate}"/>
+					                                </apex:outputText>
+								            	</div>
+								            	<div class="dateColumnEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pRecipe.Status__c}"/></div>
+								            </div>
+			                          	</apex:repeat>
+			                          	<apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasPublishedRecipe}" value="You have no Recipes." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>
+			                     	</div>
+				              	</div>
+				              	<div class="titleClass">
+					              	<apex:outputpanel rendered="{!If(((currentRecipeLimit>5 ) || ((recipeCount-currentRecipeLimit)>0)),true,false)}">
+					                       <i><apex:commandLink value="Show 5 less..." rerender="recipesPanel" action="{!showLessRecipe}" rendered="{!If((currentRecipeLimit)>5,true,false)}" styleclass="aLink" /></i>
+					                       <i><apex:commandLink value="Show 5 more..." rerender="recipesPanel" action="{!showMoreRecipe}" rendered="{!If((recipeCount-currentRecipeLimit)>0,true,false)}" styleclass="aLink" /></i>
+					         	   </apex:outputpanel>
+				         	   </div>
+							</apex:outputPanel>
+							
+							<apex:outputPanel id="occasionsPanel" styleClass="fontClass">
+					       		<div class="titleClass">
+					       			<apex:outputlabel value="Occasions"/>
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			&nbsp;&nbsp;&nbsp;&nbsp;
+					       			<apex:commandButton styleClass="filterButton filterButtonsClass" style="width: 150px;" value="Manage Occasions" onclick="manageOccasions('{!publishedAsset.Id}','{!publishedAsset.Name}'); return false;"/>
+					       		</div>
+					         	<div class="recipeStatusHeader borderBackgroundTop savedHeaderClass">
+						           <div class="columnBar">
+							             <div class="nameColumnEditor"><apex:outputlabel value="Occasion" styleclass="statusHeaderClass"></apex:outputlabel></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Locale" styleclass="statusHeaderClass"/></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Type" styleclass="statusHeaderClass"></apex:outputlabel></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Status" styleclass="statusHeaderClass"></apex:outputlabel></div>
+							        </div>
+					          	</div>     
+					           	<div id="savedOccasions" class="recipeStatusContainer borderBackgroundBottom">
+				                   	<div class="saved dashboardSection">
+				                   		<apex:repeat value="{!PublishedOccasions}" var="pOccasion" id="idPublishedOccasion">
+				                	    	<div class="dashboardRow" >
+			                                	<div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pOccasion.Occasion__r.Name_Of_The_Occasion__c}"/></div>
+			                                	<div class="dateColumnEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pOccasion.Occasion__r.Locale__c}"/></div>
+			                                	<div class="dateColumnEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pOccasion.Occasion__r.Occasion_Type__c}"/></div>
+			                                	<div class="dateColumnEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!pOccasion.Status__c}"/></div>
+								            </div>
+			                          	</apex:repeat>
+			                          	<apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasPublishedOccasion}" value="You have no Occasions." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>
+			                     	</div>
+				              	</div>
+				              	<div class="titleClass">
+					              	<apex:outputpanel rendered="{!If(((currentOccasionLimit > 5 ) || ((occasionCount-currentOccasionLimit)>0)),true,false)}">
+					                       <i><apex:commandLink value="Show 5 less..." rerender="occasionsPanel" action="{!showLessOccasion}" rendered="{!If((currentOccasionLimit)>5,true,false)}" styleclass="aLink" /></i>
+					                       <i><apex:commandLink value="Show 5 more..." rerender="occasionsPanel" action="{!showMoreOccasion}" rendered="{!If((occasionCount-currentOccasionLimit)>0,true,false)}" styleclass="aLink" /></i>
+					         	   </apex:outputpanel>
+				         	   </div>
+							</apex:outputPanel>
+						</div>
+					</apex:form>
+				</div>
+			</div>
+		</body>
+	</html>
+</apex:page>

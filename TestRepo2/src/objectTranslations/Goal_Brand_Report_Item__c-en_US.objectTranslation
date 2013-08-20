@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Goal Brand Report Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Goal Brand Report Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- API Level --></label>
+        <name>API_Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Priority --></label>
+        <name>Brand_Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completed Actions - Local --></label>
+        <name>Completed_Actions_Local__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completed Actions - National --></label>
+        <name>Completed_Actions_National__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completed Actions - Total --></label>
+        <name>Completed_Actions__c</name>
+    </fields>
+    <fields>
+        <label><!-- % Completed - National --></label>
+        <name>Completed_National__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dave Flag --></label>
+        <name>Dave_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Name --></label>
+        <name>Goal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+        <relationshipLabel><!-- Goal Brand Report Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Ind. Brand / Size --></label>
+        <name>Ind_Brand_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Individual Brand --></label>
+        <name>Individual_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>Level__c</name>
+    </fields>
+    <fields>
+        <label><!-- Local --></label>
+        <name>Local_new__c</name>
+    </fields>
+    <fields>
+        <label><!-- National --></label>
+        <name>National_new__c</name>
+    </fields>
+    <fields>
+        <label><!-- Premise/Activity/Brand --></label>
+        <name>Premise_Activity_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Classification --></label>
+        <name>Product_Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Group --></label>
+        <name>Product_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report Brand --></label>
+        <name>Report_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Brand --></label>
+        <name>Sub_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total --></label>
+        <name>Total_new__c</name>
+    </fields>
+    <layouts>
+        <layout>Goal Brand Report Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

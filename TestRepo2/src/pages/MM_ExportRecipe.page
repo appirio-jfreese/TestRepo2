@@ -1,0 +1,31 @@
+<apex:page controller="MM_ExportRecipe" contentType="text/csv#downloadedRecipes.csv" cache="true">
+<apex:variable var="index" value="{!1}" /> 
+<apex:repeat value="{!recipes}" var="recipe">
+<!--  "Option<apex:outputText value=" {0,number,0}">
+<apex:param value="{!index}"/>
+</apex:outputText>" -->
+"Recipe Title","{!recipe.Recipe_Title__c}"
+
+"Recipe Ingredients" 
+""
+"Amount","Metric","Ingredient"
+	<apex:repeat value="{!recipe.Diageo_Ingredients__r}" var="ingredient">
+"{!ingredient.Quantity__c}",{!if(ingredient.Units__c!='N/A','\"'+ingredient.Units__c+'\"','\"\"')},"{!ingredient.Recipe_Diageo_Product__r.Name}"
+	</apex:repeat>
+    <apex:repeat value="{!recipe.Diageo_Ingredients__r}" var="ingredient">
+"{!ingredient.Quantity__c}",{!if(ingredient.Units__c!='N/A','\"'+ingredient.Units__c+'\"','\"\"')},"{!ingredient.Recipe_Non_Diageo_Product__r.Name}"
+	</apex:repeat>
+""	  
+"Preparation Steps"
+<apex:repeat value="{!recipe.Preparation_Steps__r}" var="prepstep">
+"{!prepstep.Step_Number__c}","{!prepstep.Description__c}"
+</apex:repeat>
+""
+"Image Reference URL or File Reference"
+"Main Recipe Image",{!if(recipe.Main_Drink_Image__r.Content_id__c!=null,'\"https://c.'+currentServerInstance+'.content.force.com/sfc/servlet.shepherd/version/download/'+recipe.Main_Drink_Image__r.Content_id__c+'\"','\"\"')}
+"Mobile Recipe Image",{!if(recipe.Mobile_Drink_Image__r.Content_id__c!=null,'\"https://c.'+currentServerInstance+'.content.force.com/sfc/servlet.shepherd/version/download/'+recipe.Mobile_Drink_Image__r.Content_id__c+'\"','\"\"')}
+"Diageo Ingredient Image",{!if(recipe.Main_Ingredient_Image__r.Content_id__c!=null,'\"https://c.'+currentServerInstance+'.content.force.com/sfc/servlet.shepherd/version/download/'+recipe.Main_Ingredient_Image__r.Content_id__c+'\"','\"\"')}
+"Additional Image",{!if(recipe.Additional_Image_1__r.Content_id__c!=null,'\"https://c.'+currentServerInstance+'.content.force.com/sfc/servlet.shepherd/version/download/'+recipe.Additional_Image_1__r.Content_id__c+'\"','\"\"')}
+""
+</apex:repeat>
+</apex:page>

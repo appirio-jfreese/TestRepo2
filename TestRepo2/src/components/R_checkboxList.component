@@ -1,0 +1,138 @@
+<apex:component controller="Controller_Base">
+	<!-- START : For US85/TA910 -->
+	<script type="text/javascript">
+		var allChildClasses = new Array();
+		function subOptionChange(childClass, calledOnClick, currentCB){
+			var bIndeterminate = false;
+			var bChecked = false;
+			var i=0;
+			//var currentCB = jQuery(currentdiv).find("input[type='checkbox']");
+			jQuery("."+childClass).each(function() {
+					
+			//alert('in subop :'+jQuery(this).prop('checked'));
+			console.log('in subop :'+jQuery(this).prop('checked'));
+    		if(jQuery(this).is(':checked')){
+    			bIndeterminate = true
+			  	if(!bChecked && i == 0)
+			  		bChecked = true;
+    		}else if(bChecked){
+			  	bChecked = false;
+			  }
+			  i++;
+			});
+
+			if(bChecked && bIndeterminate && i == jQuery("."+childClass).length){
+				bChecked = true;
+				bIndeterminate = false;
+			}
+			
+			if(childClass == '{!siteTheme}' && !bChecked && !bIndeterminate){
+				alert('{!$Label.SubThemeOptionError}' + " '" + '{!siteTheme}' + "'..!!!");
+				currentCB.checked = !currentCB.checked;
+				jQuery(currentCB).parent().find('a').addClass('jqTransformChecked');
+    			calledOnClick = false;
+			}
+			else{
+				var parentCheckBoxId;
+				jQuery("."+childClass+"_P").each(function() {
+					//parentCheckBoxId = jQuery(this).attr('id');
+					jQuery(this).prop('checked',bChecked);
+					jQuery(this).prop('indeterminate',bIndeterminate);
+					var aLink = jQuery(this).parent().find('a');
+	    			//Change to support Active/Inactive status switch 
+					if ( bChecked || bIndeterminate){
+						aLink.addClass('jqTransformChecked');		
+					}else{
+						aLink.removeClass('jqTransformChecked');		
+					}
+    			
+				});
+			}
+			
+			if(calledOnClick)
+				{!onchange};
+		}
+		
+		function parentOptionChange(childClass, calledOnClick){
+			var bChecked;
+			jQuery("."+childClass+"_P").each(function() {
+					bChecked = jQuery(this).is(':checked');
+					console.log('in parentOp bChecked:'+jQuery(this).prop('checked'));
+    			
+			});
+			
+			jQuery("."+childClass).each(function() {
+    			jQuery(this).prop('checked',bChecked);
+    			var aLink = jQuery(this).parent().find('a');
+    			//Change to support Active/Inactive status switch 
+				if ( !bChecked ){
+					aLink.removeClass('jqTransformChecked');		
+				}else{
+					aLink.addClass('jqTransformChecked');		
+				}
+    			console.log('in parentOp child:'+jQuery(this).prop('checked'));
+    			//alert('in p :'+jQuery(this).prop('checked'));
+			});
+			
+			if(calledOnClick)
+				{!onchange};
+		}
+		
+		
+		function onLoadForChildOptions(){
+			var i;
+			for(i=0; i<allChildClasses.length; i++){
+				subOptionChange(allChildClasses[i], false);
+			}
+		}
+		
+		
+	</script>
+	<!-- END : For US85/TA910 -->
+	<apex:attribute name="onchange" description="Onchange function name" type="string" required="false"/>
+	<apex:attribute name="useSectionTheme" description="If true then use section color theme" type="boolean" required="false"/>
+	<apex:attribute name="options" description="Checkbox options" type="CheckboxOption[]" assignTo="{!themeOptions}" required="false"/>
+	<apex:attribute name="noOfOptions" description="Number of options available" type="Integer" required="false"/>
+	<apex:attribute name="width" description="Width" type="string" required="false"/>
+   	
+	<div class="include-select jqTransformSelectWrapper" style="z-index: 9; width: 155px;">
+        <div>
+            <span style="width: 115px;">Include</span>
+            <a href="javascript:;" class="jqTransformSelectOpen"></a>
+        </div>
+        <ul style="width: 153px; display: none; visibility: visible; overflow-y: auto;">
+        	<apex:variable var="ind" value="{!0}"/>
+        	<script>
+        		console.log('{!themeOptions}');
+        	</script>
+        	<apex:repeat value="{!themeOptions}" var="option">
+   				<li>
+                    <div class="option" href="#" index="{!CEILING(ind)}" >
+                        <apex:inputCheckbox styleClass="{!option.name}_P" value="{!option.chosen}" onchange="parentOptionChange('{!option.name}',true)" disabled="{!option.disabled}" /> 
+                        <label>{!option.name}</label>
+                    </div>
+                </li>
+   				<apex:repeat value="{!option.subOptions}" var="subOp">
+             		<apex:variable var="ind" value="{!ind+1}"/>
+             		<li class="indent">
+                            <div class="option" href="#" index="{!CEILING(ind)}">
+                                <apex:inputCheckbox styleClass="{!option.name}" onchange="subOptionChange('{!option.name}', true,this)" value="{!subOp.chosen}" disabled="{!subOp.disabled}" />
+                                <label>{!subOp.name}</label>
+                            </div>
+                    </li>
+             		<script type="text/javascript">
+						allChildClasses[allChildClasses.length] = '{!option.name}';
+					</script>
+             	</apex:repeat>
+             	
+             <apex:variable var="ind" value="{!ind+1}"/>
+      </apex:repeat>
+            
+        </ul>
+    </div>
+    <!-- START : For US85/TA910 -->
+    <script type="text/javascript">
+    	onLoadForChildOptions();
+    </script>
+    <!-- END : For US85/TA910 -->
+</apex:component>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Attribute</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Attributes</value>
+    </caseValues>
+    <fields>
+        <label><!-- API External ID --></label>
+        <name>API_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attribute External Id --></label>
+        <name>Attribute_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attribute Type --></label>
+        <name>Attribute_Type__c</name>
+        <picklistValues>
+            <masterLabel>Barware Needed</masterLabel>
+            <translation><!-- Barware Needed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Color</masterLabel>
+            <translation><!-- Color --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Description/Overview</masterLabel>
+            <translation><!-- Description/Overview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Drink Classification</masterLabel>
+            <translation><!-- Drink Classification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Drink Type</masterLabel>
+            <translation><!-- Drink Type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Effort Level</masterLabel>
+            <translation><!-- Effort Level --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Flavor</masterLabel>
+            <translation><!-- Flavor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Food Pairings</masterLabel>
+            <translation><!-- Food Pairings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glassware</masterLabel>
+            <translation><!-- Glassware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Good For Gatherings</masterLabel>
+            <translation><!-- Good For Gatherings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Language</masterLabel>
+            <translation><!-- Language --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Luxury Flag</masterLabel>
+            <translation><!-- Luxury Flag --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nutrition Fact</masterLabel>
+            <translation><!-- Nutrition Fact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recipe Story</masterLabel>
+            <translation><!-- Recipe Story --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEO Hints</masterLabel>
+            <translation><!-- SEO Hints --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEO Meta Description</masterLabel>
+            <translation><!-- SEO Meta Description --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEO Page Title</masterLabel>
+            <translation><!-- SEO Page Title --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEO Page URL</masterLabel>
+            <translation><!-- SEO Page URL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Serving Size</masterLabel>
+            <translation><!-- Serving Size --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Serving Style</masterLabel>
+            <translation><!-- Serving Style --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Servings</masterLabel>
+            <translation><!-- Servings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard Average Analysis</masterLabel>
+            <translation><!-- Standard Average Analysis --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasting Notes</masterLabel>
+            <translation><!-- Tasting Notes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UnitofAlcohol</masterLabel>
+            <translation><!-- UnitofAlcohol --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine Taste</masterLabel>
+            <translation><!-- Wine Taste --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine Type</masterLabel>
+            <translation><!-- Wine Type --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Attribute Value Image --></label>
+        <name>Attribute_Value_Image__c</name>
+        <relationshipLabel><!-- Attributes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Attribute Value --></label>
+        <name>Attribute_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dynamic --></label>
+        <name>Dynamic__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Locale --></label>
+        <name>Locale__c</name>
+        <picklistValues>
+            <masterLabel>DE</masterLabel>
+            <translation><!-- DE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-CA</masterLabel>
+            <translation><!-- EN-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-GB</masterLabel>
+            <translation><!-- EN-GB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-IN</masterLabel>
+            <translation><!-- EN-IN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-US</masterLabel>
+            <translation><!-- EN-US --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-AR</masterLabel>
+            <translation><!-- ES-AR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CL</masterLabel>
+            <translation><!-- ES-CL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CO</masterLabel>
+            <translation><!-- ES-CO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-MX</masterLabel>
+            <translation><!-- ES-MX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR</masterLabel>
+            <translation><!-- FR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR-CA</masterLabel>
+            <translation><!-- FR-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PT-BR</masterLabel>
+            <translation><!-- PT-BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TH</masterLabel>
+            <translation><!-- TH --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Attribute Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

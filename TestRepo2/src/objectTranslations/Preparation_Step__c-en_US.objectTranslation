@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Preparation Step</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Preparation Steps</value>
+    </caseValues>
+    <fields>
+        <label><!-- ActionGroup --></label>
+        <name>ActionGroup__c</name>
+        <picklistValues>
+            <masterLabel>Mix</masterLabel>
+            <translation><!-- Mix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pour</masterLabel>
+            <translation><!-- Pour --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Serve</masterLabel>
+            <translation><!-- Serve --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stir</masterLabel>
+            <translation><!-- Stir --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preparation Step External Id --></label>
+        <name>Preparation_Step_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Preparation Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Step Number --></label>
+        <name>Step_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>Preparation Step Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- New_Preparation_Step --></label>
+        <name>New_Preparation_Step</name>
+    </webLinks>
+</CustomObjectTranslation>

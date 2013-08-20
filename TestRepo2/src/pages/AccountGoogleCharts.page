@@ -1,0 +1,269 @@
+<apex:page extensions="AccountLayoutControllerExtension" standardController="Account">
+    
+    <style>
+        .colstyle {width: 33%; height: 410px;}
+        .apexp {height: 410px;}
+    </style>
+    
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    
+    <script>
+        google.load("visualization", "1", {packages:["corechart"]});
+      
+        function drawChart() 
+        {
+            // Prepare table model for chart with columns
+            // var arrayData = [
+            // ["Month End", ""],
+            // ] ;
+                
+              
+                
+                
+            var data = new google.visualization.DataTable();
+            data.addColumn("string", "Month End");
+            data.addColumn("number", "{!chart2aSelectedBrand}");
+            
+            <apex:repeat var="list2aItem" value="{!list2a}">
+            data.addRows( [["<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!list2aItem.Month_End__c}" /></apex:outputText>", 
+                            {!ROUND(list2aItem.Batf_Volume_12_Mo_TY_vs_LY_Chg__c,0)}]] );
+            </apex:repeat>
+                
+                        
+                        
+                       
+            //var data = google.visualization.arrayToDataTable( arrayData );
+            
+            var chart = new google.visualization.LineChart(document.getElementById('chartBlock'));
+            chart.draw(data, {width: 340, height: 340, legend : {position: 'top', textStyle: {fontSize: 12}}, vAxis:{title: 'Average Batf Volume 12 Mo TY vs LY % Chg', textStyle:{fontSize: 12}}, hAxis:{title: 'Month Ending', textStyle:{fontSize: 10},showTextEvery:2,slantedText:true}, backgroundColor:{strokeWidth:1}, chartArea:{left:80,top:40}});
+        
+        }
+     
+     google.setOnLoadCallback(drawChart);
+     
+     
+     
+     function goToUrlFor3aComboboxChanged(newValue)
+     {
+        var urlString = "/apex/AccountPageLayout?id={!accountRecord.Id}&"
+        urlString += "chart3aSelectedDiv=" + newValue;
+        urlString += "#href1a" ;
+        window.parent.location = urlString;
+     }
+     
+     function goToUrlFor2aComboChange(newValue)
+     {
+        var urlString = "/apex/AccountPageLayout?id={!accountRecord.Id}&" ;
+        urlString += "&chart2aSelectedBrand=" + newValue ;
+        urlString += "#href1a" ;
+        
+        urlString = encodeURI(urlString);
+        
+        window.parent.location = urlString;
+     }
+     
+     function goToUrlFor1aComboChange(newValue)
+     {
+        var urlString = "/apex/AccountPageLayout?id={!accountRecord.Id}&" ;
+        urlString += "selected1aWineSpirit=" + newValue  ;
+        urlString += "#href1a" ;
+        
+        window.parent.location = urlString;
+     }
+     
+     
+     
+     
+     
+     
+     
+    </script>  
+    
+    
+    <style>
+        .fewerMore { display: none;}
+    </style>
+    
+    
+    
+    <apex:form >
+        
+        
+        
+        <apex:panelGrid columns="3" id="theGrid" width="100%" columnClasses="colstyle">
+            <apex:panelGroup >
+                
+                
+                <apex:pageBlock title="Opportunities for State Distribution">
+                    
+                    <apex:pageBlockButtons location="top" >
+                        <apex:selectList value="{!selected1aWineSpirit}" multiselect="false" size="1">
+                                         <!--  onchange="goToUrlFor1aComboChange(this.options[selectedIndex].text)">-->
+                            <apex:selectOptions value="{!WineSpiritsOptions}" />
+                            <apex:actionSupport event="onchange" action="{!executeChartBrandChange}" status="OppStatus" rerender="thePBT"/>
+                            
+                        </apex:selectList>
+                        <apex:actionStatus id="OppStatus" startText="Loading..."/>
+                    </apex:pageBlockButtons>
+                    
+                    <apex:pageBlockTable value="{!listOps1a}" var="aOpp" rendered="{!listOps1a.size > 0}" id="thePBT">
+                        
+                        <apex:column value="{!aOpp.Individual_Brand__c}">
+                            <apex:facet name="header">Brand</apex:facet>
+                        </apex:column>
+                        
+                        <apex:column value="{!aOpp.Size__c}"/>
+                        
+                        <apex:column >
+                            <apex:facet name="header">Total State</apex:facet>
+                            <apex:outputText style="float:right;" value="{!ROUND(aOpp.State_Batf_Volume_12_Mo_TY__c,0)}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">% Distribution</apex:facet>
+                            <apex:outputText style="float:right;" value="{!ROUND(aOpp.State_Distro__c,0)}%" />
+                        </apex:column>
+                        
+                    </apex:pageBlockTable>
+                    
+                    
+                    
+                    <apex:pageBlockSection rendered="{!(listOps1a.size == 0)}">
+                        <apex:outputLabel value="No records to display."/>
+                    </apex:pageBlockSection>
+                    
+                </apex:pageBlock>
+                
+                
+            </apex:panelGroup>
+            
+            
+            <apex:panelGroup >
+                
+                
+                <apex:pageBlock title="Brand Performance">
+                    
+                    <apex:pageBlockButtons location="top" >
+                        <apex:selectList value="{!chart3aSelectedDiv}" multiselect="false" size="1">
+                            <apex:selectOptions value="{!WineSpiritsOptions}" />
+                            <apex:actionSupport event="onchange"
+                            					action="{!executeChartBrandChange3}"
+                            					rerender="brandTablePanel"
+                            					status="brandStatus"/>
+                        </apex:selectList>
+                        <apex:actionStatus id="brandStatus" startText="Loading..."/>
+                    </apex:pageBlockButtons>
+                    
+                    <apex:outputPanel id="brandTablePanel">
+	                   <apex:pageBlockTable value="{!listBottomPerformance3a}" var="performance" rendered="{!listBottomPerformance3a.size > 0}" >
+	                       
+	                       <apex:column >
+	                           <apex:facet name="header">Bottom Performers</apex:facet>
+	                           <apex:outputText value="{!performance.Individual_Brand}"/>
+	                       </apex:column>
+	                       
+	                       <apex:column >
+	                           <apex:facet name="header">ST Growth</apex:facet>
+	                           <apex:outputText style="float:right;" value="{!performance.State_12M_Chg_vs_YA}%" />
+	                       </apex:column>
+	                       
+	                       <apex:column >
+	                           <apex:facet name="header">Acct Growth</apex:facet>
+	                           <apex:outputText style="float:right;" value="{!performance.Batf_Volume_12_Mo_TY_vs_LY_Chg}%" />
+	                       </apex:column>
+	                       
+	                       <apex:column >
+	                           <apex:facet name="header">Diff</apex:facet>
+	                           <apex:outputText style="float:right;font-weight:bold;" value="{!performance.diffBetweenStateAndAcct}%" />
+	                       </apex:column>
+	                       
+	                   </apex:pageBlockTable>
+                    
+                    
+	                    <apex:pageBlockTable value="{!listTopPerformance3a}" var="performance2" rendered="{!listTopPerformance3a.size > 0}" >
+	                        
+	                        <apex:column >
+	                            <apex:facet name="header">Top Performers</apex:facet>
+	                            <apex:outputText value="{!performance2.Individual_Brand}"/>
+	                        </apex:column> 
+	                        
+	                        
+	                        <apex:column >
+	                            <apex:facet name="header">ST Growth</apex:facet>
+	                            <apex:outputText style="float:right;" value="{!performance2.State_12M_Chg_vs_YA}%" />
+	                        </apex:column>
+	                        
+	                        <apex:column >
+	                            <apex:facet name="header">Acct Growth</apex:facet>
+	                            <apex:outputText style="float:right;" value="{!performance2.Batf_Volume_12_Mo_TY_vs_LY_Chg}%" />
+	                        </apex:column>
+	                        
+	                        <apex:column >
+	                            <apex:facet name="header">Diff</apex:facet>
+	                            <apex:outputText style="float:right;font-weight:bold;" value="{!performance2.diffBetweenStateAndAcct}%" />
+	                        </apex:column>
+	                        
+	                    </apex:pageBlockTable>
+                    </apex:outputPanel>
+                    
+                    
+<!--                    <apex:pageBlockSection rendered="{!(listTopPerformance3a.size == 0)}"> -->
+<!--                        <apex:outputLabel value="No records to display."/> -->
+<!--                    </apex:pageBlockSection> -->
+                    
+                </apex:pageBlock>
+                
+                
+            </apex:panelGroup>
+            
+            
+            <apex:panelGroup >
+                
+                
+                <apex:pageBlock title="Performance">
+        
+                    <apex:pageBlockButtons location="top" >
+                        <apex:selectList value="{!chart2aSelectedBrand}" rendered="{!display2a}" multiselect="false" size="1"
+                                         >
+<!--                                         onchange="goToUrlFor2aComboChange(this.options[selectedIndex].text)" -->
+                            <apex:selectOptions value="{!brandListFor2a}" />
+                            <apex:actionSupport event="onchange" action="{!executeChartBrandChange2}" />
+                        </apex:selectList>
+                    </apex:pageBlockButtons>
+                    
+                    
+                    <apex:pageBlockSection >
+                        
+                        <apex:pageBlockSectionItem >
+                            
+                            <div id="chartBlock"></div>
+                        
+                        </apex:pageBlockSectionItem>
+                        
+                        
+                    </apex:pageBlockSection>
+                    
+                </apex:pageBlock>
+                
+            </apex:panelGroup>
+            
+            
+            
+        </apex:panelGrid>
+                    
+                
+        <a name="href1a"></a>
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    </apex:form>
+    
+    
+
+</apex:page>

@@ -1,0 +1,49 @@
+<!------------------------------------------------------------------------------
+Name        : R_pageFooter.component
+
+Created By  : Basant Verma (Appirio Offshore)   
+Date 				: 6/25/13
+Story/Task	: US608/TA1026
+
+Updated By  : Basant Verma (Appirio Offshore)   
+Date 				: 6/25/13
+Story/Task	: US615/TA1066
+
+Updated By  : Basant Verma (Appirio Offshore)   
+Date 				: 7/1/13
+Story/Task	: US608/DE616
+------------------------------------------------------------------------------->
+<!-- Start : Changes for US615/TA1066 - Basant Verma - {Added controller="Controller_Base"}-->
+<apex:component controller="Controller_Base">
+<!-- End : Changes for US615/TA1066 - Basant Verma -->
+    <apex:attribute name="isInternal" description="Tell if user is Internal or not" type="Boolean" required="true"/>
+    <div class="footer">
+        <a href="javascript:;" class="footer-link-menu">
+            Menu
+        </a>
+        <div class="links">
+            <a href="{!$Page.HomePage}">Full Site</a> |
+            <a href="{!$Page.R_TermsAndConditions}">Terms &amp; Conditions</a> |
+            <a href="{!$Page.R_PrivacyPolicy}">Privacy &amp; Cookies Notice</a> |
+            <a href="{!$Page.R_Links}">Industry Related Links</a> |
+            <a href="{!$Page.R_FAQ}">FAQ</a> 
+<!-- Randy Wandell (Appirio) Commented because Contact us is not ready for Release 4 |
+            <a href="{!$Page.R_Cases}?caseType=new">Contact Us</a>
+-->
+        </div>
+        <span>&copy; Diageo 2011</span>
+        <!-- Start : Changes for US608/DE616 - Basant Verma -->
+        <a href="#" class="go-top"></a>
+        <!-- End : Changes for US608/DE616 - Basant Verma -->
+    </div>
+    
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+        var w = jQuery(this);
+        if (w.width() < 670){
+            jQuery(".footer .links").slideToggle("click");
+        }
+    }); 
+</script>
+    
+</apex:component>

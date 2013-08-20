@@ -1,0 +1,27 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Auth">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <div class="header">
+            <div class="logotype">&nbsp;</div>            
+        </div>  
+        <!-- PAGE CONTENT -->
+        <div class="content left">
+
+            <div class="error-header">
+                <apex:outputText styleClass="title" value="{!$Label.site.error}">
+                    <apex:param value="{!$Site.ErrorMessage}"/>
+                    <!-- this parameter needs to be italic in the site.error label -->
+                </apex:outputText>
+            </div>
+            <div class="error-description">
+
+            </div>
+
+        </div>
+        <!-- PAGE FOOTER -->
+        <div class="login-footer">
+            <apex:outputText value="{!$Label.LoginFooter}" escape="false" />
+        </div>
+    </div>
+</apex:page>

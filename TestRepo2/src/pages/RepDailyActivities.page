@@ -1,0 +1,176 @@
+<apex:page showHeader="false" controller="Controller_RepDailyActivities" renderAs="pdf">
+    <head>
+    	<style>
+    		body {
+    			font-size: 12px;
+    		}
+    	
+			@page {
+			    @bottom-left {
+			    	content: "{!footerLeftContent}";
+			        background-image: url("{!$Resource.RepFooterImage}");
+			        vertical-align: top;
+			        background-repeat: no-repeat;
+			        background-position: 10px 0px;
+			        text-align: left;
+			        font-size: 11px;
+			        padding: 0px 10px 0px 50px;
+				}
+			}
+			
+			.pageDiv {
+				width: 100%;
+			}
+			
+			.blockDiv {
+				page-break-inside: avoid;
+				border: 1px solid black;
+				margin-bottom: 10px;
+				padding: 5px;
+			}
+			
+			.titleDiv {
+				width: 98%;
+				font-size: 14px;
+				font-weight: bold;
+				margin-bottom: 5px;
+			}
+			
+			label {
+				font-weight: bold;
+			}
+		</style>
+    </head>
+    
+    <apex:pageBlock >
+        <div class="pageDiv">
+            <apex:repeat value="{!goalWrapperList}" var="gw">
+            	<div class="blockDiv">
+	                <div class="titleDiv">
+	                	<table style="width:100%">
+	                		<tr>
+	                			<td>
+				                	<apex:outputLabel value="{!gw.dummyAction.Goal__r.Program__r.name}"/>
+	                			</td>
+	                			<td style="text-align: center;">
+	                				Goal Type:&nbsp;
+				                    <apex:outputField value="{!gw.dummyAction.Goal__r.RecordType.name}"/>         
+	                			</td>
+	                			<td style="text-align: right;">
+	                				Due Date:&nbsp;
+			                        <apex:outputField value="{!gw.dummyAction.Goal__r.Due_Date__c}"/>
+	                			</td>
+	                		</tr>
+	                	</table>
+	               	</div>   
+	               	
+	                <apex:panelGrid columns="2" style="width:100%">
+	                    
+	                    <apex:panelGroup >
+	                        <apex:outputLabel value="Min # of Accounts: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Minimum_of_Accounts__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup >
+	                        <apex:outputLabel value="Sales Channel: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Sales_Channel__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup >
+	                        <apex:outputLabel value="Account Grade: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Account_Grade__c}"/>
+	                    </apex:panelGroup>
+	                     
+	                    <apex:panelGroup rendered="{!gw.showBrandType}">
+	                        <apex:outputLabel value="Brand Type: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Brand_Type__r.Name}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showBrandCategory}">
+	                        <apex:outputLabel value="Brand Category: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Brand_Category__r.Category__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showTypeOfAd}">
+	                        <apex:outputLabel value="Type of Ad: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Type_of_Ad__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showSizeOfAd}">
+	                        <apex:outputLabel value="Size of Ad: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Size_of_Ad__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showSuggestedPrice}">
+	                        <apex:outputLabel value="Suggested Price: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Suggested_Price__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showFeatureType}">
+	                        <apex:outputLabel value="Feature Type: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Feature_Type__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showLocationGrade}">
+	                        <apex:outputLabel value="Location Grade: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Location_Grade__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showPercentOfUniverse}">
+	                        <apex:outputLabel value="Percent of Universe: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Percent_of_Universe__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showFeatures}">
+	                        <apex:outputLabel value="Features: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Features_Displayed__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showCasesDisplayed}">
+	                        <apex:outputLabel value="Cases Displayed: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Cases_Displayed__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showProductSamples}">
+	                        <apex:outputLabel value="Product Samples: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Product_Sample_s__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showTrainer}">
+	                        <apex:outputLabel value="Trainer: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Trainer__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showTrainingAudience}">
+	                        <apex:outputLabel value="Training Audience: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Training_Audience__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showLengthOfTraining}">
+	                        <apex:outputLabel value="Length of Training: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.Length_of_Training__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                    <apex:panelGroup rendered="{!gw.showSFAPOS}">
+	                        <apex:outputLabel value="SFA POS Items: "/>
+	                        <apex:outputField value="{!gw.dummyAction.Goal__r.SFA_POS_Items__c}"/>
+	                    </apex:panelGroup>
+	                    
+	                </apex:panelGrid>
+	                
+	                <br/>
+	                
+	                <apex:panelgrid columns="1" style="width:100%">
+	                	<apex:panelGroup >
+	                        <apex:outputLabel value="Accounts: "/>
+	                        <apex:outputLabel style="font-weight: normal;" value="{!gw.accountString}"/>
+	                    </apex:panelGroup>
+	                </apex:panelGrid>
+	                
+	            	<div >&nbsp;</div>
+	            </div>
+            </apex:repeat>
+        </div>
+    </apex:pageBlock>
+
+</apex:page>

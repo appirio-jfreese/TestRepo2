@@ -1,0 +1,210 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_MonthlyExecutionPlan">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'style'+siteTheme+'.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.jquery, 'customDatePicker.css')}"/>
+    <style type="text/css">
+        div.ui-datepicker-buttonpane {
+            text-align:center;        
+        }
+        
+        table.ui-datepicker-calendar {
+            display:none;
+        }
+        
+        body, html{
+        	overflow: hidden;
+        }
+    </style>
+    
+    <c:loader />	
+    	
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+
+		<script type="text/javascript">
+	    	pageViewed('Monthly Execution Plan');
+	    </script>
+
+
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+        	<c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+		</apex:outputPanel>
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient {!if(ISNULL(siteTheme),'hidden','')}">
+            <apex:form >
+                <apex:actionFunction name="refreshContent" action="{!refreshContent}" rerender="mepData, beadcrumblinks" status="ajax-status"/> 
+                <apex:actionFunction name="selectSalesDriver" action="{!selectSalesDriver}" rerender="mepData, beadcrumblinks" status="ajax-status">
+                    <apex:param name="salesDriver" assignTo="{!salesDriver}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="setStartDateValue" action="{!setStartDateValue}" rerender="mepData, beadcrumblinks" status="ajax-status">
+                    <apex:param name="startFromDate" assignTo="{!startFromDate}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="nextMonth" action="{!nextMonth}" rerender="mepData, beadcrumblinks" status="ajax-status"/>
+                <apex:actionFunction name="previousMonth" action="{!previousMonth}" rerender="mepData, beadcrumblinks" status="ajax-status"/>
+                <apex:pageBlock id="mepData">
+                <div class="sub-title-with-menu-wrapper">
+                    <div class="mep-title">Monthly Execution Plan</div>
+                        <div class="title-import">
+                            <apex:outputPanel id="pdfButton">
+                                <div class="download-pdf-button float-left">
+                                    <div class="download-pdf-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-PDF"/></div>
+                                    <div class="download-pdf-button-description"><a href="{!pdfPath}" target="new">DOWNLOAD AS PDF</a></div>
+                                </div>
+                            </apex:outputPanel>
+                            <div class="clear-float"></div>
+                        </div>
+                        <div class="title-menu" style="right:225px;">
+			            	<c:checkboxList width="150" options="{!themeOptions}" noOfOptions="{!noOfThemesAvailable}" onchange="refreshContent()" />
+			            </div>
+                        <div class="title-menu">
+                            <c:selectList options="{!timePeriods}"  value="{!timePeriod}" onchange="refreshContent()" />
+                        </div>
+                </div>        
+                    <table class="mep-data">
+                        <thead>
+                            <tr>
+                                <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                                    <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                        <th class="mep_program{!salesDriversToShowCount}" ><button class="back" onclick="selectSalesDriver('All');return false;">Back</button><span class="mep-program-name-wrapper" >{!salesdrivername}</span></th>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!salesDriversToShowCount!=1}">
+                                        <th class="mep_program{!salesDriversToShowCount}" onclick="selectSalesDriver('{!salesdrivername}')" style="cursor:pointer;"><a href="#">{!salesdrivername}</a> </th>
+                                    </apex:outputText>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable var="displayCalendar" value="{!1}"/>
+                            <apex:repeat value="{!months}" var="month"> 
+                                <!-- month box -->
+                                <tr class="mep-month">
+                                    <td colspan="{!salesDriversToShowCount}" class="month">
+                                        <img src="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" alt="Next Month" class="month-next" style="display:{!month.showArrows};"/><img src="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" alt="Previous Month" class="month-previous" style="display:{!month.showArrows};"/><apex:inputText rendered="{!displayCalendar==1}" value="{!startFromDate}" styleClass="jumpToDate" style="opacity:0.0; filter:alpha(opacity=0);"/>{!month.name} <apex:inputText rendered="{!displayCalendar==1}" value="{!startFromDate}" styleClass="jumpToDate"/>
+                                    </td>
+                                </tr>
+                                <tr class="month-data month{!span}">
+                                    <apex:repeat value="{!salesDriversToShow}" var="program">
+                                        <td>
+                                            <apex:repeat value="{!calendarData[month.data][program]}" var="programData">
+                                            	<div class="month{!span} mep-general mep_program{!salesDriversToShowCount}" style="width: auto !important; {!programData.styleBackgroundColor}{!programData.styleTextColor}" onclick="window.location='{!detailPagePath}&id={!programData.id}'">
+												<a href="#" onclick="pageViewed('Monthly Execution Plan - {!programData.description}');"></a>
+												
+	                                                <apex:outputText rendered="{!salesDriversToShowCount==1}">
+                                                        <div class="month{!span}-sep1-desc">
+                                                            <apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext>
+                                                        </div>
+                                                	</apex:outputText>          
+                                                    <div class="month{!span}-sep month{!span}-sep{!salesDriversToShowCount}" style="{!programData.styleBackgroundImage}">
+                                                        <div style="{!programData.styleTextColor}">{!programData.label}</div>
+                                                    </div>
+
+                                                </div>
+                                            </apex:repeat>
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                                <apex:variable var="displayCalendar" value="{!0}"/>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function() {
+                            jQuery('.month-previous').click(previousMonth);
+                            jQuery('.month-next').click(nextMonth);
+							jQuery('.jumpToDate').datepicker({
+								showOtherMonths: true,
+								changeMonth: true,
+								changeYear: true,
+								closeText: 'Close',
+								showButtonPanel :true,
+								selectOtherMonths: true,
+								dateFormat: 'yy-mm-dd',
+                                beforeShow: function( input ) {  
+                                    setTimeout(function() {  
+                                        var buttonPane = jQuery(input).datepicker("widget").find( ".ui-datepicker-buttonpane" );   
+                                        var btn = jQuery('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Select</button>');  
+                                        btn.unbind("click").bind("click", function () {  
+                                            var selectedDate = jQuery.datepicker._formatDate(jQuery.datepicker._getInst(input)); 
+                                            jQuery.datepicker.selectedDay;  
+                                            setStartDateValue(selectedDate);
+                                            jQuery.datepicker._hideDatepicker();
+                                        });  
+                                        btn.appendTo( buttonPane );
+                                        buttonPane.find('button').addClass('update-filter').css('margin-bottom', 5);
+                                    }, 1 );  
+                                },
+                                onChangeMonthYear: function(year, month, inst ) {  
+                                    var input = inst.input[0];
+                                    setTimeout(function() {  
+                                        var buttonPane = jQuery(input).datepicker("widget").find( ".ui-datepicker-buttonpane" );   
+                                        var btn = jQuery('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Select</button>');  
+                                        btn.unbind("click").bind("click", function () {  
+                                            var selectedDate = jQuery.datepicker._formatDate(jQuery.datepicker._getInst(input)); 
+                                            setStartDateValue(selectedDate);
+                                            jQuery.datepicker._hideDatepicker();
+                                        });  
+                                        btn.appendTo( buttonPane );
+                                        buttonPane.find('button').addClass('update-filter').css('margin-bottom', 5);
+                                    }, 1 );  
+                                }
+							});                                
+                        });
+                    </script>   
+                </apex:pageBlock>
+            </apex:form>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+        </div>
+    <c:ajaxLoader />
+    
+    <script type="text/javascript">
+		jQuery('.jumpToDate').keydown(function(e) {
+			e.preventDefault;
+			return false;
+		});
+		
+		jQuery(document).ready(function() {
+			
+			hideDialog('startingLoader');
+			hideDialog('startingLoaderOverlayDisable');
+			jQuery("body").css("overflow","auto");
+			jQuery("html").css("overflow","auto");
+		});		
+		
+        jQuery(document).keydown(function(e) {
+            var element = e.target.nodeName.toLowerCase();
+            if (element != 'input' && element != 'textarea' && element != 'select') {
+
+                if(jQuery('#ajaxLoader').length != 0 && !jQuery('#ajaxLoader').hasClass('hidden') ){
+                    return false;
+                }
+            
+                if (e.keyCode === 39) { // right
+                    if(jQuery('.month-next').length != 0){
+                        jQuery('.month-next').first().trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 37) { // left
+                    if(jQuery('.month-previous').length != 0){
+                        jQuery('.month-previous').first().trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 38) { //up
+                    if(jQuery('.title-menu').find('.custom-select-box-values').find('.current').prev().length == 1){
+                        jQuery('.title-menu').find('.custom-select-box-values').find('.current').prev().trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 40) { // down
+                    if(jQuery('.title-menu').find('.custom-select-box-values').find('.current').next().length == 1){
+                        jQuery('.title-menu').find('.custom-select-box-values').find('.current').next().trigger('click');
+                    }
+                    return false;
+                }
+            }
+        });        
+    </script>
+</apex:page>

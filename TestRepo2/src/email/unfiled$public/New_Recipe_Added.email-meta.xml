@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>New_Recipe_Added</letterhead>
+    <name>New Recipe Added</name>
+    <style>formalLetter</style>
+    <subject>Diageo - Approve/Reject Recipe [Request ID: {!Workitem.ID}]</subject>
+    <textOnly>Hello ,
+
+A New recipe {!Recipe__c.Recipe_Title__c} is added by {!Recipe__c.CreatedBy} in the system on {!Recipe__c.CreatedDate}
+
+
+Please log in to the system and approve/reject the recipe with your comments.
+
+
+(Please do not reply to this is automated mail.)</textOnly>
+    <type>html</type>
+</EmailTemplate>

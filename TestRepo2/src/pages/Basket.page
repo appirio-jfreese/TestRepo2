@@ -1,0 +1,271 @@
+<!------------------------------------------------------------------------------
+Name 				: Basket.page
+
+Updated By	: Basant Kumar Verma
+Date 				: 6/14/13
+Story/Task	: US79/DE581 
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Basket">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SearchResultPage, 'style'+siteTheme+'.css')}"/>
+    <style type="text/css">
+        span.searchMessage {
+            font-size: 18px;
+        }
+    </style>
+    <style type="text/css">
+        body, html{
+            overflow: hidden;
+        }
+    </style>
+    <c:loader />    
+    <div class="content-wrapper basketPage">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}"/>
+
+        <script type="text/javascript">
+            pageViewed('Basket Page');
+        </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+            <input type="hidden" id="possibleItemsToRemove"/>
+            <apex:outputPanel id="allPage">
+            <apex:form >
+                    <apex:actionFunction status="ajax-status" name="removeTrashFromBasket" action="{!removeTrashFromBasket}"/>
+                    <apex:actionFunction status="ajax-status" name="clearBasket" action="{!clearBasket}"/>    
+                    <apex:actionFunction status="ajax-status" name="changeNumberOfItemPerPage" action="{!changeNumberOfItemPerPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showFirstPage" action="{!showFirstPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showPrevPage" action="{!showPrevPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showNextPage" action="{!showNextPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showLastPage" action="{!showLastPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showPageRequested" action="{!showPageRequested}" rerender="messages, pageContent, downloadAllDialog">
+                        <apex:param name="requestedPageNumber" assignTo="{!numberOfCurrentPage}" value="" />
+                    </apex:actionFunction>
+
+                    <apex:outputPanel id="messages">
+                        <apex:messages styleClass="errorMessagesList" />
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="pageContent">
+                        <apex:outputPanel rendered="{!OR(ISNULL(content),content.size=0)}">
+                            <div class="content-no-items-msg">No items.</div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!AND(!ISNULL(content),content.size!=0)}">
+                            <div class="corner-button-holder">
+	                        	<div class="pagination-right-top">
+	                        		<div class="float-left defaultTheme pagination-text-result">
+	                        			Showing {!showFromIndex+1}-{!showToIndex} of total {!numberOfItems} documents
+	                        		</div>
+	                        		<div class="float-left">
+										<c:selectList width="80" options="{!NumberOfItemsPerPageList}"  value="{!numberOfItemsOnPage}" onchange="changeNumberOfItemPerPage();" />
+									</div>
+	                        		<div class="clear-float"></div>
+								</div>   
+                                <apex:outputPanel rendered="{!AND(!ISNULL(contentDownloadShare),contentDownloadShare.size!=0)}">
+                                    <div class="downloadAllButton action-button float-right">
+                                        <div class="action-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/downloadArrow.png')}"/></div>
+                                        <div class="action-button-description">Download / Share Multiple Files</div>
+                                    </div>
+                                    <div class="action-button float-right">
+                                        <div id="tryClearBasket" class="action-button-description" style="margin-left: 0px;">Clear Basket</div>
+                                    </div>
+                                </apex:outputPanel>
+                                <div class="clear-float"></div>                            
+                            </div>
+                            
+                            <apex:repeat value="{!content}" var="contentItem">
+                                <div>
+                                    <apex:outputPanel rendered="{!!ISNULL(contentDetailsMap[contentItem.Content_Version_Id__c].result)}">
+                                        <apex:variable value="{!contentDetailsMap[contentItem.Content_Version_Id__c]}" var="d"/>
+                                        <c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!d}" lastLoginDateItem="{!lastLoginDate}" renderAsList="true"/>
+                                        <div class="clear-float"></div>
+                                        <div style="margin-left: 53px; width: 860px; text-align: left; color: #1B7E92;">Added Date: <apex:outputText value="{0,date, MM'/'dd'/'yy' 'hh':'mm':'ss ' 'a}"><apex:param value="{!contentDate[contentItem.id]}" /></apex:outputText></div>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:repeat>
+                            <div class="clear-float"></div>
+                            <c:pagination showNewContentMsg="false" totalNumberOfPages="{!numberOfPages}" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="{!numberOfCurrentPage}" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+            </apex:form>
+            </apex:outputPanel>
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <apex:form >
+        <apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>                          
+        <apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        
+        <apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, allPage, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, allPage, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+
+
+		<apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages,currentBasketItemsNo, allPage, downloadAllDialog">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}"  rerender="messages,currentBasketItemsNo, allPage, downloadAllDialog">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}"  rerender="messages,currentBasketItemsNo, allPage, downloadAllDialog">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}"  rerender="messages,currentBasketItemsNo, allPage, downloadAllDialog">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+    </apex:form>
+
+    <div id="confirmDelete" class="hidden dialog">
+        <div class="moreInfoWrapper">
+            <div class="moreInfoDescriptionWrapper sectionBackground">
+                <div class="moreInfoDescription">Complete</div>
+            </div>
+            <div class="moreInfoError"></div>
+            <div class="moreInfoContentWrapper">
+                <div style="font-size: 14px; padding: 10px; text-align: left;">
+                    Would you like to remove the items from your basket?<br/>
+                    <div style="float: right; margin-top: 10px;">
+                        <button class="green confirm-yes" onclick="return false;">Yes</button>
+                        <button class="green confirm-no" onclick="return false;">No</button>
+                    </div>
+                    <div class="clear-float"></div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <div id="confirmDeleteAllBasketItems" class="hidden dialog">
+        <div class="moreInfoWrapper">            
+            <div class="moreInfoDescriptionWrapper sectionBackground">
+               <div class="moreInfoDescription">Warning</div>
+               <apex:outputPanel ><div class="moreInfoClose close">&nbsp;</div></apex:outputPanel>
+            </div>   
+            <div class="moreInfoContentWrapper">
+                <div style="font-size: 14px; padding: 10px; text-align: left;">
+                    Would you like to remove all the items from your basket?<br/><br/>
+                    <div style="float: right; margin-top: 10px;">
+                        <button class="green confirm-yes" onclick="clearBasket();">Yes</button>
+                        <button class="green confirm-clearall-no">No</button>
+                    </div>
+                    <div class="clear-float"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="downloadAllInfo" class="hidden dialog" >
+        <apex:outputPanel id="downloadAllDialog">
+            <c:downloadAll content="{!contentDownloadShare}" isFileObject="true" isBasketAction="true"/>
+        </apex:outputPanel>
+    </div>
+    
+    <div id="moreInfo" class="hidden dialog" >
+        <apex:outputPanel id="overviewDialog">
+            <c:overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+        </apex:outputPanel>        
+    </div>
+
+    <div id="shareInfo" class="hidden dialog">
+        <apex:outputPanel id="shareDialog">
+            <c:share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div>   
+         
+    <div id="basketWarning" class="hidden dialog {!if(accessChanged, 'showRequired','')}">
+        <div class="moreInfoWrapper">
+            <div class="moreInfoDescriptionWrapper sectionBackground">
+               <div class="moreInfoDescription">Warning</div>
+               <apex:outputPanel rendered="{!if(OR(siteTheme == null, siteTheme == ''), 'false','true')}"><div class="moreInfoClose close">&nbsp;</div></apex:outputPanel>
+            </div>
+            <div class="moreInfoError">
+                <apex:outputPanel id="moreInfoError">
+                    <apex:messages styleClass="errorMessagesList" />
+                </apex:outputPanel>
+            </div>        
+            <div class="moreInfoContentWrapper">
+                <div class="shareRecipientInformation">
+                    {!$Label.Basket_Warning}
+                    <br/><br/>
+                    <button class="green close" onclick="removeTrashFromBasket(); showDialog('ajaxLoader');">OK</button>
+                </div>
+            </div>      
+        </div>
+    </div>
+             
+    <c:ajaxLoader beforeStop="bindFilterJs();"/>
+    
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+            hideDialog('startingLoader');
+            hideDialog('startingLoaderOverlayDisable');
+            jQuery("body").css("overflow","auto");
+            jQuery("html").css("overflow","auto");
+        }); 
+            
+    function calculateBoxHeight(){
+        jQuery("div.content-item").each(function(i, elem){
+            var bottomValue = jQuery("div.item-description", elem).height()-jQuery("div.content-item-menu div", elem).height() - 5;
+            jQuery("div.item-description", elem).css('bottom', -bottomValue+"px");
+        });
+    }
+    
+    function bindFilterJs(){
+
+    }
+
+    jQuery(document).ready(function() {
+        if(jQuery('#basketWarning').length == 1){
+            if(jQuery('#basketWarning').hasClass('showRequired')){
+                showDialog('basketWarning');
+            }
+        }
+
+        jQuery('button.confirm-no').live('click',function(){
+            hideDialog('confirmDelete');
+        });
+        
+        jQuery('button.confirm-clearall-no').live('click', function(){
+        	  hideDialog('confirmDeleteAllBasketItems');
+        });
+        
+        jQuery('#tryClearBasket').live('click', function(){
+        	showDialog('confirmDeleteAllBasketItems',true);		
+        });
+        
+        jQuery('button.confirm-yes').live('click',function(){
+            if(jQuery('#possibleItemsToRemove').val() != '' && jQuery('#possibleItemsToRemove').val() != null){
+                removeFromBasketMultiple(jQuery('#possibleItemsToRemove').val());
+            }
+            hideDialog('confirmDelete');
+        });
+
+				// Start : Changes for US79/DE581 : Basant Verma
+        /*jQuery('.emptyBasketPopupRequired').live('click',function(){
+            if(jQuery('#possibleItemsToRemove').length == 1){
+                showDialog('confirmDelete');
+            }
+        });*/
+        // End : Changes for US79/DE581 : Basant Verma
+
+        calculateBoxHeight();
+        bindFilterJs();
+       
+    });
+    
+    </script>   
+
+</apex:page>

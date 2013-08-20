@@ -1,0 +1,9 @@
+<apex:page >
+<div style="width:1200px; overflow: auto;">
+<apex:Flash src="{!$Resource.Flex_Uploader}"
+    width="100%"
+    height="800"
+    flashvars="session_id={!$Api.Session_ID}&server_url={!$Api.Partner_Server_URL_220}"
+   />
+</div>
+</apex:page>

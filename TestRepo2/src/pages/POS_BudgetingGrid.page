@@ -1,0 +1,1662 @@
+<apex:page controller="POS_BudgetingGridController" showHeader="false" sidebar="false" cache="false">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=1138"  />
+    <meta name="MobileOptimized" content="1138" /> 
+    <title>Diageo - Order Window Budgeting</title> 
+    <!-- Start Slick-grid imports //--> 
+    <apex:stylesheet value="{!URLFOR($Resource.slickgrid_libzip, 'slick.grid.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.slickgrid_libzip, 'css/smoothness/jquery-ui-1.8.16.custom.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.slickgrid_libzip, 'examples/examples.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.slickgrid_libzip, 'examples/examples.css')}"/>
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" />
+    <link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    
+    <!-- Define Tab panel .css styles --> 
+    <style>
+    .activeTab {background-color: #236FBD; color:white; background-image:none}
+    .inactiveTab {background-color: lightgrey; color:black; background-image:none}
+    .disabledTab {background-color: lightgrey; color:grey; background-image:none}
+    </style>
+        
+    <style type="text/css">
+        .wrapper .page .header-container {height: 137px;}
+        .editor-select {
+            background: none repeat scroll 0 0 transparent;
+            border: 0 none;
+            height: 100%;
+            margin: 0;
+            outline: 0 none;
+            padding: 0;
+            width: 100%;
+        }
+        
+        .cell-shopper {
+            font-weight: bold;
+        }
+        
+        .cell-currency {
+            text-align: right;
+        }       
+        
+        .cell-effort-driven {
+            text-align: center;
+        }
+        
+        .toggle {
+            height: 9px;
+            width: 9px;
+            display: inline-block;
+        }
+        
+        .toggle.expand {
+            background: url({!URLFOR($Resource.slickgrid_libzip, 'images/expand.gif')}) no-repeat center center;
+        }
+        
+        .toggle.collapse {
+            background: url({!URLFOR($Resource.slickgrid_libzip, 'images/collapse.gif')}) no-repeat center center;
+        }
+        
+        .allocate {
+            height: 14px;
+            width: 14px;
+        }   
+        
+        .delete {
+            height: 12px;
+            width: 12px;
+        }    
+        .ui-autocomplete {
+            width: 154px !important;
+        }
+        .mainTable {
+            margin: 10px;
+            min-width: 0;
+        }
+          
+        #myGrid, .slick-header, .slick-viewport, .slick-row, .grid-canvas, .slick-cell, .slick-resizable-handle {
+            *zoom: 1;
+            min-width: 0;
+        }
+        
+        /*
+        .slick-viewport .grid-canvas .slick-row .slick-cell select {
+            *width: 76x;
+        } 
+        .slick-viewport .grid-canvas .slick-row .slick-cell select:focus {
+            *width: 280px;
+        } 
+        */
+    </style>
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_IE7_select)}"></script> 
+
+
+        
+    <!-- Start Slick-grid imports //-->  
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'lib/firebugx.js')}"/>
+    
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'lib/jquery-1.7.min.js')}"/>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" /> <!-- Needed for autocomplete //-->
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'lib/jquery.event.drag-2.0.min.js')}"/>
+
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script><!-- Needed for something else, and needs to be here //-->
+    
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'slick.core.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'slick.formatters.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'slick.editors.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'slick.grid.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.slickgrid_libzip, 'slick.dataview.js')}"/> 
+    
+    <apex:includeScript value="{!URLFOR($Resource.jquery_pluginszip, 'jquery.json-2.3.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.jquery_pluginszip, 'jquery.formatCurrency-1.4.0.js')}"/> 
+    <!-- End Slick-grid imports //-->
+
+<script  type="text/javascript">
+<!-- Start: Plug-in to show tooltip on slickgrid cell when the text is longer than cell width //--> 
+(function ($) {
+  // register namespace
+  $.extend(true, window, {
+    "Slick": {
+      "AutoTooltips": AutoTooltips
+    }
+  });
+
+
+  function AutoTooltips(options) {
+    var _grid;
+    var _self = this;
+    var _defaults = {
+      maxToolTipLength: null
+    };
+
+    function init(grid) {
+      options = $.extend(true, {}, _defaults, options);
+      _grid = grid;
+      _grid.onMouseEnter.subscribe(handleMouseEnter);
+    }
+
+    function destroy() {
+      _grid.onMouseEnter.unsubscribe(handleMouseEnter);
+    }
+
+    function handleMouseEnter(e, args) {
+      var cell = _grid.getCellFromEvent(e);
+      if (cell) {
+        var node = _grid.getCellNode(cell.row, cell.cell);
+        if ($(node).innerWidth() < node.scrollWidth) {
+          var text = $.trim($(node).text());
+          if (options.maxToolTipLength && text.length > options.maxToolTipLength) {
+            text = text.substr(0, options.maxToolTipLength - 3) + "...";
+          }
+          $(node).attr("title", text);
+        } else {
+          $(node).attr("title", "");
+        }
+      }
+    }
+
+    $.extend(this, {
+      "init": init,
+      "destroy": destroy
+    });
+  }
+})(jQuery); 
+<!-- End: Plug-in to show tooltip on slickgrid cell when the text is longer than cell width //-->
+
+    var itemAllocationGrid = false;
+    var alertOnLeaving = true;
+    var alertOnLeavingNew = false;
+    jQuery(window).bind('beforeunload', function(){
+        if(alertOnLeaving == true){
+            var isChanged = false;
+            var currentData = dataView.getItems();
+            jQuery.each(currentData, function(index,elem){
+                if(elem.updated){
+                    isChanged = true;
+                }
+            });
+            
+            if(isChanged || alertOnLeavingNew)
+                return "It appears that you have not saved all changes on this page. Please confirm you want to Leave this page before 'Save Changes'.";
+        }
+    });
+    
+                
+    //jQuery.noConflict();
+    jQuery(function() {
+     jQuery("form").submit(
+          function() {
+            alertOnLeaving = false;
+            jQuery(".slick-cell.active").next().click();
+            delete Array.prototype.toJSON; // needed to avoid passing extra quotes along with toJSON object
+            
+            //alert('jQuery.toJSON(data) -' + jQuery.toJSON(data));
+            jQuery("input[name='gridData']").val(jQuery.toJSON(data));
+          }
+        );
+      });   
+        
+
+        var searchString = "";
+        function myFilter(item) {
+        
+          if (searchString != "" && item["Shopper"].toLowerCase().indexOf(searchString.toLowerCase()) != 0) {
+            return false;
+          }
+        
+          if (item.parent != null) {
+            var parent = data[item.parent];
+        
+            while (parent) {
+              if (parent._collapsed || (searchString != "" && parent["Shopper"].toLowerCase().indexOf(searchString.toLowerCase()) != 0)) {
+                return false;
+              }
+        
+              parent = data[parent.parent];
+            }
+          }
+        
+          return true;
+        }                           
+                    
+    var isResettingForm = false;
+        
+    function validateFormBA() {//console.log('validating form');
+       if(isResettingForm){
+        isResettingForm = false;
+        return true;
+       } 
+        
+       var items = dataView.getItems(); 
+       // var requiredDataMissing = false;     
+        for(var i = 0 ; i < items.length ; i++ ) {      
+
+            if(items[i].ShopperId == null || items[i].BrandId == null || items[i].Budget == null ||
+                items[i].ShopperId == '' || items[i].BrandId == '' || items[i].Budget == '') {
+                alert('Shopper, Brand and Budget are required fields. Please make sure all rows have these values before Saving Changes.')
+                return false;
+            }             
+        } 
+        
+        return true;
+    }   
+                
+    function validateFormIA() {//console.log('validating form');
+       if(isResettingForm){
+        isResettingForm = false;
+        return true;
+       } 
+        
+       var items = dataView.getItems(); 
+       // var requiredDataMissing = false;     
+        for(var i = 0 ; i < items.length ; i++ ) {      
+
+            if(items[i].ShopperId == null || items[i].ItemId == null || items[i].Budget == null ||
+                items[i].ShopperId == '' || items[i].ItemId == '' || items[i].Budget == '') {
+                alert('Shopper, Item and Quantity are required fields. Please make sure all rows have these values before Saving Changes.')
+                return false;
+            }             
+        } 
+        
+        return true;
+    }     
+
+    <!-- Custom Validators for SlickGrid -->
+    function requiredFieldValidator(value) {
+      //alert('requiredFieldValidator ' + value);
+      if (value == null || value == undefined || !value.length) {
+        return {valid: false, msg: "This is a required field"};
+      
+      } else {
+
+        return {valid: true, msg: null};
+      }
+    }
+    
+    <!-- Custom Editors for SlickGrid -->
+    function SelectCellEditor (args) {
+        var $select;
+        var defaultValue;
+        var scope = this;
+
+        this.init = function() {
+
+            if(args.column.options){
+              opt_values = args.column.options.split(',');
+            }else{
+              opt_values ="yes,no".split(',');
+            }
+            option_str = ""
+            jQuery.each(opt_values, function(i, v){
+              if(!isNaN(i)){
+                  option_str += '<option value="' + v + '">' + v + '</option>';
+              }
+            });
+            $select = jQuery('<select id="dynamic_select" tabIndex="0" class="editor-select">'+ option_str +"</select>");
+            $select.appendTo(args.container);
+            
+            if (jQuery.browser.msie) {
+                jQuery('#dynamic_select').fixieselects();
+            }
+        };
+
+        this.destroy = function() {
+            $select.remove();
+        };
+
+        this.focus = function() {
+            $select.focus();
+        };
+
+        this.loadValue = function(item) {
+            defaultValue = item[args.column.field];
+            $select.val(defaultValue);
+        };
+
+        this.serializeValue = function() {
+            if(args.column.options){
+              return $select.val();
+            }else{
+              return ($select.val() == "yes");
+            }
+        };
+
+        this.applyValue = function(item,state) {//console.log(state);
+            item[args.column.field] = state;
+        };
+
+        this.isValueChanged = function() {
+            return ($select.val() != defaultValue);
+        };
+
+        this.validate = function() {
+            return {
+                valid: true,
+                msg: null
+            };
+        };
+
+        this.init();
+    }
+  
+    function DynamicDropdownEditor (args) {
+        var $select;
+        var defaultValue;
+        var scope = this;
+        var item = args.item;
+        
+        var callbackHandler = function(data, event){
+                                if(event.status) {
+                                    sourceOptions = jQuery.map( data, function( item ) {
+                                            if(!!item.Name){
+                                                bName = item.Name;
+                                            } else {
+                                                bName = 'No name';
+                                            }
+                                            
+                                            return {
+                                                label: bName,
+                                                value: item.Id
+                                            }
+                                        });
+                                    } else if (event.type === 'exception') {
+                                        alert(event.message);
+                                    } else {
+                                        alert(event.message);
+                                    }
+                                    
+                                    option_str = '<OPTION value="">- Select -</OPTION>';
+                                        
+                                    jQuery.each(sourceOptions, function(i, v){
+                                        
+                                      if(isNaN(i)){
+                                        //alert('*** Got NaN! ***');
+                                      } else {
+                                          option_str += '<option value="' + v.value + '">' + v.label + '</option>';
+                                      }
+                                    });
+                                    $select = jQuery('<select id="dynamic_select" tabIndex="0" class="editor-select">'+ option_str +"</select>");
+                                    $select.appendTo(args.container);
+                                    if (jQuery.browser.msie) {
+                                        jQuery('#dynamic_select').fixieselects();
+                                    }
+                                    setTimeout("hideDialog('ajaxLoader');", 500);
+                                }
+
+        var callbackHandler_no_IE_fix = function(data, event){
+                                if(event.status) {
+                                    sourceOptions = jQuery.map( data, function( item ) {
+                                            if(!!item.Name){
+                                                bName = item.Name;
+                                            } else {
+                                                bName = 'No name';
+                                            }
+                                            
+                                            return {
+                                                label: bName,
+                                                value: item.Id
+                                            }
+                                        });
+                                    } else if (event.type === 'exception') {
+                                        alert(event.message);
+                                    } else {
+                                        alert(event.message);
+                                    }
+                                    
+                                    option_str = '<OPTION value="">- Select -</OPTION>';
+                                        
+                                    jQuery.each(sourceOptions, function(i, v){
+                                        
+                                      if(isNaN(i)){
+                                        //alert('*** Got NaN! ***');
+                                      } else {
+                                          option_str += '<option value="' + v.value + '">' + v.label + '</option>';
+                                      }
+                                    });
+                                    $select = jQuery('<select id="dynamic_select" tabIndex="0" class="editor-select">'+ option_str +"</select>");
+                                    $select.appendTo(args.container);
+                                    setTimeout("hideDialog('ajaxLoader');", 500);
+                                }
+                                
+            var callbackHandlerGeography = function(data, event){
+                                    if(event.status) {
+                                        sourceOptions = jQuery.map( data, function( item ) {
+                                                if(!!item.Hierarchy_Location__c){
+                                                    bName = item.Hierarchy_Location__c;
+                                                } else {
+                                                    bName = 'No name';
+                                                }
+                                                
+                                                return {
+                                                    label: bName,
+                                                    value: item.Id
+                                                }
+                                            });
+                                        } else if (event.type === 'exception') {
+                                            alert(event.message);
+                                        } else {
+                                            alert(event.message);
+                                        }
+                                        
+                                        option_str = '<OPTION value="">- Select -</OPTION>';
+                                            
+                                        jQuery.each(sourceOptions, function(i, v){
+                                            
+                                          if(isNaN(i)){
+                                            //alert('*** Got NaN! ***');
+                                          } else {
+                                              option_str += '<option value="' + v.value + '">' + v.label + '</option>';
+                                          }
+                                        });
+                                        $select = jQuery('<select id="dynamic_select" tabIndex="0" class="editor-select">'+ option_str +"</select>");
+                                        $select.appendTo(args.container);
+                                        if (jQuery.browser.msie) {
+                                            jQuery('#dynamic_select').fixieselects();
+                                        }
+                                        setTimeout("hideDialog('ajaxLoader');", 500);
+                                    }                               
+
+        this.init = function() {
+            var sourceOptions = null;
+            
+            if(item.ShopperId == null) {
+                alert("You need to first select a Shopper for the budget before selecting this field.");
+                option_str = '<OPTION value="">- Select -</OPTION>';
+                $select = jQuery("<SELECT tabIndex='0' class='editor-select'>"+ option_str +"</SELECT>");
+                return;     
+            }           
+            if(itemAllocationGrid == false) { //brand allocation Grid dynamic lookups
+                if(args.column.field != 'Brand' && item.BrandId == null){
+                    alert("You need to first select a Shopper, Brand for the budget before selecting this field.");
+                    option_str = '<OPTION value="">- Select -</OPTION>';
+                    $select = jQuery("<SELECT tabIndex='0' class='editor-select'>"+ option_str +"</SELECT>");
+                    return;
+                }               
+                try {
+                    showDialog('ajaxLoader');
+                    if(args.column.field == 'Program'){
+                        POS_BaseRemote.searchForProgram(item.BrandId, '{!orderWindow.id}', callbackHandler_no_IE_fix, {escape:true});
+                    } else if(args.column.field == 'Distributor'){
+                        POS_BaseRemote.searchForDistributors(item.BrandId, item.ShopperId, callbackHandler, {escape:true});
+                    } else if(args.column.field == 'Geography'){
+                        POS_BaseRemote.searchForGeography(item.BrandId, item.ShopperId, callbackHandlerGeography, {escape:true});
+                    } else if(args.column.field == 'Brand'){
+                        POS_BaseRemote.searchForBrand(item.ShopperId, '{!orderWindow.id}', callbackHandler, {escape:true});
+                    } 
+                } catch(e){
+                    alert('Error during search:');
+                    console.log('Error during search:' + e);
+                    setTimeout("hideDialog('ajaxLoader');", 500);;
+                }
+            } else {
+                if(args.column.field != 'Item' && item.ItemId == null){
+                    alert("You need to first select a Shopper, Item for the budget before selecting this field.");
+                    option_str = '<OPTION value="">- Select -</OPTION>';
+                    $select = jQuery("<SELECT tabIndex='0' class='editor-select'>"+ option_str +"</SELECT>");
+                    return;
+                }
+                try {
+                    showDialog('ajaxLoader');
+                    if(args.column.field == 'Program'){
+                        POS_BaseRemote.searchForProgramItemAllocation(item.ItemId, '{!orderWindow.id}', callbackHandler_no_IE_fix, {escape:true});
+                    } else if(args.column.field == 'Distributor'){
+                        POS_BaseRemote.searchForDistributorsItemAllocation(item.ItemId, item.ShopperId, callbackHandler, {escape:true});
+                    } else if(args.column.field == 'Geography'){
+                        POS_BaseRemote.searchForGeographyItemAllocation(item.ItemId, item.ShopperId, callbackHandlerGeography, {escape:true});
+                    } else if(args.column.field == 'Item'){
+                        POS_BaseRemote.searchForItemsOnAllocation(item.ShopperId, '{!orderWindow.id}', callbackHandler, {escape:true});
+                    }  
+                    
+                } catch(e){
+                    alert('Error during search:');
+                    console.log('Error during search:' + e);
+                    setTimeout("hideDialog('ajaxLoader');", 500);;
+                }           
+            
+            }
+            
+        };
+
+        this.destroy = function() {
+            $select.remove();
+        };
+
+        this.focus = function() {
+            $select.focus();
+        };
+
+        this.loadValue = function(item) {//console.log('load');
+            defaultValue = item[args.column.field];
+            try{$select.val(defaultValue);}catch(ex){}
+        };
+
+        this.serializeValue = function() {
+            try{
+                if($select.val() == "")
+                    return {ProgramId: "", Program: ""};
+                if(args.column.field == 'Program')
+                    return {ProgramId: $select.val(), Program: $select.find(':selected').text()};
+                if(args.column.field == 'Distributor')
+                    return {DistributorId: $select.val(), Distributor: $select.find(':selected').text()};
+                if(args.column.field == 'Geography')
+                    return {GeographyId: $select.val(), Geography: $select.find(':selected').text()};
+                if(args.column.field == 'Brand')
+                    return {BrandId: $select.val(), Brand: $select.find(':selected').text()};   
+                if(args.column.field == 'Item')
+                    return {ItemId: $select.val(), Item: $select.find(':selected').text()};                 
+            } catch(ex){}
+        };
+
+        this.applyValue = function(item,state) {
+            try{
+                item[args.column.field] = state[args.column.field];
+                item[args.column.field+'Id'] = state[args.column.field+'Id'];
+            } catch(ex){}
+        };
+
+        this.isValueChanged = function() {
+            return ($select.val() != defaultValue);
+        };
+
+        this.validate = function() {
+            return {
+                valid: true,
+                msg: null
+            };
+        };
+
+        this.init();
+    }
+  
+  function BudgetFieldEditor(args) {
+    var $input;
+    var defaultValue;
+    var scope = this;
+    this.init = function () {
+        $input = jQuery("<INPUT type=text class='editor-text' />")
+        .appendTo(args.container)
+        .bind("keydown.nav", function (e) {
+            if (e.keyCode === jQuery.ui.keyCode.LEFT || e.keyCode === jQuery.ui.keyCode.RIGHT) {
+                e.stopImmediatePropagation();
+            }
+        })
+        .focus()
+        .select();
+    };
+    this.destroy = function () {
+        $input.remove();
+    };
+    /*this.focus = function () {
+        $input.focus();
+    };*/
+    this.getValue = function () {
+        return $input.val();
+    };
+    this.setValue = function (val) {
+        $input.val(val);
+    };
+    this.loadValue = function (item) {
+    defaultValue = item[args.column.field] || "";
+    $input.val(defaultValue);
+    $input[0].defaultValue = defaultValue;
+    $input.select();
+    };
+    this.serializeValue = function () {
+        return $input.val();
+    };
+    this.applyValue = function (item, state) {
+        item[args.column.field] = state;
+    };
+    this.isValueChanged = function () {
+        return true;//(!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
+    };
+    
+    this.validate = function () {
+        if (args.column.validator) {
+            var validationResults = args.column.validator($input.val());
+            if (!validationResults.valid) {
+                return validationResults;
+            }
+        }
+        
+        //alert('parseInt($input.val(), 10) = ' + parseInt($input.val(), 10));
+        if (isNaN(parseInt($input.val(), 10)) || parseInt($input.val(), 10) != $input.val() || parseInt($input.val(), 10) < 0) {
+            alert('Please enter whole number for this field. No commas, decimals allowed.');
+            //grid.resetActiveCell();
+            return {valid: false, msg: ""};
+        }           
+        
+        var item = args.item;
+        var parItem;
+        var priorUAmt = 0;
+        if(!isNaN(parseInt(item.Unallocated, 10))) {
+            priorUAmt = parseInt(item.Unallocated, 10);
+        }
+        //alert('item.Unallocated =' + item.Unallocated.trim() + ' $input.val() =' + $input.val());
+        if(item.parent != null) {
+            parItem = dataView.getItemByIdx(item.parent);
+            
+            var parUAmt = parseInt(parItem.Unallocated, 10) + priorUAmt - parseInt($input.val(), 10);
+            //alert('parUAmt =' + parUAmt); 
+            if(parUAmt < 0) {
+                alert('Budget may not exceed the unallocated amount available at the parent level.');
+                return {
+                    valid: false,
+                    msg: null
+                };                  
+            } else {
+                parItem.Unallocated = parUAmt;
+                dataView.updateItem(parItem.id, parItem);
+            }
+        }
+    
+        
+        return {
+            valid: true,
+            msg: null
+        };
+    };
+    this.init();
+} 
+  
+  var currentShopperId = null;
+  
+  function AutoCompleteEditor(args) {
+    var $input;
+    var $hidden;
+    var defaultValue;
+    var scope = this;
+    //var calendarOpen = false;
+    var sourceOptions = args.column.options;
+    var item = args.item;
+    
+    currentShopperId = item.ShopperId;
+
+    this.init = function () {
+      $input = jQuery("<INPUT class='editor-text autoCompleteToBind' />");
+      $hidden = jQuery("<INPUT type=hidden style='width:1px' />").appendTo(args.container);
+      $input.appendTo(args.container);
+      $input.focus().select();
+
+      if(!!sourceOptions.makeDynamicQueryForBrand){
+        // source not given, dynamic ajax call for brands are required
+        sourceOptions = function( request, response ) {
+            if(currentShopperId == undefined){
+                // prompt entry of Shopper
+                alert('Please select a Shopper for this budget before selecting Brand.');
+                $input.val('');
+                $input.parent().prev().trigger('click'); 
+            } else {
+                try {
+                    showDialog('ajaxLoader');
+                    //alert('currentShopperId: ' + currentShopperId); 
+                    POS_BaseRemote.searchForBrand(request.term, currentShopperId, '{!orderWindow.id}', function(data, event){
+                        if(event.status) {
+                            response( jQuery.map( data, function( item ) {
+                                if(!!item.Name){
+                                    bName = item.Name;
+                                } else {
+                                    bName = 'No name';
+                                }
+                                return {
+                                    label: bName,
+                                    value: item.Id
+                                }
+                            }));
+                        } else if (event.type === 'exception') {
+                            alert(event.message);
+                        } else {
+                            alert(event.message);
+                        }
+                        setTimeout("hideDialog('ajaxLoader');", 500);
+                    }, {escape:true});
+
+                } catch(e){
+                    alert('Error during search:' + e.message);
+                    setTimeout("hideDialog('ajaxLoader');", 500);;
+                }
+            }
+        }               
+      }
+
+      jQuery(args.container).find('.autoCompleteToBind').autocomplete({
+           source: sourceOptions,
+       minLength: 1,
+       select: function(event, ui) {
+           event.preventDefault();
+           this.value = ui.item.label;
+           $hidden.value = ui.item.value;
+           //alert('autocomplete select - $hidden.value ' + $hidden.value + ' this.value ' + this.value);
+       },
+       focus: function(event, ui) {
+           event.preventDefault();
+           this.value = ui.item.label;
+           $hidden.value = ui.item.value;
+           //alert('autocomplete focus - $hidden.value ' + $hidden.value + ' this.value ' + this.value);
+       }
+       });
+    };
+
+    this.destroy = function () {
+        //alert('destroy');
+      jQuery(args.container).find('.autoCompleteToBind').autocomplete("destroy");
+    };
+
+    this.focus = function () {
+      $input.focus();
+    };
+    
+    this.serializeValue = function () {
+        //alert('serializeValue ' + $input.val() + ' hidden - ' + $hidden.value);
+        
+        if(args.column.field == 'Shopper') {
+            return {Shopper: $input.val(), ShopperId: $hidden.value};
+        }
+        else if(args.column.field == 'Brand') {
+            return {Brand: $input.val(), BrandId: $hidden.value};
+        }
+        else if(args.column.field == 'Program') {
+            return {Program: $input.val(), ProgramId: $hidden.value};
+        } 
+        else if(args.column.field == 'Distributor') {
+            return {Distributor: $input.val(), DistributorId: $hidden.value};
+        }  
+        else if(args.column.field == 'Geography') {
+            return {Geography: $input.val(), GeographyId: $hidden.value};
+        }  
+        else if(args.column.field == 'Item') {
+            return {Item: $input.val(), ItemId: $hidden.value};
+        }       
+        else {
+            return  $input.val();
+        }
+    };   
+    
+    this.applyValue = function (item, state) {
+        item[args.column.field] = state[args.column.field];
+       item[args.column.field+'Id'] = state[args.column.field+'Id'];
+      //item[args.column.field] = state;
+    };       
+
+    this.loadValue = function (item) {
+    
+      defaultValue = item[args.column.field];
+      
+      $input.val(defaultValue);
+      $hidden.val(item[args.column.field+'Id']);
+      
+      $input[0].defaultValue = defaultValue;
+      $input.select();
+    };
+
+ /*this.handleKeyDown = function (e) {
+    if (e.keyCode == jQuery.ui.keyCode.LEFT || e.keyCode == jQuery.ui.keyCode.RIGHT || e.keyCode == jQuery.ui.keyCode.TAB) {
+        e.stopImmediatePropagation();
+    }
+ }; */
+
+    this.isValueChanged = function () {
+      return (!($input.val() == "" && defaultValue == null)) && ($input.val() != defaultValue);
+    };
+
+    this.validate = function () {
+    
+    if (args.column.validator) {
+        var validationResults = args.column.validator($input.val());
+        if (!validationResults.valid) {
+            return validationResults;
+        }
+    } 
+    var item = args.item;
+    var items = dataView.getItems(); 
+    //alert('$input.val() ' + $input.val() + ' $input.value ' + $input.value + '  $hidden.value ' + $hidden.value);
+    
+    
+    if ($input.val() != null && $input.val()!='' && $input.val() != undefined && 
+        ($hidden.value == null || $hidden.value =='' || $hidden.value == undefined)) {
+        
+        alert('Free-form text not allowed in this field. Please select from the type-ahead selection.');
+        return {
+             valid: false,
+             msg: null
+           };
+    }
+    
+    // validate for Shopper, Brand combination to be unique. Note: this.validate mehtod is called ONLY when a cell value is changed.
+    
+    
+    /*
+    Case 00003585
+    Modified By - Rahul Chitkara
+    if(args.column.field == 'Shopper') {
+            
+        for(var i = 0 ; i < items.length ; i++ ) {      
+          if(items[i].id != item.id && item.parent != null && items[i].parent == item.parent && items[i].ShopperId == $hidden.value ) {
+            
+                alert('Duplicate Shopper allocation for the same Budget.');
+                return {
+                     valid: false,
+                     msg: null
+                   };
+          } 
+        }   
+    } 
+    End Case
+      */
+    
+    // validate for Shopper, Brand combination to be unique. Note: this.validate mehtod is called ONLY when a cell value is changed.
+    /*if(args.column.field == 'Shopper' || args.column.field == 'Brand') {
+            
+        for(var i = 0 ; i < items.length ; i++ ) {      
+          if(args.column.field == 'Shopper' && 
+                items[i].id != item.id && items[i].ShopperId == $hidden.value && items[i].BrandId == item.BrandId) {
+            
+                alert('Duplicate Shopper, Brand line item.');
+                return {
+                     valid: false,
+                     msg: null
+                   };
+          } else if(args.column.field == 'Brand' && 
+                items[i].id != item.id && items[i].ShopperId == item.ShopperId && items[i].BrandId == $hidden.value) {
+            
+                alert('Duplicate Shopper, Brand line item.');
+                return {
+                     valid: false,
+                     msg: null
+                   };
+          }
+        }   
+    }   */      
+       
+      return {
+        valid: true,
+        msg: null
+      };
+    };
+
+    this.init();
+  }     
+  
+    <!-- Custom Formatters for SlickGrid -->
+    var ShopperNameFormatter = function (row, cell, value, columnDef, dataContext) {
+      value = value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      var spacer = "<span style='display:inline-block;height:1px;width:" + (15 * dataContext["indent"]) + "px'></span>";
+      var idx = dataView.getIdxById(dataContext.id);
+      if (data[idx + 1] && data[idx + 1].indent > data[idx].indent) {
+      //if(dataContext["isLeaf"]=="false"){
+        if (dataContext._collapsed) {
+          return spacer + " <span class='toggle expand'></span>&nbsp;" + value;
+        } else {
+          return spacer + " <span class='toggle collapse'></span>&nbsp;" + value;
+        }
+      } else {
+        return spacer + " <span class='toggle'></span>&nbsp;" + value;
+      }
+    };
+    
+    var BudgetCurrencyFormatter = function (row, cell, value, columnDef, dataContext) {
+        jQuery('.cell-currency').formatCurrency({roundToDecimalPlace: 0});
+        return value;
+    } 
+
+    var QuantityNumberFormatter = function (row, cell, value, columnDef, dataContext) {
+        jQuery('.cell-quantity').toNumber();
+        return value;
+    }   
+    
+    
+    var ActionColumnFormatter = function (row, cell, value, columnDef, dataContext) {
+        var idx = dataView.getIdxById(dataContext.id);
+        //alert('Unallocated' + dataContext["Unallocated"]);
+        //alert('Budget' + dataContext["Budget"]);
+        var returnHtml = "<p>";
+        if(dataContext["indent"] == 0 && dataContext["id"].indexOf('new_') != 0) {
+            returnHtml = returnHtml + "<img src='/resource/1346335868000/POS_allocate_budget' title='Allocate' class='allocate'> &nbsp; ";
+        }
+        if(dataContext["Unallocated"] == dataContext["Budget"] && dataContext["BudgeterId"] == "{!$User.Id}") { // there have been no sub-allocations and the logged in user is the Budgetor of this record
+            returnHtml = returnHtml + "<img src='/resource/1346335933000/POS_delete_budget' title='Delete' align='top' class='delete'>";
+        }           
+        
+        returnHtml = returnHtml + "</p>";
+        return returnHtml;
+    }         
+
+    var options = {
+      editable: true,
+      enableAddRow: <apex:outputText value="{!allowNewBudgetCreation}"/>,
+      enableCellNavigation: true,
+      asyncEditorLoading: false
+    };
+            
+
+    jQuery(window).load(function(item) {
+        isRunningOnIE7 = navigator.appVersion.indexOf("MSIE 7.0") != -1;
+        if(isRunningOnIE7){
+            setInterval(function(elem) {
+                jQuery(".refresherHand").addClass("refresher");
+                jQuery('.refresherHand').removeClass('refresher');
+            }, 500)
+        }
+    });
+    
+ </script> 
+</head>
+
+<body style="position: relative;" class="refresherHand">
+        
+            <c:ajaxLoader />
+    <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+    <div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+    <div class="wrapper">
+        <div class="page">
+            
+    <div class="main col-full-layout" id="main">
+    <c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+     <apex:pageMessages />
+    <!-- Create Tab panel --> 
+    <apex:tabPanel switchType="server" value="{!selectedTab}" id="BudgetingTabPanel"  tabClass="activeTab" inactiveTabClass="inactiveTab">
+        <apex:tab label="Budgeting by BRAND Allocation" name="brandTab" id="tabOne">    
+      
+    <table width="100%" class="mainTable"> 
+      <apex:form onsubmit="return validateFormBA();">
+      <tr>
+        <td valign="top" width="100%">
+            <script  type="text/javascript">
+                //alert('loading first tab');
+                <!-- SlickGrid Column Definitions and basic Setup-->
+                var dataView;
+                var grid;
+                var data = [];
+                var columns = [
+                  {id: "Shopper", name: "Shopper", field: "Shopper", width: 165, cssClass: "cell-shopper", sortable: true, formatter: ShopperNameFormatter, editor: AutoCompleteEditor,
+                    options: [<apex:repeat var="user" value="{!shoppersFromOrgHierarchy}">{'label':'{!JSENCODE(user.Name)}','value':'{!JSENCODE(user.Id)}'},</apex:repeat>]},
+                  {id: "Brand", name: "Brand", field: "Brand", width: 97, editor: DynamicDropdownEditor},
+                  {id: "Budget", name: "Budget", field: "Budget", width: 65, resizable: false, cssClass: "cell-currency", formatter: BudgetCurrencyFormatter, editor: BudgetFieldEditor, validator: requiredFieldValidator},
+                  {id: "Unallocated", name: "Unallocated", field: "Unallocated", width: 65, resizable: false, cssClass: "cell-currency"},
+                  //{id: "remaining", name: "Remaining", field: "remaining", width: 65, resizable: false, cssClass: "cell-currency"},
+                  {id: "Program", name: "Program", field: "Program", minWidth: 167, editor: DynamicDropdownEditor},
+                  {id: "Channel", name: "Channel", field: "Channel", width: 68, editor: SelectCellEditor, options: "- Select -,On-premise,Off-premise"},
+                  {id: "Distributor", name: "Distributor", field: "Distributor", width: 85, editor: DynamicDropdownEditor},
+                  {id: "Geography", name: "Geography", field: "Geography", width: 85, editor: DynamicDropdownEditor},
+                  {id: "Budgeter", name: "Budgeter", field: "Budgeter", width: 95, minWidth: 40, maxWidth: 160},
+                  {id: "Action", name: "Action", field: "Action", width: 44, resizable: false, formatter: ActionColumnFormatter}
+                ];
+        
+                
+                <!-- Action Functions -->
+
+                function budgetingFormatOnChange(){
+                    jQuery('.cell-currency').each(function(index, inp1){
+                        try{
+                            var inp = jQuery(inp1);
+                            if(!isNaN(inp.val())){
+                                inp.formatCurrency({roundToDecimalPlace: 0});
+                            }
+                        } catch(err) {}
+                        });
+                }
+                
+                jQuery(function () {
+                  var indent = 0;
+                  var parents = [];
+                  var d; var parent; 
+                  var i = 0;
+                  
+                  // prepare the data
+                <apex:repeat var="par" value="{!orderwindowBudgets}">
+                    d = (data[i] = {});
+                    parents.push(i);
+                    d["id"] = "{!par.Id}";
+                    d["indent"] = 0;
+                    d["parent"] = null;
+                    d["updated"] = false;
+                    d["Shopper"] = "{!par.Shopper__r.Name}";
+                    d["ShopperId"] = "{!par.Shopper__c}";
+                    d["Brand"] = "{!par.Brand__r.Name}";
+                    d["BrandId"] = "{!par.Brand__c}";
+                    d["Program"] = "{!par.Program__r.Name}";
+                    d["ProgramId"] = "{!par.Program__c}";   
+                    d["Distributor"] = "{!par.Account__r.Name}";
+                    d["DistributorId"] = "{!par.Account__c}";   
+                    d["Geography"] = "{!par.Organizational_Unit__r.Hierarchy_Location__c}";
+                    d["GeographyId"] = "{!par.Organizational_Unit__c}";
+                    d["Channel"] = "{!par.Channel__c}";
+                    d["Budget"] = "<apex:outputText value="{0, number,####}"><apex:param value="{!par.Amount__c}" /></apex:outputText>";
+                    d["Suballocated"] = "{!par.Sub_Allocated_Amount__c}";
+                    d["Unallocated"] = "<apex:outputText value="{0, number,####}"><apex:param value="{!par.Amount__c - par.Sub_Allocated_Amount__c}" /></apex:outputText>";
+                    d["Budgeter"] = "{!par.Budgeter__r.Name}";
+                    d["BudgeterId"] = "{!par.Budgeter__c}";
+                    
+                    i++;
+                    
+                    <apex:repeat var="chld1" value="{!par.Budgets__r}">
+                        d = (data[i] = {});
+                        parent = parents[parents.length - 1];
+                                
+                        d["id"] = "{!chld1.Id}";
+                        d["indent"] = {!if(chld1.Parent__c != '', 1, 0)};
+                        d["parent"] = parent;
+                        d["updated"] = false;
+                        d["Shopper"] = "{!chld1.Shopper__r.Name}";
+                        d["ShopperId"] = "{!chld1.Shopper__c}";
+                        d["Brand"] = "{!chld1.Brand__r.Name}";
+                        d["BrandId"] = "{!chld1.Brand__c}";
+                        d["Program"] = "{!chld1.Program__r.Name}";
+                        d["ProgramId"] = "{!chld1.Program__c}"; 
+                        d["Distributor"] = "{!chld1.Account__r.Name}";
+                        d["DistributorId"] = "{!chld1.Account__c}"; 
+                        d["Geography"] = "{!chld1.Organizational_Unit__r.Hierarchy_Location__c}";
+                        d["GeographyId"] = "{!chld1.Organizational_Unit__c}";                   
+                        d["Channel"] = "{!chld1.Channel__c}";
+                        d["Budget"] = "<apex:outputText value="{0, number, ####}"><apex:param value="{!chld1.Amount__c}" /></apex:outputText>";
+                        d["Suballocated"] = "{!chld1.Sub_Allocated_Amount__c}";
+                        d["Unallocated"] = "<apex:outputText value="{0, number, ####}"><apex:param value="{!chld1.Amount__c - chld1.Sub_Allocated_Amount__c}" /></apex:outputText>";
+                        d["Budgeter"] = "{!chld1.Budgeter__r.Name}";
+                        d["BudgeterId"] = "{!chld1.Budgeter__c}";
+                        
+                        i++;                
+                    </apex:repeat>
+                                
+                  </apex:repeat>
+                
+                  // initialize the model
+                  dataView = new Slick.Data.DataView({ inlineFilters: true });
+                  dataView.beginUpdate();
+                  dataView.setItems(data);
+                  dataView.setFilter(myFilter); // needed for the expand collapse of rows even if there is No filtering used here
+                  dataView.endUpdate();
+                
+                  // initialize the grid
+                  grid = new Slick.Grid("#myGrid", dataView, columns, options);
+                  grid.registerPlugin(new Slick.AutoTooltips());
+                  
+                  grid.onAddNewRow.subscribe(function (e, args) {
+                    alertOnLeavingNew = true;
+                    var item = {
+                      "id": "new_" + (Math.round(Math.random() * 10000)),
+                      "indent": 0,
+                      "updated": false,
+                      "Shopper": "{!$User.FirstName} {!$User.LastName}",
+                      "ShopperId" : "{!$User.Id}",
+                      "Suballocated" : "0",
+                      "Budgeter": "{!$User.FirstName} {!$User.LastName}",
+                      "BudgeterId": "{!$User.Id}"};
+                  
+                    jQuery.extend(item, args.item);
+                    dataView.addItem(item);
+                  });
+                
+                 <!-- Event Handlers -->
+                  grid.onClick.subscribe(function (e, args) {
+                    //$('.cell-currency').formatCurrency({roundToDecimalPlace: 0});
+                    //budgetingFormatOnChange(); 
+                    if (jQuery(e.target).hasClass("toggle")) {
+                      var item = dataView.getItem(args.row);
+                      if (item) {
+                        if (!item._collapsed) {
+                          item._collapsed = true;
+                        } else {
+                          item._collapsed = false;
+                        }
+                        //console.log('item._collapsed: ' + item._collapsed);
+                
+                        dataView.updateItem(item.id, item);
+                      }
+                      e.stopImmediatePropagation();
+                      jQuery('.cell-currency').formatCurrency({roundToDecimalPlace: 0});
+                      
+                    } else if(jQuery(e.target).hasClass("allocate")) {
+                    /* case 00003583 
+ 					   Modified By - Rahul Chitkara
+ 					   Date  - 28th Feb 2013	                    
+                    */
+                      if(Slick.GlobalEditorLock.isActive() ){
+                      	Slick.GlobalEditorLock.commitCurrentEdit();
+                      }
+                    // End Case  
+                      insertNewAllocationRow(args.row);
+                      
+                      //e.stopImmediatePropagation();
+                      
+                    } else if(jQuery(e.target).hasClass("delete")) {
+                    /* case 00003583 
+ 					   Modified By - Rahul Chitkara
+ 					   Date  - 28th Feb 2013	                    
+                    */
+                       if(Slick.GlobalEditorLock.isActive() ){
+                      	Slick.GlobalEditorLock.commitCurrentEdit();
+                      }
+                      
+                      //End Case
+                      deleteAllocationRow(args.row);
+                      //e.stopImmediatePropagation();
+                    }
+                });
+                  
+                jQuery('.cell-currency').change(function() {
+                     //budgetingFormatOnChange();
+                });  
+                
+                grid.onCellChange.subscribe(function (e, args) {
+                  var cell = grid.getCellFromEvent(e);
+            
+                  var item = dataView.getItem(args.row);
+            
+                  item.updated = true;
+                  //console.log('item.Budget ' + item.Budget);
+                  if(item.Budget != null && item.Budget != '') {
+                    item.Unallocated = item.Budget - item.Suballocated; 
+                  }
+                  dataView.updateItem(item.id, item);
+                    
+                  updateBudgetTotal();
+                  e.stopImmediatePropagation();
+               });  
+                
+               grid.onBeforeEditCell.subscribe(function (e, args) {
+                    
+                    var item = dataView.getItem(args.row);
+                    if(item != null) {
+                        
+                        if(item.BudgeterId != null && item.BudgeterId.indexOf('new_') != 0 
+                                && item.BudgeterId != '{!$User.Id}') { // cannot edit any reccord not created by themselve
+                            return false;
+                        }
+                                    
+                        if(item.parentId != null || item.parent != null) { // newly inserted child record OR existing child record
+                            if(args.column.field == 'Brand' && item.BrandId != '') {
+                                return false;
+                                
+                            } else if(args.column.field == 'Program' && item.ProgramId != '') {
+                                return false;
+                                
+                            } else if(args.column.field == 'Channel' && item.Channel != '') {
+                                return false;
+                            }
+                        } else if(item.Unallocated != item.Budget) { // existing record with sub-allocation child records
+                            if(args.column.field == 'Shopper' || args.column.field == 'Brand' 
+                                || args.column.field == 'Program' || args.column.field == 'Channel') { 
+                                return false;
+                            
+                            } /*else if ( (item.ProgramId != '' && args.column.field == 'Program') 
+                                        || (item.Channel != '' && args.column.field == 'Channel')) {
+                                return false;
+                            }*/
+                        }
+            
+                    }
+            
+                    return true;
+               });      
+               
+              // wire up model events to drive the grid
+              dataView.onRowCountChanged.subscribe(function (e, args) {
+                grid.updateRowCount();
+                grid.render();
+              });
+            
+              dataView.onRowsChanged.subscribe(function (e, args) {
+                grid.invalidateRows(args.rows);
+                grid.render();
+              });   
+              
+                jQuery(document).ready(function() {
+                    updateBudgetTotal();
+                });
+                    
+                function updateBudgetTotal() {
+                    var total = 0;      
+                    var items = dataView.getItems();      
+                    for(var i = 0 ; i < items.length ; i++ ) { 
+                     if(items[i].indent == 0) {   
+                      total = total + parseInt(items[i].Budget, 10);  
+                     }    
+                    } 
+                    document.getElementById('totalBudgetLabelId').innerHTML = total;
+                    jQuery('.totalBudgetLabelClass').formatCurrency({roundToDecimalPlace: 0});
+                    jQuery('.cell-currency').formatCurrency({roundToDecimalPlace: 0});
+                    //alert('total = ' + total);          
+                }
+       
+                    
+                function insertNewAllocationRow(allocationRow) {
+                    alertOnLeavingNew = true;
+                    var allocationItem = dataView.getItem(allocationRow);
+                    var idx = dataView.getIdxById(allocationItem.id);
+                      //alert(idx + 1);
+                    var newItem = {
+                        "id": "new_" + (Math.round(Math.random()*10000)),
+                        "updated": true,
+                        "parentId": allocationItem.id,
+                        "parent": idx,
+                        "indent": allocationItem.indent + 1,
+                        "Shopper": "",
+                        "ShopperId" : "",
+                        "Brand": allocationItem.Brand,
+                        "BrandId" : allocationItem.BrandId,     
+                        "Program": allocationItem.Program,
+                        "ProgramId" : allocationItem.ProgramId, 
+                        "Channel": allocationItem.Channel,
+                        "Suballocated" : "0",
+                        "Budgeter": "{!$User.FirstName} {!$User.LastName}",
+                        "BudgeterId": "{!$User.Id}"
+                    };
+                    //jQuery.extend(newItem, parent);
+                    dataView.insertItem( idx+1, newItem );
+                    
+                }  
+                
+                function deleteAllocationRow(deletionRow) {
+                    dataView.beginUpdate();
+                    var deletionItem = dataView.getItem(deletionRow);
+                
+                    dataView.deleteItem( deletionItem.id );
+                    document.getElementById('deletedBudgetIds').value = document.getElementById('deletedBudgetIds').value +',' + deletionItem.id;
+                    
+                    if(deletionItem.Unallocated != null && deletionItem.parent != null) {
+                        
+                        parItem = dataView.getItemByIdx(deletionItem.parent);
+                        var parUAmt = parseInt(parItem.Unallocated, 10) + parseInt(deletionItem.Unallocated, 10);
+            
+                        parItem.Unallocated = parUAmt;
+                        dataView.updateItem(parItem.id, parItem);
+                    }           
+                    
+            
+                    var currentData = dataView.getItems();
+                    jQuery.each(currentData, function(index,elem){
+                        if(elem.parent >= deletionRow && elem.parent != null){
+                            elem.parent = elem.parent - 1;
+                        }
+                    });
+                    dataView.setItems(currentData);
+            
+                    dataView.endUpdate();
+                    
+                    budgetingFormatOnChange();
+                }     
+            });     
+            </script>         
+          <div style="background-color: #202B62;border: 1px solid #666666;color: #FFFFFF;padding:6px; width:925px;">
+            <div style="padding:4px;float:right; text-align: center;width:60%;">
+                Order Window : <b>{!orderWindow.Name}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Total Budget across Brands : <b><span id="totalBudgetLabelId" class="totalBudgetLabelClass"></span></b>
+            </div>  
+ 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!saveGrid}" value=" Save Changes " style="margin:4px;"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!resetGrid}" value=" Reset " immediate="true" style="margin:4px; cancel" onclick="isResettingForm=true;"/>         
+                    
+          </div>
+          <div id="myGrid" style="width:936px;height:480px;"></div>
+          <input type="hidden" id="gridData" name="gridData" value=""/>
+          <input type="hidden" id="deletedBudgetIds" name="deletedBudgetIds" value=""/>
+          <input type="hidden" id="selectedTab" name="selectedTab" value="brandTab"/>
+        </td>
+      </tr>
+    </apex:form>
+    </table>
+    </apex:tab>
+    
+    <apex:tab label="Budgeting by ITEM Allocation" name="itemTab" id="tabTwo" disabled="true" styleClass="disabledTab">     
+     
+    <table width="100%" class="mainTable">
+      <apex:form onsubmit="return validateFormIA();">     
+      <tr>
+        <td valign="top" width="100%">
+    
+        <script  type="text/javascript">
+            //alert('loading second tab');
+            <!-- SlickGrid Column Definitions and basic Setup for Budgeting by Item Quantity-->
+            itemAllocationGrid = true;
+            
+            var dataView;
+            var grid;
+            var data = [];
+            var columns = [
+              {id: "Shopper", name: "Shopper", field: "Shopper", width: 165, cssClass: "cell-shopper", sortable: true, formatter: ShopperNameFormatter, editor: AutoCompleteEditor,
+                options: [<apex:repeat var="user" value="{!shoppersFromOrgHierarchy}">{'label':'{!JSENCODE(user.Name)}','value':'{!JSENCODE(user.Id)}'},</apex:repeat>]},
+              {id: "Item", name: "Item", field: "Item", width: 97, editor: DynamicDropdownEditor},
+              {id: "Budget", name: "Allocated", field: "Budget", width: 65, resizable: false, cssClass: "cell-quantity", editor: BudgetFieldEditor, validator: requiredFieldValidator},
+              {id: "Unallocated", name: "Unallocated", field: "Unallocated", width: 65, resizable: false, cssClass: "cell-quantity"},
+              //{id: "remaining", name: "Remaining", field: "remaining", width: 65, resizable: false, cssClass: "cell-currency"},
+              {id: "Program", name: "Program", field: "Program", minWidth: 167, editor: DynamicDropdownEditor},
+              {id: "Channel", name: "Channel", field: "Channel", width: 68, editor: SelectCellEditor, options: "- Select -,On-premise,Off-premise"},
+              {id: "Distributor", name: "Distributor", field: "Distributor", width: 85, editor: DynamicDropdownEditor},
+              {id: "Geography", name: "Geography", field: "Geography", width: 85, editor: DynamicDropdownEditor},
+              {id: "Budgeter", name: "Budgeter", field: "Budgeter", width: 95, minWidth: 40, maxWidth: 160},
+              {id: "Action", name: "Action", field: "Action", width: 44, resizable: false, formatter: ActionColumnFormatter}
+            ];
+            //alert('columns = ' + columns);
+            <!-- Action Functions -->
+                    
+            function budgetingFormatOnChange(){
+                jQuery('.cell-currency').each(function(index, inp1){
+                    try{
+                        var inp = jQuery(inp1);
+                        if(!isNaN(inp.val())){
+                            inp.formatCurrency({roundToDecimalPlace: 0});
+                        }
+                    } catch(err) {}
+                    });
+            }           
+            
+            jQuery(function () {
+              var indent = 0;
+              var parents = [];
+              var d; var parent; 
+              var i = 0;
+              
+              // prepare the data
+            <apex:repeat var="par" value="{!orderwindowBudgetsIA}">
+                d = (data[i] = {});
+                parents.push(i);
+                d["id"] = "{!par.Id}";
+                d["indent"] = 0;
+                d["parent"] = null;
+                d["updated"] = false;
+                d["Shopper"] = "{!par.Shopper__r.Name}";
+                d["ShopperId"] = "{!par.Shopper__c}";
+                d["Item"] = "{!par.Item__r.Name}";
+                d["ItemId"] = "{!par.Item__c}";
+                d["Program"] = "{!par.Program__r.Name}";
+                d["ProgramId"] = "{!par.Program__c}";   
+                d["Distributor"] = "{!par.Account__r.Name}";
+                d["DistributorId"] = "{!par.Account__c}";   
+                d["Geography"] = "{!par.Organizational_Unit__r.Hierarchy_Location__c}";
+                d["GeographyId"] = "{!par.Organizational_Unit__c}";
+                d["Channel"] = "{!par.Channel__c}";
+                d["Budget"] = "<apex:outputText value="{0, number,####}"><apex:param value="{!par.Item_Allocation_Quantity__c}" /></apex:outputText>";
+                d["Suballocated"] = "{!par.Sub_Allocated_Item_Quantity__c}";
+                d["Unallocated"] = "<apex:outputText value="{0, number,####}"><apex:param value="{!par.Item_Allocation_Quantity__c - par.Sub_Allocated_Item_Quantity__c}" /></apex:outputText>";
+                d["Budgeter"] = "{!par.Budgeter__r.Name}";
+                d["BudgeterId"] = "{!par.Budgeter__c}";
+                
+                i++;
+                
+                <apex:repeat var="chld1" value="{!par.Budgets__r}">
+                    d = (data[i] = {});
+                    parent = parents[parents.length - 1];
+                            
+                    d["id"] = "{!chld1.Id}";
+                    d["indent"] = {!if(chld1.Parent__c != '', 1, 0)};
+                    d["parent"] = parent;
+                    d["updated"] = false;
+                    d["Shopper"] = "{!chld1.Shopper__r.Name}";
+                    d["ShopperId"] = "{!chld1.Shopper__c}";
+                    d["Item"] = "{!chld1.Item__r.Name}";
+                    d["ItemId"] = "{!chld1.Item__c}";
+                    d["Program"] = "{!chld1.Program__r.Name}";
+                    d["ProgramId"] = "{!chld1.Program__c}"; 
+                    d["Distributor"] = "{!chld1.Account__r.Name}";
+                    d["DistributorId"] = "{!chld1.Account__c}"; 
+                    d["Geography"] = "{!chld1.Organizational_Unit__r.Hierarchy_Location__c}";
+                    d["GeographyId"] = "{!chld1.Organizational_Unit__c}";                   
+                    d["Channel"] = "{!chld1.Channel__c}";
+                    d["Budget"] = "<apex:outputText value="{0, number,####}"><apex:param value="{!chld1.Item_Allocation_Quantity__c}" /></apex:outputText>";
+                    d["Suballocated"] = "{!chld1.Sub_Allocated_Item_Quantity__c}";
+                    d["Unallocated"] = "<apex:outputText value="{0, number,####}"><apex:param value="{!chld1.Item_Allocation_Quantity__c - chld1.Sub_Allocated_Item_Quantity__c}" /></apex:outputText>";                    
+                    d["Budgeter"] = "{!chld1.Budgeter__r.Name}";
+                    d["BudgeterId"] = "{!chld1.Budgeter__c}";
+                    
+                    i++;                
+                </apex:repeat>
+                            
+              </apex:repeat>
+            
+              // initialize the model
+              dataView = new Slick.Data.DataView({ inlineFilters: true });
+              dataView.beginUpdate();
+              dataView.setItems(data);
+              dataView.setFilter(myFilter); // needed for the expand collapse of rows even if there is No filtering used here             
+              dataView.endUpdate();
+            
+              // initialize the grid
+              grid = new Slick.Grid("#myGrid", dataView, columns, options);
+              grid.registerPlugin(new Slick.AutoTooltips());
+            
+              grid.onAddNewRow.subscribe(function (e, args) {
+                alertOnLeavingNew = true;
+                var item = {
+                  "id": "new_" + (Math.round(Math.random() * 10000)),
+                  "indent": 0,
+                  "updated": false,
+                  "Shopper": "{!$User.FirstName} {!$User.LastName}",
+                  "ShopperId" : "{!$User.Id}",
+                  "Suballocated" : "0",
+                  "Budgeter": "{!$User.FirstName} {!$User.LastName}",
+                  "BudgeterId": "{!$User.Id}"};
+              
+                jQuery.extend(item, args.item);
+                dataView.addItem(item);
+              });
+              
+            function insertNewAllocationRow(allocationRow) {
+                alertOnLeavingNew = true;
+                var allocationItem = dataView.getItem(allocationRow);
+                var idx = dataView.getIdxById(allocationItem.id);
+                  //alert(idx + 1);
+                var newItem = {
+                    "id": "new_" + (Math.round(Math.random()*10000)),
+                    "updated": true,
+                    "parentId": allocationItem.id,
+                    "parent": idx,
+                    "indent": allocationItem.indent + 1,
+                    "Shopper": "",
+                    "ShopperId" : "",
+                    "Item": allocationItem.Item,
+                    "ItemId" : allocationItem.ItemId,       
+                    "Program": allocationItem.Program,
+                    "ProgramId" : allocationItem.ProgramId, 
+                    "Channel": allocationItem.Channel,
+                    "Suballocated" : "0",
+                    "Budgeter": "{!$User.FirstName} {!$User.LastName}",
+                    "BudgeterId": "{!$User.Id}"
+                };
+                //jQuery.extend(newItem, parent);
+                dataView.insertItem( idx+1, newItem );
+            }         
+            
+             <!-- Event Handlers -->
+              grid.onClick.subscribe(function (e, args) {
+                if (jQuery(e.target).hasClass("toggle")) {
+                  var item = dataView.getItem(args.row);
+                  if (item) {
+                    if (!item._collapsed) {
+                      item._collapsed = true;
+                    } else {
+                      item._collapsed = false;
+                    }
+            
+                    dataView.updateItem(item.id, item);
+                  }
+                  e.stopImmediatePropagation();
+                  jQuery('.cell-currency').formatCurrency({roundToDecimalPlace: 0});
+                  
+                } else if(jQuery(e.target).hasClass("allocate")) {
+                /* case 00003583 
+ 				   Modified By - Rahul Chitkara
+ 			       Date  - 28th Feb 2013	                    
+                    */
+                if(Slick.GlobalEditorLock.isActive() ){
+                      	Slick.GlobalEditorLock.commitCurrentEdit();
+                      }
+                  //End Case
+                  insertNewAllocationRow(args.row);
+                  //e.stopImmediatePropagation();
+                  
+                } else if(jQuery(e.target).hasClass("delete")) {
+                /* case 00003583 
+ 				   Modified By - Rahul Chitkara
+ 				   Date  - 28th Feb 2013	                    
+                   */
+                if(Slick.GlobalEditorLock.isActive() ){
+                      	Slick.GlobalEditorLock.commitCurrentEdit();
+                      }
+                      //End Case
+                  
+                  deleteAllocationRow(args.row);
+                  //e.stopImmediatePropagation();
+                }
+            });
+            
+            grid.onCellChange.subscribe(function (e, args) {
+              var cell = grid.getCellFromEvent(e);
+        
+              var item = dataView.getItem(args.row);
+        
+              item.updated = true;
+              //console.log('item.Budget ' + item.Budget);
+              if(item.Budget != null && item.Budget != '') {
+                item.Unallocated = item.Budget - item.Suballocated; 
+              }
+              dataView.updateItem(item.id, item);
+                
+              updateBudgetTotal();
+              e.stopImmediatePropagation();
+           });  
+            
+           grid.onBeforeEditCell.subscribe(function (e, args) {
+                
+                var item = dataView.getItem(args.row);
+                if(item != null) {
+                    
+                    if(item.BudgeterId != null && item.BudgeterId.indexOf('new_') != 0 
+                            && item.BudgeterId != '{!$User.Id}') { // cannot edit any reccord not created by themselve
+                        return false;
+                    }
+                                
+                    if(item.parentId != null || item.parent != null) { // newly inserted child record OR existing child record
+                        if(args.column.field == 'Item' && item.ItemId != '') {
+                            return false;
+                            
+                        } else if(args.column.field == 'Program' && item.ProgramId != '') {
+                            return false;
+                            
+                        } else if(args.column.field == 'Channel' && item.Channel != '') {
+                            return false;
+                        }
+                    } else if(item.Unallocated != item.Budget) { // existing record with sub-allocation child records
+                        if(args.column.field == 'Shopper' || args.column.field == 'Item' 
+                            || args.column.field == 'Program' || args.column.field == 'Channel') { 
+                            return false;
+                        
+                        } 
+                    }
+        
+                }
+        
+                return true;
+           });      
+           
+          // wire up model events to drive the grid
+          dataView.onRowCountChanged.subscribe(function (e, args) {
+            grid.updateRowCount();
+            grid.render();
+          });
+        
+          dataView.onRowsChanged.subscribe(function (e, args) {
+            grid.invalidateRows(args.rows);
+            grid.render();
+          });   
+          
+          jQuery(document).ready(function() {
+            updateBudgetTotal();
+          });
+                
+          function updateBudgetTotal() {
+                var total = 0;      
+                var items = dataView.getItems();      
+                for(var i = 0 ; i < items.length ; i++ ) { 
+                 if(items[i].indent == 0) {   
+                  total = total + parseInt(items[i].Budget, 10);  
+                 }    
+                } 
+                document.getElementById('totalBudgetLabelIdIA').innerHTML = total;
+                //jQuery('.totalBudgetLabelClass').formatCurrency({roundToDecimalPlace: 0});
+                //jQuery('.cell-currency').formatCurrency({roundToDecimalPlace: 0});
+                //alert('total = ' + total);          
+            }
+            
+            function deleteAllocationRow(deletionRow) {
+                dataView.beginUpdate();
+                var deletionItem = dataView.getItem(deletionRow);
+            
+                dataView.deleteItem( deletionItem.id );
+                document.getElementById('deletedBudgetIds').value = document.getElementById('deletedBudgetIds').value +',' + deletionItem.id;
+                
+                if(deletionItem.Unallocated != null && deletionItem.parent != null) {
+                    
+                    parItem = dataView.getItemByIdx(deletionItem.parent);
+                    var parUAmt = parseInt(parItem.Unallocated, 10) + parseInt(deletionItem.Unallocated, 10);
+        
+                    parItem.Unallocated = parUAmt;
+                    dataView.updateItem(parItem.id, parItem);
+                }           
+                
+        
+                var currentData = dataView.getItems();
+                jQuery.each(currentData, function(index,elem){
+                    if(elem.parent >= deletionRow && elem.parent != null){
+                        elem.parent = elem.parent - 1;
+                    }
+                });
+                dataView.setItems(currentData);
+        
+                dataView.endUpdate();
+                
+                budgetingFormatOnChange();
+            }     
+        });     
+        </script>       
+          <div style="background-color: #202B62;border: 1px solid #666666;color: #FFFFFF;padding:6px; width:925px;">
+            <div style="padding:4px;float:right; text-align: center;width:60%;">
+                Order Window : <b>{!orderWindow.Name}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Total Allocation across Items : <b><span id="totalBudgetLabelIdIA" class="totalBudgetLabelClass"></span></b>
+            </div>  
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!saveGrid}" value=" Save Changes " style="margin:4px;"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!resetGrid}" value=" Reset " immediate="true" style="margin:4px; cancel" onclick="isResettingForm=true;"/>         
+          </div>
+          <div id="myGrid" style="width:936px;height:480px;"></div>
+          <input type="hidden" id="gridData" name="gridData" value=""/>
+          <input type="hidden" id="deletedBudgetIds" name="deletedBudgetIds" value=""/>
+          <input type="hidden" id="selectedTab" name="selectedTab" value="itemTab"/>
+        </td>
+      </tr>
+    </apex:form>
+    </table>
+        
+    </apex:tab>
+    </apex:tabPanel>    
+    <c:POS_Footer />
+    </div>
+  </div>
+</div>  
+
+
+
+<script type="text/javascript">
+repaint = function(){
+    try{
+        body.parentNode.style.cssText += "";
+        body.parentNode.style.zoom = 1;
+        body.style.cssText += "";
+        body.style.zoom = 1;
+    }catch(ex){}
+}
+t = setInterval("repaint", 500);
+</script>
+
+
+
+</body> 
+</apex:page>

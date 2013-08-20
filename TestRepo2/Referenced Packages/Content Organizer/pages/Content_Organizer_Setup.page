@@ -1,0 +1,9 @@
+<apex:page controller="LS_CO.ContentOrgSetUpController" tabStyle="Content_Organizer__tab"> 
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageblockSection title="Please click on the button to execute batch..">
+                <apex:commandButton value="Click to execute Batch" action="{!getExecuteBatch}"/>        
+            </apex:pageblockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

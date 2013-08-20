@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Basket_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Basket Warning</shortDescription>
+        <value>Currently You don&apos;t have access to some contents in Your basket. This items were removed from Your basket.</value>
+    </labels>
+    <labels>
+        <fullName>BlogBrandSecurityError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BlogBrandSecurityError</shortDescription>
+        <value>This blog post is not visible since it does not pertain to your current Account Brand Portfolio.  Contact your Administrator if you need further assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Submit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Submit</shortDescription>
+        <value>Thank you for submitting your case to us. Your case will be reviewed and someone will reach out to you within 24 business hours of submission.</value>
+    </labels>
+    <labels>
+        <fullName>CatalystParentTheme</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CatalystParentTheme</shortDescription>
+        <value>Spirits</value>
+    </labels>
+    <labels>
+        <fullName>Follow_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Follow Warning</shortDescription>
+        <value>Currently You don&apos;t have access to some contents in Your followed items. These items were removed from Your followed list.</value>
+    </labels>
+    <labels>
+        <fullName>FooterForRepActivities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FooterForRepActivities</shortDescription>
+        <value>Instructions on how to use comment box. Suggested Display Price Legal Disclaimer.</value>
+    </labels>
+    <labels>
+        <fullName>Forgot_Password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Forgot Password</shortDescription>
+        <value>forgot password?</value>
+    </labels>
+    <labels>
+        <fullName>Forgot_UserName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>forgot user name?</shortDescription>
+        <value>forgot user name?</value>
+    </labels>
+    <labels>
+        <fullName>LoginFooter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LoginFooter</shortDescription>
+        <value>By entering this site you accept the &lt;span class=&quot;bold&quot;&gt;terms of use, privacy statement and terms &amp;amp; conditions&lt;/span&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>Login_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Login Message</shortDescription>
+        <value>Your main resource for information, communication and your future port of entry for all DIAGEO-related web based applications.</value>
+    </labels>
+    <labels>
+        <fullName>Login_welcome_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Login welcome text</shortDescription>
+        <value>WELCOME TO DIAGEO DIRECT!</value>
+    </labels>
+    <labels>
+        <fullName>NewUsers</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewUsers</shortDescription>
+        <value>New Users: Please retrieve your user name and temporary password from your Distributor HR administrator or contact the Diageo Customer Collaboration Portal support at 1-800-377-8919.</value>
+    </labels>
+    <labels>
+        <fullName>Placeholder</fullName>
+        <categories>CMCasecreation VF page</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder</shortDescription>
+        <value>Please include : what is the issue that you are facing and what steps did you take to get to this point ?</value>
+    </labels>
+    <labels>
+        <fullName>RememberUsername</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remember Username</shortDescription>
+        <value>Remember Username</value>
+    </labels>
+    <labels>
+        <fullName>Rep_Footer_Comment_Instructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rep Footer Comment Instructions</shortDescription>
+        <value>The comments box should be used for additional fields that are specific to each type of goal (for example, display goals should include # of cases, POS items, Location grade in addition to the standard fields).</value>
+    </labels>
+    <labels>
+        <fullName>Rep_Footer_Legal_Disclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rep Footer Legal Disclaimer</shortDescription>
+        <value>The prices discussed herein are suggestions and for discussion purposes only. All pricing decisions are and will be the sole decision of the final selling party.</value>
+    </labels>
+    <labels>
+        <fullName>ResponsiveHomePage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ResponsiveHomePage</shortDescription>
+        <value>/apex/R_HomePage</value>
+    </labels>
+    <labels>
+        <fullName>SalesforceHomePage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesforceHomePage</shortDescription>
+        <value>/home/home.jsp</value>
+    </labels>
+    <labels>
+        <fullName>Select_case_from_list</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select_case_from_list</shortDescription>
+        <value>Please select a case from the list on the left.</value>
+    </labels>
+    <labels>
+        <fullName>Select_case_from_list_for_CM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select case from list for CM</shortDescription>
+        <value>Please select a case from the list on the left or select Submit New Case.</value>
+    </labels>
+    <labels>
+        <fullName>SubThemeOptionError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubThemeOptionError</shortDescription>
+        <value>At a time one sub option must be checked for default theme</value>
+    </labels>
+    <labels>
+        <fullName>Support_Number</fullName>
+        <categories>number</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Number</shortDescription>
+        <value>1.800.377.8919</value>
+    </labels>
+    <labels>
+        <fullName>UserEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E-mail</shortDescription>
+        <value>E-mail</value>
+    </labels>
+    <labels>
+        <fullName>User_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>User Name</shortDescription>
+        <value>User Name</value>
+    </labels>
+    <labels>
+        <fullName>forgotUsername</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Did you forget your username? Please enter your e-mail below.</shortDescription>
+        <value>Did you forget your username? Please enter your e-mail below.</value>
+    </labels>
+    <labels>
+        <fullName>userNameNotificationSent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>User name sent.</shortDescription>
+        <value>An email has been sent to you with your user name.</value>
+    </labels>
+</CustomLabels>

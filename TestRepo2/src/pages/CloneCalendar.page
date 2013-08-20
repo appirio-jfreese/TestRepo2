@@ -1,0 +1,36 @@
+<apex:page standardController="Calendar__c" extensions="Controller_CloneCalendar">
+       
+		
+	<apex:form > 
+		<apex:actionFunction status="ajax-status" name="switchh" action="{!salesToRecordType}" rerender="selectSalesList" />		
+    
+    	<apex:pageBlock title="Clone calendar page">
+			<apex:pageMessages />
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Record type" for="recordTypeList"/>
+					 	<apex:selectList value="{!selectedRecordType}" size="1" onchange="switchh();" id="recordTypeList">
+					   	    <apex:selectOptions value="{!recordTypes}"/>
+					   	</apex:selectList>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+					  	<apex:outputLabel value="Sales chanel" for="selectSalesList"/> 			
+					    <apex:selectList value="{!selectedChanell}" size="1" id="selectSalesList">
+					   	    <apex:selectOptions value="{!salesChanells}"/>
+					   	</apex:selectList>
+					</apex:pageBlockSectionItem>
+			
+					<apex:pageBlockSectionItem >
+					    <apex:outputLabel value="Calendar name" for="calendarName"/> 
+					   	<apex:inputText value="{!calendarName}" id="calendarName" />
+			  		</apex:pageBlockSectionItem>
+			   	</apex:pageBlockSection>	
+			   	<apex:pageBlockButtons >
+					<apex:commandButton value="Clone" action="{!saveCloneCalendar}"/>
+					<apex:commandButton value="Cancel" action="{!cancel}"/>
+           		</apex:pageBlockButtons> 		   
+		    </apex:pageBlock>
+	</apex:form>
+	
+</apex:page>

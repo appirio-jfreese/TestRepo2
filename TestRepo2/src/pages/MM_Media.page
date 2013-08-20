@@ -1,0 +1,384 @@
+<apex:page id="pg" controller="MM_MediaController" sidebar="false" showHeader="false" standardStylesheets="false" action="{!loadAllImages}">
+	<head>
+		<meta name="google" value="notranslate"/>
+		<meta name="viewport" content="width=600, maximum-scale=1.0" />
+		<apex:stylesheet value="{!$Resource.RecipeStyles}"/>
+		<apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-1.6.2.min.js')}"  />
+		<apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-ui-1.8.16.custom.min.js')}"  />
+		<apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7MediaPageCSS}" /></apex:outputpanel>
+		<apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.mediaPageCSS}" /></apex:outputpanel>
+		<script>
+			function redir(){
+			   var redirect = '{!redirect}';
+			   window.opener.location.href=redirect;
+			   window.close();
+		   	}
+		   
+			function setMediaType(input){
+		        MM_MediaController.setMediaType(input.value, function(result, event){
+		            if (event.status) {
+							document.getElementById('myTextBox').value = result;
+		            } else if (event.type === 'exception') {
+		            alert('exception!');
+		                //document.getElementById("responseErrors").innerHTML = event.message;
+		            } else {
+		            alert('responseError!');
+		                //document.getElementById("responseErrors").innerHTML = event.message;
+		            }
+		        }, {escape:true});
+			}
+			
+			function prepopupImageWindow () {
+				 popupWin = window.open('','imageUploadWindow','location=1,status=1,scrollbars=no,resizable=no,width=800,height=1100');   
+			}
+		
+			function popupImageUploadWindow() {
+		    	var recipeId = "{!recipe.Id}";
+		        var popupWin; 
+		        var intId = 0; 
+		        popupWin = window.open('/apex/MM_UploadMedia?recipeId=' + recipeId +'&mediaName='+jsMediaName,'imageUploadWindow','location=1,status=1,scrollbars=no,resizable=no,width=560,height=400');
+		        
+		        checkPopup= function() { 
+		            if (intId != 0) { 
+		                if (popupWin.closed) { 
+		                    window.clearInterval(intId); 
+		                    intId = 0; 
+		                    document.location.reload();
+		                } 
+		            } 
+		        }   
+		    }
+		    
+		    function clickMediaSelection(mediaId) {
+		    	if('{!editMode}' == 'false' && mediaId != null && mediaId != '') {
+					//document.getElementById('pg:frm5:saveImagesId').disabled = true;
+					//document.getElementById('pg:frm5:saveImagesId').style.background = '#C0C0C0';
+					//document.getElementById('imageSelectButton').disabled = true;
+				} else {
+					//document.getElementById('pg:frm5:saveImagesId').disabled = false;
+					//document.getElementById('pg:frm5:saveImagesId').style.background = '#037F43';
+					//document.getElementById('imageSelectButton').disabled = false;
+				}
+			}
+		</script>
+		
+		<style>
+			#pagination{
+				height:64px;
+				width:100%;
+				margin-top:50px;
+				margin-left:30px;
+			}
+		</style>
+	</head>
+
+	<body onload="clickMediaSelection('{!recipe.Main_Drink_Image__c}');">
+		<div id="mainContainer">
+			<div class="topLevelHeader popupHeader">
+	  			<div class="topLevelTitle">
+					<apex:image value="/resource/1320197973000/logo2"/>
+	  			</div>
+			</div>
+		    <div id="bodyHeader" class="popupHeader"></div>
+		    <apex:pageMessages id="pgmsg"/>
+		    <br/>
+		    
+		    <div id="pagination">
+		     	<apex:form id="frm1">
+		     		<apex:outputpanel id="controls" >
+						<div style="width:942px;height:65px;">
+							<script type="text/javascript">/** searchTerm ---  totalRecords --- {}  **/</script>
+							<apex:outputpanel >
+								<div style="float:left;width:93%;height:25px;">
+		                 			<apex:repeat value="{!alphabets}" var="c" id="alphaBets">     
+		                                <apex:commandLink value="{!c}" rerender="filterSection,imagePanel" status="statusImg" action="{!filterImages}">
+		                                	<apex:param name="selectedAlphabet" AssignTo="{!selectedAlphabet}" value="{!c}"/> 
+		                                 </apex:commandLink>&nbsp;  
+		                                <apex:outputText value=" | " rendered="true" />                       																								
+		                  			</apex:repeat>                
+		               			</div>
+		               			<br/>
+		          			</apex:outputpanel>
+		          			<!--  <apex:outputpanel rendered="{!if(totalRecords>0,true,false)}">
+		               			<div style="width:92%;float:left;">
+				                 	<i class="colorClass"> Now Viewing &nbsp;:&nbsp;{!currentStartRecord}&nbsp; - &nbsp;{!currentEndRecord}&nbsp;&nbsp;of&nbsp;&nbsp;{!totalRecords}&nbsp;</i><apex:outputText value=" Approved Recipes Starting with  {!selectedAlphabet}" rendered="{!if(searchTerm==null,true,false)}" styleclass="colorClass"></apex:outputText><apex:outputText value=" Approved Recipes Containing {!searchTerm}" rendered="{!if(searchTerm!=null,true,false)}" styleclass="colorClass"></apex:outputText>  	  	
+				                  	<br/>
+				                  	<apex:panelGrid columns="4">
+									    <apex:commandLink action="{!first}" rerender="masterPanel,controls">First</apex:commandlink>
+									    <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="masterPanel,controls">Previous</apex:commandlink>
+									    <apex:commandLink action="{!next}" rendered="{!hasNext}" rerender="masterPanel,controls">Next</apex:commandlink>
+									    <apex:commandLink action="{!last}" rendered="{!hasNext}" rerender="masterPanel,controls">Last</apex:commandlink>
+								  	</apex:panelGrid>
+								</div>   
+							</apex:outputpanel>   -->          
+						</div>
+					</apex:outputpanel>
+				</apex:form>
+		    </div> <!-- End of Pagination Div -->
+		    
+		    <div id="MediaTypeSelection">	
+			 	<apex:form id="frm2">  
+			 		<apex:outputPanel id="mediaSelection" >
+				 		<div id="mediaTypeSelectionPanel">
+				 			<apex:commandLink id="mainRecipe" styleClass="imageTypeSelection" action="{!setMediaType2}" oncomplete="clickMediaSelection('{!recipe.Main_Drink_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName1" assignTo="{!mediaName}" value="mainRecipe"/>
+				 					Main Drink 
+				 				</apex:commandLink>
+				 			<apex:commandLink id="mobileDrink" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Mobile_Drink_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName2" assignTo="{!mediaName}" value="mobileDrink"/>
+				 					Mobile Drink
+				 			</apex:commandLink>
+				 			<apex:commandLink id="mobileSelected" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Mobile_Selected_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName3" assignTo="{!mediaName}" value="mobileSelected"/>
+				 					Mobile Selected 
+				 				</apex:commandLink>
+				 			<apex:commandLink id="mobileUnselected" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Mobile_Unselected_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName4" assignTo="{!mediaName}" value="mobileUnselected"/>
+				 					Mobile Unselected 
+				 				</apex:commandLink>
+				 			<apex:commandLink id="background" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Background_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName5" assignTo="{!mediaName}" value="background"/>
+				 			 		Background
+				 				</apex:commandLink>
+				 			<apex:commandLink id="brandRecipe" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Brand_Recipe_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName6" assignTo="{!mediaName}" value="brandRecipe"/>
+				 					Brand Recipe 
+				 				</apex:commandLink>
+				 			<apex:commandLink id="searchRecipe" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Search_Recipe_Image__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName7" assignTo="{!mediaName}" value="searchRecipe"/>
+				 					Search Recipe
+				 				</apex:commandLink>
+				 			<apex:commandLink id="additional1" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Additional_Image_1__c}');"  rerender="CurrentImage">
+				 				<apex:param id="mediaName8" assignTo="{!mediaName}" value="additional1"/>
+				 					Additional1
+				 			</apex:commandLink>
+				 	
+				 			<apex:commandLink id="additional2" styleClass="imageTypeSelection" action="{!setMediaType2}"  oncomplete="clickMediaSelection('{!recipe.Additional_Image_2__c}');" rerender="CurrentImage">
+				 				<apex:param id="mediaName9" assignTo="{!mediaName}" value="additional2"/>
+				 					Additional2
+				 				</apex:commandLink>
+		 				</div> <!-- End of MediaTypeSelectionPanel Div -->
+					</apex:outputPanel>	<!-- End of Outpanel media Selection -->
+				</apex:form>	<!-- End of Form -->
+			</div>	<!-- End of MediaTypeSelection Div -->
+	
+			<apex:pageBlock id="SelectMedia" > 
+				<div id="selectMediaLeft" styleClass="currentImageStyle" >
+					<apex:outputPanel id="CurrentImage">	
+						<div class="noImageSelected">
+							<div id="trashcan">
+								<apex:form id="frm3">
+									<apex:commandLink action="{!disassociateMedia}" oncomplete="clickMediaSelection('{!currentImageId}');" rerender="mainContainer,CurrentImage"><img src="{!$Resource.trashcan}" width="30" height="30" class="trashcanImage"/></apex:commandLink>
+								</apex:form>
+							</div> <!-- End of TrashCan Div -->
+							<apex:outputPanel rendered="{!currentImageId!=''}">
+								<div class="imageCont">
+									<img src="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!currentImageId}"  height="180" style="max-width:180px;"/>
+								</div>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{!currentImageId==''}">
+								<div class="currentImageStyle"><div class="noImageText">NO IMAGE SELECTED</div></div> 		
+							</apex:outputPanel>
+						</div> <!-- End of No Image Selected Div -->
+					
+						<script type="text/javascript"> 
+							$(document).ready(function() {
+				  				$(".imageTypeSelection").each(function(index) {
+				  					this.className = "imageTypeSelection";
+				  						if (this.id.indexOf("mainRecipe")>-1) {
+				  							if ({!recipe.Main_Drink_Image__c!=null}) {
+				  								this.className=this.className+" imageTypeHighlight";
+				  							}
+				  						if ({!mediaName=="mainRecipe"} || {!mediaName==null}) {
+				  							this.className=this.className+" imageTypeSelected";
+				  						}
+				  				}
+							  	if(this.id.indexOf("mobileDrink")>-1) {
+							  		if ({!recipe.Mobile_Drink_Image__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="mobileDrink"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	if (this.id.indexOf("mobileSelected")>-1) {
+							  		if ({!recipe.Mobile_Selected_Image__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="mobileSelected"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	if (this.id.indexOf("mobileUnselected")>-1) {
+							  		if ({!recipe.Mobile_Unselected_Image__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="mobileUnselected"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	if (this.id.indexOf("background")>-1) {
+							  		if ({!recipe.Background_Image__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="background"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	if (this.id.indexOf("brandRecipe")>-1) {
+							  		if ({!recipe.Brand_Recipe_Image__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="brandRecipe"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	
+							  	if (this.id.indexOf("searchRecipe")>-1) {
+							  		if ({!recipe.Search_Recipe_Image__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="searchRecipe"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	
+							  	if (this.id.indexOf("additional2")>-1) {
+							  		if ({!recipe.Additional_Image_2__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="additional2"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  	
+							  	if (this.id.indexOf("additional1")>-1) {
+							  		if ({!recipe.Additional_Image_1__c!=null}) {
+							  			this.className=this.className+" imageTypeHighlight";
+							  		}
+							  		if ({!mediaName=="additional1"}) {
+							  			this.className=this.className+" imageTypeSelected";
+							  		}
+							  	}
+							  		  	
+								});
+							});
+						var jsMediaName='{!mediaName}';
+					</script>
+				</apex:outputPanel> <!-- End of OutputPanel CurrentImage -->
+				
+				<div id="uploadButtonDiv">
+					<div id="uploadDiv">
+						<apex:form id="uploadForm" onsubmit="return false;">
+							<div id="hiddenUpload">
+								<apex:actionRegion >
+									<apex:inputFile styleClass="inputFileStyle" value="{!myImage.VersionData}" onchange="showLabelDiv()" filename="{!myImage.PathOnClient}"/>
+								</apex:actionRegion>
+							</div>
+							<input type="button" id="imageSelectButton" class="actionButton" value="Upload New Image"/>
+							
+							<apex:actionFunction name="initiateUpload" action="{!upload}"/>
+							<div id="imageLabelDiv">
+								<span class="imageNameLabel">Name your image:</span>
+								<apex:inputText styleClass="imageLabelInput" id="currentImageName" value="{!currentImageName}"/>
+								<input type="button" onClick="saveImage()" class="actionButton greenActionButton imageLabelButton" value="Save"/>
+								<input type="button" onClick="hideLabelDiv(this)" class="actionButton imageLabelButton" value="Cancel"/>
+							</div>
+							<script type="text/javascript">
+								function saveImage () {
+									initiateUpload();
+									hideLabelDiv();
+								}
+								function showLabelDiv () {
+									div = document.getElementById("imageLabelDiv");
+									if (div.style.display='none') {
+										div.style.display='block'; 
+									}
+									fullPath=$('input[type=file]').val();
+									var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+							        var filename = fullPath.substring(startIndex);
+							        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+							                filename = filename.substring(1);
+							        }
+									$('.imageLabelInput').val(filename);
+								}
+								function hideLabelDiv (cancelButton) {
+									div = document.getElementById("imageLabelDiv");
+									div.style.display='none'; 
+									
+									form = cancelButton.form;
+									form.reset();	
+								}
+				
+								$(document).ready(function() {
+									$('#imageSelectButton').click(function() {
+									    $('input[type=file]').trigger('click');
+									});
+								});
+					
+								$(document).ready(function() {
+									$('.filterInput').keydown(function (e) {
+									  var keyCode = e.keyCode || e.which;
+									  if (keyCode == 13) {
+									    $('.filterButton').trigger('click');
+									  }
+									});
+								});
+							</script>
+						</apex:form>
+					</div>
+	 			</div>
+		</div>
+		
+				<div id="verticalSeparator"></div>
+				<apex:form id="frm4">  
+				<div id="selectMediaRight">
+					<div id="filterBar">
+						<apex:outputpanel id="filterSection">
+						<span class="selectedMediaHeader" style="margin-top:6px;text-align:center;width:55px;">Filter Images:&nbsp;</span>
+						<div style="margin-left:81px;margin-top:-15px;"><apex:inputText id="fixDONOTDELETE" styleClass="hidden"/>
+							<apex:inputText styleClass="filterInput" value="{!imageNameFilter}"/>&nbsp;
+						</div>
+						<div style="margin-left:175px;margin-top:-24px;"><apex:commandButton action="{!filterImages}" rerender="imagePanel" value="Filter" styleClass="smallActionButton greenActionButton filterButton"/> 
+						&nbsp;<apex:commandButton action="{!filterImages}" rerender="filterSection,imagePanel" value="Reset" styleClass="smallActionButton">
+								<apex:param name="imageNameFilter" assignTo="{!imageNameFilter}" value=""/>
+							  </apex:commandButton>
+						</div>
+						</apex:outputpanel>
+					</div>
+					<apex:outputPanel styleClass="imagePanel" id="imagePanel">
+						<apex:repeat value="{!mediaList}" var="mediaImage">
+							<apex:outputPanel styleClass="imageContainer">
+							<div class="imageheight">
+								<apex:commandLink rerender="CurrentImage" action="{!associateMedia}"><img  src="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!mediaImage.Content_id__c}" class="imageContainerWidth" height="100"/>
+									<apex:param name="mediaId" value="{!mediaImage.Id}" assignTo="{!mediaId}"/>
+								</apex:commandLink>
+							</div>
+								<span class="imageText">{!LEFT(mediaImage.Name,13)}</span>
+							
+							</apex:outputPanel>
+						</apex:repeat>
+						<apex:outputPanel rendered="{!mediaList.size==0}">
+							<div id="noImagesAvailable">
+								NO IMAGES AVAILABLE
+							</div>
+						</apex:outputPanel>
+					</apex:outputPanel>
+					</div>
+				</apex:form> 
+			</apex:pageBlock>
+	
+			<apex:form id="frm5">
+				<apex:actionFunction action="{!setMediaType2}" name="updateMediaType" rerender="out">
+					<apex:param name="mName" assignTo="{!mediaName}" value=""/>
+				</apex:actionFunction>
+		
+				<apex:outputPanel id="out"></apex:outputPanel>
+				<div class="mediaButtons">
+					<apex:commandButton id="saveImagesId" action="{!saveImages}" oncomplete="redir();" value="Save" styleClass="actionButton greenActionButton "></apex:commandButton>&nbsp;&nbsp;
+					<apex:commandButton value="Cancel"  onclick="window.close();" styleClass="actionButton "/>
+	    		</div>
+			</apex:form>
+		</div>
+	</body>
+</apex:page>

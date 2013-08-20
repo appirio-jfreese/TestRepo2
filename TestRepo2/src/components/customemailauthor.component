@@ -1,0 +1,123 @@
+<apex:component controller="customEmailAuthorController"  allowDML="true" >
+
+<!-- Attributes specifying the values such as From, To, Bcc etc -->
+<apex:attribute name="FromAddress" description="This specifies the From Addresee" type="String" assignTo="{!fromAddress}"/>
+<apex:attribute name="To" description="This specifies the To values for an email" type="String"  assignTo="{!toAddress}"/>
+<apex:attribute name="orderWindowId" description="This Id helps in navigating back to the Order Window Id" type="String"/>
+
+
+<script src="/soap/ajax/19.0/connection.js"></script>
+<script src="/soap/ajax/19.0/apex.js"></script>   
+<script>
+    
+    function setTemplate(Id) {
+   
+    sforce.connection.sessionId = "{!$Api.Session_ID}";  
+
+    
+    var result = sforce.connection.query("Select e.Subject, e.Body From EmailTemplate e where e.Id ='"+Id+"'");
+
+    var subjectElement;
+    var emailBodyElement;
+
+    var elements = new Array();
+    elements = document.getElementsByTagName('input');
+    for(var j =0;j<elements.length;j++){
+    //alert('--'+templateResult[i].Subject);
+        if(elements[j].type=='text' && elements[j].id.indexOf('emailSubject')!=-1)
+            subjectElement =  elements[j];
+    }
+
+    var textAreas = new Array();
+    textAreas = document.getElementsByTagName('textarea');
+    for(var j =0;j<textAreas.length;j++){
+    //alert('--'+templateResult[i].Subject);
+        if(textAreas[j].id.indexOf('emailBody')!=-1)
+            emailBodyElement =  textAreas[j];
+    }
+
+    
+
+    var templateResult = result.getArray("records");
+
+    for(var i = 0;i<templateResult.length;i++){
+    //alert('Subject--'+templateResult[i].Subject);
+    //alert('Body--'+templateResult[i].Body); 
+    subjectElement.value = templateResult[i].Subject;
+    emailBodyElement.value = templateResult[i].Body;
+ }
+}
+
+function setFromAndTo() {
+    var FromElement;
+    var ToElement;
+
+    var elements = new Array();
+    elements = document.getElementsByTagName('input');
+    for(var j =0;j<elements.length;j++){
+    //alert('--'+templateResult[i].Subject);
+        if(elements[j].type=='text' && elements[j].id.indexOf('emailAuthorFrom')!=-1)
+            FromElement =  elements[j];
+    }
+    //alert('from');
+    var textAreas = new Array();
+    textAreas = document.getElementsByTagName('textarea');
+    for(var j =0;j<textAreas.length;j++){
+    //alert('--'+templateResult[i].Subject);
+        if(textAreas[j].id.indexOf('emailAuthorTo')!=-1)
+            ToElement =  textAreas[j];
+    }
+    alert('to');
+
+    document.getElementById('fromHidden').value=FromElement.value;
+    document.getElementById('ToHidden').value=ToElement.value;
+
+    return true;
+
+}
+
+</script>
+
+  <apex:pageblock id="emailAuthor">
+      <apex:pagemessages />
+
+      <apex:pageblockbuttons >
+
+        <apex:commandButton value="Save draft as Template"  action="{!createNewTemplate}" reRender="newTemplateSection" status="newTemplateRes" rendered="{!NOT(emailSent)}"/>
+        <apex:commandButton value="Send Email"   action="{!sendEmail}" reRender="emailAuthor" status="resultStatus" rendered="{!NOT(emailSent)}"/>
+        <apex:commandButton value="Back To Order Window"  onClick="top.location.href=top.location.href; return false;" />
+        &nbsp;&nbsp;
+        <apex:actionStatus startText="Sending Email..." id="resultStatus"/> 
+        <apex:actionStatus startText="Collecting Information..." id="newTemplateRes"/> 
+      </apex:pageblockbuttons>
+       <apex:pageBlockSection columns="1" collapsible="false" title="Select A Template" rendered="{!NOT(emailSent)}">
+          <apex:outputpanel >
+             <apex:outputLabel value="Choose a Template" styleClass="labelCol"/>
+             <apex:selectList value="{!templateId}" size="1" onchange="setTemplate(this.value);">
+                 <apex:selectOptions value="{!templates}" />
+             </apex:selectList>
+          </apex:outputPanel>
+       </apex:pageBlockSection>
+      
+      <apex:outputpanel id="newTemplateSection"> 
+        <apex:pageBlockSection columns="3" collapsible="false" title="Save Draft as Temlpate" rendered="{!renderNewTemplateSection}" >
+        <center>
+            <apex:outputpanel id="newTemplateButtons">
+            <apex:commandbutton value="Save" action="{!createNewTemplate}"/>
+            <apex:commandbutton value="Cancel" action="{!cancelNewTemplate}" reRender="newTemplateSection"/> 
+            </apex:outputpanel>
+        </center>
+        <apex:inputfield value="{!newEmailTemplate.Name}" />
+        <apex:inputfield value="{!newEmailTemplate.DeveloperName}" />
+       </apex:pageBlockSection>
+     </apex:outputpanel>  
+      <apex:pageBlockSection columns="1" collapsible="false" title="Email Shoppers" rendered="{!NOT(emailSent)}">
+          <apex:inputText label="From" size="50" value="{!FromAddress}" id="emailAuthorFrom" disabled="true"/>
+          <apex:inputTextArea cols="65" label="To"  value="{!To}" required="true"  id="emailAuthorTo"/>
+          <apex:inputTextArea cols="65" label="CC"  value="{!CCAddress}"/>
+          <apex:inputTextArea cols="65" label="Bcc" value="{!BccAddress}"/>
+          <apex:inputText label="Subject" size="70" value="{!emailSubject}" id="emailSubject" required="true"/>
+          <apex:inputTextArea cols="93" rows="15" label="Body" id="emailBody" value="{!emailBody}"/>
+      </apex:pageBlockSection>
+  </apex:pageblock>
+</apex:component>

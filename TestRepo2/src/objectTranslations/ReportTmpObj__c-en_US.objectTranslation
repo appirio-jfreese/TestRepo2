@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ReportTmpObj</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ReportTmpObjs</value>
+    </caseValues>
+    <fields>
+        <label><!-- br --></label>
+        <name>br__c</name>
+    </fields>
+    <fields>
+        <label><!-- cl --></label>
+        <name>cl__c</name>
+    </fields>
+    <fields>
+        <label><!-- ds --></label>
+        <name>ds__c</name>
+    </fields>
+    <fields>
+        <label><!-- ou --></label>
+        <name>ou__c</name>
+    </fields>
+    <fields>
+        <label><!-- ow --></label>
+        <name>ow__c</name>
+    </fields>
+    <fields>
+        <label><!-- ss --></label>
+        <name>ss__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

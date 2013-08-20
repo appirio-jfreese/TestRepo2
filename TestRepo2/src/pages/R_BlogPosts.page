@@ -1,0 +1,50 @@
+<!--**************************************************************************************************************
+Name        : R_BlogPost.page
+
+Created By  : Randy Wandell (Appirio)   
+Date        : 7/12/13
+Story/Task  : 
+***************************************************************************************************************-->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo Blogs" 
+			controller="Controller_Base" id="postBlogPage">
+	<apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.HomePage, 'style'+siteTheme+'.css')}" />
+    <style type="text/css">
+        body, html{
+        	overflow: hidden;
+        }
+    </style>
+<div class="wrapper">
+
+    <div class="container">
+		<!-- PAGE HEADER -->
+		<c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}"/>
+        
+		<script type="text/javascript">
+			pageViewed('Blog Page');
+		</script>
+		  
+		<!--  BREADCRUMB -->
+		<c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+		
+		<!-- PAGE CONTENT -->
+		<div class="content">
+			<div>
+				<c:blogPost format="TitlesAndShortDesc" isLoggedIn="{!isLoggedIn}" maxAllowdBlogs="4" url="" id="blogPostComp"/>
+			</div>
+			<div>
+				<c:BlogSideTile show="Themes"/>
+			</div>
+			<div>
+				<c:BlogSideTile show="Archives"/>
+			</div>
+			<div>
+				<c:BlogSideTile show="Tags"/>
+			</div>
+		</div>
+	</div>
+	<!-- PAGE FOOTER -->
+	<c:R_pageFooter isInternal="{!isInternalUser}" />
+</div>
+
+</apex:page>

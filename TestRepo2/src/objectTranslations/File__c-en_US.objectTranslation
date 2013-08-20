@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>File</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Files</value>
+    </caseValues>
+    <fields>
+        <label><!-- Available Until --></label>
+        <name>Available_Until__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brands --></label>
+        <name>Brand_Names__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand IDs --></label>
+        <name>Brands__c</name>
+        <picklistValues>
+            <masterLabel>a</masterLabel>
+            <translation><!-- a --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>b</masterLabel>
+            <translation><!-- b --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>c</masterLabel>
+            <translation><!-- c --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Calendar --></label>
+        <name>Calendar__c</name>
+        <relationshipLabel><!-- Files --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Content ID --></label>
+        <name>Content_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content Version Id --></label>
+        <name>Content_Version_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributors --></label>
+        <name>Distributor_Names__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor IDs --></label>
+        <name>Distributors__c</name>
+        <picklistValues>
+            <masterLabel>a</masterLabel>
+            <translation><!-- a --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>b</masterLabel>
+            <translation><!-- b --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>c</masterLabel>
+            <translation><!-- c --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Division Access --></label>
+        <name>Division_Access__c</name>
+        <picklistValues>
+            <masterLabel>Charmer</masterLabel>
+            <translation><!-- Charmer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Control</masterLabel>
+            <translation><!-- Control --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Franchise</masterLabel>
+            <translation><!-- Franchise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glazers</masterLabel>
+            <translation><!-- Glazers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Independent</masterLabel>
+            <translation><!-- Independent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SWS</masterLabel>
+            <translation><!-- SWS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <picklistValues>
+            <masterLabel>Charmer</masterLabel>
+            <translation><!-- Charmer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Control</masterLabel>
+            <translation><!-- Control --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Franchise</masterLabel>
+            <translation><!-- Franchise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glazers</masterLabel>
+            <translation><!-- Glazers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Independent</masterLabel>
+            <translation><!-- Independent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SWS</masterLabel>
+            <translation><!-- SWS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Folders --></label>
+        <name>Folder_Names__c</name>
+    </fields>
+    <fields>
+        <label><!-- Folder IDs --></label>
+        <name>Folders__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>14</masterLabel>
+            <translation><!-- 14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15</masterLabel>
+            <translation><!-- 15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>16</masterLabel>
+            <translation><!-- 16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>17</masterLabel>
+            <translation><!-- 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>18</masterLabel>
+            <translation><!-- 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>19</masterLabel>
+            <translation><!-- 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>21</masterLabel>
+            <translation><!-- 21 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>22</masterLabel>
+            <translation><!-- 22 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>23</masterLabel>
+            <translation><!-- 23 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>24</masterLabel>
+            <translation><!-- 24 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>25</masterLabel>
+            <translation><!-- 25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>26</masterLabel>
+            <translation><!-- 26 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>27</masterLabel>
+            <translation><!-- 27 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>28</masterLabel>
+            <translation><!-- 28 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>29</masterLabel>
+            <translation><!-- 29 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30</masterLabel>
+            <translation><!-- 30 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>31</masterLabel>
+            <translation><!-- 31 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>32</masterLabel>
+            <translation><!-- 32 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>33</masterLabel>
+            <translation><!-- 33 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>34</masterLabel>
+            <translation><!-- 34 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>35</masterLabel>
+            <translation><!-- 35 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>36</masterLabel>
+            <translation><!-- 36 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>37</masterLabel>
+            <translation><!-- 37 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>38</masterLabel>
+            <translation><!-- 38 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>39</masterLabel>
+            <translation><!-- 39 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Image Resolution --></label>
+        <name>Image_Resolution__c</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is Video --></label>
+        <name>Is_Video__c</name>
+    </fields>
+    <fields>
+        <label><!-- Only For Internal User --></label>
+        <name>Only_For_Internal_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Organizational Units --></label>
+        <name>OrgUnitsNames__c</name>
+    </fields>
+    <fields>
+        <label><!-- OrgUnit Id --></label>
+        <name>OrgUnits__c</name>
+        <picklistValues>
+            <masterLabel>OrgUnit</masterLabel>
+            <translation><!-- OrgUnit --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Page Section --></label>
+        <name>Page_Section__c</name>
+        <picklistValues>
+            <masterLabel>Collaboration</masterLabel>
+            <translation><!-- Collaboration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance Management</masterLabel>
+            <translation><!-- Performance Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Portfolio --></label>
+        <name>Portfolio__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preview Available --></label>
+        <name>Preview_Available__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preview Id --></label>
+        <name>Preview_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- RTS --></label>
+        <name>RTS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tags --></label>
+        <name>Tags__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Uploaded date --></label>
+        <name>Uploaded_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Video Id --></label>
+        <name>Video_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- filesize --></label>
+        <name>filesize__c</name>
+    </fields>
+    <fields>
+        <label><!-- filetype --></label>
+        <name>filetype__c</name>
+    </fields>
+    <fields>
+        <label><!-- share_link --></label>
+        <name>share_link__c</name>
+    </fields>
+    <layouts>
+        <layout>File Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Date has to be greater or equal to current date. --></errorMessage>
+        <name>AvailableUntilDateValidator</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Classification field is required for portfolio documents. --></errorMessage>
+        <name>Classification_required_for_portfolio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please choose at least one Distrubutor. --></errorMessage>
+        <name>DistributorRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Start Date must be lower than or equal to End Date --></errorMessage>
+        <name>StartEndDateValidator</name>
+    </validationRules>
+</CustomObjectTranslation>

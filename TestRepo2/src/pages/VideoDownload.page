@@ -1,0 +1,23 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_VideoDownload">
+
+<div style="padding-top:50px; padding-left: 66px;">
+	<h3>Link: <a href="{!videoUrl}">{!description}</a></h3>
+</div>
+<apex:outputPanel rendered="{!browser == 'chrome'}">
+	<img src="{!URLFOR($Resource.VideoDownloadInstructions, 'Slide1.JPG')}" />
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!browser == 'safari'}">
+	<img src="{!URLFOR($Resource.VideoDownloadInstructions, 'Slide4.JPG')}" />
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!browser == 'firefox'}">
+	<img src="{!URLFOR($Resource.VideoDownloadInstructions, 'Slide3.JPG')}" />
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!browser == 'ie'}">
+	<img src="{!URLFOR($Resource.VideoDownloadInstructions, 'Slide2.JPG')}" />
+</apex:outputPanel>
+
+
+</apex:page>

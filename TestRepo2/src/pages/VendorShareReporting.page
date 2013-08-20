@@ -1,0 +1,117 @@
+<apex:page standardController="Account" extensions="Controller_VendorShareReporting" sidebar="false" showHeader="false">
+  
+<script src="{!URLFOR($Resource.Sortable,'/blue/jquery-latest.js')}"/>
+<script src="{!URLFOR($Resource.Sortable,'/blue/jquery.tablesorter.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Sortable, '/blue/blue.css')}"/>
+<style type="text/css">
+
+    .totalRow  {
+    text-align:right;
+    }
+    .headAlign{
+    text-align:right;
+    }
+    .datealign{
+    color: #222222;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 75%;
+    }
+    .timestampStyle{
+      left: 250px;
+      position: absolute;
+      top: 15px;
+      font-size: 1.1em;
+    }
+    .negativeNumeric{
+    color: red;
+    }
+</style>    
+     
+   <apex:actionStatus id="theStatus">
+        <apex:facet name="start">
+            <apex:image value="/img/loading.gif" Style="left: 350px;position: absolute;top: 12px;"/>
+        </apex:facet>
+    </apex:actionStatus>
+
+<apex:form >
+   <apex:pageBlock id="thePageBlock" title="Vendor Share Reporting">
+   <span class="timestampStyle">
+   <b>{!monthYear}</b>
+   </span>
+   
+  
+      
+<script language="javascript" type="text/javascript">
+            $(document).ready(function(){
+                  //important to specify the sorting param otherwise it wont always choose the 'correct' one
+                  $("table").tablesorter({
+                    headers: {
+                        0: {sorter: 'text'},
+                        1: {sorter: 'digit'},
+                        2: {sorter: 'digit'},
+                        3: {sorter: 'digit'},
+                        4: {sorter: 'digit'},
+                        5: {sorter: 'digit'}                        
+                    }
+                });
+            });   
+            
+      </script> 
+      <apex:outputPanel rendered="{!ShowList}">
+    <apex:outputLabel value="Filter By"/>
+       <apex:selectList size="1" value="{!SelectedValue}" >
+         <apex:selectOptions value="{!items}"/>
+        </apex:selectList>
+
+    <apex:outputLabel value="Date Range"/>&nbsp;
+   <apex:selectList size="1" value="{!SelectedType}" >
+     <apex:selectOptions value="{!recordsItems}"/>
+    </apex:selectList>
+    <apex:outputLabel value="Spirits/Wines"/>&nbsp;
+       <apex:selectList size="1" value="{!SelectedFilter}" >
+     <apex:selectOptions value="{!SpiritsnWines}"/>
+    </apex:selectList>
+    <apex:outputLabel value="Dollar/Volume" for="SelectedDollar"/>&nbsp;
+    <apex:selectList id="SelectedDollar" size="1" value="{!SelectedDollar}" label="Dollar/Volume">
+     <apex:selectOptions value="{!DollarVolumeItems}"/>
+    </apex:selectList>
+     <apex:commandButton value="Go" action="{!getSelectedVolume}" rerender="thePageBlock" status="theStatus"/>
+     </apex:outputPanel>
+      <apex:pageBlockTable value="{!BrandRowlist}" var="BRVar" id="tablesorter" styleclass="tablesorter"  rendered="{!ShowList}">
+            <apex:column headerValue="Vendor Name" value="{!BRVar.brandName}">
+                <apex:facet name="footer">Total</apex:facet>
+            </apex:column>
+            <apex:column headerValue="{!volumeHeader}"  style="text-align:right;" headerClass="headAlign">
+                 <!-- <apex:facet name="footer">{!ROUND(totalVolume,2)}</apex:facet> -->
+                      <apex:facet name="footer">{!groupedquerytotal}</apex:facet>   
+                   <!-- {!ROUND(BRVar.volume,2)}  -->
+                        {!BRVar.shelfdollardata}
+            </apex:column>
+             <apex:column headerValue="% Change" style="text-align:right;" headerClass="headAlign">
+                 <apex:facet name="footer"><!-- {!ROUND(totalPercentChange,2)} -->
+                 <apex:outputPanel rendered="{!totalPercentChange == 100.00}" >NA</apex:outputPanel>
+                 <apex:outputPanel rendered="{!totalPercentChange != 100}" >{!TEXT(ROUND(totalPercentChange,0))}</apex:outputPanel>
+                 </apex:facet>
+                 <!-- {!ROUND(BRVar.perCentChange,2)} -->
+                 <apex:outputPanel rendered="{!BRVar.perCentChange == 100.00}" >NA</apex:outputPanel>
+                  <apex:outputPanel rendered="{!BRVar.perCentChange >= 0 && BRVar.perCentChange != 100.00}" >{!TEXT(ROUND(BRVar.perCentChange,0))}</apex:outputPanel> 
+                  <apex:outputPanel rendered="{!BRVar.perCentChange < 0}" styleclass="negativeNumeric">{!TEXT(ROUND(BRVar.perCentChange,0))}</apex:outputPanel>
+             </apex:column>
+            <apex:column headerValue="Share" style="text-align:right;" headerClass="headAlign">
+            {!Round(BRVar.share,2)}
+              <!--  <apex:facet name="footer">{!ROUND(totalShare,2)}</apex:facet> --> 
+            </apex:column>
+            <apex:column headerValue="Share Change" style="text-align:right;" headerClass="headAlign"> 
+                <apex:outputPanel rendered="{!BRVar.PercentChangeShare < 0}" styleclass="negativeNumeric">{!TEXT(Round(BRVar.PercentChangeShare,2))}</apex:outputPanel>
+                <apex:outputPanel rendered="{!BRVar.PercentChangeShare > 0}">{!TEXT(Round(BRVar.PercentChangeShare,2))}</apex:outputPanel>
+               <!-- {!Round(BRVar.PercentChangeShare,2)} -->    
+               <!-- <apex:facet name="footer">{!totalPercentChangeShare}</apex:facet> -->
+            </apex:column>
+     </apex:pageBlockTable>
+    
+    <apex:pageBlockSection rendered="{!NOT(ShowList)}">
+        No vendor sharing data found to display.
+    </apex:pageBlockSection>
+ </apex:pageblock>
+ </apex:form>
+</apex:page>

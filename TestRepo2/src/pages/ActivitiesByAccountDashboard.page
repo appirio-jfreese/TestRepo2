@@ -1,0 +1,157 @@
+<apex:page controller="Controller_ActivitiesByAcct" showHeader="false" sidebar="false">
+	
+	<apex:form >
+	
+	<div style="overflow:auto;height:300px;width:400px;">
+	
+			<apex:pageBlock title="Activities by Account">
+			
+				<apex:pageBlockTable value="{!dataObjList}" var="obj">
+					
+					<apex:column >
+						<apex:facet name="header">Rep</apex:facet>
+						<apex:outputText value="{!obj.rep}" />
+					</apex:column>
+					
+					<apex:column >
+						<apex:facet name="header">Account</apex:facet>
+						<apex:outputText >{!obj.accountName}</apex:outputText>
+					</apex:column>
+					
+					
+					<apex:column rendered="{!fieldCount >= 1}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label1, 5)}..." title="{!label1}" /></apex:facet>
+						<apex:image rendered="{!obj.activity1Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity1Status}"/>
+						<apex:image rendered="{!obj.activity1Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity1Status}"/>
+						<apex:image rendered="{!obj.activity1Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity1Status}"/>
+						<apex:image rendered="{!obj.activity1Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity1Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 2}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label2, 5)}..." title="{!label2}" /></apex:facet>
+						<apex:image rendered="{!obj.activity2Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity2Status}"/>
+						<apex:image rendered="{!obj.activity2Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity2Status}"/>
+						<apex:image rendered="{!obj.activity2Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity2Status}"/>
+						<apex:image rendered="{!obj.activity2Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity2Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 3}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label3, 5)}..." title="{!label3}" /></apex:facet>
+						<apex:image rendered="{!obj.activity3Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity3Status}"/>
+						<apex:image rendered="{!obj.activity3Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity3Status}"/>
+						<apex:image rendered="{!obj.activity3Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity3Status}"/>
+						<apex:image rendered="{!obj.activity3Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity3Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 4}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label4, 5)}..." title="{!label4}" /></apex:facet>
+						<apex:image rendered="{!obj.activity4Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity4Status}"/>
+						<apex:image rendered="{!obj.activity4Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity4Status}"/>
+						<apex:image rendered="{!obj.activity4Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity4Status}"/>
+						<apex:image rendered="{!obj.activity4Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity4Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 5}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label5, 5)}..." title="{!label5}" /></apex:facet>
+						<apex:image rendered="{!obj.activity5Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity5Status}"/>
+						<apex:image rendered="{!obj.activity5Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity5Status}"/>
+						<apex:image rendered="{!obj.activity5Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity5Status}"/>
+						<apex:image rendered="{!obj.activity5Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity5Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 6}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label6, 5)}..." title="{!label6}" /></apex:facet>
+						<apex:image rendered="{!obj.activity6Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity6Status}"/>
+						<apex:image rendered="{!obj.activity6Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity6Status}"/>
+						<apex:image rendered="{!obj.activity6Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity6Status}"/>
+						<apex:image rendered="{!obj.activity6Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity6Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 7}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label7, 5)}..." title="{!label7}" /></apex:facet>
+						<apex:image rendered="{!obj.activity7Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity7Status}"/>
+						<apex:image rendered="{!obj.activity7Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity7Status}"/>
+						<apex:image rendered="{!obj.activity7Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity7Status}"/>
+						<apex:image rendered="{!obj.activity7Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity7Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 8}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label8, 5)}..." title="{!label8}" /></apex:facet>
+						<apex:image rendered="{!obj.activity8Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity8Status}"/>
+						<apex:image rendered="{!obj.activity8Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity8Status}"/>
+						<apex:image rendered="{!obj.activity8Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity8Status}"/>
+						<apex:image rendered="{!obj.activity8Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity8Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 9}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label9, 5)}..." title="{!label9}" /></apex:facet>
+						<apex:image rendered="{!obj.activity9Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity9Status}"/>
+						<apex:image rendered="{!obj.activity9Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity9Status}"/>
+						<apex:image rendered="{!obj.activity9Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity9Status}"/>
+						<apex:image rendered="{!obj.activity9Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity9Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 10}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label10, 5)}..." title="{!label10}" /></apex:facet>
+						<apex:image rendered="{!obj.activity10Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity10Status}"/>
+						<apex:image rendered="{!obj.activity10Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity10Status}"/>
+						<apex:image rendered="{!obj.activity10Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity10Status}"/>
+						<apex:image rendered="{!obj.activity10Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity10Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 11}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label11, 5)}..." title="{!label11}" /></apex:facet>
+						<apex:image rendered="{!obj.activity11Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity11Status}"/>
+						<apex:image rendered="{!obj.activity11Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity11Status}"/>
+						<apex:image rendered="{!obj.activity11Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity11Status}"/>
+						<apex:image rendered="{!obj.activity11Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity11Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 12}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label12, 5)}..." title="{!label12}" /></apex:facet>
+						<apex:image rendered="{!obj.activity12Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity12Status}"/>
+						<apex:image rendered="{!obj.activity12Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity12Status}"/>
+						<apex:image rendered="{!obj.activity12Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity12Status}"/>
+						<apex:image rendered="{!obj.activity12Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity12Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 13}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label13, 5)}..." title="{!label13}" /></apex:facet>
+						<apex:image rendered="{!obj.activity13Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity13Status}"/>
+						<apex:image rendered="{!obj.activity13Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity13Status}"/>
+						<apex:image rendered="{!obj.activity13Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity13Status}"/>
+						<apex:image rendered="{!obj.activity13Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity13Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 14}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label14, 5)}..." title="{!label14}" /></apex:facet>
+						<apex:image rendered="{!obj.activity14Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity14Status}"/>
+						<apex:image rendered="{!obj.activity14Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity14Status}"/>
+						<apex:image rendered="{!obj.activity14Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity14Status}"/>
+						<apex:image rendered="{!obj.activity14Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity14Status}"/>
+					</apex:column>
+					
+					<apex:column rendered="{!fieldCount >= 15}" style="text-align:center">
+						<apex:facet name="header"><apex:outputText value="{!LEFT(label15, 5)}..." title="{!label15}" /></apex:facet>
+						<apex:image rendered="{!obj.activity15Status == 'Closed - Complete'}" url="{!URLFOR($Resource.dashboardButtons, 'greenButton.jpg')}" title="{!obj.activity15Status}"/>
+						<apex:image rendered="{!obj.activity15Status == 'Closed - Incomplete'}" url="{!URLFOR($Resource.dashboardButtons, 'redButton.jpg')}" title="{!obj.activity15Status}"/>
+						<apex:image rendered="{!obj.activity15Status == 'Open - In Progress'}" url="{!URLFOR($Resource.dashboardButtons, 'yellowButton.jpg')}" title="{!obj.activity15Status}"/>
+						<apex:image rendered="{!obj.activity15Status == 'Open - Not Started'}" url="{!URLFOR($Resource.dashboardButtons, 'clear.jpg')}" title="{!obj.activity15Status}"/>
+					</apex:column>
+					
+					
+				</apex:pageBlockTable>
+				
+				<apex:outputText rendered="{!IF(dataObjList.size > 0,false,true)}" escape="false"
+								 value="&nbsp;&nbsp;You have either no current activities or own no accounts." />
+			
+			</apex:pageblock>
+	
+		</div>
+	
+	</apex:form>
+	
+	
+	
+	
+</apex:page>

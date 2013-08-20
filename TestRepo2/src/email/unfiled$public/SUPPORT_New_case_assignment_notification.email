@@ -1,0 +1,9 @@
+Company:  {!Account.Name} 
+Contact Name:  {!Contact.Name} 
+Case #:  {!Case.CaseNumber} 
+Subject:  {!Case.Subject} 
+Type: {!Case.Type}
+
+Description: {!Case.Description}  
+
+Click on the link to access the case:  {!Case.Link}

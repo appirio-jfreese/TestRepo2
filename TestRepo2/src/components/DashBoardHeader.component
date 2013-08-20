@@ -1,0 +1,93 @@
+<apex:component controller="MM_RecipeBase">
+
+<!--  <apex:stylesheet value="{!$Resource.RecipeStyles}"/> -->
+<style>
+#componentMain { z-index: 1000; left: 0px; top:12px; color: #ffffff;
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#000000), color-stop(25%,#ac0334), color-stop(51%,#c5064c), color-stop(90%, #8e053e), color-stop(100%,#000000));
+    background: -moz-linear-gradient(left top, #000000 0% , #ac0334 25% , #c5064c 51%, #8e053e 90%, #000000 100%);
+    background: linear-gradient(left, #000000 0%,#ac0334 25%,#c5064c 51%,#8e053e 90%,#000000 100%);
+    background: -ms-linear-gradient(left, #000000 0%,#ac0334 25%,#c5064c 51%,#8e053e 90%,#000000 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#ac0334',GradientType=1 );
+    font-family:"Arial", "Arial", sans-serif; font-size: 18px; height:50px; width:100%;min-width:100%;
+}
+#title { float: left; width: 24%; margin-left: 5px; margin-top: 10px;min-width:0px;}
+#viewControl { float: left;  width: 65%;min-width:0px;}
+#newRecipe { float: left;  width: 35%;text-align:right;min-width:0px;}
+#buttonPanel { float: left;  width:  50%; margdin-left: 30px;margin-top: 10px;padding: 5px;min-width:0px;}
+#userInfo { float: left;  width:  22%; margin-right: 10px; margin-top: 10px;font-size: 12px; text-align:right;}
+
+.links { text-decoration: none; color: #ffffff;}
+.plusButton {
+    background-color:#000000;
+    -moz-border-radius:42px;
+    -webkit-border-radius:42px;
+    border-radius:42px;
+    display:inline-block;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:16px;
+    padding:0px 4px;
+    text-decoration:none;
+
+}
+
+.body {
+
+}
+
+img { border: 0px;}
+
+.logoutLink { text-decoration: none; color: #fff}
+
+</style>
+<apex:form >
+<div id="componentMain">
+  <div id="title"> <apex:outputLink styleClass="links" title="Recipe Dashboard" value="/apex/MM_RecipeDashboard"><apex:image value="/resource/1320197973000/logo2"/></apex:outputLink>
+  <!--  <apex:image value="/resource/1327446037000/HeaderVerticalLine" style="float:right;"/>	-->
+  </div>
+  
+  <div id="buttonPanel" align="center">
+  	<apex:outputpanel rendered="{!isSuperAdmin}">
+  		<apex:outputLink styleClass="links" value="/apex/MM_MasterRecipe"><apex:image value="{!$Resource.createRecipe}"/></apex:outputLink>&nbsp;&nbsp;
+  		<apex:outputLink styleClass="links" value="/apex/MM_ViewAllRecipes" id="links"><apex:image value="{!$Resource.viewRecipe}"/></apex:outputLink>&nbsp;&nbsp;
+<!--   		<apex:outputLink styleClass="links" value="/apex/MM_ManageAsset" id="links2"><apex:image value="{!$Resource.manageRecipe}"/></apex:outputLink> -->
+  		<apex:outputLink styleClass="links" value="/apex/APPIRIO_MyAssets" id="links2"><apex:image value="{!$Resource.manageRecipe}"/></apex:outputLink>
+  	</apex:outputpanel>
+  	
+  	<apex:outputpanel rendered="{!!isSuperAdmin}">
+  		<apex:outputLink styleClass="links" value="/apex/MM_MasterRecipe"><apex:image value="{!$Resource.createRecipe}"/></apex:outputLink>&nbsp;&nbsp;
+  		<apex:outputLink styleClass="links" value="/apex/MM_ViewAllRecipes"><apex:image value="{!$Resource.viewRecipe}"/></apex:outputLink>&nbsp;&nbsp;
+  		<!-- <apex:outputLink styleClass="links" value="/apex/MM_ManageAsset" id="links2"><apex:image value="/resource/1320203060000/button_bottle"/></apex:outputLink> -->
+  		<apex:outputLink styleClass="links" value="/apex/APPIRIO_MyAssets" id="links3"><apex:image value="{!$Resource.manageRecipe}"/></apex:outputLink>
+  	</apex:outputpanel>
+  
+  </div>
+ <!--  <div id="buttonPanel">
+      <div id="newRecipe"> <!-- rendered="{!!isSuperAdmin}" 
+        <apex:outputLink styleClass="links" value="/apex/MM_MasterRecipe"><apex:image value="/resource/1320203083000/button_plus" width="17px" height="17px"/>&nbsp;Create A Recipe</apex:outputLink>
+        
+      </div> 
+      <div id="viewControl">
+           &nbsp;&nbsp; <apex:outputLink styleClass="links" value="/apex/MM_ViewAllRecipes" id="links"><apex:image value="/resource/1320203108000/button_mag" width="17px" height="17px"/>&nbsp;View All Recipes</apex:outputLink>&nbsp;&nbsp;
+            <apex:outputPanel rendered="{!isSuperAdmin}" >
+             <apex:outputLink styleClass="links" value="/apex/MM_ManageAsset" id="links2"><apex:image value="/resource/1320203060000/button_bottle" width="17px" height="17px"/>&nbsp;Manage Assets</apex:outputLink>
+            </apex:outputPanel>
+      </div>
+  </div>	 --> 
+  
+  <div id="userInfo">
+    <!-- <apex:image value="/resource/1327446037000/HeaderVerticalLine" style="float:left;"/> -->	
+    {!currentUser.Name} : {!currentRole}
+    <br/>
+     <apex:commandLink styleClass="logoutLink" action="{!logoutmethod}">Log Out</apex:commandLink>
+    
+    </div>
+    <!-- <apex:form >
+    <apex:commandLink styleClass="logoutLink" action="{!logoutmethod}">Log Out</apex:commandLink>
+    </apex:form>
+  </div>-->
+
+ 
+</div>
+</apex:form>
+</apex:component>

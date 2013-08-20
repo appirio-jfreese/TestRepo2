@@ -1,0 +1,35 @@
+<!------------------------------------------------------------------------------
+Name        : pageFooter.page
+
+Updated By  : Basant Verma (Appirio Offshore)   
+Date 				: 6/25/13
+Story/Task	: US615/TA1067
+------------------------------------------------------------------------------->
+<!-- Start : Changes for US615/TA1067 - Basant Verma - {Added controller="Controller_Base"}-->
+<apex:component controller="Controller_Base">
+<!-- End : Changes for US615/TA1067 - Basant Verma -->
+    <apex:attribute name="isInternal" description="Tell if user is Innternal or not" type="Boolean" required="true"/>
+    <div class="footer">
+        <!-- Start : Changes for US615/TA1067 - Jonathan Freese -->
+        <apex:outputPanel rendered="{!isResponsive}">
+            <a href="{!$Page.R_HomePage}">Go to Mobile</a><span>|</span>
+         </apex:outputPanel>
+        <!-- End : Changes for US615/TA1067 - Jonathan Freese -->
+        <a href="{!$Page.TermsAndConditions}">Terms &amp; Conditions</a><span>|</span>
+        <a href="{!$Page.PrivacyPolicy}">Privacy &amp; Cookies Notice</a><span>|</span>
+        <a href="{!$Page.Links}">Industry Related Links</a><span>|</span>
+        <a href="{!$Page.FAQ}">FAQ</a><span>|</span>
+        <a href="{!$Page.Cases}?caseType=new">Contact Us</a>
+        <span>&copy; Diageo 2011</span>
+    </div>
+<!-- 
+        <a href="{!$Page.TermsAndConditions}">Terms &amp; Conditions</a><span>|</span>
+        <a href="{!$Page.PrivacyPolicy}">Privacy &amp; Cookies Notice</a><span>|</span>
+        <a href="{!$Page.Links}">Industry Related Links</a><span>|</span>
+        <a href="{!$Page.FAQ}">FAQ</a><span>|</span>
+        <a href="{!$Page.Cases}?caseType=new">Contact Us</a>
+        <apex:outputPanel rendered="{!isResponsive}">
+        	<span>|</span><a href="{!$Label.ResponsiveHomePage}">Responsive Page</a>
+        </apex:outputPanel>
+        <!-- End : Changes for US615/TA1067 - Basant Verma -->
+</apex:component>

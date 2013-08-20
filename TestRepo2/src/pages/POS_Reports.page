@@ -1,0 +1,274 @@
+<apex:page controller="POS_ReportsController" standardStylesheets="false" showHeader="false" sidebar="false" cache="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=1138"  />
+        <meta name="MobileOptimized" content="1138" /> 
+        <title>Reports</title> 
+        <link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+        <link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+        <link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+        <link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+        <link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+        
+        <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+        <style type="text/css">
+        .wrapper .page .header-container {height: 137px;}
+        
+        .linksTable {
+            width: 50% !important;
+        }
+
+        .reports-filters-single {
+            min-height: 164px;
+        }
+        </style>
+    </head>
+
+    <body >
+        <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+        <div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+        <div class="wrapper">
+            <div class="page">
+                <div class="main col-full-layout" id="main">
+                    <c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+                    <div class="not-col-main">
+                        <div class="std"> 
+                            <div class="visual-block" style="color:black; padding: 30px 1px 10px 10px;">
+                                <div class="reports-filters" id="filtersDiv" style="background: #BBBBBB;">
+                                    <apex:outputPanel id="filtersPanel" >
+                                        <apex:form style="background: #BBBBBB;">
+                                            <apex:actionFunction name="saveToTMP" action="{!saveToTmpObject}" rerender="linksPanel">
+                                                <apex:param name="owP" assignTo="{!owP}" value="" />
+                                                <apex:param name="clP" assignTo="{!clP}" value="" />
+                                                <apex:param name="brP" assignTo="{!brP}" value="" />
+                                                <apex:param name="ouP" assignTo="{!ouP}" value="" />
+                                                <apex:param name="bsP" assignTo="{!dsP}" value="" />
+                                                <apex:param name="ssP" assignTo="{!ssP}" value="" />
+                                            </apex:actionFunction>
+
+                                            <apex:actionFunction name="loadOrganizationalUnits" action="{!fillOrganizationalUnitOptions}" rerender="orgUnitsPanel, distributorsPanel">
+                                                <apex:param name="classification" value="" assignTo="{!classification}" />
+                                            </apex:actionFunction>
+
+                                            <apex:actionFunction name="loadBrands" action="{!fillBrandOptions}" rerender="brandsPanel">
+                                                <apex:param name="classification" value="" assignTo="{!classification}" />
+                                            </apex:actionFunction>
+
+                                            <apex:actionFunction name="resetOrganizationalUnitsOptions" action="{!resetOrganizationalUnitOptions}" rerender="orgUnitsPanel, distributorsPanel" />
+
+                                            <apex:actionFunction name="resetBrandsOptions" action="{!resetBrandsOptions}" rerender="brandsPanel" />
+
+                                            <apex:actionFunction name="resetDistributorOptions" action="{!resetDistributorOptions}" rerender="distributorsPanel" />
+
+                                            <apex:actionFunction name="loadDistributors" action="{!fillDistributorOptions}" rerender="distributorsPanel">
+                                                <apex:param name="orgUnitsString" value="" assignTo="{!orgUnitsString}" />
+                                            </apex:actionFunction>
+
+                                            <apex:actionFunction name="resetClassification" action="{!resetClassification}" rerender="classificationPanel, orgUnitsPanel" />
+
+                                            <apex:actionFunction name="resetOrgUnits" action="{!resetOrganizationalUnits}" rerender="orgUnitsPanel, distributorsPanel" />
+
+                                            <h1 style="padding:6px;">Filters</h1>
+                                            <br/>
+                                            <apex:messages />
+                                            <apex:outputPanel id="orderWindowsPanel">
+                                                <div class="reports-filters-single reports-filters-order-windows">
+                                                    <h2>Order Windows</h2>
+                                                    <select class="orderWindowSelect" value="{!orderWindows}" size="8" multiple="true" onchange="checkAllowDownload();getShoppers(this.options[this.selectedIndex].value);">
+                                                        <apex:repeat value="{!orderWindowOptions}" var="ow">
+                                                            <option value="{!ow.value}" title="{!ow.label}">{!ow.label}</option>
+                                                        </apex:repeat>
+                                                    </select>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <!--<apex:outputPanel id="classificationPanel">
+                                                <div class="reports-filters-single reports-filters-classification">
+                                                    
+                                                </div>  
+                                            </apex:outputPanel>-->
+                                            <apex:outputPanel id="brandsPanel">
+                                                <div class="reports-filters-single reports-filters-brnads">
+                                                    <h2>Classification</h2>
+                                                    <apex:selectList value="{!classification}" multiselect="false" size="1" styleclass="classificationSelect" id="classificationSelect" onchange="selectionChanged();">
+                                                        <apex:selectOptions value="{!classificationOptions}" />
+                                                    </apex:selectList>
+
+                                                    <div style="height: 12px;" />
+
+                                                    <h2>Brands</h2>
+                                                    <select class="brandSelect" value="{!brands}" size="5" multiple="true" onchange="checkAllowDownload();">
+                                                        <apex:repeat value="{!brandOptions}" var="ow">
+                                                            <option value="{!ow.value}" title="{!ow.label}">{!ow.label}</option>
+                                                        </apex:repeat>
+                                                    </select>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel id="orgUnitsPanel">
+                                                <div class="reports-filters-single reports-filters-organizational-units">
+                                                    <h2>Organizational Units</h2>
+                                                    <select class="organizationalUnitsSelect" value="{!organizationalUnits}" size="8" multiple="true" onchange="ouChanged();">
+                                                        <apex:repeat value="{!organizationalUnitOptions}" var="ow">
+                                                            <option value="{!ow.value}" title="{!ow.label}">{!ow.label}</option>
+                                                        </apex:repeat>
+                                                    </select>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel id="distributorsPanel">
+                                                <div class="reports-filters-single reports-filters-distributors">
+                                                    <h2>Distributors</h2>
+                                                    <select class="distributorSelect" value="{!distributors}" size="8" multiple="true" onchange="checkAllowDownload();">
+                                                        <apex:repeat value="{!distributorOptions}" var="ow">
+                                                            <option value="{!ow.value}" title="{!ow.label}">{!ow.label}</option>
+                                                        </apex:repeat>
+                                                    </select>
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel id="shoppersPanel">
+                                                <div class="reports-filters-single reports-filters-shoppers">
+                                                    <h2>Shoppers</h2>
+                                                    <select class="shopperSelect" size="8" multiple="true" onchange="checkAllowDownload();">
+                                                    </select>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </apex:form>
+                                    </apex:outputPanel>
+                                </div>
+                                <div class="clearFloat" style="clear:both" />
+                                <apex:outputPanel id="linksPanel">
+                                    <div class="reports-content" style="margin-top: 20px; background: #BBBBBB; padding: 5px; margin-right: 5px;">
+                                        <h1 style="padding: 5px 0px;">Download</h1>
+                                        <div id="downloadPanel" style="padding: 5px 0px;"></div>
+                                        <table class="linksTable">
+                                            <apex:repeat value="{!reportsNames}" var="name">
+                                                <tr class="reportLinks">
+                                                    <td>{!name}</td>
+                                                    <td><a class="reportLink" id="{!reportsMap[name]}XLS" href="{!reportsMap[name]}XLS?id={!objId}" style="{!IF(objID==null, 'visibility:hidden', '')}">XLS</a></td>
+                                                    <td><a class="reportLink" id="{!reportsMap[name]}CSV" href="{!reportsMap[name]}CSV?id={!objId}" style="">CSV</a></td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                    <c:POS_Footer />
+                </div>
+            </div>
+        </div>
+        
+        <script>
+        
+            var $jq = jQuery.noConflict();
+            $jq(document).ready(function() {
+                $jq('hr').click( function(event) {
+                    $jq(this).hide();
+                    event.preventDefault();
+                });
+            });
+        
+            function selectionChanged(){ 
+                value = $jq('.classificationSelect').val();
+                $jq('.brandSelect').val('');
+                $jq('.organizationalUnitsSelect').val('');
+                $jq('.distributorSelect').val('');
+                if(value!="All"){                    
+                    loadOrganizationalUnits(value);
+                    loadBrands(value);
+                }
+                else{
+                    resetOrganizationalUnitsOptions();
+                    resetBrandsOptions();
+                }
+                checkAllowDownload();
+            }
+
+            function getShoppers(windowId) {
+                $jq('.shopperSelect').val('');
+                
+                /* Added statment for Case 00003925 and commented out "option.empty();"
+                 Modified By - Appirio Offshore (Rahul Chitkara)
+                 Date - 15th Feb 2013 */
+                
+                $jq('.shopperSelect').html('');
+                //options = $jq(".shopperSelect");
+                // remove the current options
+                //options.empty();
+                  // End for Case 00003925
+        
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.POS_ReportsController.getShopperWindowOptions}',
+                    windowId, 
+                    function(result, event){ 
+                        if(event.type == 'exception') {
+                            alert('Error fetching Shoppers! - ' + event.message);
+                        } else {
+                            /* Added statment for Case 00003925 and commented out "console.log();"
+                             Modified By - Appirio Offshore (Rahul Chitkara)
+                             Date - 15th Feb 2013 */
+                            //console.log(result);
+                            // add the new ones
+                            var valu ='';
+                            for(var i = 0; i < result.length; i++) {
+                                valu += '<option value="'+result[i]['Id']+'">'+result[i]['Name']+'</option>';
+                                //options.append(new Option(result[i]['Name'], result[i]['Id']));
+                            }
+                            $jq('.shopperSelect').html(valu);
+                            //End Case 00003925
+                        }               
+                    }, {escape: true}
+                );
+
+            }
+            
+            function ouChanged(){
+                value = $jq('.organizationalUnitsSelect').val() || [];
+                $jq('.distributorSelect').val('');
+                if(value!=null) {
+                    loadDistributors(value.join(","));
+                } else {
+                    resetDistributorOptions();
+                }
+                checkAllowDownload();
+            }
+            
+            function checkAllowDownload(){
+                ow = $jq('.orderWindowSelect').val() || [];
+                cl = $jq('.classificationSelect').val();
+                br = $jq('.brandSelect').val() || [];
+                ou = $jq('.organizationalUnitsSelect').val() || [];
+                ds = $jq('.distributorSelect').val() || [];
+                ss = $jq('.shopperSelect').val() || [];
+                
+                if((ow.length > 0)){
+                    unblockDownload(ow.join(","), cl, br.join(","), ou.join(","), ds.join(","), ss.join(","));
+                } else {
+                    blockDownload();
+                }
+
+                //console.log(ow.join(","));
+            }
+            
+            function blockDownload(){
+                $jq('#downloadPanel').text('Choose a filter in order to generate report.');
+                $jq('.reportLink').each( function(index, item) {
+                    $jq(item).attr('style', 'visibility:hidden');
+                });
+            }
+            
+            function unblockDownload(ow, cl, br, ou, ds, ss){
+                saveToTMP(ow, cl, br, ou, ds, ss);
+            }
+            
+            $jq(window).load(function(){
+                blockDownload();
+            });
+            
+        </script>
+        
+    </body>
+</html>
+</apex:page>

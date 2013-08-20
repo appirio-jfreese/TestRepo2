@@ -1,0 +1,123 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Auth" action="{!checkLoggedIn}">
+
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.LoginPage, 'style.css')}"/>
+	<div class="content-wrapper">
+        <!-- PAGE HEADER -->
+    	<div class="header">
+	        <div class="logotype">&nbsp;</div>            
+    	</div>  
+        <!-- PAGE CONTENT -->
+        <div class="content left">
+			<div class="login-holder">
+				<div class="login-error-short">
+					<apex:outputPanel id="messages">
+						<apex:messages styleClass="errorLogin" />
+					</apex:outputPanel>
+				</div>
+				<div class="login-box">
+					
+					<h2><apex:outputText value="{!$Label.Login_welcome_text}" escape="false" /></h2>
+					<p><apex:outputText value="{!$Label.Login_Message}" escape="false" /></p>
+					
+					<div class="login-form-wrapper">
+						<apex:form forceSSL="true" id="dataForm">
+							<apex:actionFunction name="logUser" action="{!logUser}"/>
+							<div class="user-name" style="margin: 5px 10px;  font-size: 17px;">
+								{!$Label.User_Name}<br/>
+								<apex:inputText value="{!userName}" id="username" styleClass="forceSubmit"/>
+							</div>
+							<div class="user-password" style="margin: 5px 10px; font-size: 17px;">
+								{!$Label.site.password}<br/>
+								<apex:inputSecret value="{!userPassword}" styleClass="forceSubmit"/><br />
+                                <span style="font-size: 11px;"><input type="checkbox" id="rememberUsername" /><label for="rememberUsername">{!$Label.RememberUsername}</label></span><br/>
+                            	<div style="font-size: 11px; margin: 7px 5px;">By entering this site you accept our <a href="{!$Page.Terms}" class="link-decoration">Terms and Conditions</a> and <a href="{!$Page.Privacy}" class="link-decoration">Privacy &amp; Cookies Notice</a>.</div>
+							</div>
+							<div class="login-button" style="margin: 0 10px;">
+								<button onclick="saveUsername();return false;" class="green">LOG IN</button>
+							</div>
+							<div class="login-help" style="padding-top: 5px;"><apex:outputLink value="{!$Page.ForgotUserName}">{!$Label.Forgot_UserName}<br/></apex:outputLink><apex:outputLink value="{!$Page.ForgotPassword}">{!$Label.Forgot_Password}</apex:outputLink></div>
+						</apex:form>
+					</div>
+					<apex:outputText value="{!$Label.NewUsers}" escape="false" styleClass="newUsersInfo" />
+				</div>
+			</div>
+        </div>
+        <!-- PAGE FOOTER -->
+		<div class="login-footer">
+			<a href="">&copy; Diageo 2011</a>
+		</div>
+    </div>
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>    
+    <script type="text/javascript" language="JavaScript">
+ 		jQuery('input.forceSubmit').keydown(function(e) {
+ 			if(!jQuery.browser.msie){
+ 				return;
+ 			}
+			if(e.keyCode == 13){
+				if(jQuery(this).parents('form').length != 0 ){
+					form = jQuery(this).parents('form');
+					if(form.find('input[type=submit]').length == 1){
+						form.find('input[type=submit]').trigger('click');
+					} else if(form.find('button').length == 1) {
+						form.find('button').trigger('click');
+					}
+				}
+			}
+        });       
+    </script>    
+	<script type="text/javascript" language="JavaScript">
+    function saveUsername() {
+        if (document.getElementById('rememberUsername').checked) {
+            setCookie('portalUsername', document.getElementById('{!$Component.dataForm.username}').value);
+        }
+        logUser();
+    }
+    
+	function setCookie(n, v, d) {
+	    if(arguments.length < 2) {
+	        return;
+	    }
+	    if (!v) {
+	        return false;
+	    }    
+	    var exp = '';
+	    if (arguments.length > 2) {
+	        d = parseInt(d, 10);
+			if (d > 0) {
+			    var now = new Date();
+			    then = now.getTime() + (d * 24 * 60 * 60 * 1000);
+			    now.setTime(then);
+			    exp = '; expires=' + now.toGMTString();
+			}        
+	    }
+	    document.cookie = n + "=" + escape(String(v)) + '; path=/' + exp;
+	}
+	
+	function readCookie(n) {
+	    var cookieContent = '';
+	    if (document.cookie.length > 0) {
+	        var cookieName = n+ '=';
+	        var cookieBegin = document.cookie.indexOf(cookieName);
+	        var cookieEnd = 0;
+	        if (cookieBegin > -1) {
+	            cookieBegin += cookieName.length;
+	            cookieEnd = document.cookie.indexOf(";",cookieBegin);
+	            if (cookieEnd < cookieBegin) {
+	                cookieEnd = document.cookie.length;
+	            }
+	            cookieContent = document.cookie.substring(cookieBegin,cookieEnd);
+	        }
+	    }
+	    return unescape(cookieContent);
+	}
+	
+	window.onload = function(){
+	    var el = document.getElementById('{!$Component.dataForm.username}');
+	    if (el && !el.value) {
+	        el.value = readCookie('portalUsername');     
+	    }
+	};
+	</script>
+
+</apex:page>

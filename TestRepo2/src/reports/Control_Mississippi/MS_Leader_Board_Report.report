@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Goal__c.Actions__r$Account__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Actions__r$Status__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Owner</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Name</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Actions__r$Account__c.Doing_Business_As__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Actions__r$Name</field>
+    </columns>
+    <columns>
+        <field>Goal__c.Actions__r$RecordType</field>
+    </columns>
+    <columns>
+        <field>Goal__c$RecordType</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Minimum_of_Accounts__c</field>
+    </columns>
+    <description>Showing Multiple Goals Assigned Out by Reps</description>
+    <format>Tabular</format>
+    <name>MS - Leader Board Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Goals_Actions_Territories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Goal__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

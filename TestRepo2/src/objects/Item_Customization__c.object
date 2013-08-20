@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>POS Project: object that represents different customizations that a catalog item may have</description>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>Custom_Attribute_Length__c</fullName>
+        <externalId>false</externalId>
+        <label>Custom Attribute Length</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item__c</fullName>
+        <externalId>false</externalId>
+        <label>Item</label>
+        <referenceTo>Item__c</referenceTo>
+        <relationshipLabel>Item Customizations</relationshipLabel>
+        <relationshipName>Item_Customizations</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Magento_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Magento ID</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Item Customization</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Custom Attribute Label</label>
+        <type>Text</type>
+    </nameField>
+    <namedFilters>
+        <fullName>nf_01IZ00000000IRTMA2_00NZ0000000IIo5MAG</fullName>
+        <active>true</active>
+        <errorMessage>The Item Customization selected must belong to the Cart Item&apos;s related Item</errorMessage>
+        <field>Cart_Item__c.Item_Customization__c</field>
+        <filterItems>
+            <field>Item_Customization__c.Item__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Item__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Cart Item_Item Customization</name>
+        <sourceObject>Cart_Item__c</sourceObject>
+    </namedFilters>
+    <pluralLabel>Item Customizations</pluralLabel>
+    <searchLayouts>
+        <searchFilterFields>NAME</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Valid_Custom_Attribute_Length</fullName>
+        <active>true</active>
+        <description>Enforces the custom attribute length to be a valid number</description>
+        <errorConditionFormula>Custom_Attribute_Length__c &lt; 1</errorConditionFormula>
+        <errorDisplayField>Custom_Attribute_Length__c</errorDisplayField>
+        <errorMessage>Please provide a valid custom attribute length</errorMessage>
+    </validationRules>
+</CustomObject>

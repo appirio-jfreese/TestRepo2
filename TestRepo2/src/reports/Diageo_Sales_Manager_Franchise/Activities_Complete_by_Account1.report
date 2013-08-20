@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Action__c$Name</field>
+    </columns>
+    <columns>
+        <field>Action__c.Action_Product_Links__r$Name</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Action__c$Status__c</column>
+            <operator>equals</operator>
+            <value>Closed - Complete</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Goal__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Owner</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c$Account__c.Account_Name_Street_Address__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Activities Complete by Account</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Actions_with_Goals_Brands__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Action__c$Due_Date__c</dateColumn>
+        <interval>INTERVAL_THISMONTH</interval>
+    </timeFrameFilter>
+</Report>

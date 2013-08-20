@@ -1,0 +1,5 @@
+<apex:page controller="POS_ReportBudgetInfo" ContentType="application/vnd.ms-excel#POS_BudgetVsActualSpend.csv" cache="true" action="{!initializerAction}">Order Window,Account,Shopper,Brand,Brand Type,Budgeted Amount,Spent Amount
+<apex:repeat value="{!budgets}" var="budget"> 
+{!budget.Order_Window__r.Name},{!budget.Account__r.Name},"{!budget.Shopper__r.Name}",{!budget.Brand__r.Name},{!budget.Brand__r.Brand_Type__c},"<apex:outputText value="{0, number, #0.00}"><apex:param value="{!budget.Amount__c}" /></apex:outputText>","<apex:outputText value="{0, number, #0.00}"><apex:param value="{!budget.My_Spent_Amount__c}" /></apex:outputText>"
+</apex:repeat>
+</apex:page>

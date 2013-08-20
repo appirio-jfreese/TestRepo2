@@ -1,0 +1,247 @@
+<apex:component >
+    <apex:attribute name="breadcrumbLinks" description="" type="pageLink[]" required="true"/>
+    <apex:attribute name="menuLinks" description="" type="pageLink[]" required="true"/>
+    <apex:attribute name="showExtendedBreancrumbs" description="" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="breadcrumbHolder" description="" type="BreadcrumbsHolder" required="false" />
+    
+      
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            //hover effect for home button
+            jQuery("div.breadcrumb-home").hover(
+                function(){jQuery(this).addClass('over')},
+                function(){jQuery(this).removeClass('over')}
+            );
+            jQuery("div.breadcrumb-nav").hover(
+                function(){jQuery(this).addClass('over')},
+                function(){jQuery(this).removeClass('over')}
+            );
+            jQuery("button").live('mouseenter', function(){
+                jQuery(this).addClass('over');
+            });
+            jQuery("button").live('mouseleave', function(){
+                jQuery(this).removeClass('over');
+            });            
+            //site navigation menu
+            
+            var navmenu = null;
+            jQuery("body").bind('touchstart',function(event) {
+                if (jQuery(event.target).hasClass("breadcrumb-nav") || jQuery(event.target).parents().hasClass("breadcrumb-nav")){
+                 
+                }else{
+                    if(navmenu != null){
+                        navmenu.parents().find("ul.subnav").hide();
+                        jQuery('.active-item').removeClass('active-item');                      
+                    }           
+                }
+            
+            });
+
+            jQuery("div.breadcrumb-home").live('click', function(){
+                window.location = "{!$Page.HomePage}";
+            });
+            
+            jQuery("ul.topnav span.topNavRoot").live('click',function() {
+                if(jQuery(this).parent().find("ul.subnav").first().find('li').length == 0){
+                    return false;
+                }
+                jQuery("ul.subnav").hide();
+                jQuery(this).parent().find("ul.subnav").first().show();
+                
+                jQuery(this).parents('ul:first').parent().hover(
+                    function() {},
+                    function() {  
+                       	jQuery(this).parent().find("ul.subnav").hide();
+                       	jQuery(this).parent().find('.active-item').removeClass('active-item');
+                    });
+                navmenu = jQuery(this);   
+            });
+
+            jQuery("a.topNavRoot").live('mouseenter',function() {
+                if(jQuery(this).parent().find("ul.subnav").first().find('li').length == 0){
+                    return false;
+                }
+                jQuery(this).parent().find("ul.subnav").first().stop(true,true).show();
+                jQuery(this).addClass('active-item');
+                jQuery(this).parent().hover(
+                    function() {},
+                    function() {
+                       	jQuery(this).stop(true,true).find("ul.subnav").hide();
+                       	jQuery(this).parent().find('.active-item').removeClass('active-item');
+                    });
+                navmenu = jQuery(this);
+            });
+            
+            jQuery("div.breadcrumb-home").live('click', function(){
+                window.location = "{!$Page.HomePage}";
+            });
+            
+            
+        });
+    </script>
+       
+    <div class="breadcrumb">
+    <table>
+        <tr>
+            <td style="vertical-align:middle;width:45px;"><a href="{!$Page.HomePage}" class="box-link"><div class="breadcrumb-home">&nbsp;</div></a><div class="breadcrumb-sep">&nbsp;</div></td>
+            <td style="vertical-align:middle;width:175px;">
+                <div class="breadcrumb-nav">
+                    <ul class="topnav">  
+                        <li>
+                            <ul class="subnav">  
+                                <apex:repeat value="{!menuLinks}" var="menuLink">
+                                    <li class="{!menuLink.className}">
+                                        <ul class="subnav subnav2">  
+                                             <apex:repeat value="{!menuLink.subLinks}" var="subMenuLink">
+                                                 <li class="{!subMenuLink.className}" ><a href="{!subMenuLink.link}">{!subMenuLink.linkName}</a></li>
+                                             </apex:repeat>
+                                        </ul>
+                                        <a name="subnavtitle" href="{!menuLink.link}" onlick="{!if(menuLink.subLinks.size==0,'','return false;')}" class="{!if(menuLink.subLinks.size==0,'','topNavRoot')}" target="{!IF(OR(menuLink.linkName == 'DWS', menuLink.linkName == 'diageowines.com'), '_blank', '_self')}">{!menuLink.linkName}</a>
+                                    </li>                                   
+                                </apex:repeat>
+                            </ul>  
+                            <span class="topNavRoot">Site Navigation</span>
+                        </li>  
+                    </ul>  
+                </div>
+                <div class="breadcrumb-sep">&nbsp;</div>
+          </td>
+          <td style="vertical-align:middle;width:565px;">
+            <apex:outputPanel rendered="{!if(showExtendedBreancrumbs = false, 'true', 'false')}">  
+                 <div class="breadcrumb-links">
+                    <apex:repeat rows="1" value="{!breadcrumbLinks}" var="breadcrumbLink">
+                        <a class="{!IF(breadcrumbLinks.size = 1, 'breadcrumb-links-current', '')}" href="{!breadcrumbLink.link}">{!breadcrumbLink.linkName}</a>
+                    </apex:repeat>
+                    <apex:repeat first="1" value="{!breadcrumbLinks}" var="breadcrumbLink">
+                        <span>&nbsp;</span><a class="{!IF(breadcrumbLinks[breadcrumbLinks.size-1].linkName = breadcrumbLink.linkName && breadcrumbLinks[breadcrumbLinks.size-1].link = breadcrumbLink.link, 'breadcrumb-links-current', '')}" href="{!breadcrumbLink.link}">{!breadcrumbLink.linkName}</a>
+                    </apex:repeat>
+                </div>
+            </apex:outputPanel>     
+			<apex:outputPanel rendered="{!if(showExtendedBreancrumbs = true, 'true', 'false')}">
+				<style>
+				.extrabreadcrumbs .subnav{
+					width: 140px !important;
+				}
+				.extrabreadcrumbs ul.topnav li ul.subnav li a {
+					width: 124px !important;
+				}
+				.extrabreadcrumbs ul.subnav {
+					width: 140px !important;
+				}
+				.extrabreadcrumbs ul.topnav li ul.subnav li {
+					width: 140px !important;
+				}
+				.extrabreadcrumbs ul.topnav li ul.subnav2 {
+					left: 140px !important;
+				}
+				</style>             
+                        <apex:repeat value="{!breadcrumbHolder.ouSteps}" var="ouTree">
+                            <div class="breadcrumb-nav extrabreadcrumbs" style="background: none !important; padding-left: 2px; margin-left: -2px;">    
+                                <div class="breadcrumbs-wrapper-ext" style="float: left;">
+                                    <apex:repeat value="{!ouTree}" var="parentOu">
+                                        <ul class="topnav" style="padding-left: 0px !important;">  
+                                            <li class="menu-col">
+                                                <ul class="subnav" style="top: 29px !important; left: 0px !important; width: 140px !important;">
+                                                    <apex:variable value="{!1}" var="currentStage"/>
+                                                    <apex:repeat value="{!parentOu.organizationalUnits}" var="subOu">
+                                                        <li class="menu-col">
+                                                            <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                 <apex:repeat value="{!subOu.organizationalUnits}" var="subSubOu">
+                                                                     <li class="menu-col">
+                                                                        <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                             <apex:repeat value="{!subSubOu.organizationalUnits}" var="subSubSubOu">
+                                                                                 <li class="menu-col">
+                                                                                    <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                                         <apex:repeat value="{!subSubSubOu.organizationalUnits}" var="subSubSubSubOu">
+                                                                                             <li class="menu-col">
+                                                                                                <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                                                     <apex:repeat value="{!subSubSubSubOu.organizationalUnits}" var="subSubSubSubSubOu">
+                                                                                                         <li class="menu-col">
+                                                                                                            <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                                                                 <apex:repeat value="{!subSubSubSubSubOu.organizationalUnits}" var="subSubSubSubSubSubOu">
+                                                                                                                     <li class="menu-col">
+                                                                                                                        <!--  -->
+                                                                                                                        <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                                                                             <apex:repeat value="{!subSubSubSubSubSubOu.organizationalUnits}" var="subSubSubSubSubSubSubOu">
+                                                                                                                                 <li class="menu-col">
+                                                                                                                                    <ul class="subnav subnav2" style="width: 140px !important;">  
+                                                                                                                                         <apex:repeat value="{!subSubSubSubSubSubSubOu.organizationalUnits}" var="subSubSubSubSubSubSubSubOu">
+                                                                                                                                             <li class="menu-col">
+                                                                        
+                                                                                                                                                <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubSubSubSubSubSubSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubSubSubSubSubSubSubOu.organizationalUnitName}</a>
+                                                                                                                                             </li>
+                                                                                                                                         </apex:repeat>
+                                                                                                                                         <apex:repeat value="{!subSubSubSubSubSubSubOu.distributors}" var="subSubSubSubSubSubSubSubDistributors">
+                                                                                                                                             <li class="menu-col"><a onclick='distributorsContent("{!subSubSubSubSubSubSubSubDistributors.Id}","{!subSubSubSubSubSubSubSubDistributors.name}", "{!subSubSubSubSubSubSubOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubSubSubSubSubSubSubDistributors.Name}</a></li>
+                                                                                                                                         </apex:repeat>
+                                                                                                                                    </ul>
+                                                                                                                                    <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubSubSubSubSubSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubSubSubSubSubSubOu.organizationalUnitName}</a>
+                                                                                                                                 </li>
+                                                                                                                             </apex:repeat>
+                                                                                                                             <apex:repeat value="{!subSubSubSubSubSubOu.distributors}" var="subSubSubSubSubSubSubDistributors">
+                                                                                                                                 <li class="menu-col"><a onclick='distributorsContent("{!subSubSubSubSubSubSubDistributors.Id}","{!subSubSubSubSubSubSubDistributors.name}", "{!subSubSubSubSubSubOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubSubSubSubSubSubDistributors.Name}</a></li>
+                                                                                                                             </apex:repeat>
+                                                                                                                        </ul>
+                                                                                                                        <!--  -->
+                                                                                                                        <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubSubSubSubSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubSubSubSubSubOu.organizationalUnitName}</a>
+                                                                                                                     </li>
+                                                                                                                 </apex:repeat>
+                                                                                                                 <apex:repeat value="{!subSubSubSubSubOu.distributors}" var="subSubSubSubSubSubDistributors">
+                                                                                                                     <li class="menu-col"><a onclick='distributorsContent("{!subSubSubSubSubSubDistributors.Id}","{!subSubSubSubSubSubDistributors.name}", "{!subSubSubSubSubOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubSubSubSubSubDistributors.Name}</a></li>
+                                                                                                                 </apex:repeat>
+                                                                                                            </ul>
+                                                                                                            <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubSubSubSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubSubSubSubOu.organizationalUnitName}</a>
+                                                                                                         </li>
+                                                                                                     </apex:repeat>
+                                                                                                     <apex:repeat value="{!subSubSubSubOu.distributors}" var="subSubSubSubSubDistributors">
+                                                                                                         <li class="menu-col"><a onclick='distributorsContent("{!subSubSubSubSubDistributors.Id}","{!subSubSubSubSubDistributors.name}", "{!subSubSubSubOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubSubSubSubDistributors.Name}</a></li>
+                                                                                                     </apex:repeat>
+                                                                                                </ul>
+                                                                                                <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubSubSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubSubSubOu.organizationalUnitName}</a>
+                                                                                             </li>
+                                                                                         </apex:repeat>
+                                                                                         <apex:repeat value="{!subSubSubOu.distributors}" var="subSubSubSubDistributors">
+                                                                                             <li class="menu-col"><a onclick='distributorsContent("{!subSubSubSubDistributors.Id}","{!subSubSubSubDistributors.name}", "{!subSubSubOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubSubSubDistributors.Name}</a></li>
+                                                                                         </apex:repeat>
+                                                                                    </ul>
+                                                                                    <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubSubOu.organizationalUnitName}</a>
+                                                                                 </li>
+                                                                             </apex:repeat>
+                                                                             <apex:repeat value="{!subSubOu.distributors}" var="subSubSubDistributors">
+                                                                                 <li class="menu-col"><a onclick='distributorsContent("{!subSubSubDistributors.Id}","{!subSubSubDistributors.name}", "{!subSubOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubSubDistributors.Name}</a></li>
+                                                                             </apex:repeat>
+                                                                        </ul>
+                                                                        <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subSubOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subSubOu.organizationalUnitName}</a>
+                                                                     </li>
+                                                                 </apex:repeat>
+                                                                 <apex:repeat value="{!subOu.distributors}" var="subSubDistributors">
+                                                                     <li class="menu-col"><a onclick='distributorsContent("{!subSubDistributors.Id}","{!subSubDistributors.name}", "{!subOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!subSubDistributors.Name}</a></li>
+                                                                 </apex:repeat>
+                                                            </ul>
+                                                            <a class="topNavRoot" onclick='nextOrganizationalUnit("{!subOu.organizationalUnitId}","{!round(currentStage,0)}"); return false;'>&raquo; {!subOu.organizationalUnitName}</a>
+                                                        </li>                                   
+                                                    </apex:repeat>
+                                                    <apex:repeat value="{!parentOu.distributors}" var="parentDistributors">
+                                                  		<li class="menu-col"><a onclick='distributorsContent("{!parentDistributors.Id}","{!parentDistributors.name}", "{!parentOu.organizationalUnitId}", "{!round(currentStage,0)}"); return false;'>{!parentDistributors.Name}</a></li>
+                                                    </apex:repeat>
+                                                </ul>  
+                                                <span class="topNavRoot" style="white-space:nowrap; font-size: 14px; font-weight: normal;"><div class="button-bread" style="height: 30px !important;">{!parentOu.organizationalUnitName}</div></span>
+                                            </li>  
+                                        </ul>
+                                        <apex:variable value="{!floor(currentStage + 1)}" var="currentStage"/>
+                                    </apex:repeat>
+                                </div>
+	                            <div class="breadcrumb-links" style="float: left;">
+	                            	<span>&nbsp;</span>
+	                        	</div>
+	                    	</div>
+	                   	</apex:repeat>
+            	</apex:outputPanel> 
+            </td>         
+        </tr>
+    </table>
+        
+        
+
+    </div>
+</apex:component>

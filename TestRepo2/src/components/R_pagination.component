@@ -1,0 +1,39 @@
+<apex:component >
+	<apex:attribute name="pageNumbers" description="" type="List" required="true"/>
+	<apex:attribute name="totalNumberOfPages" description="" type="Integer" required="false"/>
+	<apex:attribute name="numberOfCurrentPage" description="" type="Integer" required="true"/>
+	<apex:attribute name="isNewContent" description="" type="Boolean" required="false"/>    
+	<apex:attribute name="showPager" description="" type="Boolean" required="false" default="true"/>    
+	<apex:attribute name="showNewContentMsg" description="" type="Boolean" required="false" default="true"/> 
+        	
+  <div class="float-left paginate msg-paginate" style="text-align: left !important; float: left; width: 40%;">      
+   <apex:outputPanel rendered="{! IF(isNewContent != false && showNewContentMsg , 'true', 'false')}">
+       <span class="defaultTheme" style="line-height: 25px;"><span class="bold">*</span> Uploaded since your last visit</span> 
+   </apex:outputPanel>
+  </div> 
+  
+  <apex:outputPanel rendered="{!IF(AND(0<totalNumberOfPages,showPager==true),'true','false')}">          
+		<div class="paging-simple {!IF(showPager==true,'','hidden')}" >  			
+			<!-- <apex:outputPanel rendered="{! if( numberOfCurrentPage != 1, 'true','false' )}"> -->
+			<apex:outputPanel >
+				<!-- <a class="number" onclick="showFirstPage()">First</a>-->
+				<a href="javascript:;" class="prev {!IF(numberOfCurrentPage != 1,'','disabled')} "  onclick="{!IF(numberOfCurrentPage != 1,'showPrevPage();return false;','return false;')}"><span></span></a>
+			</apex:outputPanel>
+
+			<apex:repeat value="{!pageNumbers}" var="pageNumber">
+				<apex:outputPanel rendered="{! if( numberOfCurrentPage != pageNumber, 'true','false' )}">
+     			<a href="javascript:;" onclick="showPageRequested({!pageNumber})" class="number">{!pageNumber}</a>
+  			</apex:outputPanel> 
+  			<apex:outputPanel rendered="{! if( numberOfCurrentPage == pageNumber, 'true','false' )}">
+     			<a href="javascript:;" class="number current">{!pageNumber}</a>
+  			</apex:outputPanel> 
+			</apex:repeat>
+
+			<!-- <apex:outputPanel rendered="{! if( totalNumberOfPages > 1 && numberOfCurrentPage < totalNumberOfPages, 'true','false' )}">
+    		<a class="next" onclick="showNextPage()"><span></span></a>
+				<!-- <a class="number" onclick="showLastPage()">Last</a> -->
+      		<!-- </apex:outputPanel> -->
+      		<a href="javascript:;" class="next {!IF(AND(totalNumberOfPages > 1,numberOfCurrentPage < totalNumberOfPages),'','disabled')}" onclick="{!IF(AND(totalNumberOfPages > 1,numberOfCurrentPage < totalNumberOfPages),'showNextPage();return false;','return false;')}"><span></span></a>
+  	</div>
+	</apex:outputPanel>
+</apex:component>

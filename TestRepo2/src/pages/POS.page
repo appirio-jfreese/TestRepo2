@@ -1,0 +1,73 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_POS">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.POS, 'style'+siteTheme+'.css')}"/>
+    <style type="text/css">
+        body, html{
+        	overflow: hidden;
+        }
+    </style>
+    <c:loader />
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}"  />
+
+		<script type="text/javascript">
+	    	pageViewed('POS');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+            <!-- Internal user view -->
+            <apex:outputPanel rendered="{!isInternalUser==true}">
+                <div class="link-header">
+                    <div class="title-text"><apex:outputText value="POS Agency Links"/></div>
+                </div>
+                <br/>
+                <table class="center">
+                    <tr>
+                        <td><a href="http://diageo.imsfastpak.com/" target="_blank" onclick="pageViewed('POS - http://diageo.imsfastpak.com/');"><img src="{!URLFOR($Resource.POS, 'images/ims.png')}" /></a></td>
+                        <td><a href="https://diageo.mytangerineorders.com/login/" target="_blank" onclick="pageViewed('POS - https://diageo.mytangerineorders.com/login/');"><img src="{!URLFOR($Resource.POS, 'images/tangerine.png')}" /></a></td>
+                        <td><a href="http://www.instantimpact.com/" target="_blank" onclick="pageViewed('POS - http://www.instantimpact.com/');"><img src="{!URLFOR($Resource.POS, 'images/centiv.png')}" /></a></td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+                <div class="link-header">
+                    <div class="title-text"><apex:outputText value="Spirits Planning"/></div>
+                </div>
+                <ul class="link-list">
+                        <li><a href="{!$Page.SpiritsPlanning}?section={!posAdHocFolderId}" onclick="pageViewed('POS - POS Ad hoc');">POS Ad hoc</a></li>
+                        <li><a href="{!$Page.SpiritsPlanning}?section={!posToolFolderId}" onclick="pageViewed('POS - POS Tool');">POS Tool</a></li>
+                </ul>
+            </apex:outputPanel>
+            
+            <!-- Distributor user view -->
+            <apex:outputPanel rendered="{!isInternalUser==false}">
+                <div class="link-header">
+                    <div class="title-text"><apex:outputText value="POS Agency Links"/></div>
+                </div>
+                <ul class="link-list">
+                    <li><a href="http://www.instantimpact.com/" target="_blank" onclick="pageViewed('POS - http://www.instantimpact.com/');"><img src="{!URLFOR($Resource.POS, 'images/centiv.png')}" /></a></li>
+                </ul>
+            </apex:outputPanel>
+        </div>        
+        
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <c:ajaxLoader />
+      	<script type="text/javascript">		
+			jQuery(document).ready(function() {
+				hideDialog('startingLoader');
+				hideDialog('startingLoaderOverlayDisable');
+				jQuery("body").css("overflow","auto");
+				jQuery("html").css("overflow","auto");
+			});	
+		</script>
+
+</apex:page>

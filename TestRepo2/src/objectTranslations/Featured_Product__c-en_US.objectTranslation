@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Featured Product</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Featured Products</value>
+    </caseValues>
+    <fields>
+        <label><!-- Diageo Product --></label>
+        <name>Diageo_Product__c</name>
+        <relationshipLabel><!-- Featured Products --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Featured Products --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Featured Product Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

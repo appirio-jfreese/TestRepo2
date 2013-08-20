@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Organizational Unit</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Organizational Units</value>
+    </caseValues>
+    <fields>
+        <label><!-- District Code --></label>
+        <name>District_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hierarchy Location --></label>
+        <name>Hierarchy_Location__c</name>
+    </fields>
+    <fields>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+        <picklistValues>
+            <masterLabel>Division</masterLabel>
+            <translation><!-- Division --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Market</masterLabel>
+            <translation><!-- Market --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Region</masterLabel>
+            <translation><!-- Region --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>State District</masterLabel>
+            <translation><!-- State District --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Migration ID --></label>
+        <name>Migration_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- Organizational Units --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Responsible Code --></label>
+        <name>Responsible_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>POS Organizational Unit Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Goal Brand</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Goal Brands</value>
+    </caseValues>
+    <fields>
+        <label><!-- CT Loaded --></label>
+        <name>CT_Loaded__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dave Flag --></label>
+        <name>Dave_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duplication Key --></label>
+        <name>Duplication_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+        <relationshipLabel><!-- Goal Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Ind. Brand / Size --></label>
+        <name>Ind_Brand_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Individual Brand --></label>
+        <name>Individual_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Match Key --></label>
+        <name>Match_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Org ID --></label>
+        <name>New_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Org --></label>
+        <name>New_Org__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Classification --></label>
+        <name>Product_Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Group --></label>
+        <name>Product_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Report Brand --></label>
+        <name>Report_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub Brand --></label>
+        <name>Sub_Brand__c</name>
+    </fields>
+    <layouts>
+        <layout>Goal Brand Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Goal Product Link Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

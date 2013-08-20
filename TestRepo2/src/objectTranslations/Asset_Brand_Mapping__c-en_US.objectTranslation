@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Asset Brand Mapping</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Asset Brand Mappings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assigned --></label>
+        <name>Assigned__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available --></label>
+        <name>Available__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Asset --></label>
+        <name>Diageo_Asset__c</name>
+        <relationshipLabel><!-- Asset Brand Mappings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recipe Brand --></label>
+        <name>Recipe_Brand__c</name>
+        <relationshipLabel><!-- Asset Brand Mappings --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>*Control - Director Reports</name>
+    <publicFolderAccess>ReadOnly</publicFolderAccess>
+    <sharedTo>
+        <role>Division_Sales_Director_East</role>
+        <role>Division_Sales_Director_West</role>
+        <role>MarketingDirectors191001</role>
+        <role>NASW_Ctrl_East_AL_Director</role>
+        <role>NASW_Ctrl_East_ME_NH_VT_Sales_Director</role>
+        <role>NASW_Ctrl_East_MS_Director</role>
+        <role>NASW_Ctrl_East_NC_Director</role>
+        <role>NASW_Ctrl_East_PA_Director</role>
+        <role>NASW_Ctrl_East_VA_WV_Director</role>
+        <role>NASW_Ctrl_East_VA_WV_Director_Diageo</role>
+        <role>NASW_Ctrl_West_Director_of_Comm_Mktg</role>
+        <role>NASW_Ctrl_West_IA_Director</role>
+        <role>NASW_Ctrl_West_ID_Director</role>
+        <role>NASW_Ctrl_West_MI_Chain_Director</role>
+        <role>NASW_Ctrl_West_MI_City_Team_Director</role>
+        <role>NASW_Ctrl_West_MI_Commercial_MKTing_Director</role>
+        <role>NASW_Ctrl_West_MI_Director</role>
+        <role>NASW_Ctrl_West_MI_Off_Premise_Director</role>
+        <role>NASW_Ctrl_West_MI_On_Premise_Director</role>
+        <role>NASW_Ctrl_West_MI_SAM_Director</role>
+        <role>NASW_Ctrl_West_MO_Director</role>
+        <role>NASW_Ctrl_West_Mountain_State_Director</role>
+        <role>NASW_Ctrl_West_OH_Director</role>
+        <role>NASW_Ctrl_West_OH_North_Director</role>
+        <role>NASW_Ctrl_West_OH_On_Premise_Director</role>
+        <role>NASW_Ctrl_West_OH_South_Director</role>
+        <role>NASW_Ctrl_West_OR_Director</role>
+        <role>NASW_Ctrl_West_UT_Director</role>
+        <role>NASW_Ctrl_West_WY_Director</role>
+        <role>NASW_Division_Sales_Director_East</role>
+        <role>NASW_Division_Sales_Director_West</role>
+        <role>NASW_State_Director_East</role>
+        <role>NASW_State_Director_West</role>
+        <role>Sales_Director_East</role>
+        <role>Sales_Director_West</role>
+    </sharedTo>
+</ReportFolder>

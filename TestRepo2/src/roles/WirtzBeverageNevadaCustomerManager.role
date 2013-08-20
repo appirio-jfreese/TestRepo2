@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Edit</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <description>Wirtz Beverage Nevada Customer Manager</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>Wirtz Beverage Nevada Customer Manager</name>
+    <opportunityAccessLevel>Read</opportunityAccessLevel>
+    <parentRole>WirtzBeverageNevadaCustomerExecutive</parentRole>
+</Role>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>BrandBottle_Size__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BrandBottle Size</label>
+        <referenceTo>BrandBottle_Size__c</referenceTo>
+        <relationshipLabel>Survey Innovation / Sustainovation</relationshipLabel>
+        <relationshipName>Survey_Layout_Brand_Bottle_Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Survey_Layout__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Survey Layout</label>
+        <referenceTo>Survey_Layout__c</referenceTo>
+        <relationshipName>Survey_Layout_Brand_Bottle_Items</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <label>Survey Innovation / Sustainovation</label>
+    <nameField>
+        <displayFormat>SLBBIN-{00000}</displayFormat>
+        <label>Survey Layout Brand Bottle Item Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Survey Innovation / Sustainovation</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

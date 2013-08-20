@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Control - ME, NH &amp; VT</name>
+    <publicFolderAccess>ReadWrite</publicFolderAccess>
+    <sharedTo>
+        <group>Control_ME_NH_VT_Reporting_Group</group>
+        <group>Jason_and_Pete_NASW</group>
+    </sharedTo>
+</ReportFolder>

@@ -1,0 +1,1225 @@
+<apex:page controller="GoalCreation2Controller"
+		   tabStyle="My_Goals__tab"
+		   sidebar="false">
+		   
+	<head>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-1.7.2.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-ui-1.8.21.custom.min.js')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.ACPJQuery, 'css/custom-theme/jquery-ui-1.8.21.custom.css')}"/>
+		<!-- 
+			<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/lib/jquery-1.7.min.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/lib/jquery-ui-1.8.16.custom.min.js')}"/>
+			<apex:stylesheet value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/css/smoothness/jquery-ui-1.8.16.custom.css')}"/>
+		-->
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/lib/jquery.event.drag-2.0.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.core.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.editors.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.grid.js')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.JSSlickGrid, 'SlickGrid-master/slick.grid.css')}"/>
+		
+		<link rel="stylesheet" type="text/css" href="{!$Resource.GC2PCSS}" />
+	</head>
+		
+	<script>
+		var j$ = jQuery.noConflict();
+		
+		var onSPLs;
+		var offSPLs;
+		var isGridShown = false;
+		
+		var data;
+		var grid;
+		var columnsCase;
+		var columnsNoCase;
+		var options;
+		
+		var goalsToCreate;
+		var goalsIdsToDelete;
+		
+		beenFocused = true;
+		
+		j$(document).ready(function() {
+			checkToBuildSPLs();
+		});
+		
+		function checkToBuildSPLs(){
+			var isGridShown = j$('#splGrid').length > 0;
+			if(isGridShown && getUserMode() != ''){
+				buildGrid();
+				readSPLs();
+			}
+		}
+		
+		function buildGrid(){
+			columnsCase = [
+				{id: "stateCol", name: "State", field: "state", width: 60, cssClass: "cell-left-align"}
+			   ,{id: "goalForCol", name: "Goal For", field: "userName", width: 180, cssClass: "cell-left-align"}
+			   ,{id: "accsAvailCol", name: "Accounts", field: "accsAvail", width: 80, cssClass: "cell-right-align"}
+			   ,{id: "goalCol", name: "Goal", field: "goal", width: 80, cssClass: "cell-right-align", editor: Slick.Editors.Integer}
+			   ,{id: "casesCol", name: "Cases", field: "cases", width: 80, cssClass: "cell-right-align", editor: Slick.Editors.Integer}
+			   ,{id: "commentsCol", name: "Comments", field: "comments", width: 520, cssClass: "cell-left-align", editor: Slick.Editors.Text}
+			];
+			columnsNoCase = [
+				{id: "stateCol", name: "State", field: "state", width: 60, cssClass: "cell-left-align"}
+			   ,{id: "goalForCol", name: "Goal For", field: "userName", width: 180, cssClass: "cell-left-align"}
+			   ,{id: "accsAvailCol", name: "Accounts", field: "accsAvail", width: 80, cssClass: "cell-right-align"}
+			   ,{id: "goalCol", name: "Goal", field: "goal", width: 80, cssClass: "cell-right-align", editor: Slick.Editors.Integer}
+			   ,{id: "commentsCol", name: "Comments", field: "comments", width: 600, cssClass: "cell-left-align", editor: Slick.Editors.Text}
+			];
+		
+			options = {
+				editable: true,
+				enableCellNavigation: true,
+				enableColumnReorder: false,
+				autoHeight: true
+			};
+				
+			data = [];
+			grid = new Slick.Grid("#splGrid", data, columnsNoCase, options);
+			
+			grid.onCellChange.subscribe(function (e, args) {
+				updateTotals();
+			});
+		}
+		
+		function setGridColumns(){
+			var helpText = 'Click to copy the value from the top row to all rows beneath';
+			if(getShowCases()){
+				grid.setColumns(columnsCase);
+				j$('[id*="goalCol"]').append('<div class="copyButton" onclick="doCopy(\'goal\', 3)" title="' + helpText + '">↓</div>');
+				j$('[id*="casesCol"]').append('<div class="copyButton" onclick="doCopy(\'cases\', 2)" title="' + helpText + '">↓</div>');
+				j$('[id*="commentsCol"]').append('<div class="copyButton" onclick="doCopy(\'comments\', 1)" title="' + helpText + '">↓</div>');
+			} else {
+				grid.setColumns(columnsNoCase);
+				j$('[id*="goalCol"]').append('<div class="copyButton" onclick="doCopy(\'goal\', 2)" title="' + helpText + '">↓</div>');
+				j$('[id*="commentsCol"]').append('<div class="copyButton" onclick="doCopy(\'comments\', 1)" title="' + helpText + '">↓</div>');
+			}
+		}
+		
+		function doCopy(field, timesToNavigate){
+			for(var i = 0; i < timesToNavigate; i++){
+				grid.navigateRight();
+			}
+			for(var i = 1; i < data.length; i++){
+				data[i][field] = data[0][field];
+			}
+			refreshGrid();
+		}
+		
+		function readSPLs(){
+			Visualforce.remoting.Manager.invokeAction(
+		        '{!$RemoteAction.GoalCreation2Controller.readSPLs}',
+		        getUserMode(),
+		        function(result, event) {
+		            if (event.status) {
+		            	onSPLs = buildSPLs(result[0], 'On-Premise - Control', getExistingIds('on'), getExistingGoals('on'), getExistingCases('on'), getExistingComments('on'));
+		            	offSPLs = buildSPLs(result[1], 'Off-Premise - Control', getExistingIds('off'), getExistingGoals('off'), getExistingCases('off'), getExistingComments('off'));
+		            	if(onSPLs.length > 0){
+		            		suggestPremiseValue('On-Premise - Control');
+		            	} else {
+		            		suggestPremiseValue('Off-Premise - Control');
+		            	}
+		            } else if (event.type === 'exception') {
+		                //handle errors
+		            } else {
+		                //handle unknown responses
+		            }
+		        }, 
+		        {escape: true}
+		    );
+		}
+		
+		function buildSPLs(source, premString, idString, goalString, caseString, commentString){
+			var idsByUserId = createIdValueHash(idString);
+			var goalsByUserId = createIdValueHash(goalString);
+			var casesByUserId = createIdValueHash(caseString);
+			var commentsByUserId = createIdValueHash(commentString);
+		
+			var splList = [];
+			for(var i = 0; i < source.length; i++){
+				var spl = source[i];
+				spl.premise = premString;
+				
+				if(getPrevSaveMode() != 'none'){
+					spl.existingId = idsByUserId.get(spl.userId);
+				}
+				
+				spl.goal = convertStringToInt(goalsByUserId.get(spl.userId));
+				spl.cases = convertStringToInt(casesByUserId.get(spl.userId));
+				
+				if(getGoalMode() == 'cascade' && getPrevSaveMode() == 'none'){
+					spl.comments = commentsByUserId.get(getUserId());
+				} else {
+					spl.comments = commentsByUserId.get(spl.userId);
+				}
+
+				splList.push(spl);
+			}
+			return splList;
+		}
+		
+		function createIdValueHash(longString){
+			var hash = new Hash();
+			
+			if(longString != ''){
+				longString = longString.substring(0, longString.length-2);
+				var split1 = longString.split('||');
+				for(var i = 0; i < split1.length; i++){
+					var split2 = split1[i].split('|');
+					hash.put(split2[0], split2[1]);
+				}
+			}
+			
+			return hash;
+		}
+		
+		function convertStringToInt(str){
+			var intg = parseInt(str);
+			if(isNaN(intg)){
+				return 0;
+			}
+			return intg;
+		}
+		
+		function premOrRecTypeChanged(){
+			setGridColumns();
+			
+			if(getPremiseValue() == 'On-Premise - Control'){
+				applyDataToGrid(onSPLs);
+			} else {
+				applyDataToGrid(offSPLs);
+			}
+			hideDateInputs();
+		}
+		
+		function applyDataToGrid(splArray){
+			data = splArray;
+			j$('#splGrid').css('height', 24 + 25 * data.length);
+			grid.setData(data);
+			setTimeout(refreshGrid(), 200);
+		}
+		
+		function refreshGrid(){
+			grid.invalidate();
+			updateTotals();
+			if(isGridShown == false){
+				isGridShown = true;
+				j$('#gridLoadingMessage').css('display', 'none');
+				j$('#splGrid').css('display', 'block');
+				j$('#buttonDiv').css('display', 'block');
+			}
+		}
+		
+		function updateTotals(){
+			var accCount = 0;
+			var goalCount = 0;
+			var caseCount = 0;
+			
+			for(var i = 0; i < data.length; i++){
+				accCount += data[i].accsAvail;
+				goalCount += data[i].goal;
+				caseCount += data[i].cases;
+			}
+			
+			var summaryString = '';
+			summaryString += getPremiseDispValue() + ' accounts targeted: ' + goalCount;
+			if(getGoalMode() != 'cascade'){
+				summaryString += ' (' + accCount + ' available)';
+				if(getShowCases()){
+					summaryString += ', ' + caseCount + ' cases targeted';
+				}
+			} else {
+				summaryString += ' (' + accCount + ' available, ' + getParentGoalNum() + ' requested)';
+				if(getShowCases()){
+					summaryString += ', ' + caseCount + ' cases targeted (' + getParentCasesNum() + ' requested)';
+				}
+			}
+			j$('#tabSummary').empty().append(summaryString);
+		}
+		
+		function finishGridEdit(){
+			grid.getEditController().commitCurrentEdit();
+			grid.resetActiveCell();
+		}
+		
+		function prepareSaveDialog(withSubmit){
+			finishGridEdit();
+			
+			var dialog = j$('#theDialog');
+			j$(dialog).empty();
+			if(withSubmit){
+				j$(dialog).dialog({draggable: false, modal: true, resizable: false, title: 'Submit Goals'});
+			} else {
+				j$(dialog).dialog({draggable: false, modal: true, resizable: false, title: 'Save Goals'});
+			}
+			
+			//controller-side checks
+			var errorMessage = getErrorMessage();
+			var onCount = 0;
+			var offCount = 0;
+			if(errorMessage == '' || errorMessage == 'CHECK_FOR_BOTH_PREMISES'){
+				//js-side checks
+				goalsToCreate = [];
+	
+				for(var i = 0; i < onSPLs.length; i++){
+					if(onSPLs[i].goal > 0){
+						onCount++;
+						goalsToCreate.push(onSPLs[i]);
+					}
+				}
+				
+				for(var i = 0; i < offSPLs.length; i++){
+					if(offSPLs[i].goal > 0){
+						offCount++;
+						goalsToCreate.push(offSPLs[i]);
+					}
+				}
+				
+				if(goalsToCreate.length == 0){
+					if(withSubmit){
+						errorMessage = 'Please add a goal number to one or more line before submitting.';
+					} else {
+						errorMessage = 'Please add a goal number to one or more line before saving.';
+					}
+				}
+				
+				goalIdsToDelete = [];
+				for(var i = 0; i < onSPLs.length; i++){
+					if(onSPLs[i].goal == 0 && onSPLs[i].existingId != null){
+						goalIdsToDelete.push(onSPLs[i].existingId);
+					}
+				}
+				for(var i = 0; i < offSPLs.length; i++){
+					if(offSPLs[i].goal == 0 && offSPLs[i].existingId != null){
+						goalIdsToDelete.push(offSPLs[i].existingId);
+					}
+				}
+			}
+			
+			if(errorMessage != '' && errorMessage != 'CHECK_FOR_BOTH_PREMISES'){
+				j$(dialog).append('<p>' + errorMessage + '</p>');
+				j$(dialog).dialog( "option", "buttons", [
+					{text: "Ok", click: function() {
+						j$(this).dialog("close");
+					}}
+				]);
+			} else if(withSubmit != true){
+				//alert('DAVE TEST, PLEASE IGNORE ' + getDummyGoalArray());
+				j$(dialog).append('<p>Saving will create the goals so you can edit and/or submit them at a later time. Continue?</p>');
+				j$(dialog).dialog( "option", "buttons", [
+					{text: "Ok", click: function() {
+						performSave(false);
+					}},
+					{text: "Cancel", click: function() {
+						j$(this).dialog("close");
+					}}
+				]);
+			} else {
+				if(errorMessage == 'CHECK_FOR_BOTH_PREMISES' && onCount > 0 && offCount == 0){
+					j$(dialog).append('<p>Submitting will create ' + goalsToCreate.length + ' goals, and assign them to the appropriate users. Because you have only entered On-Premise goal numbers, you and the users below you will not be able to create Off-Premise goals or actions related to this goal. Continue?</p>');
+				} else if(errorMessage == 'CHECK_FOR_BOTH_PREMISES' && offCount > 0 && onCount == 0){
+					j$(dialog).append('<p>Submitting will create ' + goalsToCreate.length + ' goals, and assign them to the appropriate users. Because you have only entered Off-Premise goal numbers, you and the users below you will not be able to create On-Premise goals or actions related to this goal. Continue?</p>');
+				} else {
+					j$(dialog).append('<p>Submitting will create ' + goalsToCreate.length + ' goals, and assign them to the appropriate users. Continue?</p>');
+				}
+				j$(dialog).dialog( "option", "buttons", [
+					{text: "Ok", click: function() {
+						performSave(true);
+					}},
+					{text: "Cancel", click: function() {
+						j$(this).dialog("close");
+					}}
+				]);
+			}
+		}
+		
+		function performSave(withSubmit){
+			var dialog = j$('#theDialog');
+			j$(dialog).empty();
+			j$(dialog).dialog( "option", "buttons", []);
+			if(withSubmit == true){
+				j$(dialog).append('Submitting goals...');
+			} else {
+				j$(dialog).append('Saving goals...');
+			}
+			
+			var userMode = getUserMode();
+			var goalMode = getGoalMode();
+			var goalLevel;
+			if(userMode == 'sam'){
+				goalLevel = 'Director';
+			} else if(userMode == 'dir'){
+				goalLevel = 'Manager';
+			} else if(userMode == 'mgr'){
+				goalLevel = 'Rep';
+			}
+			var isManagerCreatingLocal = (userMode == 'mgr' && goalMode == 'createLocal');
+			
+			Visualforce.remoting.Manager.invokeAction(
+		        '{!$RemoteAction.GoalCreation2Controller.doSave}',
+		        withSubmit,
+		        getDummyGoalArray(),
+		        onSPLs,
+		        offSPLs,
+		        getDummyOnGoalId(),
+		        getDummyOffGoalId(),
+		        goalIdsToDelete,
+		        getPLs(),
+		        goalLevel,
+		        isManagerCreatingLocal,
+		        function(result, event) {
+		            if (event.status) {
+		            	//alert(result);
+		            	completeSave(result);
+		            } else if (event.type === 'exception') {
+		                //handle errors
+		            } else {
+		                //handle unknown responses
+		            }
+		        }, 
+		        {escape: true}
+		    );
+		}
+		
+		function completeSave(status){
+			var dialog = j$('#theDialog');
+           	j$(dialog).empty();
+           	
+           	if(status == 'onNameEmpty'){
+           		j$(dialog).append('Please enter a name for your On-Premise goals before saving.');
+            	j$(dialog).dialog( "option", "buttons", [
+					{text: "Ok", click: function() {
+						j$(dialog).dialog('close');
+					}}
+				]);
+           	} else if(status == 'offNameEmpty'){
+           		j$(dialog).append('Please enter a name for your Off-Premise goals before saving.');
+            	j$(dialog).dialog( "option", "buttons", [
+					{text: "Ok", click: function() {
+						j$(dialog).dialog('close');
+					}}
+				]);
+           	} else if(getGoalMode() == 'createSAM'){
+            	j$(dialog).append('Goals have been successfully ' + status + '. Would you like to create more goals on this page, or go to the My Goals page?');
+            	j$(dialog).dialog( "option", "buttons", [
+					{text: "Create More", click: function() {
+						moveToURL('/apex/GoalCreation2Page');
+					}},
+					{text: "My Goals", click: function() {
+						moveToURL('/apex/MyGoalsPage');
+					}}
+				]);
+			} else if(getGoalMode() == 'cascade' || getGoalMode() == 'createLocal'){
+            	j$(dialog).append('Goals have been successfully ' + status + '. You will now return to the My Goals page to select further goals to cascade, or to create Local goals.');
+            	j$(dialog).dialog( "option", "buttons", [
+					{text: "Ok", click: function() {
+						moveToURL('/apex/MyGoalsPage');
+					}}
+				]);
+			}
+		}
+		
+		function hideDateInputs(){
+			j$('.dateFormat').css('display', 'none');
+		}
+		
+		function moveToURL(url){
+			window.location.assign(url);
+		}
+		
+		function Hash(){
+		    var lengthCounter = 0;
+		    var valueHolder = new Object();
+		    this.put = function(key, val){
+		    	if(valueHolder[key] == null){
+		    		lengthCounter++;
+		    	}
+		        valueHolder[key] = val;
+		    };
+		    this.remove = function(key){
+		    	delete valueHolder[key];
+		    }
+		    this.get = function(key) {
+		    	return valueHolder[key];
+		    };
+		    this.values = function(){
+		    	var arr = [];
+		    	for(var propString in valueHolder){
+		    		arr.push(valueHolder[propString]);
+		    	}
+		    	return arr;
+		    };
+		    this.length = function(){
+		        return lengthCounter;
+		    };
+		}
+		
+		function massRemoveAposIndex(str){
+			if(str.indexOf('_') != -1){
+				var spl1 = str.split(' - ');
+				var str2 = spl1[1];
+				var spl2 = str2.split(', ');
+				var newArray = [];
+				for(var i = 0; i < spl2.length; i++){
+					newArray.push(removeAposIndex(spl2[i]));
+				}
+				spl1[1] = newArray.join(', ');
+				str = spl1.join(' - ');
+			}
+			return str;
+		}
+		
+		function removeAposIndex(str){
+			if(str.indexOf('_') != -1){
+				var spl = str.split('_');
+				var index = parseInt(spl[1]);
+				str = spl[0];
+				str = str.substring(0, index) + "'" + str.substring(index, str.length);
+			}
+			return str;
+		}
+	</script>
+	
+	<apex:outputPanel id="updateableJS">
+		<script>
+			function getShowCases(){
+				return '{!showCases}' == 'true';
+			}
+			function getUserId(){
+				return '{!$User.Id}';
+			}
+			function getUserMode(){
+				return '{!userMode}';
+			}
+			function getPrevSaveMode(){
+				return '{!prevSaveMode}';
+			}
+			function getGoalMode(){
+				return '{!goalMode}';
+			}
+			function getDummyOnGoalId(){
+				return '{!dummyOnGoalId}';
+			}
+			function getDummyOffGoalId(){
+				return '{!dummyOffGoalId}';
+			}
+			function getPremiseValue(){
+				return '{!premiseValue}';
+			}
+			function getExistingIds(premVal){
+				if(premVal == 'on'){
+					return '{!onIdsString}';
+				}
+				return '{!offIdsString}';
+			}
+			function getExistingGoals(premVal){
+				if(premVal == 'on'){
+					return '{!onGoalsString}';
+				}
+				return '{!offGoalsString}';
+			}
+			function getExistingCases(premVal){
+				if(premVal == 'on'){
+					return '{!onCasesString}';
+				}
+				return '{!offCasesString}';
+			}
+			function getExistingComments(premVal){
+				if(premVal == 'on'){
+					return '{!onCommentsString}';
+				}
+				return '{!offCommentsString}';
+			}
+			function getPremiseDispValue(){
+				return '{!premiseDispValue}';
+			}
+			function getErrorMessage(){
+				return '{!errorMessage}';
+			}
+			function getParentGoalNum(){
+				if('{!premiseValue}' == 'On-Premise - Control'){
+					return parseInt('{!dummyOnGoal.Minimum_of_Accounts__c}');
+				}
+				return parseInt('{!dummyOffGoal.Minimum_of_Accounts__c}');
+			}
+			function getParentCasesNum(){
+				if('{!premiseValue}' == 'On-Premise - Control'){
+					return parseInt('{!dummyOnGoal.Cases_Displayed__c}');
+				}
+				return parseInt('{!dummyOffGoal.Cases_Displayed__c}');
+			}
+			
+			function getDummyGoalArray(){
+				return [getDummyOnGoal(), getDummyOffGoal()];
+			}
+			
+			function getDummyOnGoal(){
+				var goalStringArray = [];
+				goalStringArray.push('{!dummyGoal.Program__c}');
+				goalStringArray.push('{!dummyGoal.Priority__c}');
+				if(getGoalMode() == 'cascade' && '{!allowOnPrem}' == 'true'){
+					goalStringArray.push('{!dummyOnGoal.RecordTypeId}');
+				} else {
+					goalStringArray.push('{!onPremRecTypeId}');
+				}
+				
+				var longName = massRemoveAposIndex("{!dummyOnGoal.Long_Name__c}");
+				goalStringArray.push(longName);
+				goalStringArray.push(longName.substring(0, 80));
+				
+				goalStringArray.push('{!dummyOnGoal.SFA_POS_Items__c}');
+				goalStringArray.push('{!dummyOnGoal.Account_Grade__c}');
+				goalStringArray.push('{!dummyOnGoal.Location_Grade__c}');
+				goalStringArray.push('{!MONTH(dummyOnGoal.Start_Date__c)}/{!DAY(dummyOnGoal.Start_Date__c)}/{!YEAR(dummyOnGoal.Start_Date__c)}');
+				goalStringArray.push('{!MONTH(dummyOnGoal.Due_Date__c)}/{!DAY(dummyOnGoal.Due_Date__c)}/{!YEAR(dummyOnGoal.Due_Date__c)}');
+				
+				goalStringArray.push('{!dummyOnGoal.Content_Link__c}');
+				goalStringArray.push('{!dummyOnGoal.Feature_Type__c}');
+				goalStringArray.push('{!dummyOnGoal.Length_of_Training__c}');
+				goalStringArray.push('{!dummyOnGoal.Number_of_Attendees__c}');
+				goalStringArray.push('{!dummyOnGoal.Product_Sample_s__c}');
+				goalStringArray.push('{!dummyOnGoal.Shelf_Set_Criteria__c}');
+				goalStringArray.push('{!dummyOnGoal.Size_of_Ad__c}');
+				goalStringArray.push('{!dummyOnGoal.Suggested_Price__c}');
+				goalStringArray.push('{!dummyOnGoal.Tasted_Product__c}');
+				goalStringArray.push('{!dummyOnGoal.Trainer__c}');
+				goalStringArray.push('{!dummyOnGoal.Training_Audience__c}');
+				goalStringArray.push('{!dummyOnGoal.Type_of_Ad__c}');
+				return goalStringArray;
+			}
+			
+			function getDummyOffGoal(){
+				var goalStringArray = [];
+				goalStringArray.push('{!dummyGoal.Program__c}');
+				goalStringArray.push('{!dummyGoal.Priority__c}');
+				if(getGoalMode() == 'cascade' && '{!allowOffPrem}' == 'true'){
+					goalStringArray.push('{!dummyOffGoal.RecordTypeId}');
+				} else {
+					goalStringArray.push('{!offPremRecTypeId}');
+				}
+				
+				var longName = massRemoveAposIndex("{!dummyOffGoal.Long_Name__c}");
+				goalStringArray.push(longName);
+				goalStringArray.push(longName.substring(0, 80));
+				
+				goalStringArray.push('{!dummyOffGoal.SFA_POS_Items__c}');
+				goalStringArray.push('{!dummyOffGoal.Account_Grade__c}');
+				goalStringArray.push('{!dummyOffGoal.Location_Grade__c}');
+				goalStringArray.push('{!MONTH(dummyOffGoal.Start_Date__c)}/{!DAY(dummyOffGoal.Start_Date__c)}/{!YEAR(dummyOffGoal.Start_Date__c)}');
+				goalStringArray.push('{!MONTH(dummyOffGoal.Due_Date__c)}/{!DAY(dummyOffGoal.Due_Date__c)}/{!YEAR(dummyOffGoal.Due_Date__c)}');
+				
+				goalStringArray.push('{!dummyOffGoal.Content_Link__c}');
+				goalStringArray.push('{!dummyOffGoal.Feature_Type__c}');
+				goalStringArray.push('{!dummyOffGoal.Length_of_Training__c}');
+				goalStringArray.push('{!dummyOffGoal.Number_of_Attendees__c}');
+				goalStringArray.push('{!dummyOffGoal.Product_Sample_s__c}');
+				goalStringArray.push('{!dummyOffGoal.Shelf_Set_Criteria__c}');
+				goalStringArray.push('{!dummyOffGoal.Size_of_Ad__c}');
+				goalStringArray.push('{!dummyOffGoal.Suggested_Price__c}');
+				goalStringArray.push('{!dummyOffGoal.Tasted_Product__c}');
+				goalStringArray.push('{!dummyOffGoal.Trainer__c}');
+				goalStringArray.push('{!dummyOffGoal.Training_Audience__c}');
+				goalStringArray.push('{!dummyOffGoal.Type_of_Ad__c}');
+				return goalStringArray;
+			}
+			
+			function getPLs(){
+				var plStringArray = [];
+				var i = 0;
+				<apex:repeat var="pl" value="{!pls}">
+					plStringArray.push([]);
+					plStringArray[i].push('{!pl.plClass}');
+					plStringArray[i].push('{!pl.plGroup}');
+					plStringArray[i].push(removeAposIndex("{!pl.prodSel1}"));
+					plStringArray[i].push(removeAposIndex("{!pl.prodSel2}"));
+					plStringArray[i].push(removeAposIndex("{!pl.prodSel3}"));
+					plStringArray[i].push('{!pl.sizeSel}');
+					i++;
+				</apex:repeat>
+				return plStringArray;
+			}
+		</script>
+	</apex:outputPanel>
+	
+	<apex:form id="mainForm">
+	
+		<apex:outputPanel id="messagePanel">
+			<apex:pageMessages />
+		</apex:outputPanel>
+		
+		<apex:actionFunction name="suggestPremiseValue"
+							 action="{!suggestPremiseValue}"
+							 rerender="tabPanel, detailPanel, updateableJS"
+							 status="premiseStatus"
+							 oncomplete="premOrRecTypeChanged()">
+			<apex:param name="premiseValue"
+						value=""
+						assignTo="{!premiseValue}"/>
+		</apex:actionFunction>
+		<apex:actionFunction name="updateGoalNamePanel"
+							 action="{!calculateName}"
+							 rerender="onGoalNamePanel, offGoalNamePanel"/>
+		<apex:actionFunction name="programChanged"
+							 action="{!programSelected}"
+							 rerender="programDescPanel, detailPanel, additionalFieldsPanel, updateableJS, onGoalNamePanel, offGoalNamePanel"
+							 onComplete="premOrRecTypeChanged()"/>
+		<apex:actionFunction name="priorityChanged"
+							 action="{!prioritySelected}"
+							 rerender="programPanel, onGoalNamePanel, offGoalNamePanel"/>
+		<apex:actionFunction name="premiseChanged"
+							 action="{!premiseSelected}"
+							 rerender="messagePanel, tabPanel, detailPanel, updateableJS"
+							 status="premiseStatus"
+							 oncomplete="premOrRecTypeChanged()">
+			<apex:param name="premiseValue"
+						value=""
+						assignTo="{!premiseValue}"/>
+		</apex:actionFunction>
+		<apex:actionFunction name="rtOnChanged"
+							 action="{!recTypeSelected}"
+							 status="rtOnChangeStatus"
+							 rerender="additionalFieldsPanel, updateableJS, onGoalNamePanel"
+							 oncomplete="premOrRecTypeChanged()"/>
+		<apex:actionFunction name="rtOffChanged"
+							 action="{!recTypeSelected}"
+							 status="rtOffChangeStatus"
+							 rerender="additionalFieldsPanel, updateableJS, offGoalNamePanel"
+							 oncomplete="premOrRecTypeChanged()"/>
+		<apex:actionFunction name="nameChanged"
+							 action="{!localNameChanged}"
+							 rerender="messagePanel, updateableJS"
+							 status="saveButtonStatus"/>
+							 
+		<apex:outputPanel id="roleConfirmPanel"
+						  rendered="{!showRoleConfirmPanel == true}">
+			<apex:pageBlock title="User Role Confirmation">
+				<apex:outputPanel rendered="{!userModeQuestion == 'dir|mgr'}">
+					<apex:outputLabel value="Would you like to create goals as a Director, or as a Manager?"/>
+					<apex:actionStatus id="userModeConfirmStatus" style="float: left;">
+						<apex:facet name="start">
+							<apex:image value="/img/loading.gif"
+										style="padding: 3px 0px 0px 3px;"/>
+						</apex:facet>
+					</apex:actionStatus>
+					<br/>
+					<div style="text-align: center;">
+						<apex:commandButton value="Director"
+											action="{!confirmDirector}"
+											status="userModeConfirmStatus"
+											rerender="mainForm, updateableJS"
+											oncomplete="checkToBuildSPLs();"/>
+						<apex:commandButton value="Manager"
+											action="{!confirmManager}"
+											status="userModeConfirmStatus"
+											rerender="mainForm, updateableJS"
+											oncomplete="checkToBuildSPLs();"/>
+					</div>
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!userModeQuestion != 'dir|mgr'}">
+					<apex:outputLabel value="Unknown territory configuration. Please contact your administrator."/>
+				</apex:outputPanel>
+			</apex:pageBlock>
+		</apex:outputPanel>
+	
+		<apex:outputPanel id="goalCreatePanel"
+						  rendered="{!showRoleConfirmPanel == false}">
+			<apex:pageBlock title="Goal Creation"
+							mode="edit">
+				<!-- {!userMode}|{!goalMode}|{!prevSaveMode} -->
+				<apex:pageBlockSection title="Brand Selection"/>
+				<apex:outputPanel id="plPanel">
+					<table style="width: 100%">
+						<tr style="font-weight: bold;">
+							<td/>
+							<td/>
+							<td>
+								Brand
+							</td>
+							<td>
+								Sub Brand
+							</td>
+							<td>
+								Individual Brand
+							</td>
+							<td>
+								Size
+							</td>
+						</tr>
+						
+						<apex:repeat var="pl"
+									 value="{!pls}"
+									 rendered="{!allowTopFieldEdit == false}">
+							<tr style="">
+								<td style="width: 4%"/>
+								<td style="width: 6%"/>
+								<td style="width: 22%">
+									{!pl.prodSel1}
+								</td>
+								<td style="width: 24%">
+									{!pl.prodSel2}
+								</td>
+								<td style="width: 28%">
+									{!pl.prodSel3}
+								</td>
+								<td style="width: 18%">
+									{!pl.sizeSel}
+								</td>
+							</tr>
+						</apex:repeat>
+						
+						<apex:repeat var="pl"
+									 value="{!pls}"
+									 rendered="{!allowTopFieldEdit == true}">
+							<tr style="">
+								<td style="width: 4%">
+									<apex:commandLink value="Delete"
+												  action="{!removePL}"
+												  status="plStatus"
+												  rerender="plPanel, onGoalNamePanel, offGoalNamePanel"
+												  style="padding-left: 10px;">
+										<apex:param name="plIndex"
+													value="{!pl.index}"
+													assignTo="{!currentPLIndex}"/>
+									</apex:commandLink>
+								</td>
+								<td style="width: 6%">
+									<apex:commandLink value="Copy"
+												  action="{!copyPL}"
+												  status="plStatus"
+												  rerender="plPanel, messagePanel"
+												  style="padding-left: 10px;">
+										<apex:param name="plIndex"
+													value="{!pl.index}"
+													assignTo="{!currentPLIndex}"/>
+									</apex:commandLink>
+								</td>
+								<td style="width: 22%">
+									<apex:selectList value="{!pl.prodSel1}"
+													 size="1">
+										<apex:selectOptions value="{!pl.prodList1}"/>
+										<apex:actionSupport event="onchange"
+															 action="{!prodSel1Changed}"
+															 rerender="prodSel2Panel, prodSel3Panel, sizePanel, onGoalNamePanel, offGoalNamePanel"
+															 status="prodSel1Status">
+											<apex:param name="plIndex"
+														value="{!pl.index}"
+														assignTo="{!currentPLIndex}"/>
+										</apex:actionSupport>
+									</apex:selectList>
+									<apex:actionStatus id="prodSel1Status">
+										<apex:facet name="start">
+											<apex:image value="/img/loading.gif"
+														styleClass="brandLoadStatus"/>
+										</apex:facet>
+									</apex:actionStatus>
+								</td>
+								<td style="width: 24%">
+									<apex:outputPanel id="prodSel2Panel">
+										<apex:selectList value="{!pl.prodSel2}"
+														 size="1">
+											<apex:selectOptions value="{!pl.prodList2}"/>
+											<apex:actionSupport event="onchange"
+																 action="{!prodSel2Changed}"
+																 rerender="prodSel3Panel, sizePanel, onGoalNamePanel, offGoalNamePanel"
+																 status="prodSel2Status">
+												<apex:param name="plIndex"
+															value="{!pl.index}"
+															assignTo="{!currentPLIndex}"/>
+											</apex:actionSupport>
+										</apex:selectList>
+										<apex:actionStatus id="prodSel2Status">
+											<apex:facet name="start">
+												<apex:image value="/img/loading.gif"
+														styleClass="brandLoadStatus"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</td>
+								<td style="width: 28%">
+									<apex:outputPanel id="prodSel3Panel">
+										<apex:selectList value="{!pl.prodSel3}"
+														 size="1">
+											<apex:selectOptions value="{!pl.prodList3}"/>
+											<apex:actionSupport event="onchange"
+																 action="{!prodSel3Changed}"
+																 rerender="sizePanel, onGoalNamePanel, offGoalNamePanel"
+																 status="prodSel3Status">
+												<apex:param name="plIndex"
+															value="{!pl.index}"
+															assignTo="{!currentPLIndex}"/>
+											</apex:actionSupport>
+										</apex:selectList>
+										<apex:actionStatus id="prodSel3Status">
+											<apex:facet name="start">
+												<apex:image value="/img/loading.gif"
+														styleClass="brandLoadStatus"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+								</td>
+								<td style="width: 18%">
+									<apex:outputPanel id="sizePanel">
+										<apex:selectList value="{!pl.sizeSel}"
+														 size="1">
+											<apex:selectOptions value="{!pl.sizeList}"/>
+										</apex:selectList>
+									</apex:outputPanel>
+								</td>
+							</tr>
+						</apex:repeat>
+						
+					</table>
+					<apex:outputPanel rendered="{!allowTopFieldEdit == true}">
+						<apex:commandLink value="Add"
+										  action="{!addPL}"
+										  status="plStatus"
+										  rerender="plPanel"
+										  style="padding-left: 13px; padding-top: 3px;"/>
+						<apex:actionStatus id="plStatus">
+							<apex:facet name="start">
+								<apex:image value="/img/loading.gif"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</apex:outputPanel>
+				</apex:outputPanel>
+				
+				<apex:pageBlockSection title="Main Details"/>
+				<table style="width: 100%; padding: 10px;">
+					<tr style="font-weight: bold">
+						<td style="min-width: 120px;">
+							Priority
+						</td>
+						<td style="min-width: 180px;">
+							Program
+						</td>
+						<td style="width: 100%"/>
+					</tr>
+					<tr>
+						<td>
+							<apex:inputField value="{!dummyGoal.Priority__c}"
+											 rendered="{!enforcePriority == false}"
+											 onchange="priorityChanged()"/>
+							<apex:outputField value="{!dummyGoal.Priority__c}"
+											  rendered="{!enforcePriority == true}"/>
+						</td>
+						<td>
+							<apex:outputPanel id="programPanel">
+								<apex:inputField value="{!dummyGoal.Program__c}"
+												 rendered="{!allowProgram == true}"
+												 onchange="programChanged()"/>
+								<apex:outputLabel value="N/A"
+												  rendered="{!allowProgram == false && goalMode != 'cascade'}"/>
+								<apex:outputLabel value="{!dummyGoal.Program__r.Name}"
+												  rendered="{!allowProgram == false && goalMode == 'cascade'}"/>
+							</apex:outputPanel>
+						</td>
+						<td>
+							<apex:outputPanel id="programDescPanel">
+								<apex:outputLabel rendered="{!programDesc != null}"
+												  styleClass="progDescLink"
+												  value="Hover to view program description"
+												  title="{!programDesc}"/>
+							</apex:outputPanel>
+						</td>
+					</tr>
+				</table>
+			</apex:pageBlock>
+			
+			<apex:outputPanel id="tabPanel">
+				<div class="tabHeader">
+					<ul>
+						<li id="premTab0"
+							onclick="finishGridEdit(); if(getPremiseValue() != 'On-Premise - Control'){ premiseChanged('On-Premise - Control')}"
+							class="{!IF(allowOnPrem, IF(premiseValue == 'On-Premise - Control', 'selected', 'unselected'), 'disabled')}">
+							<a href="#">On-Premise</a>
+						</li>
+						<li id="premTab1"
+							onclick="finishGridEdit(); if(getPremiseValue() != 'Off-Premise - Control'){ premiseChanged('Off-Premise - Control')}"
+							class="{!IF(allowOffPrem, IF(premiseValue == 'Off-Premise - Control', 'selected', 'unselected'), 'disabled')}">
+							<a href="#">Off-Premise</a>
+						</li>
+					</ul>
+				</div>
+				<apex:actionStatus id="premiseStatus">
+					<apex:facet name="start">
+						<apex:image value="/img/loading.gif"
+									style="padding: 3px 0px 0px 3px;"/>
+					</apex:facet>
+				</apex:actionStatus>
+			</apex:outputPanel>
+			
+			<apex:pageBlock mode="edit">
+				<apex:outputPanel id="detailPanel">
+					<apex:pageBlockSection title="{!premiseDispValue + ' Goal Details'}"/>
+					<apex:outputPanel rendered="{!premiseValue == 'On-Premise - Control'}">
+						<table style="width: 100%; padding: 10px 10px 0px 10px;">
+							<tr style="font-weight: bold">
+								<td>
+									Goal Activity Type
+								</td>
+								<td>
+									Goal Name
+								</td>
+							</tr>
+							<tr style="vertical-align: top">
+								<td style="min-width: 180px">
+									<apex:outputPanel rendered="{!goalMode != 'cascade'}">
+										<apex:selectList id="onPremRTSelect"
+														 value="{!onPremRecTypeSel}"
+														 size="1"
+														 onchange="rtOnChanged()">
+											<apex:selectOptions value="{!onPremGoalRecTypes}"/>
+										</apex:selectList>
+										<br/>
+										<apex:actionStatus id="rtOnChangeStatus" style="float: left;">
+											<apex:facet name="start">
+												<apex:image value="/img/loading.gif"
+															style="padding: 3px 0px 0px 3px;"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!goalMode == 'cascade'}">
+										<apex:outputLabel value="{!dummyOnGoal.RecordType.Name}"/>
+									</apex:outputPanel>
+								</td>
+								<td style="width: 100%">
+									<apex:outputPanel id="onGoalNamePanel">
+										<apex:outputPanel rendered="{!allowManualName == true}">
+											{!onPremRecTypeSelDisplay} -
+											&nbsp;<apex:inputField value="{!dummyOnGoal.Name}"
+																   style="width: 300px;"
+																   onchange="nameChanged()"/>
+											 - On
+										</apex:outputPanel>
+														 
+										<apex:outputLabel rendered="{!allowManualName == false}"
+														  value="{!dummyOnGoalLongName}"/>
+									</apex:outputPanel>
+								</td>
+							</tr>
+						</table>
+						<table style="width: 100%; padding: 10px 10px 0px 10px;">
+							<tr style="font-weight: bold">
+								<td>
+									SFA POS Items
+								</td>
+								<td>
+									Account Segmentation
+								</td>
+								<!-- <td>
+									Location Grade
+								</td> -->
+								<td>
+									Start Date
+								</td>
+								<td>
+									End Date
+								</td>
+							</tr>
+							<tr style="vertical-align: top">
+								<td>
+									<apex:inputField value="{!dummyOnGoal.SFA_POS_Items__c}"/>
+								</td>
+								<td>
+									<apex:inputField value="{!dummyOnGoal.Account_Grade__c}"/>
+								</td>
+								<!-- <td>
+									<apex:inputField value="{!dummyOnGoal.Location_Grade__c}"/>
+								</td> -->
+								<td>
+									<apex:inputField value="{!dummyOnGoal.Start_Date__c}"
+													 rendered="{!goalMode != 'cascade'}"/>
+									<apex:outputField value="{!dummyOnGoal.Start_Date__c}"
+													  rendered="{!goalMode == 'cascade'}"/>
+								</td>
+								<td>
+									<apex:inputField value="{!dummyOnGoal.Due_Date__c}"
+													 rendered="{!goalMode != 'cascade'}"/>
+									<apex:outputField value="{!dummyOnGoal.Due_Date__c}"
+													  rendered="{!goalMode == 'cascade'}"/>
+								</td>
+							</tr>
+						</table>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!premiseValue == 'Off-Premise - Control'}">
+						<table style="width: 100%; padding: 10px 10px 0px 10px;">
+							<tr style="font-weight: bold">
+								<td>
+									Goal Activity Type
+								</td>
+								<td>
+									Goal Name
+								</td>
+							</tr>
+							<tr style="vertical-align: top">
+								<td style="min-width: 180px">
+									<apex:outputPanel rendered="{!goalMode != 'cascade'}">
+										<apex:selectList id="offPremRTSelect"
+														 value="{!offPremRecTypeSel}"
+														 size="1"
+														 onchange="rtOffChanged()">
+											<apex:selectOptions value="{!offPremGoalRecTypes}"/>
+										</apex:selectList>
+										<br/>
+										<apex:actionStatus id="rtOffChangeStatus" style="float: left;">
+											<apex:facet name="start">
+												<apex:image value="/img/loading.gif"
+															style="padding: 3px 0px 0px 3px;"/>
+											</apex:facet>
+										</apex:actionStatus>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!goalMode == 'cascade'}">
+										<apex:outputLabel value="{!dummyOffGoal.RecordType.Name}"/>
+									</apex:outputPanel>
+								</td>
+								<td style="width: 100%">
+									<apex:outputPanel id="offGoalNamePanel">
+										<apex:outputPanel rendered="{!allowManualName == true}">
+											{!offPremRecTypeSelDisplay} -
+											&nbsp;<apex:inputField value="{!dummyOffGoal.Name}"
+																   style="width: 300px;"
+																   onchange="nameChanged()"/>
+											 - Off
+										</apex:outputPanel>
+														 
+										<apex:outputLabel rendered="{!allowManualName == false}"
+														  value="{!dummyOffGoalLongName}"/>
+									</apex:outputPanel>
+								</td>
+							</tr>
+						</table>
+						<table style="width: 100%; padding: 10px 10px 0px 10px;">
+							<tr style="font-weight: bold">
+								<td>
+									SFA POS Items
+								</td>
+								<td>
+									Account Segmentation
+								</td>
+								<td>
+									Location Grade
+									<img src="/s.gif" class="helpOrb"
+									     title="A = Front end cap, main lobby, checkout,
+									     		B = Back of store, isle display, mid end cap,
+									     		C = Others"/>
+								</td>
+								<td>
+									Start Date
+								</td>
+								<td>
+									End Date
+								</td>
+							</tr>
+							<tr style="vertical-align: top">
+								<td>
+									<apex:inputField value="{!dummyOffGoal.SFA_POS_Items__c}"/>
+								</td>
+								<td>
+									<apex:inputField value="{!dummyOffGoal.Account_Grade__c}"/>
+								</td>
+								<td>
+									<apex:inputField value="{!dummyOffGoal.Location_Grade__c}"/>
+								</td>
+								<td>
+									<apex:inputField value="{!dummyOffGoal.Start_Date__c}"
+													 rendered="{!goalMode != 'cascade'}"/>
+									<apex:outputField value="{!dummyOffGoal.Start_Date__c}"
+													  rendered="{!goalMode == 'cascade'}"/>
+								</td>
+								<td>
+									<apex:inputField value="{!dummyOffGoal.Due_Date__c}"
+													 rendered="{!goalMode != 'cascade'}"/>
+									<apex:outputField value="{!dummyOffGoal.Due_Date__c}"
+													  rendered="{!goalMode == 'cascade'}"/>
+								</td>
+							</tr>
+						</table>
+					</apex:outputPanel>
+					<apex:outputPanel id="additionalFieldsPanel">
+						<div style="text-align: right">
+							<apex:commandLink value="{!IF(showAdditionalFields, 'Hide', 'Show') + ' additional details'}"
+											  action="{!toggleAdditionalFields}"
+											  status="additionalFieldsStatus"
+											  rerender="additionalFieldsPanel"
+											  style="padding: 0px 8px;"/>
+							<apex:actionStatus id="additionalFieldsStatus">
+								<apex:facet name="start">
+									<apex:image value="/img/loading.gif"
+												style="padding: 3px 0px 0px 3px;"/>
+								</apex:facet>
+							</apex:actionStatus>
+						</div>
+						<apex:pageBlockSection title="Additional Details"
+											   rendered="{!showAdditionalFields}">
+							<apex:inputField value="{!dummyGoal.Size_of_Ad__c}"
+											 rendered="{!showSizeOfAd}"/>
+							<apex:inputField value="{!dummyGoal.Feature_Type__c}"
+											 rendered="{!showFeatureType}"/>
+							<apex:inputField value="{!dummyGoal.Type_of_Ad__c}"
+											 rendered="{!showTypeOfAd}"/>
+							<apex:inputField value="{!dummyGoal.Suggested_Price__c}"
+											 rendered="{!showSuggestedPrice}"/>
+							<apex:inputField value="{!dummyGoal.Content_Link__c}"
+											 rendered="{!showContentLink}"/>
+							<apex:inputField value="{!dummyGoal.Shelf_Set_Criteria__c}"
+											 rendered="{!showShelfSetCriteria}"/>
+							<apex:inputField value="{!dummyGoal.Length_of_Training__c}"
+											 rendered="{!showTrainingLength}"/>
+							<apex:inputField value="{!dummyGoal.Tasted_Product__c}"
+											 rendered="{!showTastedProduct}"/>
+							<apex:inputField value="{!dummyGoal.Trainer__c}"
+											 rendered="{!showTrainer}"/>
+							<apex:inputField value="{!dummyGoal.Number_of_Attendees__c}"
+											 rendered="{!showNumAttendees}"/>
+							<apex:inputField value="{!dummyGoal.Training_Audience__c}"
+											 rendered="{!showTrainingAud}"/>
+							<apex:inputField value="{!dummyGoal.Product_Sample_s__c}"
+											 rendered="{!showProductSamples}"/>
+							<apex:inputField value="{!dummyGoal.Accomplishment_Recap__c}"
+											 rendered="{!showAccomplishment}"/>
+						</apex:pageBlockSection>
+					</apex:outputPanel>
+					<apex:pageBlockSection title="{!premiseDispValue + ' Goal Cascade Details'}"/>
+				</apex:outputPanel>
+				
+				<div id="gridLoadingMessage">
+					Loading data...
+				</div>
+				<div id="tabSummary"/>
+				<div id="splGrid" style="display: none;"/>
+				<div id="buttonDiv" style="display: none;">
+					<apex:actionStatus id="saveButtonStatus">
+						<apex:facet name="start">
+							<apex:outputPanel >
+								<apex:commandButton value="Save"
+													disabled="true"/>
+								<apex:commandButton value="Submit"
+													disabled="true"/>
+								<apex:image value="/img/loading.gif"
+													style="padding: 3px 0px 0px 3px;"/>
+							</apex:outputPanel>
+						</apex:facet>
+						<apex:facet name="stop">
+							<apex:outputPanel >
+								<apex:commandButton value="Save"
+													action="{!checkSaveErrors}"
+													rerender="updateableJS"
+													oncomplete="prepareSaveDialog(false)"/>
+								<apex:commandButton value="Submit"
+													action="{!checkSubmitErrors}"
+													rerender="updateableJS"
+													oncomplete="prepareSaveDialog(true)"/>
+							</apex:outputPanel>
+						</apex:facet>
+					</apex:actionStatus>
+				</div>
+				
+			</apex:pageBlock>
+			
+		</apex:outputPanel>
+		
+	</apex:form>
+	
+	<div id="theDialog"/>
+	
+</apex:page>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>An Object that stores all the Attribute Types(Color,Flavor,Type) and its associated Attribute Values(Blue,Banana,Cocktails) along with its associated Atribute Value&apos;s Images(Fireworks Image for 4th of July)</description>
+    <enableActivities>true</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>API_External_ID__c</fullName>
+        <displayFormat>A-{0000}</displayFormat>
+        <externalId>true</externalId>
+        <label>API External ID</label>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Attribute_External_Id__c</fullName>
+        <description>FIeld that helps during dataload to prevent duplicates</description>
+        <externalId>true</externalId>
+        <label>Attribute External Id</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Attribute_Type__c</fullName>
+        <description>A Picklist Field that contains all the Attribute types that are being seen on a Recipe</description>
+        <externalId>false</externalId>
+        <label>Attribute Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Barware Needed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Description/Overview</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Drink Classification</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Drink Type</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Effort Level</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Flavor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Food Pairings</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Glassware</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Good For Gatherings</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Language</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Luxury Flag</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nutrition Fact</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recipe Story</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Servings</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Serving Size</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Serving Style</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard Average Analysis</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tasting Notes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wine Taste</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wine Type</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UnitofAlcohol</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEO Meta Description</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEO Page Title</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEO Page URL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEO Hints</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Attribute_Value_Image__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>An Image associated with an Attribute Value that looks up to media</description>
+        <externalId>false</externalId>
+        <label>Attribute Value Image</label>
+        <referenceTo>Recipe_Media__c</referenceTo>
+        <relationshipLabel>Attributes</relationshipLabel>
+        <relationshipName>AttributeValueImages</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Attribute_Value__c</fullName>
+        <description>A Field That stores the Value of respective Attribute Type(Blue,Green,Banana,English)</description>
+        <externalId>false</externalId>
+        <label>Attribute Value</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dynamic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>A check box that helps in determining the Value of certain Attribute Types.</description>
+        <externalId>false</externalId>
+        <label>Dynamic</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LegacyID__c</fullName>
+        <externalId>true</externalId>
+        <label>LegacyID</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Locale__c</fullName>
+        <externalId>false</externalId>
+        <label>Locale</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EN-US</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR-CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PT-BR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-MX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-CO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-CL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ES-AR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-GB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EN-IN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Attribute</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Attribute_Type__c</columns>
+        <columns>Dynamic__c</columns>
+        <columns>Attribute_Value__c</columns>
+        <columns>API_External_ID__c</columns>
+        <columns>Locale__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>ATTR-{0000}</displayFormat>
+        <label>Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Attributes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Attribute_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Attribute_Value__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Attribute_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Attribute_Value__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Attribute_Type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Attribute_Value__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Attribute_Type__c</searchFilterFields>
+        <searchFilterFields>Attribute_Value__c</searchFilterFields>
+        <searchResultsAdditionalFields>Attribute_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Attribute_Value__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

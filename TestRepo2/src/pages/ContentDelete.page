@@ -1,0 +1,431 @@
+<apex:page controller="Controller_ContentDelete">
+    <script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+   	<style>
+   		.labC{width:220px !important; float: left;}
+   		.pbBody select {min-width:240px;}
+   	</style>
+    <apex:sectionHeader title="Delete Content {!if(currentSection != '','-','')} {!if(currentSection == 'file', 'Planning, Collaboration, Performance Managment','')}{!if(currentSection == 'desc', 'Distributor Portal','')} "/>  
+        <apex:outputPanel id="messages">
+            <apex:messages styleClass="errorMessagesList" />
+        </apex:outputPanel>
+        <apex:form >
+            <apex:actionFunction name="reloadLists" action="{!reloadLists}" />
+            <apex:actionFunction name="reloadListsAfterSearch" action="{!reloadListsAfterSearch}" />                      
+            <apex:actionFunction name="switchSection" action="{!switchSection}" />
+            <apex:actionFunction name="cancelDelete" action="{!cancelDelete}" />
+            <apex:actionFunction name="resetFilters" action="{!resetFilters}" />          
+            
+            <apex:pageBlock rendered="{!ISNULL(currentSection)}">
+	            <apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem >
+	           				<apex:outputLabel value="Select Library"/>
+	           				<apex:selectList value="{!currentSection}" size="1" onchange="switchSection();">
+								<apex:selectOptions value="{!PageSections}"/>
+	           				</apex:selectList>	           				        				           			
+	           			</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection>
+            </apex:pageBlock>            
+            <apex:pageBlock title="Filter" rendered="{!AND(NOT(ISNULL(currentSection)))}">
+	            <apex:outputLabel value="Search: " for="searchBox"/>&nbsp;
+	            <apex:inputText id="searchBox" value="{!searchClause}"/>	           
+         		<br />
+         		<br />	
+				<apex:inputCheckbox value="{!selectedRTS}" onchange="reloadLists();"/> RTS&nbsp;&nbsp;
+				<apex:inputCheckbox value="{!selectedPortfolio}" onchange="reloadLists();"/> Portfolio&nbsp;&nbsp;
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<apex:inputCheckbox value="{!selectedTBA}" onchange="reloadLists();"/> TBA&nbsp;&nbsp;
+				</apex:outputPanel>
+				<apex:inputCheckbox value="{!selectedVideo}" onchange="reloadLists();"/> Video&nbsp;&nbsp;
+				<br />
+				<br />
+									
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Brands:</div>	 
+	       				<apex:selectList value="{!selectedBrand}" size="1">
+							<apex:selectOptions value="{!Brands}"/>
+	       				</apex:selectList>	
+       				</div>          				        				           			
+				</apex:outputPanel>				
+				<apex:outputPanel >
+					<div style="padding-bottom:8px;">
+						<div class="labC">Calendar:</div>									
+		       			<apex:selectList value="{!selectedCalendar}" size="1" >
+							<apex:selectOptions value="{!Calendars}"/>
+		       			</apex:selectList>
+	       			</div>	           				        				           			
+				</apex:outputPanel>	
+						
+				<apex:outputPanel rendered="{!AND(isFile)}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Organizational Unit:</div>									
+		       			<apex:selectList value="{!organizationalUnitName}" size="1">
+							<apex:selectOptions value="{!Organizationunits}"/>
+		       			</apex:selectList>
+	       			</div>	           				        				           			
+				</apex:outputPanel>	
+							
+				<apex:outputPanel rendered="{!AND(isFile)}">					
+					<div style="padding-bottom:8px;">
+						<div class="labC">Folder:</div>	
+	       				<apex:selectList value="{!selectedFolder}" size="1">
+							<apex:selectOptions value="{!Folders}"/>
+	       				</apex:selectList>
+	       			</div>       					           				        				           			
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<apex:inputHidden value="{!selectedMainCategory}" id="Category__c"/>
+					<apex:inputHidden value="{!selectedSubCategory}" id="Sub_Category__c"/>
+					<apex:inputHidden value="{!selectedSubSubCategory}" id="Sub_Sub_Category__c"/>
+					<apex:inputHidden value="{!selectedSubSubSubCategory}" id="Sub_Sub_Sub_Category__c"/>
+				</apex:outputPanel>
+																
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Category:</div>	 
+	       				<apex:selectList value="{!selectedMainCategory}" styleClass="Category__c" onchange="clearDeepSelect(1); populateDependency('Sub_Category__c', 'Sub_Category__c', this.value);" size="1">
+							<apex:selectOptions value="{!Categories}"/>
+	       				</apex:selectList>	
+       				</div>          				        				           			
+				</apex:outputPanel>	
+							
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Sub category:</div>	 
+		       				<select class="Sub_Category__c" onchange="clearDeepSelect(2); populateDependency('Sub_Sub_Category__c', 'Sub_Sub_Category__c', this.value);" size="1">
+								<option value="">Select</option>
+		       				</select>
+       				</div>	           				        				           			
+				</apex:outputPanel>		
+						
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Sub sub category:</div>	 
+		       			<select class="Sub_Sub_Category__c" onchange="clearDeepSelect(3); populateDependency('Sub_Sub_Sub_Category__c', 'Sub_Sub_Sub_Category__c', this.value);" size="1">
+							<option value="">Select</option>
+		       			</select>	
+       				</div>           				        				           			
+				</apex:outputPanel>	
+							
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Sub sub sub category:</div>	 
+		       			<select size="1" class="Sub_Sub_Sub_Category__c">
+							<option value="">Select</option>
+		       			</select>
+	       			</div>           				        				           			
+				</apex:outputPanel>
+				
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Selling Materials Classification Row 1:</div>	 
+	       				<apex:selectList value="{!selectedClassificationRow1}" size="1">
+							<apex:selectOptions value="{!ClassificationRow1}"/>
+	       				</apex:selectList>	
+       				</div>          				        				           			
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!AND(NOT(isFile))}">
+					<div style="padding-bottom:8px;">
+						<div class="labC">Selling Materials Classification Row 2:</div>	 
+	       				<apex:selectList value="{!selectedClassificationRow2}" size="1">
+							<apex:selectOptions value="{!ClassificationRow2}"/>
+	       				</apex:selectList>	
+       				</div>          				        				           			
+				</apex:outputPanel>
+				<br />
+				<button onclick="reloadLists(); return false;" rendered="{!AND(NOT(isFile))}">Search</button><button onclick="resetFilters(); return false;">Reset filters</button>
+			</apex:pageBlock>
+            <apex:pageBlock title="Content List" mode="edit" rendered="{!AND(NOT(ISNULL(currentSection)),isFile)}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Delete" action="{!deleteContent}"/>
+                    <apex:commandButton value="Cancel" action="{!cancelDelete}"/>                    
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!contentItemList}" var="c" id="listTable">
+                    <apex:column style="width: 40px;">
+                    	<apex:facet name="header"><input type="checkbox" id="selectAllContentToDelete"/> Select All</apex:facet>
+                        <apex:inputCheckbox value="{!c.selected}" styleClass="deleteContentCheckbox"/>
+                    </apex:column>
+                    
+                     <apex:column headerValue="Filename">  
+                    		<a target="_blank" href="{!baseUrl}/{!c.itemF.Id}"><apex:outputText value="{!c.itemF.Name}" /></a>
+                    </apex:column>
+                    <apex:column headerValue="File">
+                    		<apex:outputText value="{!c.itemF.Title__c}" />
+                    </apex:column>                    
+                    <apex:column headerValue="Description">
+                    		<apex:outputText value="{!c.itemF.Description__c}" />
+                    </apex:column>                    
+                    <apex:column headerValue="Library">
+                    		<apex:outputText value="{! c.recNa}" />
+                    </apex:column>
+                    <apex:column headerValue="Page section">
+                    		<apex:outputText value="{! c.itemF.Page_Section__c}" />
+                    </apex:column>               
+                    <apex:column headerValue="Folders">
+                    		<apex:outputText value="{!c.itemF.Folder_Names__c}" />
+                    </apex:column>  
+                     <apex:column headerValue="Organizational Unit">
+                    		<apex:outputText value="{!c.itemF.OrgUnitsNames__c}" />
+                    </apex:column> 
+                    <apex:column headerValue="Distributor">
+                    		<apex:outputText value="{!c.itemF.Distributor_Names__c}" />
+                    </apex:column> 
+               
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions"> 
+                        <apex:commandLink action="{!first}"    rendered="{!hasPrevious}" rerender="listTable, actions, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="listTable, actions, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!next}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!last}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>
+            
+            <apex:pageBlock title="Content List" mode="edit" rendered="{!AND(NOT(ISNULL(currentSection)),NOT(isFile))}">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Delete" action="{!deleteContent}"/>
+                    <apex:commandButton value="Cancel" action="{!cancelDelete}"/>                                      
+                </apex:pageBlockButtons> 
+                <apex:pageBlockTable value="{!contentItemList}" var="c" id="listTable">
+                    <apex:column style="width: 40px;">
+                    	<apex:facet name="header"><input type="checkbox" id="selectAllContentToDelete"/> Select All</apex:facet>
+                        <apex:inputCheckbox value="{!c.selected}" styleClass="deleteContentCheckbox"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Filename">
+                    		<a target="_blank" href="{!baseUrl}/{!c.itemD.Id}"><apex:outputText value="{!c.itemD.Name}" /></a>
+                    </apex:column>  
+                    
+                    <apex:column headerValue="Title">
+                    		<apex:outputText value="{!c.itemD.Title__c}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Description">
+                    		<apex:outputText value="{!c.itemD.Description__c}" />
+                    </apex:column>  
+                    
+                    <apex:column headerValue="Library">
+                    		<apex:outputText value="{! IF (isFile == False,  'Distributor Portal', '') }" />
+                    </apex:column>                                         
+                    
+                    <apex:column headerValue="Calendar" style="white-space: nowrap;">
+                    	<apex:repeat value="{!c.itemD.Content_Properties__r}" var="subCat">                        	                           
+                           {! subCat.Calendar__r.name  } <br />                                               
+                   		</apex:repeat>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Categories" style="white-space: nowrap;">
+                    	<apex:repeat value="{!c.itemD.Content_Properties__r}" var="subCat">                        	                           
+                           {! IF (len(subCat.Category__c)>0, subCat.Category__c, '') } {! IF (len(subCat.Sub_Category__c)>0, ' › '+ subCat.Sub_Category__c, '') } {! IF (len(subCat.Sub_Sub_Category__c)>0, ' › '+ subCat.Sub_Sub_Category__c, '') } {! IF (len(subCat.Sub_Sub_Sub_Category__c)>0, ' › '+ subCat.Sub_Sub_Sub_Category__c, '') }<br />                                               
+                   		</apex:repeat>
+                    </apex:column>  
+                    
+                    <apex:column headerValue="Selling Materials Classification Row 1" style="white-space: nowrap;">
+                    	<apex:repeat value="{!c.itemD.Content_Properties__r}" var="subCat">                        	                           
+                           {! subCat.Selling_Materials_Classification_Row_1__c  } <br />                                               
+                   		</apex:repeat>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Selling Materials Classification Row 2" style="white-space: nowrap;">
+                    	<apex:repeat value="{!c.itemD.Content_Properties__r}" var="subCat">                        	                           
+                           {! subCat.Selling_Materials_Classification_Row_2__c  } <br />                                               
+                   		</apex:repeat>
+                    </apex:column> 
+                    
+                    <apex:column headerValue="Start date" style="white-space: nowrap;">
+                    	<apex:repeat value="{!c.itemD.Content_Properties__r}" var="subCat">                        	                           
+                           {! subCat.Start_Date__c  } <br />                                               
+                   		</apex:repeat>
+                    </apex:column>  
+                    
+                    <apex:column headerValue="End date" style="white-space: nowrap;">
+                    	<apex:repeat value="{!c.itemD.Content_Properties__r}" var="subCat">                        	                           
+                           {! subCat.End_Date__c } <br />                                               
+                   		</apex:repeat>
+                    </apex:column>
+                   
+                </apex:pageBlockTable>
+                    <apex:panelGrid columns="4" id="actions"> 
+                        <apex:commandLink action="{!first}"    rendered="{!hasPrevious}" rerender="listTable, actions, messages">First</apex:commandlink> 
+                        <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" rerender="listTable, actions, messages">Previous</apex:commandlink> 
+                        <apex:commandLink action="{!next}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Next</apex:commandlink> 
+                        <apex:commandLink action="{!last}"     rendered="{!hasNext}"     rerender="listTable, actions, messages">Last</apex:commandlink>
+                </apex:panelGrid> 
+            </apex:pageBlock>
+    </apex:form>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+		jQuery('#selectAllContentToDelete').live('click', function(){
+			if(jQuery(this).is(':checked')){
+				jQuery('.deleteContentCheckbox').attr('checked', true);
+			} else {
+				jQuery('.deleteContentCheckbox').attr('checked', false);
+			}
+		});
+    });
+    </script>    
+    
+    	
+	<script type="text/javascript" src="{!URLFOR($Resource.jquery, 'jquery.js')}"></script>
+    <script type="text/javascript">
+	    var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <script src="../../soap/ajax/24.0/connection.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    describeResults = null;
+
+
+    jQuery(document).ready(function() {
+		jQuery('#selectAllmatrix').live('click', function(){
+			if(jQuery(this).is(':checked')){
+				jQuery('.matrixCheckbox').attr('checked', true);
+			} else {
+				jQuery('.matrixCheckbox').attr('checked', false);
+			}
+		});
+
+		describeResults = sforce.connection.describeSObject("Content_Property__c"); 
+		
+    });
+	
+	function clearDeepSelect(level){
+		if(level == 1){
+			jQuery('select.Sub_Category__c, select.Sub_Sub_Category__c, select.Sub_Sub_Sub_Category__c').each(function(){
+				select = jQuery(this);
+				select.find('option').remove();
+				select.append($("<option></option>").attr("value","").text('Select'));
+			});
+		} else if(level == 2){
+			jQuery('select.Sub_Sub_Category__c, select.Sub_Sub_Sub_Category__c').each(function(){
+				select = jQuery(this);
+				select.find('option').remove();
+				select.append($("<option></option>").attr("value","").text('Select'));
+			});
+		} else if(level == 3){
+			jQuery('select.Sub_Sub_Sub_Category__c').each(function(){
+				select = jQuery(this);
+				select.find('option').remove();
+				select.append($("<option></option>").attr("value","").text('Select'));
+			});
+		}
+		
+		jQuery('select.Category__c, select.Sub_Category__c, select.Sub_Sub_Category__c, select.Sub_Sub_Sub_Category__c').each(function(){
+			hiddenValue = jQuery(this).val()
+			hiddenClass = jQuery(this).attr('class');
+			jQuery('input[type=hidden]').each(function(index, elem){
+    	        if(jQuery(elem).attr('id') !== undefined){
+        	    	if(jQuery(elem).attr('id').search(hiddenClass) != -1){
+            			jQuery(elem).val(hiddenValue);
+            			return;
+            		}
+            	}
+			});			
+		});
+	}
+    
+	function getPicklistValues(field) {
+	    var values = null;
+	    for(var i = 0; i < describeResults.fields.length; i++) {
+	        var fieldList = describeResults.fields[i];
+	        var fieldName = fieldList.name;
+	        if(fieldName == field) {
+	            values = fieldList.picklistValues;
+	            break;
+	        }
+	    }
+	    return values;
+	}
+
+	function getControllerName(field) {
+	    var name = null;
+	    for(var i = 0; i < describeResults.fields.length; i++) {
+	        var fieldList = describeResults.fields[i];
+	        var fieldName = fieldList.name;
+	
+	        if(fieldName == field) {
+	            name = fieldList.controllerName;
+	            break;
+	        }
+	    }
+	    return name;
+	}
+
+
+	function populateDependency(div, field, value) {
+
+	    var picklistValues = getPicklistValues(field);
+	    var dependencyCode = new Array();
+	    var controller = getControllerName(field);
+
+ 		function findRealIndex(val){
+ 			var vals = getPicklistValues(getControllerName(field));
+ 			var result = 0;
+ 			jQuery.each(vals, function(index, elem){
+ 				if(elem.value == val){
+ 					result = index;
+ 				}
+ 			});
+ 			return result;
+ 		}
+ 		
+
+	    function isDependentValue(index, validFor) {
+	        var base64 = new sforce.Base64Binary("");
+	        var decoded = base64.decode(validFor);
+	        var bits = decoded.charCodeAt(index>>3);
+	        
+	        return ((bits & (0x80 >> (index%8))) != 0);
+	    }
+	
+	    Array.prototype.doesExist = function(value) {
+	        for(var i = 0; i < this.length; i++) {
+	            if(this[i] == value) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	
+	    Array.prototype.addUnique = function(value) {
+	        if(this.doesExist(value)) {
+	            return this;
+	        } else {
+
+	            this.push(value);
+	
+	            return this;
+	        }
+	    }
+	
+		jQuery('select.'+controller).find('option').each(function(item, elem){  
+	        if(elem.value == value) {
+	        	index = findRealIndex(value);
+	            for(var i = 0; i < picklistValues.length; i++) {
+	                if(isDependentValue(index, picklistValues[i].validFor)) {
+	                    dependencyCode.addUnique(picklistValues[i].validFor);
+	                }
+	            }
+	        }
+	    });
+	    
+	    if(picklistValues != null) {
+	        var select = jQuery('select.'+div);
+	        select.find('option').remove();
+	        if(dependencyCode != null) {
+	            select.append($("<option></option>").attr("value","").text('Select'));
+	            for(var i = 0; i < picklistValues.length; i++) {
+  	                if(dependencyCode.doesExist(picklistValues[i].validFor)) {
+	                    select.append($("<option></option>").attr("value",picklistValues[i].value).text(picklistValues[i].label));
+	                }
+	            }
+	        }
+	    } else {
+	        alert("There was an error finding the dependency picklists for: " + field);
+	    }
+	}
+
+	</script>
+    
+    
+</apex:page>

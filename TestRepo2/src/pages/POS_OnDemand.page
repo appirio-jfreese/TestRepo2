@@ -1,0 +1,97 @@
+<apex:page controller="POS_OnDemandController" standardStylesheets="false" showHeader="false" sidebar="false" cache="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=1138"  />
+	<meta name="MobileOptimized" content="1138" /> 
+	<title>Diageo POS</title> 
+	<link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+	<link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+	
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+
+  	<style type="text/css">
+  	.wrapper .page .header-container {height: 137px;}
+  	.visual-block .brand-list { margin: 0 !important; }
+  	.visual-block .back { top: 30px !important; left: 0 !important; } 
+  	ul.brand-list ul.stretch-me.same-height-right li { *height: 45px !important; *padding-top: 15px !important;}
+  	</style>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_NewComps,'js/jquery.sameheight.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.POS_NewComps,'js/main.js')}"></script>
+</head>
+<body >
+	<noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+	<div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+	<div class="wrapper">
+		<div class="page">
+			<div class="main col-full-layout" id="main">
+				<c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+				<div class="not-col-main">		
+					<apex:form >		 
+						<div class="std"> 
+							<div class="visual-block">
+								<ul class="brand-list">
+									<li>
+										<div class="holder">
+											<div class="frame">
+												<div class="text-holder  ">
+													<div class="text">
+														<div class="text-fr stretch-me same-height-left" style="height: 47px;">
+															<span>On Demand</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<ul class="stretch-me same-height-right" style="height: 175px;">
+											<li><a id="premiums" href="{!tangerineUrl}"><span>Premiums</span></a></li>
+											<li><a id="coupons" href="http://diageo.avidcouponhub.com/"><span>Coupons</span></a></li>
+											<li><a id="print" href="http://rel3.instantimpact.com/"><span>Print</span></a></li>
+										</ul>
+										
+									</li>
+								</ul>
+								<script type="text/javascript">
+									subMenu = function(menu){
+									console.log('submenu!');
+										window.subMenu_displayed = false;
+										jQuery('.submenu').each(function(){
+											if(jQuery(this).css('display') == 'block'){
+												jQuery(this).hide(600, function(){jQuery(menu).fadeIn(2000)});
+												window.subMenu_displayed = true;
+											}
+										});
+										if(!window.subMenu_displayed){
+											console.log('nothing displayed, trying to show: ' + menu);
+											jQuery(menu).fadeIn(2000);
+										}
+									}
+										 
+									jQuery('#premiums').click(function(){subMenu('#submenu_premiums')});
+									jQuery('#coupons').click(function(){subMenu('#submenu_coupons')});
+									jQuery('#print').click(function(){subMenu('#submenu_print')});
+								</script>
+								<!--back link-->
+								<a class="back" href="/apex/POS_OrderWindowView">Back</a>
+							</div>
+						</div>
+					</apex:form>
+				</div>
+				<!-- <div class="col-left">
+					&nbsp;				
+				</div> -->
+				<c:POS_Footer />
+			</div>
+		</div>
+	</div>
+	<iframe id="font-resize-frame-883" class="font-resize-helper" style="width: 100em; height: 10px; position: absolute; border-width: 0px; top: -9999px; left: -9999px;"></iframe>
+</body>
+</html>
+
+
+</apex:page>

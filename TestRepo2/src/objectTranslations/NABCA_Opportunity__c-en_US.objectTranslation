@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>NABCA Opportunity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>NABCA Opportunities</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- NABCA Opportunities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- NABCA Opportunities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Month End Date --></label>
+        <name>Month_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- NABCA Material Code --></label>
+        <name>NABCA_Material_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- NABCA Material Desc --></label>
+        <name>NABCA_Material_Desc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity Composite Key --></label>
+        <name>Opportunity_Composite_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change Last Year --></label>
+        <name>Percent_Change_Last_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Roll12 9L Volume --></label>
+        <name>Roll12_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Distribution Percent --></label>
+        <name>State_Distribution_Percent__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

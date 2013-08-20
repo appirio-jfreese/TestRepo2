@@ -1,0 +1,378 @@
+<!------------------------------------------------------------------------------
+Name        : MEPDetails.page
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_MEPDetails" action="{!initTheme}">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'style'+siteTheme+'.css')}"/>
+    <style type="text/css">
+        body, html{
+        	overflow: hidden;
+        }
+    </style>
+    <c:loader />
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        
+		<script type="text/javascript">
+	    	pageViewed('Monthly Execution Plan - Detail Page');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content intro-page-bg left {!if(ISNULL(siteTheme),'hidden','')}">
+			<apex:form >
+
+				<apex:outputPanel id="messages">
+					<apex:messages styleClass="errorMessagesList" />
+				</apex:outputPanel>
+				<apex:actionFunction status="ajax-status" name="renderAsListSlider" action="{!renderAsListSlider}" rerender="messages, sliderContentItemsBxLs"/>
+				<apex:actionFunction status="ajax-status" name="renderAsBoxSlider" action="{!renderAsBoxSlider}" rerender="messages, sliderContentItemsBxLs"/>
+				        <apex:outputPanel rendered="{! if( detailId != null, 'true','false' )}" id="pageContent">
+	                <!-- Slider -->
+	                <div class="horizontal-slider">
+						<!-- Slider navigation buttons -->
+						<div class="horizontal-slider-navigation">
+							<button class="back-button" onclick="window.location='{!backToMonthlyExecutionPlanUrl}'; return false;">Back</button>
+							<div class="horizontal-slider-navigation-wrapper">
+								<div class="horizontal-slider-navigation-button horizontal-slider-navigation-button-active"><apex:outputText value="Overview"/></div>
+								<apex:repeat value="{!detailsMapOrder}" var="silderSection">
+									<div class="horizontal-slider-navigation-button {!if(silderSection == 'Media', 'mediaPage', '')}">{!silderSection}</div>
+								</apex:repeat>
+								<div class="horizontal-slider-navigation-button"><apex:outputText value="Goals"/></div>
+								<div class="horizontal-slider-clear"></div>
+							</div>				
+						</div>		
+						<div class="horizontal-slider-clear"></div>
+ 	               		<div class="brand-header">
+            	       		<span class="brand-details-name"><apex:outputText value="{!mepItem.name}"/> </span><br />
+        	           		<span class="brand-details-subname"><apex:outputText value="{!salesDriverDescription}"/> </span>
+    	               		<span class="brand-details-date"><apex:outputText value="{!dateDescription}"/> </span>             
+                   		</div>
+						<!-- Slider Previous button -->
+						<div class="horizontal-slider-prev horizontal-slider-button"><apex:image url="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'images/left_arrow.png')}"/></div>
+						<!-- Slide area -->
+	                	<div class="horizontal-slider-container">
+	                		<div class="horizontal-slider-content-wrapper">
+								<!-- slider content -->
+								<apex:outputPanel >
+								<div class="horizontal-slider-content overview-content">
+									<!-- overview section -->
+                                    <table class="centerTable"><tr><td>
+									  <div class="overview overview-to-Scroll" style="height: 500px;">
+									  	<div>
+											<apex:outputtext escape="false" value="{!description}"/>
+											<apex:outputPanel rendered="{!IF(mepItem.description_content_description__r.Content_Version_Id__c != '', 'true','false')}">
+												<!-- <br/><br/><c:downloadButton description="Overview" cvid="{!mepItem.description_content_description__r.Content_Version_Id__c}" filetype="{!mepItem.description_content_description__r.filetype__c}"/> -->
+											</apex:outputPanel>
+										</div>
+									  </div>
+                                    </td></tr></table>
+									<div class="logo-bg" style="{!styleBackgroundLogoImage}">&nbsp;</div>
+									<!-- end of overview section -->
+								</div>
+								</apex:outputPanel>
+
+											<apex:outputPanel id="sliderContentItemsBxLs">
+												<apex:repeat value="{!detailsMapOrder}" var="silderSection">
+													<div class="horizontal-slider-content">
+														<!-- slider section -->
+														<apex:outputPanel rendered="{!if(detailsMapSize[silderSection] != 0, 'true','false')}">
+									                        <div class="right"  style="margin-right: 44px;">
+																<div class="float-right" style="text-align: center;">
+																	<div onclick="renderAsBoxSlider();" class="show-as-box-button {!if(displayAsList != true, 'show-as-list-box-button-active','')}">
+																		<apex:image styleClass="list-box-img" url="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'images/boxView.png')}"/>									
+																	</div>								
+																	<div onclick="renderAsListSlider();" class="show-as-list-button {!if(displayAsList = true, 'show-as-list-box-button-active','')}">
+																		<apex:image styleClass="list-box-img" url="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'images/listView.png')}"/>
+																	</div>
+																	<div class="clear-float"></div>
+																</div>	
+									                            <div class="downloadAllButton action-button" id="{!detailsMapParser[silderSection]}">
+									                                <div class="action-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/downloadArrow.png')}"/></div>
+									                                <div class="action-button-description">Download / Share Multiple Files</div>
+									                            </div>
+									                        </div>
+															<div class="content-item-wrapper">
+																<apex:variable value="" var="currentSubSubCategory"/>
+																<apex:repeat value="{!contentHolderMap[silderSection]}" var="calendarItm">
+																	<apex:outputPanel rendered="{!IF(currentSubSubCategory != calendarItm.result['Sub_Sub_Category__c'],'true','false')}">
+																	<div class="clear-float"></div>
+																		<div class="sub-label">{!calendarItm.result['Sub_Sub_Category__c']}</div>
+																	</apex:outputPanel>
+																	<apex:variable value="{!calendarItm.result['Sub_Sub_Category__c']}" var="currentSubSubCategory" rendered="{!!ISNULL(calendarItm.result['Sub_Sub_Category__c'])}"/>
+
+																	<apex:outputPanel rendered="{!if(displayAsList != true,'true','false')}">
+																		<c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!calendarItm}" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true" />
+						                                            </apex:outputPanel>
+																	<apex:outputPanel rendered="{!if(displayAsList = true,'true','false')}">
+																		<c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!calendarItm}" renderAsList="true" lastLoginDateItem="{!lastLoginDate}" displayUploadDate="true"/>
+			                                            			</apex:outputPanel>
+																</apex:repeat>
+																<div class="content-item-clean"></div>
+															</div>
+															<c:pagination showPager="false" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="1" />
+														</apex:outputPanel>
+													</div>
+												</apex:repeat>
+											</apex:outputPanel>
+
+								<div class="horizontal-slider-content">
+									<!-- goals section -->								
+									<div class="static-text-paragraph">
+										<a href="{!$Page.Collaboration}?section={!goalsFolderId}" onclick="pageViewed('Monthly Execution Plan - Detail Page - Program Goals');"><span class="pink-color-text">Program Goals</span> can be found in the Goals Folder in "Collaboration".</a>
+									</div>			
+									
+									<!-- end of goals section -->	
+								</div>
+								
+								<div class="horizontal-slider-clear"></div>
+							</div>						
+						</div>
+						<!-- Slider Next button-->
+						<div class="horizontal-slider-next horizontal-slider-button"><apex:image url="{!URLFOR($Resource.MonthlyExecutionPlanPage, 'images/right_arrow.png')}"/></div>
+						<div class="horizontal-slider-clear"></div>
+					</div>
+                </apex:outputPanel>
+			</apex:form>
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}"/>
+    </div>
+    
+	<apex:form >
+		<apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction> 
+		
+		<apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		
+				<apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>
+		<apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentBasketItemsNo, sliderContentItemsBxLs, downloadAllCalendarItems">
+			<apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+		</apex:actionFunction>		
+	</apex:form>
+
+    <div id="moreInfo" class="hidden dialog" >
+	    <apex:outputPanel id="overviewDialog">
+	    	<c:overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+	    </apex:outputPanel>        
+    </div>
+
+	<apex:outputPanel id="downloadAllCalendarItems">
+		<apex:repeat value="{!detailsMap}" var="silderSection">
+			<div id="downloadAllInfo-{!detailsMapParser[silderSection]}" class="hidden dialog" >
+				<c:downloadAll content="{!detailsMap[silderSection]}"/>
+			</div>	
+		</apex:repeat>
+	</apex:outputPanel>
+	
+    <div id="shareInfo" class="hidden dialog">
+        <apex:outputPanel id="shareDialog">
+			<c:share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div>    
+
+    <c:ajaxLoader beforeStop="bindJs();" />
+       
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+			hideDialog('startingLoader');
+			hideDialog('startingLoaderOverlayDisable');
+			jQuery("body").css("overflow","auto");
+			jQuery("html").css("overflow","auto");
+		});		
+        jQuery(document).keydown(function(e) {
+            var element = e.target.nodeName.toLowerCase();
+            if (element != 'input' && element != 'textarea') {
+                if (e.keyCode === 39) {
+                    if(jQuery('.horizontal-slider-next').length == 1){
+                        jQuery('.horizontal-slider-next').trigger('click');
+                    }
+                    return false;
+                } else if (e.keyCode === 37) {
+                    if(jQuery('.horizontal-slider-prev').length == 1){
+                        jQuery('.horizontal-slider-prev').trigger('click');
+                    }
+                    return false;
+                }
+            }
+        });    
+    
+    	function calculateBoxHeight(){
+	    	 jQuery("div.content-item").each(function(i, elem){
+		        	var bottomValue = jQuery("div.item-description", elem).height()-jQuery("div.content-item-menu div", elem).height() - 5;
+			        jQuery("div.item-description", elem).css('bottom', -bottomValue+"px");
+		        });
+	    }
+	    
+	    function bindJs(){
+            jQuery('.content-item-wrapper').not('.overview-content').each(function(){
+            	var isiPad = navigator.userAgent.match(/iPad/i) != null;
+    	    		
+		    	if( isiPad == true){
+		    		jQuery("div.content-item-list-description").live('touchstart', function(){
+		    			jQuery("div.content-item-list-buttons").addClass("hidden");
+		    			jQuery(this).parent().find("div.content-item-list-buttons").removeClass("hidden");
+		    			return false;
+		    		});
+		    	}
+            	if(!jQuery(this).hasClass('scrollBind')){
+            		jQuery(this).addClass('scrollBind');            	
+            		jQuery(this).jScrollPane();
+            	}
+            });
+            if(!jQuery('.overview-to-Scroll').hasClass('scrollBind')){
+            	jQuery('.overview-to-Scroll').addClass('scrollBind');
+            	jQuery('.overview-to-Scroll').jScrollPane();
+            }	    
+	    }	    
+    
+        jQuery(document).ready(function() {
+        	calculateBoxHeight();
+            // init horizontal-slider
+            bindJs();
+            
+            jQuery('.horizontal-slider-container').scrollLeft(0);           
+            jQuery('.horizontal-slider').each(function(){
+				jQuery(this).find('.horizontal-slider-prev').css({'opacity': '0', 'visibility': 'hidden'});
+                dataContentWidth = jQuery(this).find('.horizontal-slider-content').size();
+                if(!isNaN(dataContentWidth)){
+                    totalWarpperWidth = dataContentWidth * jQuery(this).find('.horizontal-slider-content').first().outerWidth();
+                    jQuery(this).find('.horizontal-slider-content-wrapper').css('width', totalWarpperWidth);
+                }
+            });
+            // end of init
+    
+            // horizontal slider navigation
+            jQuery('.horizontal-slider-button').live('click', function(){
+                sliderHolder = jQuery(this).parents('.horizontal-slider');
+                if(sliderHolder.length != 0){
+                    slider = sliderHolder.find('.horizontal-slider-container');
+                    if(slider.length != 0){
+                        if(slider.find('.horizontal-slider-content').first().length != 0){
+                            if(sliderHolder.find('.horizontal-slider-navigation-button-active').length == 0){
+                                return;
+                            }
+                            scrollToPosition = slider.scrollLeft();
+                            buttonToActivate = null;
+                            if(jQuery(this).hasClass('horizontal-slider-prev')){
+                                if(sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button').length == 0){
+                                    return;
+                                }
+
+                                if(sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button').prev('.horizontal-slider-navigation-button').length == 0){
+                                    sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 0}, 500, function(){
+                                    	jQuery(this).css('visibility','hidden');
+                                    });
+                                } else {
+                                	sliderHolder.find('.horizontal-slider-next').css('visibility','');
+                                    sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 1}, 500);
+                                }
+
+                                buttonToActivate = sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button');
+                                scrollToPosition -= slider.find('.horizontal-slider-content').first().outerWidth();
+                            } else if(jQuery(this).hasClass('horizontal-slider-next')){
+                                if(sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button').length == 0){
+                                    return;
+                                }
+                                
+                                if(sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button').next('.horizontal-slider-navigation-button').length == 0){
+                                    sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 0}, 500, function(){
+                                    	jQuery(this).css('visibility','hidden');
+                                    });
+                                } else {
+                                	sliderHolder.find('.horizontal-slider-prev').css('visibility','');                                
+                                    sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 1}, 500);
+                                }
+
+                                buttonToActivate = sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button');
+                                scrollToPosition += slider.find('.horizontal-slider-content').first().outerWidth();
+                            }
+							if(buttonToActivate.hasClass('mediaPage')){
+								renderAsBoxSlider();
+							}	else {
+								renderAsListSlider();
+							}    
+                            if(!slider.hasClass('scrolling') && buttonToActivate != null){                          
+                                slider.addClass('scrolling');
+                                sliderHolder.find('.horizontal-slider-navigation-button').removeClass('horizontal-slider-navigation-button-active');
+                                buttonToActivate.addClass('horizontal-slider-navigation-button-active');
+                                slider.animate({scrollLeft: scrollToPosition }, 600,function(){
+                                    jQuery(this).removeClass('scrolling');
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+            jQuery('.horizontal-slider-navigation-button').live('click', function(){
+                sliderHolder = jQuery(this).parents('.horizontal-slider');
+				if(jQuery(this).hasClass('mediaPage')){
+					renderAsBoxSlider();
+				} else {
+					renderAsListSlider();
+				}             
+                if(sliderHolder.length != 0){
+                    slider = sliderHolder.find('.horizontal-slider-container');
+                    if(slider.length != 0){
+                        if(slider.find('.horizontal-slider-content').first().length != 0){
+                            scrollToPosition = jQuery(this).index()*jQuery(slider).find('.horizontal-slider-content').first().outerWidth();
+                            if(!slider.hasClass('scrolling')){
+                                slider.addClass('scrolling');
+                                sliderHolder.find('.horizontal-slider-navigation-button').removeClass('horizontal-slider-navigation-button-active');
+                                jQuery(this).addClass('horizontal-slider-navigation-button-active');
+                                
+                                if(sliderHolder.find('.horizontal-slider-navigation-button-active').next('.horizontal-slider-navigation-button').length == 0){
+                                    sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 0}, 500, function(){
+                                    	jQuery(this).css('visibility','hidden');                                    
+                                    });
+                                } else {
+                                	sliderHolder.find('.horizontal-slider-next').css('visibility','');
+                                    sliderHolder.find('.horizontal-slider-next').stop().animate({'opacity': 1}, 500);
+                                }
+                                if(sliderHolder.find('.horizontal-slider-navigation-button-active').prev('.horizontal-slider-navigation-button').length == 0){
+                                    sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 0}, 500, function(){
+                                    	jQuery(this).css('visibility','hidden');
+                                    });
+                                } else {
+                                	sliderHolder.find('.horizontal-slider-prev').css('visibility','');
+                                    sliderHolder.find('.horizontal-slider-prev').stop().animate({'opacity': 1}, 500);
+                                }
+                                
+                                slider.animate({scrollLeft: scrollToPosition }, 600,function(){
+                                    jQuery(this).removeClass('scrolling');
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</apex:page>

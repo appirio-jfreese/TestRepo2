@@ -1,0 +1,143 @@
+<apex:page controller="POS_GenerateOrderingSheetController" cache="true" contentType="{!IF(userAddresses==null || userAddresses.size == 0, 'text/html', 'application/vnd.ms-excel#ordering_sheet_'+$User.Id+'.xls')}" showHeader="false" showChat="false" sidebar="false">
+	<apex:pageMessage summary="There are no shiptos selected by you, cannot generate the sheet until at least one shipto is selected." 
+		severity="warning" strength="3" rendered="{!userAddresses==null || userAddresses.size == 0}" />
+	<apex:variable var="rowNum" value="{!1}"/>
+	<apex:variable var="totalAcross" value=""/>
+	<apex:variable var="totalAcrossSnH" value=""/>
+	<apex:dataTable value="{!orderwindowData}" var="program" border="1" rendered="{! !(userAddresses==null || userAddresses.size == 0)}">
+		<apex:facet name="header">Ordering Sheet for "{!orderWindow.Name}"</apex:facet>
+         <apex:column colspan="{!colStartPosition+(userAddresses.size*noOfItemCols)}">  
+         <apex:variable var="rowNum" value="{!rowNum + 7}"/>
+         <apex:variable var="subNum" value="{!0}"/>
+      	 <apex:dataTable value="{!program.Items__r}" var="item" border="1">
+      	 	 <apex:column style="background:#FFCC99;">
+      	 	 <apex:variable var="subNum" value="{!subNum + 1}"/>
+      	 	 <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+				<apex:facet name="header">Brand</apex:facet>
+				<apex:outputText value="{!program.Brand__r.name}" escape="false" rendered="{! subNum == 1}"/>
+			</apex:column>      	 	 
+	         <apex:column style="background:#99CCFF;">
+				<apex:facet name="header">Program</apex:facet>
+				<apex:outputText value="{!program.name}" escape="false" rendered="{! subNum == 1}"/>
+			</apex:column>
+	         
+	         <apex:column >
+				<apex:facet name="header">Item Name</apex:facet>
+				<apex:outputText value="{!item.Name}" escape="false"/>
+			</apex:column>
+	         <apex:column >
+				<apex:facet name="header">Item Id</apex:facet>
+				<apex:outputText value="{!item.Id}"/>
+			</apex:column>			
+	         <apex:column >
+				<apex:facet name="header">Packout Quantity</apex:facet>
+				<apex:outputText value="{!item.Packout_Quantity__c}"/>
+			</apex:column>
+	        <apex:column style="text-align:right;">
+				<apex:facet name="header">Estimated Price</apex:facet>
+				<apex:outputText value="${!BLANKVALUE(item.Current_Price__c, 0)}"/>
+			</apex:column>
+	        <apex:column >
+	        	<!-- LSLEVIN Case 6123 7.25.2013 START -->
+				<!-- <apex:facet name="header">Shipping/Tax %</apex:facet>-->
+				<apex:facet name="header">Shipping</apex:facet>
+				<!-- LSLEVIN Case 6123 7.25.2013 END -->
+				<apex:outputText value="{!BLANKVALUE(item.Estimated_Shipping_Tax__c, 0)}%"/>
+				<apex:variable var="totalAcross" value="=ROUND(SUM(" />
+				<apex:variable var="totalAcrossSnH" value="=ROUND(SUM(" />
+			</apex:column>			
+			<apex:repeat value="{!userAddresses}" var="addr">
+         	<apex:column style="background:#FFFF99;">		
+         		<apex:facet name="header">{!addr.usrShipTo.Ship_To__r.Name} <br/>{!addr.usrShipTo.Ship_To__r.Account__r.Name} <br/>{!addr.usrShipTo.Ship_To__r.Attention__c} <br/>{!addr.usrShipTo.Ship_To__r.Street__c} <br/>{!addr.usrShipTo.Ship_To__r.City__c}, {!addr.usrShipTo.Ship_To__r.State__c}
+         		<br/><br/> Unit Qty
+         		</apex:facet>
+			</apex:column>	
+	         <apex:column >
+				<apex:facet name="header">ShipTo Id</apex:facet>
+				<apex:outputText value="{!addr.usrShipTo.Ship_To__r.Id}"/>
+			</apex:column>			
+	        <apex:column style="text-align:right;">
+				<apex:facet name="header"><br/><br/><br/><br/><br/><br/>Item Total Price</apex:facet>
+				<apex:outputText value="=ROUND({!itemPriceColumn}{!FLOOR(rowNum)}*{!addr.itemQtyColumn}{!FLOOR(rowNum)},2)"/>
+				<apex:variable var="totalAcross" value="{!totalAcross} ,{!addr.itemTotalColumn}{!FLOOR(rowNum)}" />
+			</apex:column>	
+	        <apex:column style="text-align:right;">
+	        <!-- LSLEVIN Case 6123 7.25.2013 START -->
+				<!--<apex:facet name="header"><br/><br/><br/><br/><br/>Item Total &#43;<br/> Shipping &amp; Tax</apex:facet> -->
+				    <apex:facet name="header"><br/><br/><br/><br/><br/>Item Total &#43;<br/> Shipping</apex:facet>
+			<!-- LSLEVIN Case 6123 7.25.2013 END -->	
+				<apex:outputText value="=ROUND({!addr.itemTotalColumn}{!FLOOR(rowNum)}+({!itemSnHColumn}{!FLOOR(rowNum)}*{!addr.itemTotalColumn}{!FLOOR(rowNum)}),2)"/>
+				<apex:variable var="totalAcrossSnH" value="{!totalAcrossSnH} ,{!addr.itemTotalSnHColumn}{!FLOOR(rowNum)}" />
+			</apex:column>				
+	        </apex:repeat>  
+	        
+ 			<apex:column style="font-weight:bold;background:silver;text-align:right;">
+				<apex:facet name="header"><br/><br/><br/><br/><br/>Item Total Price<br/>across all Ship Tos</apex:facet>
+				<apex:variable var="totalAcross" value="{!totalAcross} ), 2)"/>
+				<apex:outputText value="{!totalAcross}" />
+			</apex:column>	
+	         <apex:column style="font-weight:bold;background:silver;text-align:right;">
+	         <!-- LSLEVIN Case 6123 7.25.2013 START -->
+				<!--<apex:facet name="header"><br/><br/><br/><br/>Item Total &#43;<br/> Shipping &amp; Tax<br/>across all Ship Tos</apex:facet>-->
+				<apex:facet name="header"><br/><br/><br/><br/>Item Total &#43;<br/> Shipping<br/>across all Ship Tos</apex:facet>
+			<!-- LSLEVIN Case 6123 7.25.2013 END -->	
+				<apex:variable var="totalAcrossSnH" value="{!totalAcrossSnH} ), 2)"/>
+				<apex:outputText value="{!totalAcrossSnH}" />
+			</apex:column>	         
+		 </apex:dataTable>	
+         </apex:column>	
+        <apex:column breakBefore="true" colspan="{!colStartPosition - 2}" style="font-weight:bold;text-align:center;background:#99CCFF;">
+        	<apex:variable var="rowNum" value="{!rowNum + 1}"/>
+        	<apex:outputText value="{!program.name} - Total" escape="false"/>
+		</apex:column>
+		<apex:repeat value="{!userAddresses}" var="addr">
+		<apex:column style="font-weight:bold;background:silver;">
+        	<apex:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;"/>
+		</apex:column>  
+		<apex:column style="font-weight:bold;background:silver;">
+        	<apex:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;"/>
+		</apex:column> 		
+		<apex:column style="font-weight:bold;background:silver;">
+        	<apex:outputText value="=ROUND(SUM({!addr.itemTotalColumn}{!FLOOR(rowNum) - program.Items__r.size}:{!addr.itemTotalColumn}{!FLOOR(rowNum) - 1}), 2)"
+        		rendered="{! !(program.Items__r==null || program.Items__r.size == 0)}"/>
+		</apex:column> 	
+		<apex:column style="font-weight:bold;background:silver;">
+        	<apex:outputText value="=ROUND(SUM({!addr.itemTotalSnHColumn}{!FLOOR(rowNum) - program.Items__r.size}:{!addr.itemTotalSnHColumn}{!FLOOR(rowNum) - 1}), 2) "
+        		rendered="{! !(program.Items__r==null || program.Items__r.size == 0)}"/>
+		</apex:column> 	
+		</apex:repeat>	
+		<apex:column style="font-weight:bold;background:silver;">
+        	<apex:outputText value="=ROUND(SUM({!totalAcrossColumn}{!FLOOR(rowNum) - program.Items__r.size}:{!totalAcrossColumn}{!FLOOR(rowNum) - 1}), 2) "
+        		rendered="{! !(program.Items__r==null || program.Items__r.size == 0)}"/>
+		</apex:column> 
+		<apex:column style="font-weight:bold;background:silver;">
+        	<apex:outputText value="=ROUND(SUM({!totalAcrossSnHColumn}{!FLOOR(rowNum) - program.Items__r.size}:{!totalAcrossSnHColumn}{!FLOOR(rowNum) - 1}), 2)"
+        		rendered="{! !(program.Items__r==null || program.Items__r.size == 0)}"/>
+		</apex:column> 		
+	</apex:dataTable>
+	<apex:dataTable value="{!orderWindowTotal}" var="dummy" border="1" rendered="{! !(userAddresses==null || userAddresses.size == 0)}">
+		<apex:column breakBefore="true" colspan="{!colStartPosition}" style="font-weight:bold;background:#FF99CC;">
+			Grand Total
+		</apex:column>
+		<apex:repeat value="{!userAddresses}" var="addr">
+		<apex:column style="font-weight:bold;background:#FF99CC;">
+        	<apex:outputText value=" "/>
+		</apex:column>  
+		<apex:column style="font-weight:bold;background:#FF99CC;">
+        	<apex:outputText value=" "/>
+		</apex:column> 		
+		<apex:column style="text-align:right;font-weight:bold;background:#FF99CC;">
+        	<apex:outputText value="=DOLLAR(SUMIF({!addr.itemQtyColumn}2:{!addr.itemQtyColumn}{!FLOOR(rowNum)}, &quot;&nbsp;&nbsp;&nbsp;&nbsp;&quot;, {!addr.itemTotalColumn}2:{!addr.itemTotalColumn}{!FLOOR(rowNum)}))"/>
+		</apex:column> 	
+		<apex:column style="text-align:right;font-weight:bold;background:#FF99CC;">
+        	<apex:outputText value="=DOLLAR(SUMIF({!addr.itemQtyColumn}2:{!addr.itemQtyColumn}{!FLOOR(rowNum)}, &quot;&nbsp;&nbsp;&nbsp;&nbsp;&quot;, {!addr.itemTotalSnHColumn}2:{!addr.itemTotalSnHColumn}{!FLOOR(rowNum)}))"/>
+		</apex:column> 
+		</apex:repeat>	
+		<apex:column style="text-align:right;font-weight:bold;background:#FF99CC;">
+        	<apex:outputText value="=DOLLAR(SUMIF({!firstQtyColumn}2:{!firstQtyColumn}{!FLOOR(rowNum)}, &quot;&nbsp;&nbsp;&nbsp;&nbsp;&quot;, {!totalAcrossColumn}2:{!totalAcrossColumn}{!FLOOR(rowNum)}))"/>
+		</apex:column> 
+		<apex:column style="text-align:right;font-weight:bold;background:#FF99CC;">
+        	<apex:outputText value="=DOLLAR(SUMIF({!firstQtyColumn}2:{!firstQtyColumn}{!FLOOR(rowNum)}, &quot;&nbsp;&nbsp;&nbsp;&nbsp;&quot;, {!totalAcrossSnHColumn}2:{!totalAcrossSnHColumn}{!FLOOR(rowNum)}))"/>
+		</apex:column>			
+	</apex:dataTable>
+</apex:page>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Media</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Media</value>
+    </caseValues>
+    <fields>
+        <label><!-- Available --></label>
+        <name>Available__c</name>
+        <picklistValues>
+            <masterLabel>FALSE</masterLabel>
+            <translation><!-- FALSE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRUE</masterLabel>
+            <translation><!-- TRUE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Content Display ID --></label>
+        <name>Content_Display_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content URL --></label>
+        <name>Content_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content Id --></label>
+        <name>Content_id__c</name>
+    </fields>
+    <fields>
+        <label><!-- File Type --></label>
+        <name>File_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Image --></label>
+        <name>Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Media External Id --></label>
+        <name>Media_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Version Number --></label>
+        <name>Version_Number__c</name>
+    </fields>
+    <layouts>
+        <layout>Recipe Media Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

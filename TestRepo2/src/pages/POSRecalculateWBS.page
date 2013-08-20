@@ -1,0 +1,6 @@
+<apex:page controller="POS_RecalculateWBSController" action="{!recalculate}">
+  <!-- Begin Default Content REMOVE THIS -->
+   Please wait....
+  <!-- End Default Content REMOVE THIS -->
+  <Script>window.close();</script>
+</apex:page>

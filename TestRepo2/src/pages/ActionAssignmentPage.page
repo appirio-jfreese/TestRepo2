@@ -1,0 +1,195 @@
+<apex:page controller="ActionAssignmentController"
+		   extensions="ActionAssignmentGoalSaver"
+		   tabStyle="My_Goals__tab"
+		   sidebar="false">
+
+	<head>
+	
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-1.7.2.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-ui-1.8.21.custom.min.js')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.AAPJQuery, 'css/start/jquery-ui-1.10.1.custom.css')}"/>
+		
+		<apex:includeScript value="{!$Resource.AAPData}"/>
+		<apex:includeScript value="{!$Resource.AAPInteract}"/>
+		<apex:includeScript value="{!$Resource.AAPSetup}"/>
+		<apex:includeScript value="{!$Resource.ACPUtils}"/>
+		
+		<link rel="stylesheet" type="text/css" href="{!$Resource.AAPStyles}" />
+	
+		<script>
+			var j$ = jQuery.noConflict();
+			
+			j$(document).ready(
+				function() {
+					doNextSetupStep();
+				}
+			);
+		</script>
+	
+	</head>
+	
+	<body>
+	
+		<apex:form >
+			<apex:actionFunction name="assignDummyViewGoal"
+								 action="{!assignDummyViewGoal}"
+								 rerender="dummyViewBlock"
+								 oncomplete="j$('#loadModal').dialog('close'); j$('.goalModal').slideDown();">
+				<apex:param name="goalId"
+							value=""
+							assignTo="{!dummyGoalId}"/>
+			</apex:actionFunction>
+			<apex:actionFunction name="assignDummyEditGoal"
+								 action="{!assignDummyEditGoal}"
+								 rerender="dummyViewBlock"
+								 oncomplete="j$('#loadModal').dialog('close'); j$('.goalModal').slideDown();">
+				<apex:param name="goalId"
+							value=""
+							assignTo="{!dummyGoalId}"/>
+			</apex:actionFunction>
+		
+			<div id="loadModal" title="">
+				<div id="loadProgressBar"/>
+			</div>
+			
+			<apex:outputPanel id="emptyPanel"/>
+			
+			<apex:outputPanel id="goalModalPanel">
+				<div class="goalModal" style="display: none;">
+					<apex:pageBlock id="dummyViewBlock"
+									title="{!IF(dummyGoalMode == 'view', 'View Goal', 'Edit Goal')}"
+									mode="edit">
+						<apex:pageBlockButtons >
+							<apex:commandButton value="Close"
+												rendered="{!dummyGoalMode == 'view'}"
+												action="{!doNothing}"
+												rerender="emptyPanel"
+												onComplete="j$('.goalModal').slideUp();"/>
+							<apex:commandButton value="Save"
+												rendered="{!dummyGoalMode == 'edit'}"
+												action="{!saveDummyGoal}"
+												rerender="emptyPanel"
+												onComplete="j$('.goalModal').slideUp();"/>
+							<apex:commandButton value="Cancel"
+												rendered="{!dummyGoalMode == 'edit'}"
+												action="{!doNothing}"
+												rerender="emptyPanel"
+												onComplete="j$('.goalModal').slideUp();"/>
+						</apex:pageBlockButtons>
+						<apex:pageBlockSection title="Main Details">
+							<apex:outputField value="{!dummyGoal.Long_Name__c}"/>
+							<apex:outputField value="{!dummyGoal.Goal_Type__c}"/>
+							<apex:outputField value="{!dummyGoal.Priority__c}"/>
+							<apex:pageBlockSectionItem >
+								<apex:outputLabel value="Activity Type" for="goalRecType"/>
+       							<apex:outputLabel value="{!dummyGoalRecTypeName}" id="goalRecType"/>
+							</apex:pageBlockSectionItem>
+							<apex:outputField value="{!dummyGoal.Program__c}"/>
+							<apex:outputField value="{!dummyGoal.Start_Date__c}"/>
+							<apex:outputField value="{!dummyGoal.Minimum_of_Accounts__c}"/>
+							<apex:outputField value="{!dummyGoal.Due_Date__c}"/>
+							<apex:outputField value="{!dummyGoal.Cases_Displayed__c}"
+											  rendered="{!showCases}"/>
+						</apex:pageBlockSection>
+						
+						<apex:pageBlockSection title="Brand Details"
+											   columns="1">
+							<apex:outputPanel rendered="{!pls != null}">
+								<apex:pageBlockTable var="pl"
+													 value="{!pls}">
+									<apex:column value="{!pl.Generic_Brand__c}"/>
+									<apex:column value="{!pl.Sub_Brand__c}"/>
+									<apex:column value="{!pl.Individual_Brand__c}"/>
+									<apex:column value="{!pl.Size__c}"/>
+								</apex:pageBlockTable>
+							</apex:outputPanel>
+						</apex:pageBlockSection>
+						
+						<apex:pageBlockSection title="Additional Details"
+											   rendered="{!dummyGoalMode == 'view'}">
+							<apex:outputField value="{!dummyGoal.SFA_POS_Items__c}"/>
+							<apex:outputField value="{!dummyGoal.Comments__c}"/>
+							<apex:outputField value="{!dummyGoal.Account_Grade__c}"/>
+							<apex:outputField value="{!dummyGoal.Location_Grade__c}"
+											  rendered="{!dummyGoal.Goal_Type__c = 'Off-Premise - Control'}"/>
+							<apex:outputField value="{!dummyGoal.Size_of_Ad__c}"
+											 rendered="{!showSizeOfAd}"/>
+							<apex:outputField value="{!dummyGoal.Feature_Type__c}"
+											 rendered="{!showFeatureType}"/>
+							<apex:outputField value="{!dummyGoal.Type_of_Ad__c}"
+											 rendered="{!showTypeOfAd}"/>
+							<apex:outputField value="{!dummyGoal.Suggested_Price__c}"
+											 rendered="{!showSuggestedPrice}"/>
+							<apex:outputField value="{!dummyGoal.Content_Link__c}"
+											 rendered="{!showContentLink}"/>
+							<apex:outputField value="{!dummyGoal.Shelf_Set_Criteria__c}"
+											 rendered="{!showShelfSetCriteria}"/>
+							<apex:outputField value="{!dummyGoal.Length_of_Training__c}"
+											 rendered="{!showTrainingLength}"/>
+							<apex:outputField value="{!dummyGoal.Tasted_Product__c}"
+											 rendered="{!showTastedProduct}"/>
+							<apex:outputField value="{!dummyGoal.Trainer__c}"
+											 rendered="{!showTrainer}"/>
+							<apex:outputField value="{!dummyGoal.Number_of_Attendees__c}"
+											 rendered="{!showNumAttendees}"/>
+							<apex:outputField value="{!dummyGoal.Training_Audience__c}"
+											 rendered="{!showTrainingAud}"/>
+							<apex:outputField value="{!dummyGoal.Product_Sample_s__c}"
+											 rendered="{!showProductSamples}"/>
+							<apex:outputField value="{!dummyGoal.Accomplishment_Recap__c}"
+											 rendered="{!showAccomplishment}"/>
+						</apex:pageBlockSection>
+							
+						<apex:pageBlockSection title="Additional Details"
+											   rendered="{!dummyGoalMode == 'edit'}">
+							<apex:inputField value="{!dummyGoal.SFA_POS_Items__c}"/>
+							<apex:inputField value="{!dummyGoal.Comments__c}"/>
+							<apex:inputField value="{!dummyGoal.Account_Grade__c}"/>
+							<apex:inputField value="{!dummyGoal.Location_Grade__c}"
+											  rendered="{!dummyGoal.Goal_Type__c = 'Off-Premise - Control'}"/>
+							<apex:inputField value="{!dummyGoal.Size_of_Ad__c}"
+											 rendered="{!showSizeOfAd}"/>
+							<apex:inputField value="{!dummyGoal.Feature_Type__c}"
+											 rendered="{!showFeatureType}"/>
+							<apex:inputField value="{!dummyGoal.Type_of_Ad__c}"
+											 rendered="{!showTypeOfAd}"/>
+							<apex:inputField value="{!dummyGoal.Suggested_Price__c}"
+											 rendered="{!showSuggestedPrice}"/>
+							<apex:inputField value="{!dummyGoal.Content_Link__c}"
+											 rendered="{!showContentLink}"/>
+							<apex:inputField value="{!dummyGoal.Shelf_Set_Criteria__c}"
+											 rendered="{!showShelfSetCriteria}"/>
+							<apex:inputField value="{!dummyGoal.Length_of_Training__c}"
+											 rendered="{!showTrainingLength}"/>
+							<apex:inputField value="{!dummyGoal.Tasted_Product__c}"
+											 rendered="{!showTastedProduct}"/>
+							<apex:inputField value="{!dummyGoal.Trainer__c}"
+											 rendered="{!showTrainer}"/>
+							<apex:inputField value="{!dummyGoal.Number_of_Attendees__c}"
+											 rendered="{!showNumAttendees}"/>
+							<apex:inputField value="{!dummyGoal.Training_Audience__c}"
+											 rendered="{!showTrainingAud}"/>
+							<apex:inputField value="{!dummyGoal.Product_Sample_s__c}"
+											 rendered="{!showProductSamples}"/>
+							<apex:inputField value="{!dummyGoal.Accomplishment_Recap__c}"
+											 rendered="{!showAccomplishment}"/>
+						</apex:pageBlockSection>
+					<br/>
+					</apex:pageBlock>
+				</div>
+			</apex:outputPanel>
+			
+			<div id="allTabDiv">
+				<div id="priorityTabDiv"/>
+				<div id="allHolder">
+					<div id="premiseButtonDiv"/>
+					<div id="rtButtonDiv"/>
+					<div id="totalBlocks"/>
+					<div id="repBlocks"/>
+				</div>
+			</div>
+		</apex:form>
+		
+	</body>
+
+</apex:page>

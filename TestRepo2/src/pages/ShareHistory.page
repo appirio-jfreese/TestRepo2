@@ -1,0 +1,233 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_ShareHistory">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SearchResultPage, 'style'+siteTheme+'.css')}"/>
+    <style type="text/css">
+        body, html{
+            overflow: hidden;
+        }
+        .recipientsinfowrapper {
+			height: 18px; overflow: hidden; margin-left: 53px; width: 870px; text-align: left; color: #1B7E92; position: relative;        
+        }
+        .info-history-date-wapper {
+        	margin-left: 53px; width: 870px; text-align: left; color: #1B7E92;
+        	line-height: 18px;
+        }
+        .info-recipiens-holder {
+        	width: 805px;
+        	line-height: 18px;
+        }
+		.info-history-more {
+			position: absolute; top: 0px; right: -5px; font-weight: bold; font-size: 12px; width: 60px;"
+		}
+		.info-history-more-img {
+
+		}
+    </style>    
+    <c:loader />   
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+        <script type="text/javascript">
+            pageViewed('Share History');
+        </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+            <apex:form >
+                    <apex:actionFunction status="ajax-status" name="changeNumberOfItemPerPage" action="{!changeNumberOfItemPerPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showFirstPage" action="{!showFirstPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showPrevPage" action="{!showPrevPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showNextPage" action="{!showNextPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showLastPage" action="{!showLastPage}" rerender="messages, pageContent, downloadAllDialog"/>
+                    <apex:actionFunction status="ajax-status" name="showPageRequested" action="{!showPageRequested}" rerender="messages, pageContent, downloadAllDialog">
+                        <apex:param name="requestedPageNumber" assignTo="{!numberOfCurrentPage}" value="" />
+                    </apex:actionFunction>
+                    <apex:actionFunction status="ajax-status" name="changeOrder" action="{!changeOrder}" rerender="messages, pageContent, downloadAllDialog"/>
+
+                    <apex:outputPanel id="messages">
+                        <apex:messages styleClass="errorMessagesList" />
+                    </apex:outputPanel>
+
+                    
+                    
+                    <apex:outputPanel id="pageContent">
+                        <apex:outputPanel rendered="{!OR(ISNULL(content),content.size=0)}">
+                            <div class="content-no-items-msg">No items.</div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!AND(!ISNULL(content),content.size!=0)}">
+                            <div class="corner-button-holder">
+	                        	<div class="pagination-right-top">
+	                        		<div class="float-left defaultTheme pagination-text-result">
+	                        			Showing {!showFromIndex+1}-{!showToIndex} of total {!numberOfItems} documents
+	                        		</div>
+	                        		<div class="float-left">
+										<c:selectList width="80" options="{!NumberOfItemsPerPageList}"  value="{!numberOfItemsOnPage}" onchange="changeNumberOfItemPerPage();" />
+									</div>
+	                        		<div class="clear-float"></div>
+								</div>                               
+                                <div class="pagination-info">
+                                    <div class="float-left">
+                                        <c:selectList options="{!OrderOptions}"  value="{!orderBy}" onchange="changeOrder();" />
+                                    </div>
+                                </div>
+                                <apex:outputPanel rendered="{!AND(!ISNULL(contentDownloadShare),contentDownloadShare.size!=0)}">
+                                    <div class="downloadAllButton action-button float-right">
+                                        <div class="action-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/downloadArrow.png')}"/></div>
+                                        <div class="action-button-description">Download / Share Multiple Files</div>
+                                    </div>
+                                </apex:outputPanel>
+                                <div class="clear-float"></div>                            
+                            </div>
+                            
+                            <apex:repeat value="{!content}" var="contentItem">
+                                <div>
+                                    <apex:outputPanel rendered="{!!ISNULL(contentDetailsMap[contentItem.Content_Version_Id__c].result)}">
+                                        <apex:variable value="{!contentDetailsMap[contentItem.Content_Version_Id__c]}" var="d"/>
+                                        <c:contentItem followIds="{!currentFollowIds}" basketIds="{!currentBasketIds}" aggregated="{!d}" lastLoginDateItem="{!lastLoginDate}" renderAsList="true" displayUploadDate="false"/>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!ISNULL(contentDetailsMap[contentItem.Content_Version_Id__c].result)}">
+                                        <apex:variable value="{!contentDetailsMap[contentItem.Content_Version_Id__c]}" var="d"/>
+                                        <c:contentItem followIds="{!currentFollowIds}" extraDescription="{!contentItem.Content_Name__c}" showButons="false" basketIds="{!currentBasketIds}" aggregated="{!d}" lastLoginDateItem="{!lastLoginDate}" renderAsList="true" displayUploadDate="false"/>
+                                    </apex:outputPanel>
+                                    <div class="clear-float"></div>
+                                    <div class="info-history-date-wapper">Share Date: <apex:outputText value="{0,date, MM'/'dd'/'yy' 'hh':'mm':'ss ' 'a}"><apex:param value="{!contentDate[contentItem.id]}" /></apex:outputText></div>
+                                    <div class="recipientsinfowrapper">
+                                    	<div class="info-history-more"><span class="showAllRec hidden pointer"><span class="textholder">More</span>&nbsp;<img src="{!URLFOR($Resource.CommonPage, 'images/moreimg.png')}" class="info-history-more-img more"/><img src="{!URLFOR($Resource.CommonPage, 'images/lessimg.png')}" class="info-history-more-img less hidden"/> <div class="clear-float"></div>  </span></div>
+                                    	<div class="info-recipiens-holder">Recipients: {!contentItem.Recipients__c}</div>
+                                    	
+                                    </div>
+                                </div>
+                            </apex:repeat>
+                            <div class="clear-float"></div>
+                            <c:pagination showNewContentMsg="false" totalNumberOfPages="{!numberOfPages}" isNewContent="{!isNewContent}" pageNumbers="{!pageNumbers}" numberOfCurrentPage="{!numberOfCurrentPage}" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+            </apex:form>
+        </div>
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <c:ajaxLoader beforeStop="bindFilterJs();"/>
+    
+    <apex:form >
+        <apex:actionFunction status="ajax-status" name="userShareOverview" action="{!userShareOverview}" rerender="overviewDialog, shareDialog, messages">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>                          
+        <apex:actionFunction status="ajax-status" name="userMultipleShare" action="{!userMultipleShare}" rerender="overviewDialog, shareDialog, messages">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>  
+        
+        <apex:actionFunction status="ajax-status" name="addToBasket" action="{!addToBasket}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasket" action="{!removeFromBasket}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToBasketMultiple" action="{!addToBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromBasketMultiple" action="{!removeFromBasketMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        
+        <apex:actionFunction status="ajax-status" name="addToFollow" action="{!addToFollow}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollow" action="{!removeFromFollow}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionId" assignTo="{!cVersionId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="addToFollowMultiple" action="{!addToFollowMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction status="ajax-status" name="removeFromFollowMultiple" action="{!removeFromFollowMultiple}" rerender="messages, currentBasketItemsNo, pageContent, downloadAllDialog">
+            <apex:param name="cVersionIds" assignTo="{!cVersionIds}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+
+    <div id="downloadAllInfo" class="hidden dialog" >
+        <apex:outputPanel id="downloadAllDialog">
+            <c:downloadAll content="{!contentDownloadShare}" isFileObject="true"/>
+        </apex:outputPanel>
+    </div>
+    
+    <div id="moreInfo" class="hidden dialog" >
+        <apex:outputPanel id="overviewDialog">
+            <c:overview cvid="{!cVersionId}" description="{!cDescr}" videoId="{!cVideoId}" isVideo="{!cIsVideo}" previewId="{!cPreviewId}" isPreview="{!cIsPreview}"/>
+        </apex:outputPanel>        
+    </div>
+
+    <div id="shareInfo" class="hidden dialog">
+        <apex:outputPanel id="shareDialog">
+            <c:share cvid="{!cVersionId}" cvids="{!cVersionIds}" description="{!cDescr}" cShareLink="{!cShareLink}" cShareLinkLow="{!cShareLinkLow}"/>
+        </apex:outputPanel>        
+    </div>  
+    
+    <script type="text/javascript">
+    
+    jQuery.fn.hasScrollBar = function() {
+        return this.get(0).scrollHeight > this.height();
+    }
+        
+    jQuery(document).ready(function() {
+            hideDialog('startingLoader');
+            hideDialog('startingLoaderOverlayDisable');
+            jQuery("body").css("overflow","auto");
+            jQuery("html").css("overflow","auto");
+        });    
+         
+    function calculateBoxHeight(){
+        jQuery("div.content-item").each(function(i, elem){
+            var bottomValue = jQuery("div.item-description", elem).height()-jQuery("div.content-item-menu div", elem).height() - 5;
+            jQuery("div.item-description", elem).css('bottom', -bottomValue+"px");
+        });
+    }
+    
+    function bindFilterJs(){
+        jQuery('.recipientsinfowrapper').each(function(){
+            if(jQuery(this).hasScrollBar()){
+                jQuery(this).find('.showAllRec').removeClass('hidden');
+            }
+        });
+    }
+
+    jQuery(document).ready(function() {
+    
+        jQuery('.showAllRec').live('click', function(){
+            rwrapper = jQuery(this).parents('.recipientsinfowrapper');
+            if(rwrapper.length != 1){
+                return false;
+            }
+            jQuery(this).find('.info-history-more-img').addClass('hidden');
+            if(jQuery(this).hasClass('expandeddetails')){
+                elem = jQuery(this);
+                elem.find('.textholder').html('More');
+                jQuery(this).find('.more').removeClass('hidden');
+                rwrapper.stop().animate({'height': '18px'}, 500, function(){
+                    elem.removeClass('expandeddetails');
+                });
+                
+            } else {
+                if(!isNaN(rwrapper.get(0).scrollHeight)){
+                    elem = jQuery(this);
+                    elem.find('.textholder').html('Less');
+                    jQuery(this).find('.less').removeClass('hidden');
+                    rwrapper.stop().animate({'height': rwrapper.get(0).scrollHeight+'px'}, 500, function(){
+                        elem.addClass('expandeddetails');
+                    });
+                }
+            }
+        });
+        
+        calculateBoxHeight();
+        bindFilterJs();
+        
+    });
+    
+    </script>   
+
+</apex:page>

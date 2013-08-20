@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agency Item ID --></label>
+        <name>Agency_Item_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Name (Sharing Rule) --></label>
+        <name>Agency_Name_Sharing_Rule__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Name --></label>
+        <name>Agency_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency --></label>
+        <name>Agency__c</name>
+        <relationshipLabel><!-- Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand Category --></label>
+        <name>Brand_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Classification --></label>
+        <name>Brand_Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand Count --></label>
+        <name>Brand_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Calendar --></label>
+        <name>Calendar__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Dummy Bottles</masterLabel>
+            <translation><!-- Dummy Bottles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Alcohol</masterLabel>
+            <translation><!-- Non-Alcohol --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regular</masterLabel>
+            <translation><!-- Regular --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tray Pack</masterLabel>
+            <translation><!-- Tray Pack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VAP</masterLabel>
+            <translation><!-- VAP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Channel --></label>
+        <name>Channel__c</name>
+        <picklistValues>
+            <masterLabel>Off-premise</masterLabel>
+            <translation><!-- Off-premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On-premise</masterLabel>
+            <translation><!-- On-premise --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Current Price --></label>
+        <name>Current_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer Marketing Category --></label>
+        <name>Customer_Marketing_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Price --></label>
+        <name>Estimated_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Estimated Shipping/Tax % --></label>
+        <name>Estimated_Shipping_Tax__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gang --></label>
+        <name>Gang__c</name>
+        <relationshipLabel><!-- Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Incremental Charges --></label>
+        <name>Incremental_Charges__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Category Friendly Name --></label>
+        <name>Item_Category_Friendly_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Item Category --></label>
+        <name>Item_Category__c</name>
+        <relationshipLabel><!-- Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Item ID --></label>
+        <name>Item_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Kit Only --></label>
+        <name>Kit_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento ID --></label>
+        <name>Magento_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento Option ID --></label>
+        <name>Magento_Option_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Material Code --></label>
+        <name>Material_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Quantity --></label>
+        <name>Minimum_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- On Allocation --></label>
+        <name>On_Allocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window Close Date --></label>
+        <name>Order_Window_Close_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window ID --></label>
+        <name>Order_Window_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window Name --></label>
+        <name>Order_Window_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window Start Date --></label>
+        <name>Order_Window_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window Status --></label>
+        <name>Order_Window_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Packout Quantity --></label>
+        <name>Packout_Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent --></label>
+        <name>Parent__c</name>
+        <relationshipLabel><!-- Item Variations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Primary Group --></label>
+        <name>Primary_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Primary Type --></label>
+        <name>Primary_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Image URL --></label>
+        <name>Product_Image_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Image --></label>
+        <name>Product_Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Program --></label>
+        <name>Program__c</name>
+        <relationshipLabel><!-- Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- RecordType Name --></label>
+        <name>RecordType_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Channel Group --></label>
+        <name>Sales_Channel_Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Driver --></label>
+        <name>Sales_Driver__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Accepted w/Final Price</masterLabel>
+            <translation><!-- Accepted w/Final Price --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approved w/Est Price</masterLabel>
+            <translation><!-- Approved w/Est Price --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Development</masterLabel>
+            <translation><!-- Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>POS Customizable Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Item Category --></label>
+            <section>Item Category</section>
+        </sections>
+        <sections>
+            <label><!-- Order Window --></label>
+            <section>Order Window</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POS Kit Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Item Category --></label>
+            <section>Item Category</section>
+        </sections>
+        <sections>
+            <label><!-- Order Window --></label>
+            <section>Order Window</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POS Roll-Up Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Item Category --></label>
+            <section>Item Category</section>
+        </sections>
+        <sections>
+            <label><!-- Order Window --></label>
+            <section>Order Window</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POS Standard Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Item Category --></label>
+            <section>Item Category</section>
+        </sections>
+        <sections>
+            <label><!-- Order Window --></label>
+            <section>Order Window</section>
+        </sections>
+    </layouts>
+    <namedFilters>
+        <errorMessage><!-- The selected parent must be a Roll-Up item --></errorMessage>
+        <name>nf_01IZ00000000IQkMAM_00NZ0000000IOPpMAO</name>
+    </namedFilters>
+    <namedFilters>
+        <errorMessage><!-- The related item must be a kit --></errorMessage>
+        <name>nf_01IZ00000000IR4MAM_00NZ0000000I1MIMA0</name>
+    </namedFilters>
+    <namedFilters>
+        <errorMessage><!-- The related item must be a standard item and cannot be a kit-only item --></errorMessage>
+        <name>nf_01IZ00000000IR4MAM_00NZ0000000I1MNMA0</name>
+    </namedFilters>
+    <namedFilters>
+        <errorMessage><!-- The selected Item cannot be a roll-up or kit-only item --></errorMessage>
+        <name>nf_01IZ00000000IRTMA2_00NZ0000000I1OAMA0</name>
+    </namedFilters>
+    <namedFilters>
+        <errorMessage><!-- The selected Item must be customizable and cannot be a kit-only item --></errorMessage>
+        <name>nf_01IZ00000000JqIMAU_00NZ0000000IInqMAG</name>
+    </namedFilters>
+    <recordTypes>
+        <label><!-- Customizable --></label>
+        <name>Customizable</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Kit --></label>
+        <name>Kit</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Roll-Up --></label>
+        <name>Roll_Up</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Standard --></label>
+        <name>Standard</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- A &quot;Kit Only&quot; item must be a &quot;Standard&quot; item --></errorMessage>
+        <name>Kit_Only_Item</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The pricing information cannot be changed since this item is accepted with final price --></errorMessage>
+        <name>Lock_Pricing_Information</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Parent Item cannot be changed once the Item is created --></errorMessage>
+        <name>No_Parent_Item_Change</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The Item Record Type cannot be changed --></errorMessage>
+        <name>No_RecordType_Change</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Agency --></errorMessage>
+        <name>Required_Agency</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Category --></errorMessage>
+        <name>Required_Category</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Description --></errorMessage>
+        <name>Required_Description</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Item Category --></errorMessage>
+        <name>Required_Item_Category</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enforces the Item to have a related Program. Intended for integration via API. --></errorMessage>
+        <name>Required_Program</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Status --></errorMessage>
+        <name>Required_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a valid amount for incremental charges --></errorMessage>
+        <name>Valid_Incremental_Charges</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a valid minimum quantity --></errorMessage>
+        <name>Valid_Minimum_Quantity</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a valid packout quantity --></errorMessage>
+        <name>Valid_Packout_Quantity</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid pricing information (Current Price, Estimated Price and Estimated Shipping/Tax %) --></errorMessage>
+        <name>Valid_Pricing_Information</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- View_in_Store --></label>
+        <name>View_in_Store</name>
+    </webLinks>
+</CustomObjectTranslation>

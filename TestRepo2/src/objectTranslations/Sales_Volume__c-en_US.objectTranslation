@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Sales Volume</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Sales Volumes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Sales Volumes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Acct List Rep CT w ROM and ON --></label>
+        <name>Acct_List_Rep_CT_w_ROM_and_ON__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batf Volume 12 Mo TY --></label>
+        <name>Batf_Volume_12_Mo_TY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batf Volume 12 Mo TY vs LY % Chg --></label>
+        <name>Batf_Volume_12_Mo_TY_vs_LY_Chg__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batf Volume 3 Mo TY vs LY % Chg --></label>
+        <name>Batf_Volume_3_Mo_TY_vs_LY_Chg__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batf Volume 6 Mo TY vs LY % Chg --></label>
+        <name>Batf_Volume_6_Mo_TY_vs_LY_Chg__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batf Volume FYTD TY vs LY % Chg --></label>
+        <name>Batf_Volume_FYTD_TY_vs_LY_Chg__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batf Volume TY vs LY % Chg --></label>
+        <name>Batf_Volume_TY_vs_LY_Chg__c</name>
+    </fields>
+    <fields>
+        <label><!-- Brcat Fin Plan Brand --></label>
+        <name>Brcat_Fin_Plan_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Individual Brand --></label>
+        <name>Individual_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month End --></label>
+        <name>Month_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- NA15 RT ID --></label>
+        <name>NA15_RT_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Size --></label>
+        <name>Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- State 12M % Chg vs YA --></label>
+        <name>State_12M_Chg_vs_YA__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Batf Volume 12 Mo TY --></label>
+        <name>State_Batf_Volume_12_Mo_TY__c</name>
+    </fields>
+    <fields>
+        <label><!-- State % Distro --></label>
+        <name>State_Distro__c</name>
+    </fields>
+    <fields>
+        <label><!-- Year End --></label>
+        <name>Year_End__c</name>
+    </fields>
+    <layouts>
+        <layout>1A - Growth Opportunities</layout>
+        <sections>
+            <label><!-- 1A - Growth Opportunities --></label>
+            <section>1A - Growth Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>2A - Monthly Volume</layout>
+        <sections>
+            <label><!-- 2A - Monthly Volume --></label>
+            <section>2A - Monthly Volume</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>3A - 12 Month Volume</layout>
+        <sections>
+            <label><!-- 3A - 12 Month Volume --></label>
+            <section>3A - 12 Month Volume</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>3M - Territory Growth</layout>
+        <sections>
+            <label><!-- 3M - Territory Growth --></label>
+            <section>3M - Territory Growth</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales Volume Layout</layout>
+        <sections>
+            <label><!-- 1A - Growth Opportunities --></label>
+            <section>1A - Growth Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- 2A - Monthly Volume --></label>
+            <section>2A - Monthly Volume</section>
+        </sections>
+        <sections>
+            <label><!-- 3A - 12 Month Volume --></label>
+            <section>3A - 12 Month Volume</section>
+        </sections>
+        <sections>
+            <label><!-- 3M - Territory Growth --></label>
+            <section>3M - Territory Growth</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- 1A - Growth Opportunities --></label>
+        <name>X1A_Growth_Opportunities</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 2A - Monthly Volume --></label>
+        <name>X2A_Monthly_Volume</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 3A - 12 Month Volume --></label>
+        <name>X3A_12_Month_Volume</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- 3M - Territory Growth --></label>
+        <name>X3M_Territory_Growth</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

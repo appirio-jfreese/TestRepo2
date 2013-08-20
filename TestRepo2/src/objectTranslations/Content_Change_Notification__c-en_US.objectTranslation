@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Content Change Notification</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Content Change Notifications</value>
+    </caseValues>
+    <fields>
+        <label><!-- Change Description --></label>
+        <name>Change_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content Subscription --></label>
+        <name>Content_Subscription__c</name>
+        <relationshipLabel><!-- Change Notifications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Content Version --></label>
+        <name>Content_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content --></label>
+        <name>Content__c</name>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Retry_Count --></label>
+        <name>Retry_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Date --></label>
+        <name>Send_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sent</masterLabel>
+            <translation><!-- Sent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Content Change Notifications --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

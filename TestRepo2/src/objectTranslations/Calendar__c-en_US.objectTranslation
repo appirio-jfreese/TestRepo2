@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Calendar</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Calendar</value>
+    </caseValues>
+    <fields>
+        <label><!-- Actions Completed --></label>
+        <name>Actions_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Archive --></label>
+        <name>Archive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Background Color2 --></label>
+        <name>Background_Color2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CalendarID(S2S) - delete after migration --></label>
+        <name>CalendarID_S2S__c</name>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+        <picklistValues>
+            <masterLabel>Mixed</masterLabel>
+            <translation><!-- Mixed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Consumer Target File --></label>
+        <name>Consumer_Target_Content_Description__c</name>
+        <relationshipLabel><!-- Calendar (Consumer Target Content Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Consumer Target Text --></label>
+        <name>Consumer_Target_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description File --></label>
+        <name>Description_Content_Description__c</name>
+        <relationshipLabel><!-- Calendar (Description Content Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description Text --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Folder --></label>
+        <name>Folder__c</name>
+        <relationshipLabel><!-- Calendar --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- How it Works File --></label>
+        <name>How_it_Works_Content_Description__c</name>
+        <relationshipLabel><!-- Calendar (How it Works Content Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- How it Works Text --></label>
+        <name>How_it_Works_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Idea File --></label>
+        <name>Idea_Content_Description__c</name>
+        <relationshipLabel><!-- Calendar (Idea Content Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Idea Text --></label>
+        <name>Idea_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Launch Date --></label>
+        <name>Launch_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Logo Image (Large) --></label>
+        <name>Logo_Image_Large__c</name>
+        <relationshipLabel><!-- Calendar (Logo Image (Large)) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Logo Image (Small) --></label>
+        <name>Logo_Image_Small__c</name>
+        <relationshipLabel><!-- Calendar --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- New Org ID --></label>
+        <name>New_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Programs --></label>
+        <name>Programs__c</name>
+        <picklistValues>
+            <masterLabel>Brand Program</masterLabel>
+            <translation><!-- Brand Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Portfolio Program</masterLabel>
+            <translation><!-- Portfolio Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reserve Brand Program</masterLabel>
+            <translation><!-- Reserve Brand Program --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Record Type Name --></label>
+        <name>Record_Type_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sales Channel --></label>
+        <name>Sales_Channel__c</name>
+        <picklistValues>
+            <masterLabel>African American</masterLabel>
+            <translation><!-- African American --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asian American</masterLabel>
+            <translation><!-- Asian American --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Display/Visibility</masterLabel>
+            <translation><!-- Display/Visibility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Distribution</masterLabel>
+            <translation><!-- Distribution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hispanic</masterLabel>
+            <translation><!-- Hispanic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation</masterLabel>
+            <translation><!-- Innovation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integrated National Program</masterLabel>
+            <translation><!-- Integrated National Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LGBT</masterLabel>
+            <translation><!-- LGBT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Sizes, Pack/Label Changes</masterLabel>
+            <translation><!-- New Sizes, Pack/Label Changes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off Premise</masterLabel>
+            <translation><!-- Off Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Premise</masterLabel>
+            <translation><!-- On Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pack/Label Changes</masterLabel>
+            <translation><!-- Pack/Label Changes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sustainovation</masterLabel>
+            <translation><!-- Sustainovation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VAP</masterLabel>
+            <translation><!-- VAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vintage Transition</masterLabel>
+            <translation><!-- Vintage Transition --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Segment --></label>
+        <name>Segment__c</name>
+        <picklistValues>
+            <masterLabel>AF AM</masterLabel>
+            <translation><!-- AF AM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Asian</masterLabel>
+            <translation><!-- Asian --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GLBT</masterLabel>
+            <translation><!-- GLBT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hispanic/Latino</masterLabel>
+            <translation><!-- Hispanic/Latino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mex Am</masterLabel>
+            <translation><!-- Mex Am --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off Premise</masterLabel>
+            <translation><!-- Off Premise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Premise</masterLabel>
+            <translation><!-- On Premise --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ship Date --></label>
+        <name>Ship_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Show tooltip details --></label>
+        <name>Show_tooltip_details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Situation File --></label>
+        <name>Situation_Content_Description__c</name>
+        <relationshipLabel><!-- Calendar (Situation Content Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Situation Text --></label>
+        <name>Situation_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Specification File --></label>
+        <name>Specification_Content_Description__c</name>
+        <relationshipLabel><!-- Calendar (Specification Content Description) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Specification Text --></label>
+        <name>Specification_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text Color --></label>
+        <name>Text_Color__c</name>
+    </fields>
+    <fields>
+        <label><!-- Calendar Type --></label>
+        <name>Theme__c</name>
+        <picklistValues>
+            <masterLabel>Current Programming</masterLabel>
+            <translation><!-- Current Programming --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Innovation, Sustainnovation &amp; VAP</masterLabel>
+            <translation><!-- Innovation, Sustainnovation &amp; VAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly Execution Plan</masterLabel>
+            <translation><!-- Monthly Execution Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>National Marketing Calendar</masterLabel>
+            <translation><!-- National Marketing Calendar --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Today Date --></label>
+        <name>Today_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Overview</masterLabel>
+            <translation><!-- Overview --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sell Sheet</masterLabel>
+            <translation><!-- Sell Sheet --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Background Color --></label>
+        <name>background_color__c</name>
+    </fields>
+    <layouts>
+        <layout>Innovation, Sustainnovation &amp; VAP</layout>
+        <sections>
+            <label><!-- Calendar Details --></label>
+            <section>Calendar Details</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Master</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Monthly Execution Plan</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Multicultural</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Planning</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Innovation, Sustainovation &amp; VAP --></label>
+        <name>Innovation_Sustainovation_VAP</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Monthly Execution Plan --></label>
+        <name>Monthly_Execution_Plan</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Multicultural --></label>
+        <name>Multicultural</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Planning --></label>
+        <name>Planning</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Launch Date is required --></errorMessage>
+        <name>LaunchDateRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ShipDate is required --></errorMessage>
+        <name>ShipDateRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- End date value should always be greater than Start date value. --></errorMessage>
+        <name>checkStartEndDates</name>
+    </validationRules>
+</CustomObjectTranslation>

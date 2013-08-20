@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Goal__c$Program__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Name</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Id</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Sales_Channel__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$CreatedBy</field>
+    </columns>
+    <columns>
+        <field>Goal__c$State__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Owner</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Minimum_of_Accounts__c</field>
+    </columns>
+    <columns>
+        <field>Goal__c$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Goal__c$Due_Date__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Goal__c$CreatedBy</column>
+            <operator>equals</operator>
+            <value>Geeta Rai</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Goal__c$Owner</column>
+            <operator>equals</operator>
+            <value>Mark Mullins</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>existing goals for Chris</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Goals_Actions_Territories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Goal__c$Name</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Goal__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

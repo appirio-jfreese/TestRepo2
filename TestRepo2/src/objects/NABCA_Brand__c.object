@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>We will store the National Alcohol Beverage Control Association brands data in this object</description>
+    <enableActivities>true</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Brand_Composite_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>External Id for Sales Record (Material Code + NABCA state code)</description>
+        <externalId>true</externalId>
+        <label>Brand Composite Key</label>
+        <length>50</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Common_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Common Code</label>
+        <length>30</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Common_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Common Description</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NABCA_Beverage_Type_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>NABCA Beverage Type Description</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NABCA_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>NABCA Category</label>
+        <referenceTo>NABCA_Category__c</referenceTo>
+        <relationshipLabel>NABCA Brands</relationshipLabel>
+        <relationshipName>NABCA_Brands</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>NABCA_IMP_DOM_IND_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>NABCA IMP DOM IND Description</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NABCA_Size_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>NABCA Size Description</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NABCA_Vendor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>NABCA Vendor</label>
+        <referenceTo>NABCA_Vendor__c</referenceTo>
+        <relationshipLabel>NABCA Brands</relationshipLabel>
+        <relationshipName>NABCA_Brands</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <label>NABCA Brand</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Common_Code__c</columns>
+        <columns>Common_Description__c</columns>
+        <columns>NABCA_Beverage_Type_Description__c</columns>
+        <columns>NABCA_Category__c</columns>
+        <columns>NABCA_Size_Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>NB-{YYYY}{MM}{DD}-{0000000}</displayFormat>
+        <label>NABCA Brand ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>NABCA Brands</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

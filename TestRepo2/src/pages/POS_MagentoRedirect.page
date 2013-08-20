@@ -1,0 +1,5 @@
+<apex:page controller="POS_MagentoRedirectController"  standardStylesheets="false" showHeader="false" sidebar="false" cache="false">
+<script type="text/javascript">
+	document.location.href="{!destination}";
+</script>
+</apex:page>

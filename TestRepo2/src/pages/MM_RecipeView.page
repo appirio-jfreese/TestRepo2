@@ -1,0 +1,1858 @@
+<apex:page id="pg" title="View Recipe" showHeader="false" sidebar="false" standardstylesheets="false" controller="MM_RecipeViewController" action="{!createTempRecipe}">
+    <html>
+        <head>
+            <apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-1.6.2.min.js')}"  />
+            <apex:includeScript value="{!URLFOR($Resource.jQueryLib, '/js/jquery-ui-1.8.16.custom.min.js')}"  />
+            <apex:stylesheet value="{!URLFOR($Resource.jQueryLib, '/css/ui-lightness/jquery-ui-1.8.16.custom.css')}"  />
+            <apex:stylesheet value="{!$Resource.RecipeStyles}"/>
+            
+            <apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7RecipeViewPageCSS}" /></apex:outputText>
+            <apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE'),false, true)}"><link rel="stylesheet" type="text/css" media = "only screen and (min-width:1080px)" href="{!$Resource.testCSS}" />
+            
+            <link rel="stylesheet" type="text/css" media = "only screen and (min-device-width:768px) and (max-device-width:1020px)" href="{!$Resource.recipeViewPageCSS}" />
+            </apex:outputText>
+            
+            <style>
+                .nameColumnDataEditor {
+                    float: left;
+                    height: 15px;
+                    width: 30%; 
+                    word-wrap: break-word;
+                }
+                
+                #dialog-overlay {
+                    left-margin: 100px;
+                                    top-margin: 20px;
+                                    position: absolute;
+                                    background-color: #ffffff;
+                                    top: 150px !important;
+                                    left: 500px !important;
+                                    width: 400px;
+                                    height: 150px;
+                                    z-index: 9002;
+                                    border-radius: 8px;
+                                    -moz-border-radius: 8px;
+                                    background: -webkit-gradient(linear, left top, left bottom, from(#C4BFBF), to(#C4BFBF));
+                }
+                
+                #dialog-overlay1 {
+                    left-margin: 100px;
+                                    top-margin: 20px;
+                                    position: absolute;
+                                    background-color: #ffffff;
+                                    top: 150px !important;
+                                    left: 500px !important;
+                                    width: 400px;
+                                    height: 150px;
+                                    z-index: 9002;
+                                    border-radius: 8px;
+                                    -moz-border-radius: 8px;
+                                    background: -webkit-gradient(linear, left top, left bottom, from(#C4BFBF), to(#C4BFBF));
+                }
+                
+                #publishRecipeDialog{
+                    left-margin: 100px;
+                                    top-margin: 20px;
+                                    position: absolute;
+                                    background-color: #ffffff;
+                                    top: 150px !important;
+                                    left: 400px !important;
+                                    width: 50%;
+                                    height: auto;
+                                    z-index: 9002;
+                                    border-radius: 8px;
+                                    -moz-border-radius: 8px;
+                                    background: -webkit-gradient(linear, left top, left bottom, from(#C4BFBF), to(#C4BFBF));
+                }
+                
+                #addOccasionsDialog{
+                    left-margin: 100px;
+                                    top-margin: 20px;
+                                    position: absolute;
+                                    background-color: #ffffff;
+                                    top: 150px !important;
+                                    left: 400px !important;
+                                    width: 65%;
+                                    height: auto;
+                                    z-index: 9002;
+                                    border-radius: 8px;
+                                    -moz-border-radius: 8px;
+                                    background: -webkit-gradient(linear, left top, left bottom, from(#C4BFBF), to(#C4BFBF));
+                }
+                
+                .statusButton {
+                                    width: 120px;
+                                    text-align: center;
+                                    -moz-box-shadow: 0px 2px 2px 2px #888;
+                                    -webkit-box-shadow:  0px 2px 2px 2px #888;
+                                    box-shadow: 0px 2px 2px 2px #888;
+                                    -moz-border-radius:16px;
+                                    -webkit-border-radius:16px;
+                                    border-radius:16px;
+                                    border:2px solid #ffffff;
+                                  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#98BC55', endColorstr='#89A94C',GradientType=0);
+                                  background: -moz-linear-gradient(top, #98BC55 0%,#98BC55 49%,#89A94C 50%);
+                                  display:inline-block;
+                                  font-family:"Arial", "Arial", sans-serif;;
+                                  font-size:13px;
+                                  padding: 4px;
+                                  font-weight:bold;
+                                  text-decoration:none;
+                                  behavior:url(border-radius.htc);
+                                }
+                
+            </style>
+            <script>
+                //Special case only for IE because it reload parent window every time child window is closed. Irrespective of changes made. 
+                if(navigator.appName == 'Microsoft Internet Explorer') {  
+                    intId = window.setInterval("checkPopup()",500); 
+                }
+                
+                function prepopupImageWindow () {
+                    popupWin = window.open('','imageWindow','location=1,status=1,scrollbars=no,resizable=0,width=770,height=580');
+                }
+                   
+                function focusItem(id) {
+                    //rerenderinputJS();
+                    //alert(document.getElementById(id));
+                    var children=document.getElementById(id).childNodes; 
+                    setTimeout(children[0].focus(),1);       
+                }
+                                              
+                function popupImageWindow(recipeId) {
+                    
+                    var recipeTitle;
+                    if(document.getElementById('pg:theForm:recipeNameText') != null) {
+                        recipeTitle = document.getElementById('pg:theForm:recipeNameText').value;
+                    } else {
+                    	/* LSLEVIN Case 4941 5.6.2013 START
+                        recipeTitle = '{!currentRecipe.Recipe_Title__c}';
+                        */
+                        recipeTitle = '{!JSENCODE(currentRecipe.Recipe_Title__c)}';
+                        //END
+                    }
+                    
+                    var title = recipeTitle.replace(/'/g,'__');
+                    var popupWin; 
+                    var intId = 0; 
+                    popupWin = window.open('/apex/MM_Media?recipeId=' + recipeId + '&title=' + title + '&editMode='+{!editMode},'imageWindow','location=1,status=1,scrollbars=no,resizable=no,titlebar=yes,width=770,height=670');
+                    
+                    checkPopup= function() { 
+                        if (intId != 0) { 
+                            if (popupWin.closed) { 
+                                window.clearInterval(intId); 
+                                intId = 0; 
+                                document.location.reload();
+                            } 
+                        } 
+                    }  
+                }
+                 
+                 
+                function clearField(input) {
+                    var element = document.getElementById(input);
+                        
+                    if (element.value == 'Enter Recipe Name')
+                        element.value = ''; 
+                }
+                    
+                
+                function delNDI(id,table) {
+                    deleteIngredient(id,table);
+                }
+                    
+                function func(){
+                    document.getElementById('nunit').focus();
+                }
+                    
+                function toggle(div_id) {
+                    var el = document.getElementById(div_id);
+                    if ( el.style.display == 'none' ) { 
+                        el.style.display = 'block';
+                    } else {
+                        el.style.display = 'none';
+                    }
+                }
+                    
+                function blanket_size(popUpDivVar) {
+                    if (typeof window.innerWidth != 'undefined') {
+                        viewportheight = window.innerHeight;
+                    } else {
+                        viewportheight = document.documentElement.clientHeight;
+                    }
+                    if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
+                        blanket_height = viewportheight;
+                    } else {
+                        if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
+                            blanket_height = document.body.parentNode.clientHeight;
+                        } else {
+                            blanket_height = document.body.parentNode.scrollHeight;
+                        } 
+                    }
+                    
+                    var blanket = document.getElementById('blanket');
+                    blanket.style.height = blanket_height + 'px';
+                    var popUpDiv = document.getElementById(popUpDivVar);
+                    popUpDiv_height=blanket_height/2-125;//150 is half popup's height
+                    popUpDiv.style.top = popUpDiv_height + 'px';
+                }
+                    
+                function window_pos(popUpDivVar) {
+                    if (typeof window.innerWidth != 'undefined') {
+                        viewportwidth = window.innerHeight;
+                    } else {
+                        viewportwidth = document.documentElement.clientHeight;
+                    }
+                    if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth)) {
+                        window_width = viewportwidth;
+                    } else {
+                        if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth) {
+                            window_width = document.body.parentNode.clientWidth;
+                        } else {
+                            window_width = document.body.parentNode.scrollWidth;
+                        }
+                    }
+                    var popUpDiv = document.getElementById(popUpDivVar);
+                    window_width=window_width/2-125;//150 is half popup's width
+                    popUpDiv.style.left = window_width + 'px';
+                }
+                    
+                function popup(windowname) {
+                    if(windowname=='popUpDiv2' && ({!hasError} == false) ) {
+                        checkImage();
+                    } else {
+                        blanket_size(windowname);
+                        window_pos(windowname);
+                        toggle('blanket');
+                        toggle(windowname);    
+                    }
+                }
+                
+                function publishRecipeDialogBox(status) {
+                    if(status != 'Approved') {
+                        popup('dialog-overlay');
+                    }else{
+                        popup('publishRecipeDialog');
+                    }
+                }
+                
+                function archiveRecipe(){
+                    if({!publishedRecipeExist}){
+                        popup('dialog-overlay1');
+                    } else {
+                        popup('popUpDiv5');
+                    }
+                }
+                
+                function redirectToSamePage() {
+                    window.location.replace(window.location.href);
+                }
+                
+                function clickAddTags() {
+                    document.getElementById("pg:theForm:showAddTagsLink").style.display = 'none';
+                    document.getElementById("pg:theForm:concatenateTagsValue").value = '';
+                    document.getElementById("pg:theForm:concatenateTagsValue").style.display = '';
+                    document.getElementById("pg:theForm:saveTagsValue").style.display = '';
+                    document.getElementById("pg:theForm:cancelTagsValue").style.display = '';
+                }
+                
+                function clickSaveTags() {
+                    document.getElementById("pg:theForm:showAddTagsLink").style.display = '';
+                    document.getElementById("pg:theForm:concatenateTagsValue").style.display = 'none';
+                    document.getElementById("pg:theForm:saveTagsValue").style.display = 'none';
+                    document.getElementById("pg:theForm:cancelTagsValue").style.display = 'none';
+                }
+                
+                function clickAddOccasions() {
+                    popup('addOccasionsDialog');
+                }
+                
+                function onLoad() {
+                    /*document.getElementById("pg:theForm:showAddTagsLink").style.display = 'none';
+                    if({!showAddTagsLink}) {
+                        document.getElementById("pg:theForm:showAddTagsLink").style.display = 'block';
+                    }
+                    document.getElementById("pg:theForm:concatenateTagsValue").style.display = 'none';
+                    document.getElementById("pg:theForm:saveTagsValue").style.display = 'none';
+                    document.getElementById("pg:theForm:cancelTagsValue").style.display = 'none';
+                    
+                    document.getElementById("pg:theForm:showAddOccasionsLink").style.display = 'none';
+                    if({!showAddOccasionsLink}) {
+                        document.getElementById("pg:theForm:showAddOccasionsLink").style.display = 'block';
+                    }*/
+                }
+                
+                $j = jQuery.noConflict();
+                $j(document).ready(function() {
+                
+                    document.getElementById("pg:theForm:showAddTagsLink").style.display = 'none';
+                    if({!showAddTagsLink}) {
+                        document.getElementById("pg:theForm:showAddTagsLink").style.display = 'block';
+                    }
+                    document.getElementById("pg:theForm:concatenateTagsValue").style.display = 'none';
+                    document.getElementById("pg:theForm:saveTagsValue").style.display = 'none';
+                    document.getElementById("pg:theForm:cancelTagsValue").style.display = 'none';
+                    if(document.getElementById("pg:theForm:showAddOccasionsLink") != null) {
+                        document.getElementById("pg:theForm:showAddOccasionsLink").style.display = 'none';
+                        if({!showAddOccasionsLink}) {
+                            document.getElementById("pg:theForm:showAddOccasionsLink").style.display = 'block';
+                        }
+                    }
+                              
+                    //var tabindex = 1;
+                    $j('select').focus(function() {
+                    $j(this).click();
+                          // if (this.type != "hidden") {
+                             /* var currInput = $j(this);
+                              currInput.attr("tabindex", tabindex);
+                              tabindex++;*/
+                              
+                          //}
+                            // getTypeValue($j(this), $j('#rootRow'));
+                            
+                    });
+                    lockPopupCheckboxes();
+                });
+                
+                function lockPopupCheckboxes() {
+                    var checkBoxes = $j('.popUpPanel input:checked');
+                    
+                    for (var i=0; i<checkBoxes.length; i++) {
+                       $j(checkBoxes[i]).attr('disabled', true);
+                    }
+                }                
+            </script>
+        </head>
+        <body onload="onLoad();">
+            <div id="outerDiv">
+                <c:DashBoardHeader />
+                <div id="blanket" style="display:none;"></div>
+                <apex:form id="theForm">
+                        <apex:actionFunction name="savePublishedRecipe" action="{!updatePublishRecipeRecords}" reRender="publishRecipeDialogpanel" status="status">
+                            <apex:param name="selectedAssetId" assignto="{!selectedAssetId}" value=""/>
+                        </apex:actionFunction>
+                    <apex:actionFunction name="LocaleDetailsFilter" action="{!localeDetailsFilter}"  rerender="opAttributes1,opAttributes2,opAttributes3,opAttributes4,opAttributes5,opAttributes6,addOccasionsPanel" status="localesImg"/>
+                    <apex:actionFunction name="LocaleAddOccasionsFilter" action="{!localeAddOccasionsFilter}" oncomplete="lockPopupCheckboxes();" rerender="addOccasionsPanel" status="addOccasionslocalesImg"/>
+                    <apex:actionFunction name="LocaleIngredientsFilter" action="{!localeIngredientsFilter}"  rerender="nproductEdit" status="localesImg1"/>
+                    <div id="bodyHeader">
+                        <div id="headerInner">
+                            <div class="header arrow3">
+                                <apex:outputLink value="apex/MM_RecipeDashboard">
+                                    <apex:image title="Dashboard" value="/resource/1320379988000/home"/>
+                                </apex:outputLink>
+                            </div> 
+                            <apex:image styleClass="header arrow2" title="Home" value="/resource/1320379988000/barrow"/>
+                            <apex:commandLink action="{!FilteredResultsView}" styleClass="header arrow" rendered="{!comingfromViewAll}">Recipe Search Results </apex:commandLink>
+                            <apex:image styleClass="header arrow2"  value="/resource/1320379988000/barrow" rendered="{!comingfromViewAll}"/>
+                            <b><apex:outputText value="Create A Recipe" styleClass="header arrow" rendered="{!IF(isCreateNew || prevPage == 'clone',true,false)}"></apex:outputText></b>
+                            <b><apex:outputText value="{!currentRecipe.Recipe_Title__c}" styleClass="header arrow" rendered="{!IF(NOT(isCreateNew) && prevPage != 'clone',true,false)}"></apex:outputText></b>
+                        </div>
+                    </div><!--end body header  --> 
+                    <!--
+                    isReviewer >>  {!isReviewer} <br/>
+                    isApprover >>  {!isApprover} <br/>
+                    isSuperAdmin >>  {!isSuperAdmin} <br/>
+                    currentRecipe.Status__c >> {!currentRecipe.Status__c}<br/>
+                    cRevApp >> {!cRevApp}<br/>
+                    canEdit >> {!canEdit}<br/> 
+                    cUser >> {!cUser} <br/>
+                    editMode >> {!editMode}<br/> 
+                    -->
+                    <!-- modified by Deepak for T-83188: Modify code to allow users with the Approver role to be able to Review recipes -->
+                    <!-- T-83190: Modify code to allow users with the Admin role to be able to Review recipes  -->            
+<!--                     <apex:outputPanel rendered="{!IF(canEdit && (IF(editMode && currentRecipe.Status__c =='Draft',true,false) || IF(cUser && currentRecipe.Status__c !='Approved',true,false) || IF( (isReviewer || isApprover || isSuperAdmin) && currentRecipe.Status__c =='Pending Review' && cRevApp,true,false) || IF( (isApprover || isSuperAdmin) && currentRecipe.Status__c =='Pending Approval' ,true,false)),true,false)}"> -->
+					<apex:outputPanel rendered="{!isBodyHeaderBlackShow}">
+                        <div id="bodyHeaderBlack" >
+                            <div id="headerInnerBlack">
+                                <apex:outputText value="New Recipe" styleclass="headerBlack" rendered="{!IF(isCreateNew,true,false)}"></apex:outputText>
+                                <apex:outputText value="Edit Recipe" styleclass="headerBlack" rendered="{!IF(editMode && NOT(isCreateNew),true,false)}"></apex:outputText>
+                                <apex:outputText value="Review Recipe" styleclass="headerBlack" rendered="{!IF(isReviewer && (currentRecipe.Status__c == 'Pending Review') && !editMode && cRevApp,true,false) }"></apex:outputText>
+                                <apex:outputText value="Approve Recipe" styleclass="headerBlack" rendered="{!IF((isApprover || isPublisher) && (currentRecipe.Status__c == 'Pending Approval') && !editMode && cRevApp,true,false) }"></apex:outputText>
+                            </div>
+                            <div class="error">
+                                <apex:outputLabel id="err" value="{!errorMessage}" ></apex:outputLabel>
+                            </div>
+                            <div class="fl"> 
+                                <apex:outputpanel rendered="{!editMode && canEdit && currentRecipe.Status__c != 'Archive'}" style="vertical-align:middle;">
+                                   <apex:commandButton value="Save" action="{!saveRecipe}" styleClass="actionButton blueButton" style="width:110px;"/>
+                                </apex:outputpanel>&nbsp;&nbsp;
+                 
+                                <apex:outputpanel rendered="{!editMode}" style="vertical-align:middle;">
+                                   <apex:commandButton value="Cancel" action="{!cancelEdit}" styleClass="pinkButton actionButton" />
+                                </apex:outputpanel>
+                                
+                                <apex:outputPanel rendered="{!!editMode && (currentRecipe.Status__c == 'Draft' || currentRecipe.Status__c == 'Rejected') && (isEditor || isSuperAdmin) && cUser}">
+                                   <a href="#" onclick="popup('popUpDiv2')" class="actionButton greenButton">Submit</a>&nbsp;&nbsp;&nbsp;
+                                    <apex:actionFunction name="checkImage" action="{!checkImg}" rerender="err"></apex:actionFunction>
+                                </apex:outputPanel>
+                                
+                                <!-- T-83188: Modify code to allow users with the Approver role to be able to Review recipes -->
+                                <!-- T-83190: Modify code to allow users with the Admin role to be able to Review recipes  -->                        
+                                <apex:outputPanel rendered="{!( (isReviewer ||isApprover || isSuperAdmin|| isPublisher) && (currentRecipe.Status__c == 'Pending Review') && !editMode && cRevApp) || ( (isApprover || isSuperAdmin ||isPublisher) && (currentRecipe.Status__c == 'Pending Approval') && !editMode && cRevApp)}">
+                                   <a href="#" onclick="popup('popUpDiv1')" class="actionButton redButton" >Reject</a>&nbsp;&nbsp;
+<!--                                    <a href="#" onclick="popup('popUpDiv3')" class="actionButton greenButton" ><apex:outputText rendered="{!(isReviewer ||isApprover || isSuperAdmin || isPublisher) && (currentRecipe.Status__c == 'Pending Review')}" value="Approve" /><apex:outputText rendered="{!(isApprover || isSuperAdmin || isPublisher) && currentRecipe.Status__c == 'Pending Approval'}" value="Publish"/></a>&nbsp;&nbsp;&nbsp; -->
+                                   <a href="#" onclick="popup('popUpDiv3')" class="actionButton greenButton" ><apex:outputText rendered="{!(isReviewer ||isApprover || isSuperAdmin || isPublisher) && (currentRecipe.Status__c == 'Pending Review')}" value="Approve" /><apex:outputText rendered="{!(isApprover || isSuperAdmin || isPublisher) && currentRecipe.Status__c == 'Pending Approval'}" value="Approve"/></a>&nbsp;&nbsp;&nbsp;
+                                       &nbsp;&nbsp;&nbsp;&nbsp;
+                                </apex:outputPanel>
+              
+                                <apex:outputPanel rendered="{!!editMode && (currentRecipe.Status__c == 'Draft' || currentRecipe.Status__c == 'Rejected') && (isReviewer || isApprover || isPublisher) && cUser}">
+                                   <a href="#" onclick="popup('popUpDiv2')" class="actionButton greenButton" >Submit</a>&nbsp;&nbsp;&nbsp;
+                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                   <apex:actionFunction name="checkImage" action="{!checkImg}" rerender="err"></apex:actionFunction>
+                                </apex:outputPanel>
+        
+                                <!-- modified by Deepak for T-83188: Modify code to allow users with the Approver role to be able to Review recipes -->
+                                <!-- T-83190: Modify code to allow users with the Admin role to be able to Review recipes  -->
+                                <apex:outputPanel rendered="{! (isReviewer ||isApprover || isSuperAdmin || isPublisher) && (currentRecipe.Status__c == 'Pending Review') && cRevApp && !editMode}">
+                                    <a href="#" onclick="popup('popUpDiv6')"  class="actionButton redButton" >Reassign</a>&nbsp;&nbsp;&nbsp;
+                                </apex:outputPanel>
+                                
+                                <!-- T-83191 : Modify code to allow users with the Admin role to be able to Publish recipes  -->
+                                <apex:outputPanel rendered="{! (isApprover || isSuperAdmin || isPublisher ) && (currentRecipe.Status__c == 'Pending Approval') && cRevApp && !editMode}">
+                                    <a href="#" onclick="popup('popUpDiv6')"  class="actionButton redButton" >Reassign</a>&nbsp;&nbsp;&nbsp;
+                                 </apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isEditor && cUser}">
+                                    <a href="#" onclick="popup('popUpDiv6')"  class="actionButton redButton" >Reassign</a>&nbsp;&nbsp;&nbsp;
+                                 </apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isSuperAdmin && cUser}">
+                                    <a href="#" onclick="popup('popUpDiv6')"  class="actionButton redButton" >Reassign</a>&nbsp;&nbsp;&nbsp;
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isReviewer && cUser}">
+                                   <a href="#" onclick="popup('popUpDiv6')"  class="actionButton redButton" >Reassign</a>&nbsp;&nbsp;&nbsp;
+                                 </apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && (isApprover || isPublisher) && cUser}">
+                                    <a href="#" onclick="popup('popUpDiv6')"  class="actionButton redButton" >Reassign</a>&nbsp;&nbsp;&nbsp;
+                                </apex:outputPanel>
+                            </div> <!-- end fl -->
+                        </div> <!-- end body header black -->
+                    </apex:outputPanel>   
+                           
+                    <div id="innerDiv" style="padding-top: 40px;">      
+                        <div class="bodyContainer {!topRow}" style="padding-top: 0px !important">
+                            <apex:outputPanel id="opbodyContainer"> 
+                                <div id="topRow">
+                                    <apex:outputPanel >
+                                        <apex:outputPanel rendered="{!!editMode}">
+                                            <apex:outputText value="{!currentRecipe.Recipe_Title__c}"  styleClass="title"/>&nbsp;&nbsp;&nbsp; <apex:outputText value="Submitted by" styleClass="subFont" />&nbsp;<apex:outputText value="{!recipeCreator.Name}" styleClass="subFont"/>&nbsp; <apex:outputText value="on" styleClass="subFont" />&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}" styleClass="subFont"><apex:param value="{!currentRecipe.CreatedDate}"/></apex:outputText>
+                                        </apex:outputPanel>
+                                        <apex:inputField rendered="{!editMode}" styleClass="textInput" onclick="clearField(this.id);" id="recipeNameText" value="{!currentRecipe.Recipe_Title__c}" style="float:left"/>
+                                    </apex:outputPanel>
+                                    <div style="padding-top:10px;padding-bottom:5px;">
+                                        <apex:outputPanel >
+                                            <div class="status" style="width: 300px; float:left;">Recipe Status:&nbsp;
+                                                <apex:outputText rendered="{!currentRecipe.Status__c != null}" value="{!currentRecipe.Status__c}"/>
+                                                <apex:outputText rendered="{!currentRecipe.Status__c == null}" value="New"/>
+                                            </div>
+                                            <div class="status" style="float: right;">Recipe Locale:&nbsp;
+                                                <apex:inputField rendered="{!editMode}" id="recipeLocale" value="{!currentRecipe.Locale__c}"/>
+                                                <apex:outputField rendered="{!!editMode}" id="recipeLocale1" value="{!currentRecipe.Locale__c}"/>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </div> 
+                                </div><!--end top row  --> 
+                                <div id="blank11" style="width: 600px;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                <div id="imageColumn"> 
+                                    <apex:outputText value="Recipe Images" style="font-weight:bold;align:center;"/>
+                                    <div id="blank1"></div>
+                                    <!-- 
+                                    <apex:outputPanel rendered="true" styleclass="buttonContainer"> 
+                                       <apex:CommandLink rendered="{!IF(showManageImages,true,false)}" styleClass="pinkButton largeActionButton" onclick="popupImageWindow('{!currentRecipe.Id}')" action="{!upsertTempRecipe}" value="Manage Images">
+                                       </apex:CommandLink> 
+                                    </apex:outputPanel>
+                                    -->
+                                    <apex:outputPanel rendered="false"><a href="" onclick="popupImageWindow('{!currentRecipe.Id}')" class="saveButton">Upload Image</a></apex:outputPanel>
+                                    <apex:outputPanel id="imageContainer">
+                                        <apex:outputPanel rendered="{!recipeImages.size>0}">
+                                            <div id="recipeThumbContainer"> 
+                                                <apex:repeat value="{!recipeImages}" var="i" rows="9">
+                                                    <apex:commandLink styleClass="recipeThumbs" rerender="imageContainer" action="{!swapImage}">
+                                                        <apex:image value="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!i.contentId}"  height="100%" style="max-width:40px;" title="{!i.imageType}"/>
+                                                        <apex:param name="swapId" value="{!i.contentId}" assignTo="{!swapId}"/>
+                                                    </apex:commandLink>
+                                                </apex:repeat>
+                                            </div>
+                                        </apex:outputPanel>  
+                                        <apex:outputPanel rendered="{!recipeImages.size>8}">
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!recipeImages.size>4}">
+                                            <div id="diffButtons"></div>
+                                        </apex:outputPanel>
+                                        
+                                        <apex:outputPanel rendered="{!hasImages}">
+                                              <div id="recipeImageContainer" align="center" class="imge">
+                                                <apex:image value="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!swapId}"  height="180" style="max-width:180px;" rendered="{!hasImages}"/>
+                                              </div>
+                                        </apex:outputPanel>
+                     
+                                        <apex:outputPanel rendered="{!!hasImages}">
+                                            <div id="recipeImageContainer2" class="imge" align="center">
+                                                <div id="recipeImageContainer3">
+                                                    <apex:image value="{!$Resource.StockBottle}" width="60" height="60" />
+                                                </div>
+                                            </div>
+                                        </apex:outputPanel>
+                                        
+                                        <apex:outputPanel rendered="true" styleclass="buttonContainer"> 
+                                           <apex:CommandLink rendered="{!IF(showManageImages,true,false)}" styleClass="pinkButton largeActionButton" onclick="popupImageWindow('{!currentRecipe.Id}')" action="{!upsertTempRecipe}" value="Manage Images">
+                                           </apex:CommandLink> 
+                                        </apex:outputPanel>
+                                        
+                                        <div id="diffButtons1"></div>
+                                        <apex:outputPanel rendered="{!!editMode && attributeImages.size>0}">
+                                            <apex:outputtext value="Associated Images" style="font-weight:bold;"></apex:Outputtext>
+                                            <div id="blank1"></div>
+                                            <div id="recipeThumbContainer"> 
+                                                <apex:repeat value="{!attributeImages}" var="i">
+                                                    <apex:commandLink styleClass="recipeThumbs" rerender="imageContainer" action="{!swapImage}">
+                                                        <apex:image value="https://c.{!currentServerInstance}.content.force.com/sfc/servlet.shepherd/version/download/{!i.contentId}" height="100%" style="max-width:40px;" title="{!i.imageType}"/>
+                                                        <apex:param name="swapId" value="{!i.contentId}" assignTo="{!swapId}"/>
+                                                    </apex:commandLink>
+                                                </apex:repeat>
+                                            </div>
+                                        </apex:outputPanel> 
+                                        <apex:outputPanel rendered="{!attributeImages.size>20}">
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>    
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>
+                                        </apex:outputPanel> 
+                                        <apex:outputPanel rendered="{!attributeImages.size>16}">
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>    
+                                            <div id="diffButtons"></div>    
+                                        </apex:outputPanel> 
+                                        <apex:outputPanel rendered="{!attributeImages.size>12}">
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>    
+                                        </apex:outputPanel> 
+                                        <apex:outputPanel rendered="{!attributeImages.size>8}">
+                                            <div id="diffButtons"></div>
+                                            <div id="diffButtons"></div>
+                                        </apex:outputPanel>
+                                       <apex:outputPanel rendered="{!attributeImages.size>4}">
+                                            <div id="diffButtons"></div>
+                                       </apex:outputPanel>    
+                                    </apex:outputPanel> 
+        
+                                    <apex:outputPanel id="buttonContainer"> 
+                                        <div id="diffButtons2"></div>
+                                        <apex:commandLink value="Convert To Draft" action="{!saveArchiveRecipe}" rendered="{!IF(currentRecipe.Status__c == 'Archive' && isSuperAdmin,true,false)}" styleClass="largeActionButton pinkButton"/>
+                                        <!--By Rishi Khirbat -> T-105835 - Conditonally Add "Edit Recipe" button on MM_ViewRecipe -->
+<!--                                         <apex:commandLink value="Edit Recipe" action="{!editRecipe}" styleClass="largeActionButton pinkButton" rendered="{!!editMode && canEdit && (currentRecipe.Status__c != 'Approved')}"/> -->
+                                        <apex:commandLink value="Edit Recipe" action="{!editRecipe}" styleClass="largeActionButton pinkButton" rendered="{!isEditRecipeButtonShow}"/>
+                                        <apex:outputPanel rendered="{!isSuperAdmin && !editMode && false}"><a href="#" onclick="popup('popUpDiv4')" class="largeActionButton pinkButton">Delete Recipe</a></apex:outputPanel>
+                                        <div id="diffButtons"></div>
+                                        
+                                       <apex:outputPanel rendered="{!!editMode}" ><a href="#" onclick="publishRecipeDialogBox('{!currentRecipe.status__c}');return false;" class="largeActionButton pinkButton">Publish Recipe</a></apex:outputpanel>
+                                       <apex:outputPanel rendered="{!!editMode}" ><a href="/apex/MM_ExportRecipe?masterRecipeId={!currentRecipe.Master_Recipe__r.Id}&recipeId={!currentRecipe.Id}" class="largeActionButton pinkButton" >Download Recipe</a></apex:outputpanel>
+<!--                                        <apex:commandLink rendered="{!!editMode && (currentRecipe.Status__c == 'Approved')}" value="Clone Recipe" action="{!cloneRecipe}" styleClass="largeActionButton pinkButton" /> -->
+                                       <apex:commandLink rendered="{!isCloneRecipeButtonShow}" value="Clone Recipe" action="{!cloneRecipe}" styleClass="largeActionButton pinkButton" />
+                                       <apex:outputPanel rendered="{!isSuperAdmin && !editMode && currentRecipe.Status__c != 'Archive'}"><a href="#" onclick="archiveRecipe();" class="largeActionButton pinkButton">Archive Recipe</a></apex:outputPanel>
+                                    </apex:outputPanel>
+                                </div><!-- end of image column -->
+                            
+                                <div id="bodyColumn"> 
+                                    <div id="mainContent">
+                                    
+                                        <!-- Recipe Header -->
+                                        <div class="secBottom">
+                                            <div class="recipeElementsContainer {!cssStatus}">
+                                                <apex:outputPanel id="opRecipeHeader">
+                                                    <div class="pright wd">
+                                                        <apex:outputText value="Master Recipe: "/>
+                                                        <apex:outputPanel rendered="{!renderMaster}">
+                                                            <apex:outputLink value="/apex/MM_MasterRecipe">
+                                                                <apex:outputText value="{!currentRecipe.Master_Recipe__r.Name}"/>
+                                                                <apex:param name="recipeId" value="{!currentRecipe.Master_Recipe__r.Id}"/>
+                                                            </apex:outputLink>
+                                                        </apex:outputPanel> 
+                                                        <apex:outputPanel styleClass="status" rendered="{!!renderMaster}">
+                                                            None
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Diageo  Product -->
+                                        
+                                        <apex:outputPanel id="popup" rendered="{!editMode}" >
+                                            <div class="secHead">Diageo Products </div>
+                                            <apex:outputPanel id="productEdit" styleClass="recipeIngredientsContainer {!cssStatus} clear" >
+                                                <apex:outputPanel >
+                                                    <div class="floatLeft wi1">
+                                                        <apex:outputLabel value="Featured"></apex:outputLabel>
+                                                    </div>
+                          
+                                                    <div class="floatLeft wi2">
+                                                        <apex:outputLabel value="Quantity"></apex:outputLabel>
+                                                    </div>
+                         
+                                                    <div class="floatLeft wi3">
+                                                        <apex:outputLabel value="Unit"></apex:outputLabel>
+                                                    </div>
+                          
+                                                    <div class="floatLeft wi4">
+                                                        <apex:outputLabel value="Brand"  styleClass="floatLeft"></apex:outputLabel>
+                                                        <apex:actionStatus id="statusImg3">
+                                                            <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                            <apex:facet name="stop" />
+                                                        </apex:actionStatus> 
+                                                    </div>
+                          
+                                                    <div class="floatLeft wi5">
+                                                        <apex:outputLabel value="Diageo Ingredient"></apex:outputLabel>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <br/>
+                                                <br/>
+                                                <div >
+                                                    <apex:repeat value="{!diagIng}" var="di">
+                                                        <apex:outputPanel >
+                                                            <div class="floatLeft wi1" align="center">
+                                                                <apex:inputCheckbox value="{!di.ingredient.Featured_Brand__c}" id="chkBox"  onclick="getFocus(this)"></apex:inputCheckbox>
+                                                            </div>
+                          
+                                                            <div class="floatLeft wi2">
+                                                                <apex:selectList size="1" value="{!di.ingredient.Quantity__c}" tabIndex="{!di.indexCount+1}"  >
+                                                                    <apex:selectOptions value="{!quantities}"></apex:selectOptions>
+                                                                </apex:selectList>
+                                                            </div>
+                          
+                          
+                                                            <div class="floatLeft wi3">
+                                                                <apex:selectList size="1" value="{!di.ingredient.Units__c}" tabIndex="{!di.indexCount+2}">
+                                                                    <apex:selectOptions value="{!units}"></apex:selectOptions>
+                                                                </apex:selectList> 
+                                                            </div>
+                          
+                                                            <div class="floatLeft wi4">
+                                                                <apex:selectList size="1" value="{!di.brand}" tabIndex="{!di.indexCount+3}" style="width:96.8%;">
+                                                                    <apex:selectOptions value="{!diageoBrands}"></apex:selectOptions>
+                                                                    <apex:actionSupport event="onchange" status="statusImg3" rerender="{!$Component.dVal},rerenderPanel">
+                                                                    </apex:actionSupport>
+                                                                </apex:selectList>
+                                                            </div>
+                          
+                                                            <div class="wi5">
+                                                                <apex:selectList size="1" styleClass="ws" value="{!di.dProduct}" id="dVal" tabIndex="{!di.indexCount+4}" style="width:99%;" >
+                                                                    <apex:selectOptions value="{!di.diageoProducts}"></apex:selectOptions>
+                                                                    <apex:actionsupport event="onchange"  rerender="{!$Component.dVal}" focus="{!$Component.dVal}"/>
+                                                                </apex:selectList>
+                                                            </div>
+                                                          
+                                                            <div class="wi6">
+                                                                <apex:commandLink styleClass="rmargin links" immediate="true" action="{!deleteDiagIng}"  rerender="productEdit" >
+                                                                    <apex:image title="Delete" width="20" height="20" value="/resource/1320379988000/pinkdotx"/>
+                                                                    <apex:param name="ing" value="{!di.ingredient.Ingredient_Number__c}"></apex:param>
+                                                                </apex:commandLink>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                        <br/>
+                                                    </apex:repeat>
+                                                </div>
+                                                
+                                                <apex:outputPanel styleClass="block" rendered="{!IF(editMode,true,false)}"> 
+                                                    <div class="floatLeft">
+                                                        <apex:commandLink styleClass="nLinks aLink" value="+ Add a Diageo Product" action="{!addADiagIng}" rerender="productEdit"/> 
+                                                    </div>
+                                                </apex:outputPanel>   
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        
+                                        <!-- Tags -->
+                                        <!-- 
+                                        <apex:outputPanel id="idTags">
+                                            <div class="secHead">Tags </div>
+                                            <apex:outputPanel id="tagEdit" styleClass="recipeIngredientsContainer {!cssStatus} clear" >
+                                                <apex:outputPanel rendered="{!editMode}">
+                                                    <div style="padding-top:5px;">
+                                                        <apex:inputText styleClass="inputText" id="rTags" style="width:96%;" value="{!currentRecipe.Recipe_Tag__c}"/>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!!editMode}" styleClass="display: block; clear:both" >
+                                                    <apex:outputText styleClass="status" value="{!currentRecipe.Recipe_Tag__c}"/>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        -->
+                                        
+                                        <!--  other ingredients -->
+                                        
+                                        <apex:outputPanel id="npopup" rendered="{!editMode}">
+                                            <div class="secHead" style="width: 1300px;">Other Ingredients&nbsp;
+                                                <div class="wd1" style="float:right">
+                                                    <apex:outputText value="Locale Filter: " rendered="{!editMode}"/>
+                                                    <apex:outputPanel rendered="{!editMode}">
+                                                        <apex:selectList id="rLocaleIn" size="1" title="color" value="{!selLocaleIngredientsFilter}" onchange="LocaleIngredientsFilter();">
+                                                            <apex:selectOptions value="{!LocaleIngredientsFilter}"/>
+                                                        </apex:selectList>
+                                                        <apex:actionStatus id="localesImg1">
+                                                             <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                             <apex:facet name="stop" />
+                                                        </apex:actionStatus>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </div> 
+                                            
+                                                <apex:outputPanel id="nproductEdit" styleClass="clear {!cssStatus} recipeIngredientsContainer "  >
+                                                    <apex:outputPanel >
+                                                        <div class="floatLeft wn0">
+                                                        </div>
+                                                        <div class="floatLeft wn1">
+                                                            <apex:outputLabel value="Quantity"></apex:outputLabel>
+                                                        </div>
+                                                        <div class="floatLeft wn2">
+                                                            <apex:outputLabel value="Unit" styleClass="floatLeft"></apex:outputLabel>
+                                                                <apex:actionStatus id="statusImg1">
+                                                                    <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                                    <apex:facet name="stop" />
+                                                                </apex:actionStatus> 
+                                                        </div>
+                                                        <!--  <div class="floatLeft wn3"><apex:outputLabel value="Custom Unit"></apex:outputLabel></div> -->
+                                                        <div class="floatLeft wn4">
+                                                            <apex:outputLabel value="Ingredient" styleClass="floatLeft"></apex:outputLabel>
+                                                            <apex:actionStatus id="statusImg2">
+                                                                <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                                <apex:facet name="stop" />
+                                                            </apex:actionStatus> 
+                                                        </div> 
+                                                        <div class="floatLeft wn5">
+                                                            <apex:outputLabel value="Custom Ingredient"></apex:outputLabel>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <br/>
+                                                    <br/>
+                                                    <div >
+                                                        <apex:repeat value="{!nonDiagIng}" var="ndi">
+                                                            <apex:outputPanel >
+                                                                <div class="floatLeft wn0">
+                                                                </div>
+                                                                <div class="floatLeft wn1">
+                                                                    <apex:selectList size="1" value="{!ndi.nd.Quantity__c}" tabIndex="{!ndi.nonIndexCount}">
+                                                                        <apex:selectOptions value="{!quantities}"></apex:selectOptions>
+                                                                    </apex:selectList>
+                                                                </div>
+                                                                <div class="floatLeft wn2">
+                                                                    <apex:selectList size="1" value="{!ndi.nd.Non_Diageo_Product_Units__c}" tabIndex="{!ndi.nonIndexCount+1}">
+                                                                        <apex:selectOptions value="{!customUnits}"></apex:selectOptions>
+                                                                    </apex:selectList> 
+                                                                </div>
+                                                      
+                                                                <div class="floatLeft wn4">
+                                                                    <apex:selectList size="1" value="{!ndi.ingredient}" id="dVal" tabIndex="{!ndi.nonIndexCount+2}" style="width:99%;" >
+                                                                        <apex:selectOptions value="{!nonDiageoProducts}"></apex:selectOptions>
+                                                                        <apex:actionSupport event="onchange" status="statusImg2" oncomplete="focusItem('{!ndi.nd.Ingredient_Number__c}');" action="{!showUnit}" rerender="nproductEdit,rerenderPanel" focus="dVal">
+                                                                            <apex:param name="step" value="{!ndi.nd.Ingredient_Number__c}"></apex:param>
+                                                                            <apex:param name="field" value="ingredient"></apex:param>
+                                                                        </apex:actionSupport>
+                                                                    </apex:selectList>
+                                                                </div>
+                                                                <apex:actionfunction name="rerenderinputJS" action="{!showUnit}" rerender="nproductEdit,rerenderPanel">
+                                                                    <apex:param name="step" value="{!ndi.nd.Ingredient_Number__c}"></apex:param>
+                                                                    <apex:param name="field" value="ingredient"></apex:param>
+                                                                </apex:actionfunction> 
+                                    
+                                                                <div class="floatLeft wn5">
+                                                                    <span id="{!ndi.nd.Ingredient_Number__c}">
+                                                                        <apex:inputText styleClass="inputText customIngTextBox" value="{!ndi.customIng}" disabled="{!!ndi.showI}" tabIndex="{!ndi.nonIndexCount+3}" ></apex:inputText>
+                                                                    </span>                                        
+                                                                </div>
+                                                                <div class="wn6">
+                                                                    <apex:commandLink styleClass="rmargin links floatLeft" immediate="true" action="{!deleteNonDiagIng}"  rerender="nproductEdit">
+                                                                        <apex:image title="Delete" width="20" height="20" value="/resource/1320379988000/pinkdotx"/>
+                                                                        <apex:param name="ing" value="{!ndi.nd.Ingredient_Number__c}"></apex:param>
+                                                                    </apex:commandLink>
+                                                                </div>
+                                                            </apex:outputPanel>
+                                                            <br/>
+                                                            <br/>
+                                                        </apex:repeat>
+                                                    </div>
+                                                    
+                                                    <apex:outputPanel styleClass="block" rendered="{!IF(editMode,true,false)}"> 
+                                                        <div class="floatLeft">
+                                                            <apex:commandLink styleClass="nLinks aLink" value="+ Add an Ingredient" action="{!addANDiagIng}" rerender="nproductEdit"/> 
+                                                        </div>
+                                                    </apex:outputPanel>   
+                                                </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        
+                                        <!-- Ingredients -->
+                                        
+                                        <apex:actionFunction name="convertOZMeasurements" action="{!convertOZMeasurements}"  rerender="ingDIsp" status="statusConvertMeasurements"/>
+                                        <apex:actionFunction name="convertMLMeasurements" action="{!convertMLMeasurements}"  rerender="ingDIsp" status="statusConvertMeasurements"/>
+                                        
+                                        <apex:outputPanel id="ingDIsp" rendered="{!!editMode}"  >
+                                            <div class="secHead" style="width: 200%;">Ingredients
+                                                <div class="wd1" style="float:right">
+                                                    <apex:commandButton onclick="convertOZMeasurements(); return false;" value="oz." style="width: 50px; margin-top: 0px; margin-bottom: 5px; padding: 0px 0px 0px 0px;" styleClass="largeActionButton pinkButton" id="idConvertOZ"/>&nbsp;
+                                                    <apex:commandButton onclick="convertMLMeasurements(); return false;" value="ml." style="width: 50px; margin-top: 0px; margin-bottom: 5px; padding: 0px 0px 0px 0px;" styleClass="largeActionButton pinkButton" id="idConvertML"/>
+                                                    <apex:actionStatus id="statusConvertMeasurements">
+                                                         <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                         <apex:facet name="stop" />
+                                                    </apex:actionStatus>
+                                                </div>
+                                            </div>
+                                            <apex:outputPanel styleClass="recipeIngredientsContainer {!cssStatus} clear">
+                                                <!-- Diageo and Non Diageo Product -->
+                                                <apex:repeat value="{!wrapperDiageoIngredient}" var="di" id="dList" >
+                                                    <apex:image styleClass="imgStar" width="15" height="15" title="Featured Brand" value="/resource/1320379988000/goldStar" rendered="{!di.ingredients.Featured_Brand__c}"/>
+                                                    <!--Convert Measurement -->
+                                                    <apex:outputText styleClass="rmargin" value="{!di.ingredients.Quantity__c}" rendered="{!di.ingredients.Featured_Brand__c && !isConvertMeasurement}"/>
+                                                    <apex:outputText styleClass="rmargin rmargin2" value="{!di.ingredients.Quantity__c}" rendered="{!!di.ingredients.Featured_Brand__c && !isConvertMeasurement}"/>
+                                                    <apex:outputText styleClass="rmargin" value="{!di.ingredients.Ingredient_Unit__c}" rendered="{!IF(di.ingredients.Ingredient_Unit__c == 'N/A', false, true) && !isConvertMeasurement}"/>
+                                                    <!--Converted Measurement -->
+                                                    <apex:outputText styleClass="rmargin" value="{!di.convertedQuantity}" rendered="{!di.ingredients.Featured_Brand__c && isConvertMeasurement}"/>
+                                                    <apex:outputText styleClass="rmargin rmargin2" value="{!di.convertedQuantity}" rendered="{!!di.ingredients.Featured_Brand__c && isConvertMeasurement}"/>
+                                                    <apex:outputText styleClass="rmargin" value="{!di.convertedUnit}" rendered="{!IF(di.ingredients.Ingredient_Unit__c == 'N/A', false, true) && isConvertMeasurement}"/>
+                                                    
+                                                    <apex:outputText styleClass="rmargin" value="{!di.ingredients.Recipe_Diageo_Product__r.Name}" rendered="{!IF(di.ingredients.Recipe_Diageo_Product__c == null,false,true)}"/>
+                                                    <apex:outputText styleClass="rmargin" value="{!di.ingredients.Recipe_Non_Diageo_Product__r.Name}" rendered="{!IF(di.ingredients.Recipe_Non_Diageo_Product__c == null,false,true)}"/>
+                                                    <br/>
+                                                    <div id="blank">
+                                                    </div>
+                                                </apex:repeat>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                            
+                                        <!-- Preparation Steps -->
+                                            
+                                        <div class="secHead ">Preparation Steps</div>
+                                                <apex:outputPanel styleClass="recipeIngredientsContainer {!cssStatus} " id="popupprep" >
+                                                    <apex:outputPanel id="prepSteps" styleClass="downPad2">
+                                                        <div>
+                                                            <apex:repeat value="{!prepSteps}" var="prepS" >
+                                                                <apex:outputPanel styleClass="downPad block clear " rendered="{!IF(NOT(editMode) && prepS.Description__c == '',false,true)}">
+                                                                    <apex:outputPanel rendered="{!IF(editMode,true,false)}">
+                                                                        <div class="wp1">
+                                                                            <apex:outputPanel styleClass="floatLeft" rendered="{!IF(prepS.Step_Number__c == 1, false, true)}">
+                                                                                <apex:commandLink action="{!moveUp}"  rerender="popupprep">
+                                                                                    <apex:image title="up" width="12" height="12" value="/resource/1320379988000/upArrow"/>
+                                                                                    <apex:param name="pStep" value="{!prepS.Step_Number__c}"></apex:param>
+                                                                                </apex:commandLink>
+                                                                            </apex:outputPanel>
+                                                                        </div>
+                                                                        <div class="wp11">
+                                                                            <apex:outputPanel styleClass="floatLeft" rendered="{!IF(prepS.Step_Number__c == pSize,false,true)}">
+                                                                                <apex:commandLink action="{!moveDown}"  rerender="popupprep">
+                                                                                    <apex:image title="down" width="12" height="12" value="/resource/1320379988000/downArrow"/>
+                                                                                    <apex:param name="pStep" value="{!prepS.Step_Number__c}"></apex:param>
+                                                                                </apex:commandLink>
+                                                                            </apex:outputPanel>
+                                                                        </div>
+                                                                    </apex:outputPanel>
+                                                                    <div class="wp2">
+                                                                        <div class="smallPrepActionButton">
+                                                                            <apex:image width="20" height="20" value="/resource/1320379988000/pinkcircle" rendered="{!IF(editMode || prepS.Description__c!='',true,false)}"/>
+                                                                            <div class="prepN">
+                                                                                <apex:outputText value="{!floor(prepS.Step_Number__c)}" rendered="{!IF(editMode || prepS.Description__c!='',true,false)}"  ></apex:outputText>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="prepS">
+                                                                            <apex:inputText styleClass="inputText prepStepBox" value="{!prepS.Description__c}"  rendered="{!editMode}"  tabIndex="2001"></apex:inputText>
+                                                                        </div>
+                                                                        <div class="prepTop">
+                                                                            <apex:outputText value="{!prepS.Description__c}" rendered="{!!editMode}"></apex:outputText>
+                                                                        </div>
+                                                                    </div>
+                                
+                                                                    <div class="wp3" >
+                                                                        <apex:commandLink styleClass="rmargin links floatLeft" action="{!deletePreparationStep}"  rendered="{!IF(editMode,true,false)}" rerender="popupprep">
+                                                                            <apex:image title="Delete" width="20" height="20" value="/resource/1320379988000/pinkdotx"/>
+                                                                            <apex:param name="pStep" value="{!prepS.Step_Number__c}"></apex:param>
+                                                                        </apex:commandLink>
+                                                                    </div>
+                                                                    <br/>
+                                                                </apex:outputPanel>
+                                                            </apex:repeat>
+                                                        </div>  
+                                                    </apex:outputPanel> 
+                                                    <br/>
+                                                    <apex:outputPanel styleClass="block" rendered="{!IF(editMode,true,false)}"> 
+                                                        <div class="floatLeft">
+                                                            <apex:commandLink styleClass="nLinks aLink" value="+ Add a step" action="{!addAStep}" rerender="popupprep"/> 
+                                                        </div>
+                           
+                                                    </apex:outputPanel>         
+                                                </apex:outputPanel>
+                                                
+                                        <!-- Details -->
+                                        <div class="pbottom"></div>
+                                        <div class="secHead" style="width: 1300px;">Details&nbsp;
+                                            <div class="wd1" style="float:right">
+                                                <apex:outputText value="Locale Filter: " rendered="{!editMode}"/>
+                                                <apex:outputPanel rendered="{!editMode}">
+                                                    <apex:selectList id="rLocale" size="1" title="Locale" value="{!selLocaleDetailsFilter}" onchange="LocaleDetailsFilter();">
+                                                        <apex:selectOptions value="{!LocaleDetailsFilter}"/>
+                                                    </apex:selectList>
+                                                    <apex:actionStatus id="localesImg">
+                                                         <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                         <apex:facet name="stop" />
+                                                    </apex:actionStatus>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div> 
+                                        <div class="secBottom">
+                                            <div class="recipeElementsContainer {!cssStatus}">
+                                                <apex:actionFunction name="saveTags" action="{!saveTags}" oncomplete="clickSaveTags();" rerender="opTags"  status="statusSaveTags"/>
+                                                <apex:outputPanel styleClass="clear" id="opTags">
+                                                    <!--
+                                                    <apex:outputPanel rendered="{!editMode}">
+                                                        <apex:outputText styleClass="fieldNames" value="Tags: "/>&nbsp;
+                                                        <div style="padding-top:5px;">
+                                                            <apex:inputText styleClass="inputText" id="rTags" style="width:96%;" value="{!currentRecipe.Recipe_Tag__c}"/>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!!editMode}" styleClass="display: block; clear:both" >
+                                                        <apex:outputText styleClass="fieldNames" value="Tags: " />&nbsp;
+                                                        <apex:outputText styleClass="status" value="{!currentRecipe.Recipe_Tag__c}"/>
+                                                    </apex:outputPanel> 
+                                                    <br/>
+                                                     -->
+                                                    <div>
+                                                    	<apex:outputText styleClass="fieldNames" value="Language: " />&nbsp;
+                                                    	<apex:outputText styleClass="status" value="{!currentRecipe.Language__c}" rendered="{!!editMode}"/>&nbsp;
+                                                        <apex:inputField styleClass="fieldNames"  value="{!currentRecipe.Language__c}" rendered="{!editMode}"/>&nbsp;
+                                                        <br/><br/>
+                                                        <apex:outputText styleClass="fieldNames" value="Tags: " />&nbsp;
+                                                        <apex:inputTextarea styleClass="inputText" rendered="{!editMode}" rows="3" style="width:91%;" value="{!currentRecipe.Recipe_Tags__c}"/>
+                                                        <apex:outputText rendered="{!!editMode}" styleClass="status" value="{!currentRecipe.Recipe_Tags__c}"/><br/>
+                                                        <apex:commandLink id="showAddTagsLink" onclick="clickAddTags(); return false;" value="Add Tags"/>
+                                                        <apex:inputTextarea id="concatenateTagsValue" styleClass="inputText" rendered="true" rows="3" style="width:91%" value="{!concatenateTagsValue}"/>
+                                                        <apex:commandButton id="saveTagsValue" onclick="saveTags(); return false;" oncomplete="clickSaveTags();" styleClass="actionButton" value="Save"/>
+                                                        <apex:commandButton id="cancelTagsValue" onclick="clickSaveTags(); return false;" styleClass="actionButton" value="Cancel"/>
+                                                        <apex:actionStatus id="statusSaveTags">
+                                                             <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                             <apex:facet name="stop" />
+                                                        </apex:actionStatus>
+                                                        <br/>
+                                                        
+                                                        <br/>
+                                                    </div>
+                                                    
+                                                </apex:outputPanel>
+                                                <apex:outputPanel id="opAttributes1">
+                                                    <div class="pright wd">
+                                                        <apex:outputText value="Color: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+                                                            <!--   <apex:inputField id="rColors"  value="{!currentRecipe.Recipe_Color_del__c}"/>  -->
+                                                            <apex:selectList id="rColor" size="1" title="color" value="{!selColor}">
+                                                                <apex:selectOptions value="{!recipeColors}"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}"> 
+                                                            <apex:outputText styleClass="status" value="{!recipeColor}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                                    <!-- 
+                                                    <div class="wd1">
+                                                        <apex:outputText value="Language: " />&nbsp;
+                                                        <apex:outputText rendered="{!!editMode}" styleClass="status" value="{!recipeLanguage}"/>
+                                                        <apex:selectList id="rLanguage" size="1" title="language" value="{!selLanguage}" rendered="{!editMode}">
+                                                            <apex:selectOptions value="{!languages}"></apex:selectOptions>
+                                                        </apex:selectList>
+                                                        <br/>
+                                                    </div>
+                                                     -->
+                                                     <div class="wd1">
+                                                        <apex:outputText value="Effort Level: " />&nbsp;
+                                                        <apex:outputText rendered="{!!editMode}" styleClass="status" value="{!recipeEffort}"/>
+                                                        <apex:selectList id="rEffort" size="1" title="Effort Level" value="{!selEffort}" rendered="{!editMode}">
+                                                            <apex:selectOptions value="{!recipeEfforts}"></apex:selectOptions>
+                                                        </apex:selectList>
+                                                        <br/>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                <br/><br/>
+                                                <apex:outputPanel id="opAttributes2">
+                                                    <div class="pright wd">
+                                                        <apex:outputText value="Serving Style: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+                                                            <apex:selectList id="rServing" size="1" title="Serving Style" value="{!selServing}">
+                                                                <apex:selectOptions value="{!recipeServings}"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}"> 
+                                                            <apex:outputText styleClass="status" value="{!recipeServing}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                                    
+                                                    <div class="wd1">
+                                                        <apex:outputText value="Glassware: " />&nbsp;
+                                                        <apex:outputText rendered="{!!editMode}" styleClass="status" value="{!recipeGlassware}"/>
+                                                        <apex:selectList id="rGlassware" size="1" title="Glassware" value="{!selGlassware}" rendered="{!editMode}">
+                                                            <apex:selectOptions value="{!recipeGlasswares}"></apex:selectOptions>
+                                                        </apex:selectList>
+                                                        <br/>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                
+                                                <br/><br/>
+                                                <apex:outputPanel styleClass="clear"  id="opAttributes3">
+                                                    <div class="wd pright">
+                                                        <apex:outputText value="Flavor: " />
+                                                        <apex:outputPanel rendered="{!editMode}" >
+                                                            <div style="margin-top:5px;" class="hd">
+                                                                <apex:selectCheckboxes value="{!selFlavorIds}" layout="pageDirection" style="border:none;background-color:transparent;">
+                                                                    <apex:selectOptions value="{!recipeFlavors}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!recipeFlavor}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>     
+                                                    </div>  
+                                                    <div class="wd1"> 
+                                                        <apex:outputText value="Type: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+                                                            <div style="margin-top:5px;" class="hd1">
+                                                                <apex:selectCheckboxes value="{!selTypeIds}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!recipeTypes}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </div>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>             
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!recipeType}"/>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                               </apex:outputPanel> 
+                                               
+                                               <apex:outputPanel styleClass="clear"  id="opAttributes4">
+                                                    <div class="wd pright">
+                                                        <apex:outputText value="Barware Needed: " />
+                                                        <apex:outputPanel rendered="{!editMode}" >
+                                                            <div style="margin-top:5px;" class="hd">
+                                                                <apex:selectCheckboxes value="{!selBarwareIds}" layout="pageDirection" style="border:none;background-color:transparent;">
+                                                                    <apex:selectOptions value="{!recipeBarwares}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!recipeBarware}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>     
+                                                    </div>  
+                                                    
+                                                    <div class="wd1"> 
+                                                        <apex:outputText value="Drink Classification: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+                                                            <div style="margin-top:5px;" class="hd1">
+                                                                <apex:selectCheckboxes value="{!selDrinkIds}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!recipeDrinks}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </div>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>             
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!recipeDrink}"/>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                               </apex:outputPanel> 
+                               
+                                                <br/><br/>
+                                                <apex:outputPanel id="opAttributes5">
+                                                    <div class="pright wd">
+                                                        <apex:outputText value="Wine Type: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+                                                            <apex:selectList id="rWineType" size="1" title="Wine Type" value="{!selWineType}">
+                                                                <apex:selectOptions value="{!recipeWineTypes}"/>
+                                                            </apex:selectList>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}"> 
+                                                            <apex:outputText styleClass="status" value="{!recipeWineType}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                               
+                                                    <div class="wd1">
+                                                        <apex:outputText value="Wine Taste: " />&nbsp;
+                                                        <apex:outputText rendered="{!!editMode}" styleClass="status" value="{!recipeWineTaste}"/>
+                                                        <apex:selectList id="rWineTaste" size="1" title="Wine Taste" value="{!selWineTaste}" rendered="{!editMode}">
+                                                            <apex:selectOptions value="{!recipeWineTastes}"></apex:selectOptions>
+                                                        </apex:selectList>
+                                                        <br/><br/>
+                                                    </div>
+                                                </apex:outputPanel>
+                                                
+                                                <apex:outputPanel id="opAttributes6">
+                                                    <div style="width:97%">
+                                                        <apex:outputpanel rendered="{!!editMode}" >
+                                                            <apex:outputText styleClass="floatLeft2" value="Occasion Type: " />   
+                                                            <apex:outputText styleClass="status" value="{!recipeOccasionType}"/>         
+                                                        </apex:outputPanel> 
+                                                        <apex:outputPanel rendered="{!editMode}" >
+                                                            <apex:outputText value="Occasion" />
+                                                            <div style="padding-top:5px;">
+                                                                <apex:tabPanel switchType="client" selectedTab="Celebrations" id="OccasionsTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab" contentClass="contentTab" styleClass="tabPanelClass" headerspacing="2px">
+                                                                    <apex:tab label="Celebrations" name="name1" id="tabOne" labelwidth="210px;">
+                                                                        <apex:pageblock id="pg1">
+                                                                            <apex:pageblocksection columns="4" id="pgs1">
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!SelCelebration1Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!celebrations1}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                        
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!SelCelebration2Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!celebrations2}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                        
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!SelCelebration3Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!celebrations3}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                        
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!SelCelebration4Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!celebrations4}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                            </apex:pageblocksection>
+                                                                        </apex:pageblock>
+                                                                    </apex:tab>
+                                                                    
+                                                                    <apex:tab label="Theme Parties" name="name2" id="tabTwo" labelwidth="210px;" >
+                                                                        <apex:pageblock id="pg2">
+                                                                            <apex:pageblocksection columns="4" id="pgs2">
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selThemeParty1Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!themeParties1}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selThemeParty2Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!themeParties2}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selThemeParty3Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!themeParties3}"></apex:selectOptions>
+                                                                                        </apex:selectCheckboxes>
+                                                                                    </apex:pageblockSectionItem>
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!selThemeParty4Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!themeParties4}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                            </apex:pageblocksection>
+                                                                        </apex:pageblock>
+                                                                    </apex:tab>
+                                                                    
+                                                                    <apex:tab label="Holidays" name="name3" id="tabThree" labelwidth="210px;">
+                                                                        <apex:pageblock id="pg3">
+                                                                            <apex:pageblocksection columns="4" id="pgs3">
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selHoliday1Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!holidays1}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>                                                        
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selHoliday2Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!holidays2}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selHoliday3Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!holidays3}"></apex:selectOptions>
+                                                                                        </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!selHoliday4Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!holidays4}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                            </apex:pageblocksection>
+                                                                        </apex:pageblock>
+                                                                    </apex:tab>
+                                                                    <apex:tab label="Outdoor Gatherings" name="Outdoor Gatherings" id="name4" labelwidth="210px;">
+                                                                        <apex:pageblock id="pg4">
+                                                                            <apex:pageblocksection columns="4" id="pgs4">
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selOutdoor1Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!outdoors1}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selOutdoor2Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!outdoors2}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasion" value="{!selOutdoor3Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!outdoors3}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                                
+                                                                                <apex:pageblockSectionItem >
+                                                                                    <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!selOutdoor4Ids}" layout="pageDirection">
+                                                                                        <apex:selectOptions value="{!outdoors4}"></apex:selectOptions>
+                                                                                    </apex:selectCheckboxes>
+                                                                                </apex:pageblockSectionItem>
+                                                                            </apex:pageblocksection>
+                                                                        </apex:pageblock>
+                                                                    </apex:tab>
+                                                                </apex:tabPanel>
+                                                            </div>
+                                                            <br/>
+                                                        </apex:outputPanel> 
+                                                    </div> 
+                                      
+                                                    <div class="wdOccType"> 
+                                                        <apex:outputPanel rendered="{!!editMode}" >
+                                                            <br/>
+                                                            <apex:outputText styleClass="floatLeft2" value="Occasion: " />  
+                                                            <apex:outputText styleClass="status" value="{!recipeOccasion}"/>
+                                                            <br/>
+                                                            <apex:commandLink id="showAddOccasionsLink" onclick="clickAddOccasions(); return false;" value="Add Occasions"/>
+                                                            <br/><br/>
+                                                        </apex:outputPanel> 
+                                                    </div>      
+                                                </apex:outputPanel>
+                                                
+                                                <apex:outputPanel styleClass="clear">
+                                                    <div class="wd pright">
+                                                        <apex:outputText value="Description/Overview: " />
+                                                        <apex:outputPanel rendered="{!editMode}" >
+<!--                                                            <div style="margin-top:5px; height: 54px !important;" class="hd1">-->
+                                                                <apex:inputTextarea styleClass="inputText" rows="3" style="width:80%" value="{!descriptionOverview}"/>
+<!--                                                            </div>-->
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!descriptionOverview}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>     
+                                                    </div>  
+                                                    <div class="wd1"> 
+                                                        <apex:outputText value="Recipe Story: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+<!--                                                            <div style="margin-top:5px; height: 54px !important;" class="hd1">-->
+                                                               <apex:inputTextarea styleClass="inputText" rows="3" style="width:95%" value="{!recipeStory}"/>
+<!--                                                            </div>-->
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>             
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!recipeStory}"/>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                               </apex:outputPanel>
+                                               
+                                               <apex:outputPanel styleClass="clear">
+                                                    <div class="wd pright">
+                                                        <apex:outputText value="Serving Size: " />
+                                                        <apex:outputPanel rendered="{!editMode}" >
+                                                                <br/> 
+<!--                                                            <div style="margin-top:5px; height: 54px !important;" class="hd1">-->
+                                                                <apex:inputTextarea styleClass="inputText" rows="3" style="width:80%" value="{!servingSize}"/>
+<!--                                                            </div>-->
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!servingSize}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>     
+                                                    </div> 
+                                                    <div class="wd1"> 
+                                                        <apex:outputText value="Food Pairings: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+<!--                                                            <div style="margin-top:5px; height: 54px !important;" class="hd1">-->
+                                                               <apex:inputTextarea styleClass="inputText" rows="3" style="width:95%" value="{!foodPairings}"/>
+<!--                                                            </div>-->
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>             
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!foodPairings}"/>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                               </apex:outputPanel> 
+                                               
+                                               <apex:outputPanel styleClass="clear">
+                                                    <div class="wd pright">
+                                                        <apex:outputText value="Standard Average Analysis: " />
+                                                        <apex:outputPanel rendered="{!editMode}" >
+<!--                                                            <div style="margin-top:5px; height: 54px !important;" class="hd1">-->
+                                                                <apex:inputTextarea styleClass="inputText" rows="3" style="width:80%" value="{!standardAverageAnalysis}"/>
+<!--                                                            </div>-->
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!standardAverageAnalysis}"/>
+                                                        </apex:outputPanel>
+                                                        <br/>     
+                                                    </div>  
+                                                    <div class="wd1"> 
+                                                        <apex:outputText value="Tasting Notes: " />
+                                                        <apex:outputPanel rendered="{!editMode}">
+<!--                                                            <div style="margin-top:5px; height: 54px !important;" class="hd1">-->
+                                                               <apex:inputTextarea styleClass="inputText" rows="3" style="width:95%" value="{!tastingNotes}"/>
+<!--                                                            </div>-->
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>             
+                                                        <apex:outputPanel rendered="{!!editMode}">
+                                                            <apex:outputText styleClass="status" value="{!tastingNotes}"/>
+                                                            <div id="blank clear">
+                                                            </div> 
+                                                        </apex:outputPanel>
+                                                        <br/>
+                                                    </div>
+                                               </apex:outputPanel>    
+                                     
+                                                <!-- 
+                                                <apex:outputPanel styleClass="clear">                         
+                                                    <apex:outputPanel rendered="{!editMode}">
+                                                        <apex:outputText styleClass="fieldNames" value="Tags: " />&nbsp;
+                                                        <div style="padding-top:5px;">
+                                                            <apex:inputText styleClass="inputText" id="rTags" style="width:96%;" value="{!currentRecipe.Recipe_Tag__c}"/>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!!editMode}" styleClass="display: block; clear:both" >
+                                                        <br/>
+                                                        <apex:outputText styleClass="fieldNames" value="Tags: " />&nbsp;
+                                                        <apex:outputText styleClass="status" value="{!currentRecipe.Recipe_Tag__c}"/>
+                                                    </apex:outputPanel> 
+                                                </apex:outputPanel>
+                                                -->     
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- History -->
+                                        <apex:outputPanel >
+                                                    <div class="secHead ">History</div>
+                                                    <apex:outputPanel styleClass="recipeIngredientsContainer {!cssStatus}">
+                                                        <apex:outputField value="{!currentRecipe.Comments__c}"/>
+                                                    </apex:outputPanel> 
+                                                </apex:outputPanel> 
+                       
+                      
+                                                <!-- Asset Use -->
+<!--                                                 <apex:outputPanel rendered="{!(isEditor || isApprover ||isSuperAdmin || isPublisher)}"> -->
+                                                <apex:outputPanel >
+                                                    <div class="secHead "><apex:outputText value="Asset Use"/></div>
+                                                    <apex:outputPanel styleClass="recipeIngredientsContainer {!cssStatus}"  rendered="{!!assetListEmpty}">
+                                                        <div>
+                                                            <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="Asset Name"/></div>
+                                                            <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="Publisher"/></div>
+                                                            <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="Status"/></div>
+                                                        </div>
+                                                        <div class="saved dashboardSection">
+                                                            <apex:repeat value="{!assetList}" var="a">
+                                                                <div style="height: 15px;">
+                                                                    <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{!a.Digital_Published_Asset__r.Name}"/></div>
+                                                                    <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{!a.Digital_Published_asset__r.Publisher__r.Name}"/></div>
+                                                                    <div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="padding-left:0px!important" value="{!a.Status__c}"/></div>
+                                                                </div>
+                                                            </apex:repeat>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel styleClass="recipeIngredientsContainer {!cssStatus}"  rendered="{!assetListEmpty}">
+                                                        <apex:outputText styleClass="dashboardRowNoValues" value="Recipe not currently used in an asset." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>
+                                                    </apex:outputPanel>
+                                                    <!-- 
+                                                    <apex:outputPanel styleClass="recipeIngredientsContainer {!cssStatus}" style="width:100%">
+                                                        <div style="width:200px">
+                                                            <apex:outputText value="Asset Name"  rendered="{!!assetListEmpty}"/>
+                                                        </div>
+                                                        <div style="width:150px">
+                                                            <apex:outputText value="Publisher"   rendered="{!!assetListEmpty}"/>
+                                                        </div>
+                                                        <div style="width:150px">
+                                                            <apex:outputText value="Status"      rendered="{!!assetListEmpty}"/>
+                                                        </div>
+                                                        <br/>
+                                                        <apex:repeat value="{!assetList}" var="a">
+                                                            <div>
+                                                                <apex:outputText style="width:200px" rendered="{!!assetListEmpty}" value="{!a.Digital_Published_Asset__r.Name}"/>
+                                                                <apex:outputText style="width:150px" rendered="{!!assetListEmpty}" value="{!a.CreatedBy.Name}"/>
+                                                                <apex:outputText style="width:150px" rendered="{!!assetListEmpty}" value="{!a.Status__c}"/>
+                                                            </div>
+                                                            <br/><br/>
+                                                        </apex:repeat>
+                                                        <apex:outputText value="Recipe not currently used in an asset." rendered="{!assetListEmpty}"/>
+                                                </apex:outputPanel>
+                                                 --> 
+                                            </apex:outputPanel>                                                
+                                        </div>
+                                    </div> 
+                                </apex:outputPanel>
+                            </div>
+                        <div id="popUpDiv2" style="display:none;">
+                            <div id="topBar">
+                                Submit Recipe
+                            </div>
+                            <div id="middleBody">
+                                Would you like to <b>submit</b> this recipe:&nbsp;&nbsp; 
+                                <apex:outputPanel rendered="{!!editMode && (currentRecipe.Status__c == 'Draft' || currentRecipe.Status__c == 'Rejected') && (isEditor || isSuperAdmin) && cUser}">
+                                    <apex:selectList size="1"  title="Reviewers" value="{!selectedReviewer}" rendered="{!isEditor || isSuperAdmin}">
+                                        <apex:selectOptions value="{!reviewerList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                </apex:outputPanel>
+    
+                                <apex:outputPanel rendered="{!!editMode && (currentRecipe.Status__c == 'Draft' || currentRecipe.Status__c == 'Rejected') && (isReviewer || isApprover || isPublisher) && cUser}">
+                                    <apex:selectList size="1"  title="Reviewers" value="{!selectedReviewer}" rendered="{!isReviewer || isApprover || isPublisher}">
+                                        <apex:selectOptions value="{!reviewerList}"></apex:selectOptions>
+                                    </apex:selectList>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </apex:outputPanel>
+                                
+                                <div id="bottomFooter2">
+                                    <apex:commandButton action="{!submitRecipe}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                    <!--  <apex:outputpanel rendered="{!isReviewer}"><apex:commandButton action="{!submitRecipeByReviewer}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/> </apex:outputpanel>&nbsp;&nbsp;  -->
+                                    <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv2')"/>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div id="popUpDiv3" style="display:none;">
+                            <div id="topBar">
+                                Approve Recipe
+                            </div>
+                            <div id="middleBody">
+                                <!-- Modified by Rishi Khirbat -->
+                                <!-- T-100323-Remove Field from VF Page -->
+                                <!--
+                                Would you like to <b>submit</b> this recipe:&nbsp;&nbsp;      
+                                <apex:selectList size="1"  title="Approvers" value="{!selectedApprover}" rendered="{!isReviewer || isApprover || isSuperAdmin}">
+                                    <apex:selectOptions value="{!approverList}"></apex:selectOptions>
+                                </apex:selectList><br/>
+                                <br/>
+                                -->
+                                Comments
+                                <div>
+                                    <apex:inputTextarea styleClass="rejectInput" rows="6" cols="10" value="{!currentComment}"/>
+                                </div>
+                                <br/>
+                                Does Recipe Have Legal Approval for Publishing?&nbsp;<apex:inputCheckBox value="{!currentRecipe.Has_Legal_Approval__c}" required="true"/>&nbsp;&nbsp;&nbsp;
+                                <div id="bottomFooter">
+                                    <apex:commandButton action="{!approveRecipe}" value="Approve" styleClass="actionButton greenButton" onclick="popup('popUpDiv3')"/> &nbsp;&nbsp;
+                                    <apex:commandButton value="Cancel" styleClass="actionButton redActionButton" onclick="popup('popUpDiv3')"/>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div id="popUpDiv4" style="display:none;">
+                            <div id="topBar">
+                                Delete Recipe
+                            </div>
+                            <div id="middleBody">
+                                Are you sure you want to delete {!currentRecipe.Recipe_Title__c}?
+                                <div id="bottomFooter2">
+                                    <apex:commandButton action="{!deleteRecipe}" value="Delete" styleClass="actionButton redActionButton" onclick="popup('popUpDiv4')"/>&nbsp;&nbsp;
+                                    <apex:commandButton value="Cancel" styleClass="actionButton redActionButton" onclick="popup('popUpDiv4')"/>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div id="popUpDiv5" style="display:none;">
+                            <div id="topBar">
+                                Archive Recipe
+                            </div>
+                            <div id="middleBody">        
+                                Archiving a recipe prevents assets and owners from accessing the record.
+                                Are you sure you want to archive {!currentRecipe.Recipe_Title__c}?
+                                <div id="bottomFooter2">
+                                    <apex:commandButton action="{!archiveRecipe}" value="Archive" styleClass="actionButton pinkButton" onclick="popup('popUpDiv5')"/>&nbsp;&nbsp;
+                                    <apex:commandButton value="Cancel" styleClass="actionButton pinkButton" onclick="popup('popUpDiv5')"/>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div id="popUpDiv1" style="display:none;"> 
+                            <div id="topBar">
+                                Reject Recipe
+                            </div>
+                            <div id="middleBody">
+                                Comments
+                                <div>
+                                    <apex:inputTextarea styleClass="rejectInput" rows="6" value="{!currentRejectComment}"/>
+                                </div>
+                                <div id="bottomFooter">
+                                    <apex:commandButton action="{!rejectRecipe}" value="Reject" styleClass="actionButton pinkButton" onclick="popup('popUpDiv1')"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <apex:commandButton value="Cancel" styleClass="actionButton pinkButton" onclick="popup('popUpDiv1')"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="dialog-overlay" style="display:none; left:35% !important">
+                            <div id="topBar">
+                                Alert
+                            </div>
+                            <div id="middleBody" style="margin-left: 28px;">
+                                Only Approved Recipes can be Published.
+                                <div id="bottomFooter" style="padding-left:85px;">
+                                    <apex:commandButton value="Cancel" styleClass="actionButton pinkButton" onclick="popup('dialog-overlay');return false;"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="dialog-overlay1" style="display:none;">
+                            <div id="topBar">
+                                Alert
+                            </div>
+                            <div id="middleBody" style="margin-left: 28px;">
+                                You cannot archive a Recipe that is published.
+                                <div id="bottomFooter" style="padding-left:85px;">
+                                    <apex:commandButton value="Cancel" styleClass="actionButton pinkButton" onclick="popup('dialog-overlay1');return false;"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="addOccasionsDialog" style="display:none; left:25% !important">
+                            <apex:outputPanel id="addOccasionsDialogpanel" rendered="{!!editMode}">
+                                <div id="topBar">
+                                    {!currentRecipe.Recipe_Title__c}
+                                    <apex:actionStatus id="status1">
+                                       <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                       <apex:facet name="stop" />
+                                    </apex:actionStatus>
+                                </div>
+                                <div id="middleBody1" style="height:auto;padding: 17px;" class="popUpPanel">
+                                    <apex:outputPanel id="addOccasionsPanel">
+                                        <apex:outputText value="Occasion" />
+                                        <div class="wd1" style="float:right; width: 22%;">
+                                            <apex:outputText value="Locale Filter: "/>
+                                            <apex:outputPanel >
+                                               <apex:selectList id="addOccasionsLocale" size="1" title="Locale" value="{!selLocaleAddOccasionsFilter}" onchange="LocaleAddOccasionsFilter();">
+                                                   <apex:selectOptions value="{!LocaleDetailsFilter}"/>
+                                               </apex:selectList>
+                                               <apex:actionStatus id="addOccasionslocalesImg">
+                                                    <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                                    <apex:facet name="stop" />
+                                               </apex:actionStatus>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div style="padding-top:5px;">
+                                            <apex:tabPanel switchType="client" selectedTab="Celebrations" id="addOccasionsTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab" contentClass="contentTab" styleClass="tabPanelClass" headerspacing="2px">
+                                                <apex:tab label="Celebrations" name="name1" id="addTabOne" labelwidth="210px;">
+                                                    <apex:pageblock id="addPG1">
+                                                        <apex:pageblocksection columns="4" id="pgs1">
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!SelCelebration1Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!celebrations1}"/>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                    
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!SelCelebration2Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!celebrations2}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                    
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!SelCelebration3Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!celebrations3}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                    
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!SelCelebration4Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!celebrations4}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                        </apex:pageblocksection>
+                                                    </apex:pageblock>
+                                                </apex:tab>
+                                                
+                                                <apex:tab label="Theme Parties" name="name2" id="addTabTwo" labelwidth="210px;" >
+                                                    <apex:pageblock id="addPG2">
+                                                        <apex:pageblocksection columns="4" id="pgs2">
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selThemeParty1Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!themeParties1}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selThemeParty2Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!themeParties2}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selThemeParty3Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!themeParties3}"></apex:selectOptions>
+                                                                    </apex:selectCheckboxes>
+                                                                </apex:pageblockSectionItem>
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!selThemeParty4Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!themeParties4}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                        </apex:pageblocksection>
+                                                    </apex:pageblock>
+                                                </apex:tab>
+                                                
+                                                <apex:tab label="Holidays" name="name3" id="addTabThree" labelwidth="210px;">
+                                                    <apex:pageblock id="addPG3">
+                                                        <apex:pageblocksection columns="4" id="pgs3">
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selHoliday1Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!holidays1}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>                                                        
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selHoliday2Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!holidays2}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selHoliday3Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!holidays3}"></apex:selectOptions>
+                                                                    </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!selHoliday4Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!holidays4}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                        </apex:pageblocksection>
+                                                    </apex:pageblock>
+                                                </apex:tab>
+                                                <apex:tab label="Outdoor Gatherings" name="name4" id="addTabFour" labelwidth="210px;">
+                                                    <apex:pageblock id="addPG4">
+                                                        <apex:pageblocksection columns="4" id="pgs4">
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selOutdoor1Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!outdoors1}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selOutdoor2Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!outdoors2}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasion" value="{!selOutdoor3Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!outdoors3}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                            
+                                                            <apex:pageblockSectionItem >
+                                                                <apex:selectCheckboxes styleClass="hdOccasionOutdoor" value="{!selOutdoor4Ids}" layout="pageDirection">
+                                                                    <apex:selectOptions value="{!outdoors4}"></apex:selectOptions>
+                                                                </apex:selectCheckboxes>
+                                                            </apex:pageblockSectionItem>
+                                                        </apex:pageblocksection>
+                                                    </apex:pageblock>
+                                                </apex:tab>
+                                            </apex:tabPanel>
+                                        </div>
+                                        <br/>
+                                    </apex:outputPanel>
+                                    <div id="bottomFooter" style="padding-top: 0px; padding-left:0px;text-align: center;">
+                                        <apex:commandButton value="Save" action="{!saveRecipe}" styleClass="actionButton pinkButton" onclick="" oncomplete="redirectToSamePage();return false;" status="status1"/>
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="redirectToSamePage();return false;"/>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+
+                        <div id="publishRecipeDialog" style="display:none; left:25% !important">
+                            <apex:outputPanel id="publishRecipeDialogpanel">
+                                <div id="topBar">
+                                    {!currentRecipe.Recipe_Title__c}
+                                    <apex:actionStatus id="status">
+                                       <apex:facet name="start">&nbsp;<apex:image value="{!$Resource.loadingData}" width="17px" height="17px"/></apex:facet>
+                                       <apex:facet name="stop" />
+                                    </apex:actionStatus>
+                                </div>
+                                <div id="middleBody" style="height:auto;padding: 17px;">
+                                    <apex:dataTable value="{!publishRecipeWrapperList}" var="prwList" cellpadding="5" cellspacing="5" width="100%">
+                                        <apex:column >
+                                            <apex:facet name="header"><div style="text-align: left;">Asset Name</div></apex:facet>
+                                            <apex:outputLabel value="{!prwList.assetName}"  />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header"><div style="text-align: left;">Publisher Name</div></apex:facet>
+                                            <apex:outputLabel value="{!prwList.publisherName}"  />
+                                        </apex:column>
+                                        <apex:column >
+                                            <apex:facet name="header"><div style="text-align: center;margin-right: 30px;">Status</div></apex:facet>
+                                            <apex:commandButton styleClass="statusButton" style="color:white;background-color:#98BC55;" value="{!prwList.publishedRecipe.Status__c}" title="Click to Suppress" onclick="savePublishedRecipe('{!prwList.publishedRecipe.Digital_Published_Asset__c}'); return false;" rendered="{!if(prwList.publishedRecipe.Status__c=='Published',true,false)}"/>
+                                            <apex:commandButton styleClass="statusButton" style="background-color:yellow;" value="{!prwList.publishedRecipe.Status__c}" title="Click to Publish" onclick="savePublishedRecipe('{!prwList.publishedRecipe.Digital_Published_Asset__c}'); return false;" rendered="{!if(prwList.publishedRecipe.Status__c=='Suppressed',true,false)}"/>
+                                            <apex:commandButton styleClass="statusButton" style="background-color:white;" value="{!prwList.publishedRecipe.Status__c}" title="Click to Publish" onclick="savePublishedRecipe('{!prwList.publishedRecipe.Digital_Published_Asset__c}'); return false;" rendered="{!if(prwList.publishedRecipe.Status__c=='Ready to Publish',true,false)}"/>
+                                        </apex:column>
+                                    </apex:dataTable>
+                                    <div id="bottomFooter" style="padding-left:0px;text-align: center;">
+                                        <apex:commandButton value="OK" styleClass="actionButton pinkButton" onclick="redirectToSamePage();return false;"/>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+            
+                        <div id="popUpDiv6" style="display:none;">
+                            <div id="topBar">
+                                Reassign Recipe
+                            </div>
+                            <div id="middleBody">
+                                Would you like to <b>re-assign</b> this recipe: &nbsp;&nbsp;
+                                <!-- at the time of review, a Reviewer user can reassign to other reviewer only-->
+                                <apex:outputPanel rendered="{! isReviewer && (currentRecipe.Status__c == 'Pending Review') && !cUser && !editMode}">
+                                    <apex:selectList size="1"  title="Reviewers" value="{!selectedReviewer}" >
+                                        <apex:selectOptions value="{!reviewerReassignList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignRecipe}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--T-83188 : At the time of review/approve, an Approver user can reassign to other Approver only-->
+                                <apex:outputPanel rendered="{!isApprover && (currentRecipe.Status__c == 'Pending Review' || currentRecipe.Status__c == 'Pending Approval') && !cUser && !editMode}">
+                                    <apex:selectList size="1"  title="Approvers" value="{!selectedApprover}" >
+                                        <apex:selectOptions value="{!approverReassignList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignRecipe}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--T-83190 : At the time of review/approve, an Admin user can reassign to other Admin only-->
+                                <apex:outputPanel rendered="{!isSuperAdmin && (currentRecipe.Status__c == 'Pending Review' || currentRecipe.Status__c == 'Pending Approval') && !cUser && !editMode}">
+                                    <apex:selectList size="1"  title="Admins" value="{!selectedAdmin}" >
+                                        <apex:selectOptions value="{!adminReassignList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignRecipe}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--At the time of create/Edit, an Editor user can reassign to other Editor only-->
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isEditor && cUser}">
+                                    <apex:selectList size="1"  title="All Active Editors" value="{!selectedEditor}"  >
+                                        <apex:selectOptions value="{!editorList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignWhenCreated}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--At the time of create/Edit, an Admin user can reassign to other Admin only-->
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isSuperAdmin && cUser}">
+                                    <apex:selectList size="1"  title="Admin Users" value="{!selectedEditor}" >
+                                        <!--<apex:selectOptions value="{!allUserList}"></apex:selectOptions>-->
+                                        <apex:selectOptions value="{!adminReassignList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignWhenCreated}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--At the time of create/Edit, an Reviewer user can reassign to other Reviewer only-->
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isReviewer && cUser}">
+                                   <apex:selectList size="1"  title="All Active Reviewers" value="{!selectedReviewer}"  >
+                                       <!--<apex:selectOptions value="{!reviewerList}"></apex:selectOptions>-->
+                                       <apex:selectOptions value="{!reviewerReassignList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignWhenCreated}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                        <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--At the time of create/Edit, an Approver user can reassign to other Approver only-->
+                                <apex:outputPanel rendered="{!!editMode && ((currentRecipe.Status__c == 'Draft') || (currentRecipe.Status__c == 'Rejected')) && isApprover && cUser}">
+                                    <apex:selectList size="1"  title="All Active Reviewers" value="{!selectedApprover}" >
+                                        <!--  <apex:selectOptions value="{!approverList}"></apex:selectOptions> -->
+                                        <apex:selectOptions value="{!approverReassignList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                    <div id="bottomFooter2">
+                                        <apex:commandButton action="{!reassignWhenCreated}" value="Submit" styleClass="actionButton greenButton" onclick="popup('popUpDiv2')"/>&nbsp;&nbsp;
+                                       <apex:commandButton value="Cancel" styleClass="actionButton reButton" onclick="popup('popUpDiv6')"/>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <apex:outputpanel id="rerenderPanel">
+                                <script>
+                                    /*var tabindex = 1;
+                                    $j('input,select').each(function() {
+                                        //alert('Hell');
+                                        //if (this.type != "hidden") {
+                                            var currInput = $j(this);
+                                            currInput.attr("tabindex", tabindex);
+                                            tabindex++;
+                                        //}
+                                        //alert(tabindex);
+                                        // alert($j(this).val());
+                                        // getTypeValue($j(this), $j('#rootRow'));
+                                        $j('input,select').tabs({ cookie: { expires: 30 } });  
+                                        var cookie = $j('input,select').tabs( "option", "cookie" );
+                                        //setter
+                                        $j('input,select').tabs( "option", "cookie", { expires: 30 } );
+                                    }); 
+                                    */
+                                </script>
+                            </apex:outputpanel>
+                        </div>
+                    </div>
+                </apex:form>
+            </div>
+        </body>
+        <div></div>
+        <script>
+            function disableUnits() {
+            
+                
+                var modifierElement = document.getElementById("{!$Component.theform.modifierSelect}");
+                var unitElement = document.getElementById("{!$Component.theform.unitSelect}");
+        
+                if (modifierElement.value == 'a0D3000000Af2XMEAZ')
+                    unitElement.disabled=null;
+                else
+                    unitElement.disabled="disabled";    
+            }
+            
+            function getFocus(x){
+              //alert(x);
+              x.focus();
+              //var s = document.getElementById('x');
+              //alert('Hell'+s);
+            
+            }
+        
+        </script>
+    </html>
+</apex:page>

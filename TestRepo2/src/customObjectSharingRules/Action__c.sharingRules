@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <criteriaBasedRules>
+        <fullName>Activity_Sharing_for_VA_WV_AL</fullName>
+        <sharedTo>
+            <group>Control_VA_WV_AL_Reporting_Group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>VA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>WV</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>AL</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>West Virginia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>Virginia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>Alabama</value>
+        </criteriaItems>
+        <accessLevel>Read</accessLevel>
+        <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+        <name>Activity Sharing for VA, WV, and AL</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>MS_Activity_Sharing</fullName>
+        <sharedTo>
+            <role>NASW_Ctrl_East_MS_NC_Marketing_Mgr</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>MS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>Mississippi</value>
+        </criteriaItems>
+        <accessLevel>Edit</accessLevel>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <name>MS Activity Sharing</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>NC_Activity_Sharing</fullName>
+        <sharedTo>
+            <role>NASW_Ctrl_East_MS_NC_Marketing_Mgr</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>NC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>North Carolina</value>
+        </criteriaItems>
+        <accessLevel>Edit</accessLevel>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <name>NC Activity Sharing</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>OH_Activity_Sharing</fullName>
+        <sharedTo>
+            <group>OH_Record_Sharing_Group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>Ohio</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>State__c</field>
+            <operation>equals</operation>
+            <value>OH</value>
+        </criteriaItems>
+        <accessLevel>Edit</accessLevel>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <name>OH Activity Sharing</name>
+    </criteriaBasedRules>
+    <ownerRules>
+        <fullName>CT_Actions</fullName>
+        <sharedTo>
+            <role>Sales_Specialist_East_CT</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Sales_Specialist_East_CT</role>
+        </sharedFrom>
+        <accessLevel>Read</accessLevel>
+        <name>CT Actions</name>
+    </ownerRules>
+</CustomObjectSharingRules>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Force.com Get Started Page</description>
+    <frameHeight>750</frameHeight>
+    <hasSidebar>false</hasSidebar>
+    <label>Get Started</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom57: Building Block</motif>
+    <url>https://www.salesforce.com/_app/force/gettingstarted.jsp?api={!API.Partner_Server_URL_90}</url>
+    <urlEncodingKey>UTF-8</urlEncodingKey>
+</CustomTab>

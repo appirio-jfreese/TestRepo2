@@ -1,0 +1,35 @@
+<apex:page controller="ControllerBrightcoveUpload">   		
+	<apex:form id="videoUpload"> 		   
+		<br/>
+    	<apex:pageBlock title="Add Brightcove Video">
+			<apex:pageMessages />
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Title" for="title"/>
+					 	<apex:inputField value="{!contentVer.Title}" id="title"/>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Video Id" for="video_id"/>
+					 	<apex:inputText value="{!videoId}" id="video_id"/>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Video Description" for="video_desc"/>
+					 	<apex:inputText value="{!videoDesc}" id="video_desc" required="true"/>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+					  	<apex:outputLabel value="Select Library" for="sellib"/>		
+					    <apex:selectList value="{!selectedLibrary}" multiselect="false" size="1" id="sellib">
+				            <apex:selectOptions value="{!libsOptions}"/>
+				        </apex:selectList>
+					</apex:pageBlockSectionItem>			
+					
+			   	</apex:pageBlockSection>	
+			   	<apex:pageBlockButtons >
+					<apex:commandButton value="Save" action="{!submit}"/>
+           		</apex:pageBlockButtons> 		   
+		    </apex:pageBlock>
+	</apex:form>	
+</apex:page>

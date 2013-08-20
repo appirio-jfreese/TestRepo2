@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>User$Name</field>
+    </columns>
+    <columns>
+        <field>User$Id</field>
+    </columns>
+    <columns>
+        <field>User.Account$OwnerId$Name</field>
+    </columns>
+    <columns>
+        <field>User.Account$OwnerId$Id</field>
+    </columns>
+    <description>Identifies accounts owned by users who have been set to inactive</description>
+    <filter>
+        <criteriaItems>
+            <column>User$IsActive</column>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Accounts with Inactive Owners</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Accounts_with_Owner_Info__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>User$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

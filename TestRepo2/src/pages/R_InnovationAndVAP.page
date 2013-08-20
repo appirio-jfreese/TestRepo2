@@ -1,0 +1,239 @@
+<!------------------------------------------------------------------------------
+Name        : R_InnovationAndVAP.page
+
+Updated By  : Basant Verma (Appirio Offshore)
+Date                : 6/14/13
+Story/Task  : US503/TA1011
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_InnovationAndVAP">
+<body class="isv-landing-page isv-page">    
+        
+<div class="wrapper">
+
+    <div class="container">
+
+        <!-- PAGE HEADER -->
+        <c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+
+        <!-- content -->
+        <div class="content clearfix">
+        <apex:form >
+        <apex:actionFunction name="refreshContent" action="{!refreshContent}" rerender="ivap_information, downloadPanel" status="ajax-status" onComplete="loadCalenderJs();" /> 
+        <apex:actionFunction name="selectSalesDriver" action="{!selectSalesDriver}" rerender="ivap_information, downloadPanel" status="ajax-status" onComplete="loadCalenderJs();">
+            <apex:param name="salesDriver" assignTo="{!salesDriver}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="setStartDateValue" action="{!setStartDateValue}" rerender="ivap_information, downloadPanel" status="ajax-status" onComplete="loadCalenderJs();">
+            <apex:param name="startFromDate" assignTo="{!startFromDate}" value="" />
+            <apex:param name="selectedYr" assignTo="{!selectedyear}" value="" />
+            <apex:param name="selectedMon" assignTo="{!selectedMonth}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="nextMonth" action="{!nextMonth}" rerender="ivap_information, downloadPanel" status="ajax-status" onComplete="loadCalenderJs();"/>
+        <apex:actionFunction name="previousMonth" action="{!previousMonth}" rerender="ivap_information, downloadPanel" status="ajax-status" onComplete="loadCalenderJs();"/>    
+        <apex:actionFunction name="popoverPrev" action="{!popOverPrevious}" rerender="popoverPanel" onComplete="loadCalenderJs();"/>                  
+        <apex:actionFunction name="popoverNext" action="{!popOverNext}" rerender="popoverPanel" onComplete="loadCalenderJs();"/>
+        <apex:actionFunction name="setTodayDate" action="{!setTodayDate}" rerender="popoverPanel" onComplete="loadCalenderJs();"/>
+        
+        <!-- BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+            
+            <h2 class="with-select">
+                <span class="title" style="display: {!IF(siteTheme == 'Spirits', 'block', 'none')}; font-size: 90%">Innovation, Sustainovation  &amp; VAP</span>
+                <span class="title" style="display: {!IF(siteTheme != 'Spirits', 'block', 'none')}; font-size: 70%">Innovation, Sustainovation  &amp; Vintage Transition</span>
+                <c:R_selectList options="{!timePeriods}"  value="{!timePeriod}" onchange="refreshContent()" />
+                <c:R_checkboxList width="150" options="{!themeOptions}" noOfOptions="{!noOfThemesAvailable}" onchange="refreshContent()" />
+                
+                <!-- DOWNLOAD SECTION  -->
+                <apex:outputPanel id="downloadPanel"> 
+                <a href="{!pdfPath}" class="btn pdf-btn isv-bg right-btn">
+                    <span>Download as PDF</span>
+                </a>
+                </apex:outputPanel>
+                
+            </h2>
+ 
+            
+            <apex:variable var="lastItem" value=""/>
+            <apex:repeat value="{!salesDriversToShow}" var="program"><apex:variable var="lastItem" value="{!program}" /></apex:repeat>
+            
+            <apex:outputPanel id="ivap_information" styleClass="{!if(timePeriod == 1,'','isv-quarterly-page')}">
+                <apex:outputPanel rendered="{!if(timePeriod ==1 ,true,false)}"  >
+                    <c:R_CalendarHead monthName="{!months[0].name}" selYear="{!selectedyear}" selMonth="{!selectedMonth}" pageCls="isv-bg" mnthCounter="{!1}"/>
+                </apex:outputPanel>
+                
+
+            <apex:variable var="columnWidth" value="{!25}"/>
+            <!--  START :: plans-header Section - displayed for timePeriod != Monthly -->
+                <apex:outputPanel rendered="{!timePeriod > 1}" layout="block" styleClass = "{!if(salesDriversToShowCount > 1,'plans plans-header no-spirits','plan-header')}" >                               
+                        <apex:variable var="counter" value="{!1}"/>
+                        <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                            
+                            <apex:outputPanel rendered="{!salesDriversToShowCount==1}">
+                                <div class="plan" style="width: {!(100/salesDriversToShowCount)-1}%;">
+                                <a href="javascript:void(0);" onclick="selectSalesDriver('All');return false;"  class="isv-bg btn">Back</a>
+                                <span>{!salesdrivername}</span>
+                            </div>
+                            </apex:outputPanel>
+                             
+                            <apex:outputPanel rendered="{!salesDriversToShowCount!=1}">          
+                                <div class="plan {!IF(counter == salesDriversToShowCount,'last','')}" style="width: {!(100/salesDriversToShowCount)-1}%;">
+                                    <h3 class="{!IF((len(salesdrivername) > 15 && (100/salesDriversToShowCount)-1 < 24) || len(salesdrivername) > 25,'two-lines','')} isv-bg">                  
+                                    <a href="javascript:void(0);" onclick="selectSalesDriver('{!salesdrivername}')">                     
+                                        {!salesdrivername}                        
+                                    </a>
+                                    </h3>
+                                    <apex:variable var="counter" value="{!counter + 1}"/>              
+                                </div>
+                            </apex:outputPanel>              
+                        </apex:repeat>
+                    
+                </apex:outputPanel>
+                <!--  END :: plans-header Section - displayed for timePeriod != Monthly -->
+            
+                <!--  START :: Months Loop -->
+                <apex:variable var="calMnth" value="{!selectedMonth}"/>
+                <apex:variable var="calYr" value="{!selectedyear}"/>
+                <apex:variable var="mnthCounter" value="{!1}"/>
+                
+                <apex:repeat value="{!months}" var="month">
+                    <apex:outputPanel rendered="{!if(timePeriod >1 ,true,false)}" >          
+                        <c:R_CalendarHead monthName="{!month.name}" selYear="{!calMnth}" selMonth="{!calMnth}" pageCls="isv-bg" mnthCounter="{!mnthCounter}"/>
+                        <apex:variable var="calMnth" value="{!VALUE(calMnth)+1}"/>
+                        <apex:variable var="calYr" value="{!IF(VALUE(selectedMonth)+mnthCounter == 12, VALUE(calYr)+1,calYr)}"/>
+                        <apex:variable var="mnthCounter" value="{!mnthCounter+1}"/>
+                    </apex:outputPanel>
+                    
+                    <!--  START :: Main Salesdriver data Section -->
+                    <div class="{!if(salesDriversToShowCount > 1,'plans no-spirits','')} {!IF(timePeriod != 1,'quaterly-plans','')} ">
+                    <apex:variable var="counter" value="{!1}"/>
+                    <apex:variable var="itemcount" value="{!1}"/>
+                    <apex:variable var="monthName" value="{!month.name}"/>
+                    
+                    <apex:repeat value="{!salesDriversToShow}" var="salesdrivername">
+                    
+                        <apex:outputPanel rendered="{!salesDriversToShowCount == 1}">
+                            <apex:outputPanel rendered="{!timePeriod == 1}">
+                            <div class="plan-header">
+                            <a href="{!$Page.R_InnovationAndVAP}" class="isv-bg btn">Back</a>
+                            <span>{!salesdrivername}</span>
+                            </div>
+                            </apex:outputPanel>
+                            <apex:variable var="oddEven" value="{!'odd'}"/>                                                     
+                            <apex:repeat value="{!calendarData[month.data][salesdrivername]}" var="programData">
+                                    <div class="desc-block" style="{!programData.styleBackgroundColor}; {!programData.styleTextColor}; height: 100px; overflow: hidden;" onClick="window.location='{!$Page.R_IVAPDetails}?id={!programData.id}'">
+                                        <h5>{!programData.label}</h5>
+                                        <p><apex:outputtext escape="false" value="{!programData.description}"></apex:outputtext></p>
+                                        </div>  
+                            </apex:repeat>
+                        </apex:outputPanel> 
+                        
+                        <apex:outputPanel rendered="{!salesDriversToShowCount != 1}" >
+                        <div class="plan {!IF(lastItem == salesdrivername,'last','')}" id="plan{!FLOOR(counter)}{!monthName}"  style="width: {!(100/salesDriversToShowCount)-1}%;">
+<!--                            <h3 class="{!IF(counter == 4 || counter == 5,'two-lines','')} isv-bg">  -->
+                                <h3 class="{!IF((len(salesdrivername) > 25 && (100/salesDriversToShowCount)-1 < 24) || len(salesdrivername) > 25,'two-lines','')} isv-bg">                
+                                    <a href="javascript:void(0);" onclick="selectSalesDriver('{!salesdrivername}')">                     
+                                        {!salesdrivername}                        
+                                    </a>
+                            </h3>
+                            <apex:repeat value="{!calendarData[month.data][salesdrivername]}" var="programData">
+                                <apex:outputPanel rendered="{!timePeriod == 1}">
+                                    <div align="center" style="1px solid #B9B8B8; width: 100%; height: 77px; {!programData.styleBackgroundColor}{!programData.styleTextColor}; cursor: pointer; " onClick="window.location='{!$Page.R_IVAPDetails}?id={!programData.id}'">
+<!--                                    <div style="{!programData.styleBackgroundImage} background-repeat: none; {!IF(isCalendarThemeMixed, 'background-size: 116px 36px;', 'background-size: 145px 45px;')} width: 145px; height: 45px;"></div>  -->
+                                    <div style="{!programData.styleBackgroundImage} background-repeat: no-repeat; background-position: center;  height: 60%;"></div>
+<!--                                    <div style="height: 10px; width: 145px;"></div>    -->
+                                        <div style="height: 2px; width: 100%;"></div>
+                                        <a class="p" href="#" style="line-height: 1; {!programData.styleTextColor}; font-weight: bold;">{!programData.label} </a>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!timePeriod >1 }">
+                                    <a class="p c{!CEILING(itemcount)}" href="{!$Page.R_IVAPDetails}?id={!programData.id}" style="">{!programData.label}</a>
+                                </apex:outputPanel>
+                                <div style="height: 2px; width: 100%; display: {!IF(timePeriod > 1,'none','')};"></div>
+                                <apex:variable var="itemcount" value="{!itemcount + 1}"/>
+                            </apex:repeat>                          
+                            <apex:variable var="counter" value="{!counter + 1}"/>
+                        </div>
+                        </apex:outputPanel>
+                        
+                    </apex:repeat>
+                    </div>
+                    <!--  END :: Main Salesdriver data Section -->
+                              
+                </apex:repeat>
+                <!--  END :: Months Loop -->
+            </apex:outputPanel>
+            
+            <!--  Randy Wandell 7/29/13 - The general updates section has been moved here so that it shows at the bottom of the mobile screen PLEASE DO NOT MOVE IT -->
+            <!-- Start :: General Updates  -->
+           
+           	<div class="general-updates">
+                <h3>
+<!-- Randy Wandell 8/2/13 - Removed link to blog per Jenn  -->
+<!--                    <a href="{!$Page.R_BlogHome}">General Updates</a>  -->
+                    <a href="">General Updates</a>
+                </h3>
+<!-- Randy Wandell 8/2/13 - Removed blog items per Jenn   -->
+<!--                <h5>Performance Updates</h5>
+                <div class="items">
+                    <c:R_NarrowBlogList format="Titles" isLoggedIn="{!isLoggedIn}" url="" singleTag="Location:innovation-vap" id="blogPostComp" />
+                </div>
+-->                
+                <h5>Planning Calendars</h5>
+                <div class="items">
+                    <apex:outputPanel rendered="{!OR(ISNULL(planningCalendars),planningCalendars.size=0)}">No items.</apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ISNULL(planningCalendars),planningCalendars.size!=0)}" styleClass="left">                  
+                        <apex:repeat value="{!planningCalendars}" var="pc">
+                            <p>
+                                <apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!pc['fileType']}"/>
+                                <span class="list-description">
+                                    <a href="/sfc/servlet.shepherd/version/download/{!pc['cvid']}">
+                                        {! IF (len(pc['description'])>17, LEFT(pc['description'], 20)+'...', pc['description'])}
+                                    </a>
+                                </span>
+                            </p>
+                        </apex:repeat>
+                    </apex:outputPanel> 
+                </div>
+           	</div>
+           
+           	<!-- END :: General Updates  -->            
+            
+            <div class="clear"></div>
+        </apex:form>
+        </div>
+
+    </div>
+    
+    
+    <!-- PAGE FOOTER -->
+    <c:R_pageFooter isInternal="{!isInternalUser}" />
+    <div id="tooltipIpad"></div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    //jQuery("#j_id0:j_id34:quarterly_view").html();
+    pageViewed('Innovation, Sustainovation and VAP');
+    
+    // Load Calender JS (Picked from script.js)
+    
+    jQuery(document).ready(function() {
+        loadCalenderJs();
+        updateH3Height();
+    }); 
+</script>
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/jumpToDateKeyDown.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/docReadyCommonLoader.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/docKeyDown4MainPage.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.RF_JQueries, 'js/docReady4MainPage.js')}"></script>
+<style>
+.plans .plan h3 a {
+display: block;
+color: #fff;
+font-weight: bold;
+font-size: 85%;
+}
+</style>
+</apex:page>

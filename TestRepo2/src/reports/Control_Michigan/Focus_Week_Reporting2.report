@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Account.NABCA_Licensee_State__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>CUST_RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Action__c.Goal__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.BrandBottle_Size__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Date_Finished__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Comments__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Action__c.Goal__c</column>
+            <operator>contains</operator>
+            <value>FOCUS WEEK</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c.Status__c</column>
+            <operator>equals</operator>
+            <value>Open - In Progress,Closed - Complete</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_ACC_OWNER_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Focus Week Reporting</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Action__c@Action__c.Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>FK_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Action__c.Due_Date__c</dateColumn>
+        <endDate>2013-03-01</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-02-08</startDate>
+    </timeFrameFilter>
+</Report>

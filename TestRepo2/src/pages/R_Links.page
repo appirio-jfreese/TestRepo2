@@ -1,0 +1,99 @@
+<!-----------------------------------------------------------------------------------------------------------------
+Name        : R_Links.page
+
+Created By  : Randy Wandell (Appirio)   
+Date 		: 6/27/13
+Story/Task	: US584
+------------------------------------------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Links">
+    
+<div class="wrapper">
+    <div class="container">
+        <!-- PAGE HEADER -->
+        <c:R_PageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+        <script type="text/javascript">
+            pageViewed('Industry Links');
+        </script>
+        
+		<style type="text/css">
+			div.link-header {
+				margin-left:	10px;
+				margin-right:	10px;
+				width:			100%;
+				font-size:		19px;
+				font-weight:	bold;
+				padding-top:	8px;
+				padding-bottom:	4px;	
+				text-align:		left;				
+			}
+			
+			ul.link-list {
+				text-align:				left;
+			    list-style: 			none;
+			    padding:    			0px;
+			    margin:     			0px;
+			    width:      			100%;
+				border-top:			1px dotted #bbbbbb;
+				margin-left:		10px;
+				margin-right:		10px;
+			}
+			
+			ul.link-list li {
+				text-align:				left;
+			    padding:    			6px 0px;
+				border-bottom:			1px dotted #bbbbbb;
+			}
+			
+			ul.link-list li a {
+				color:					#0000ff;
+			}
+        </style>
+        <!-- content -->
+        <!--  BREADCRUMB -->
+        <apex:outputPanel id="beadcrumblinks">
+            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+        </apex:outputPanel>
+                        
+		<!-- Links -->
+		<div class="link-header">
+			<div class="title-text"><apex:outputText value="Brand Links"/></div>
+		</div>
+		<apex:outputPanel rendered="{!OR(ISNULL(brandLinks),brandLinks.size=0)}"><ul class="link-list"><li>Links not found.</li></ul></apex:outputPanel>
+		<apex:outputPanel rendered="{!OR(ISNULL(brandLinks),brandLinks.size!=0)}">
+			<ul class="link-list">
+		       	<apex:repeat value="{!brandLinks}" var="hl">
+   					<li><a href="{!hl.URL__c}" target="_blank" onclick="pageViewed('Links - {!hl.Name}');">{!hl.Name}</a></li>
+   				</apex:repeat>
+			</ul>
+		</apex:outputPanel>
+		<div class="link-header">			
+			<div class="title-text"><apex:outputText value="Industry Links"/></div>
+		</div>				
+		<apex:outputPanel rendered="{!OR(ISNULL(industryLinks),industryLinks.size=0)}"><ul class="link-list"><li>Links not found.</li></ul></apex:outputPanel>
+		<apex:outputPanel rendered="{!OR(ISNULL(industryLinks),industryLinks.size!=0)}">
+			<ul class="link-list">
+		       	<apex:repeat value="{!industryLinks}" var="ind">
+   					<li><a href="{!ind.URL__c}" target="_blank" onclick="pageViewed('Links - {!ind.Name}');">{!ind.Name}</a></li>
+   				</apex:repeat>
+			</ul>
+		</apex:outputPanel>			
+           <div class="link-header">
+               <div class="title-text"><apex:outputText value="Facebook Links"/></div>
+           </div>
+           <apex:outputPanel rendered="{!OR(ISNULL(facebookLinks),facebookLinks.size=0)}"><ul class="link-list"><li>Links not found.</li></ul></apex:outputPanel>
+           <apex:outputPanel rendered="{!OR(ISNULL(facebookLinks),facebookLinks.size!=0)}">
+               <ul class="link-list">
+                   <apex:repeat value="{!facebookLinks}" var="dws">
+                       <li><a href="{!dws.URL__c}" target="_blank" onclick="pageViewed('Links - {!dws.Name}');">{!dws.Name}</a></li>
+                   </apex:repeat>
+               </ul>
+           </apex:outputPanel>
+
+       <!-- end of content -->
+
+    </div>
+
+    <c:R_pageFooter isInternal="{!isInternalUser }" />
+</div>
+
+</apex:page>

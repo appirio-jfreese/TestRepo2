@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Account.NABCA_Licensee_State__c</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>CUST_RECORDTYPE</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Action__c.Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Date_Finished__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>Action__c.Comments__c</field>
+    </columns>
+    <description>This report shows open in progress actions listed by Rep and by Goal Name</description>
+    <filter>
+        <criteriaItems>
+            <column>Action__c.Status__c</column>
+            <operator>equals</operator>
+            <value>Open - In Progress</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Action__c.Due_Date__c</column>
+            <operator>equals</operator>
+            <value>THIS_MONTH,NEXT_MONTH,LAST_MONTH</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FK_ACC_OWNER_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Action__c.Goal__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Actions By Account By Rep - Open In Prog</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Action__c@Action__c.Account__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Action__c.Status__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Action__c.Due_Date__c</dateColumn>
+        <endDate>2013-03-31</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2013-01-01</startDate>
+    </timeFrameFilter>
+</Report>

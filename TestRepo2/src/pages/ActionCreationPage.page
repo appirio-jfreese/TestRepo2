@@ -1,0 +1,404 @@
+<apex:page controller="Controller_ActionCreationPage" sidebar="false">
+	<head>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-1.7.2.min.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-ui-1.8.21.custom.min.js')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.ACPJQuery, 'css/custom-theme/jquery-ui-1.8.21.custom.css')}"/>
+		
+		<apex:includeScript value="{!$Resource.ACPData}"/>
+		<apex:includeScript value="{!$Resource.ACPInteract}"/>
+		<apex:includeScript value="{!$Resource.ACPSetup}"/>
+		<apex:includeScript value="{!$Resource.ACPUtils}"/>
+		
+		<apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}">
+			<link rel="stylesheet" type="text/css" href="{!$Resource.ACPStylesIE7}" />
+		</apex:outputpanel>
+    	<apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}">
+ 			<link rel="stylesheet" type="text/css" href="{!$Resource.ACPStyles}" />
+ 		</apex:outputpanel>
+		
+		<script>
+			var j$ = jQuery.noConflict();
+			
+			j$(document).ready(
+				function() {
+					
+					if(isIE8()){
+						ie8Widths = new Hash();
+						maxIE8Width = 0;
+					}
+				
+					doNextSetupStep();
+				}
+			);
+		
+			function clearBBSLookups(){
+				j$('.bbsDiv').find('.lookupInput').find('input').val('');
+				hideBBSLookups();
+			}
+			
+			function hideBBSLookups(){
+				j$('.bbsDiv').find('.lookupInput').find('input').addClass('hiddenLookup');
+			}
+			
+			function checkAddBBG(value){
+				if(value != ''){
+					addBBG(value);
+				}
+			}
+			
+		</script>
+		
+		<apex:form >
+			<apex:actionFunction name="addReadOnlyMessage"
+								 action="{!addReadOnlyMessage}"
+								 rerender="messagePanel"/>
+			<apex:actionFunction name="addRepReadOnlyMessage"
+								 action="{!addRepReadOnlyMessage}"
+								 rerender="messagePanel"/>
+			<apex:actionFunction name="showPremiseMessage"
+								 action="{!showPremiseMessage}"
+								 rerender="messagePanel">
+				<apex:param name="premiseMessagePremise"
+							value=""
+							assignTo="{!premiseMessagePremise}"/>
+			</apex:actionFunction>
+			<apex:actionFunction name="assignDummyGoal"
+								 action="{!assignDummyGoal}"
+								 rerender="messagePanel, goalModalPanel"
+								 oncomplete="showGoalModal(true)">
+				<apex:param name="goalId"
+							value=""
+							assignTo="{!dummyGoalId}"/>
+			</apex:actionFunction>
+			<apex:actionFunction name="assignDummyViewGoal"
+								 action="{!assignDummyViewGoal}"
+								 rerender="messagePanel, goalModalPanel"
+								 oncomplete="showGoalModal(true)">
+				<apex:param name="goalId"
+							value=""
+							assignTo="{!dummyGoalId}"/>
+			</apex:actionFunction>
+			<apex:actionFunction name="createDummyGoal"
+								 action="{!assignDummyCreateGoal}"
+								 rerender="messagePanel, goalModalPanel"
+								 oncomplete="showGoalModal(true)">
+				<apex:param name="goalRecTypeName"
+							value=""
+							assignTo="{!dummyGoalRecTypeName}"/>
+				<apex:param name="premType"
+							value=""
+							assignTo="{!dummyGoalPremType}"/>
+				<apex:param name="goalIsLocal"
+							value=""
+							assignTo="{!dummyGoalCreateIsLocal}"/>
+			</apex:actionFunction>
+		</apex:form>
+		
+	</head>    
+  
+	<body>
+		<div id="loadModal" title="Loading">
+			<div id="loadProgressBar"/>
+		</div>
+		
+		<div class="messagePanelDiv">
+			<apex:outputPanel id="messagePanel">
+				<apex:pageMessages />
+			</apex:outputPanel>
+		</div>
+		
+		<apex:outputPanel id="goalModalPanel">
+			<apex:outputPanel >
+				<div class="goalModal">
+					<apex:form >						
+						<apex:actionFunction name="assocParentSelected"
+								 action="{!assocParentSelected}"
+								 rerender="messagePanel, assocBasicPanel, detailEditPanel, bbgEditPanel, goalEditButtonPanel"
+								 status="assocParentStatus"
+								 oncomplete="showGoalModal(false)"/>
+						<apex:actionFunction name="saveGoal"
+								 action="{!saveGoal}"
+								 rerender="messagePanel"
+								 oncomplete="closeGoalModalAndAdd('{!dummyMode}', '{!dummyGoal.Id}', '{!dummyGoal.Name}', '{!dummyGoal.Due_Date__c}', 
+								 									'{!dummyGoal.Goal_Type__c}', '{!dummyGoal.Minimum_of_Accounts__c}', '{!dummyGoal.Cases_Displayed__c}',
+								 									'{!dummyGoal.Sales_Channel__c}', '{!dummyGoalRecTypeName}')"/>
+						<apex:actionFunction name="cancelGoal"
+								 action="{!cancelGoal}"
+								 rerender="messagePanel"
+								 immediate="true"
+								 oncomplete="closeGoalModal()"/>
+					
+					
+						<apex:pageBlock mode="edit" title="{!dummyGoal.Name}">
+							<apex:pageBlockSection title="Basic Information"
+												   rendered="{!dummyMode == 'view'}">
+								<apex:outputField value="{!dummyGoal.Name}"/>
+								<apex:outputField value="{!dummyGoal.Program__c}"/>
+								<apex:outputField value="{!dummyGoal.Due_Date__c}"/>
+								<apex:pageBlockSectionItem >
+									<apex:outputLabel value="Record Type" for="goalRecType"/>
+        							<apex:outputLabel value="{!dummyGoalRecTypeName}" id="goalRecType"/>
+								</apex:pageBlockSectionItem>
+								<apex:outputField value="{!dummyGoal.Minimum_of_Accounts__c}"/>
+								<apex:outputField value="{!dummyGoal.Sales_Channel__c}"/>
+								<apex:outputField value="{!dummyGoal.Features_Displayed__c}"
+												 rendered="{!showFeatures}"/>
+								<apex:outputField value="{!dummyGoal.Cases_Displayed__c}"
+												 rendered="{!showCases}"/>
+								<apex:outputField value="{!dummyGoal.Goal_Type__c}"/>
+								<apex:outputField value="{!dummyGoal.Brand_Category__c}"/>
+								<apex:outputField value="{!dummyGoal.Percent_of_Universe__c}"/>
+								<apex:outputField value="{!dummyGoal.State__c}"/>
+								<apex:outputPanel />
+								<apex:outputField value="{!dummyGoal.Account_Grade__c}"/>
+								<apex:outputField value="{!dummyGoal.Comments__c}"
+												 style="width: 90%; height: 60px;"/>
+							</apex:pageBlockSection>
+							<apex:pageBlockSection title="Basic Information"
+												   rendered="{!dummyMode == 'create' && dummyGoalCreateIsLocal == 'true'}">
+								<apex:inputField value="{!dummyGoal.Parent_Goal__c}"
+												 rendered="{!dummyGoalCreateIsLocal == 'false'}"
+												 required="true"/>
+								<apex:inputField value="{!dummyGoal.Name}"
+												 required="true"/>
+								<apex:pageBlockSectionItem rendered="{!dummyGoalCreateIsLocal == 'true'}">
+									<apex:outputLabel value="Record Type" for="goalRecType"/>
+        							<apex:outputLabel value="{!dummyGoalRecTypeName}" id="goalRecType"/>
+								</apex:pageBlockSectionItem>
+								<apex:inputField value="{!dummyGoal.Due_Date__c}"
+												 required="true"/>
+								<apex:outputField value="{!dummyGoal.Sales_Channel__c}"
+												  rendered="{!dummyGoalCreateIsLocal == 'true'}"/>
+								<apex:inputField value="{!dummyGoal.Minimum_of_Accounts__c}"
+												 required="true"/>
+								<apex:outputField value="{!dummyGoal.Goal_Type__c}"/>
+								<apex:inputField value="{!dummyGoal.Features_Displayed__c}"
+												 rendered="{!showFeatures}"/>
+								<apex:inputField value="{!dummyGoal.Cases_Displayed__c}"
+												 rendered="{!showCases}"/>
+								<apex:inputField value="{!dummyGoal.Brand_Category__c}"/>
+								<apex:inputField value="{!dummyGoal.Percent_of_Universe__c}"/>
+								<apex:outputPanel />
+								<apex:inputField value="{!dummyGoal.Account_Grade__c}"/>
+								<apex:inputField value="{!dummyGoal.Comments__c}"
+												 style="width: 90%; height: 60px;"/>
+							</apex:pageBlockSection>
+							<apex:outputPanel id="assocBasicPanel">
+								<apex:pageBlockSection title="Basic Information"
+													   rendered="{!dummyMode == 'create' && dummyGoalCreateIsLocal == 'false'}">
+									<apex:pageBlockSectionItem rendered="{!dummyGoalCreateIsLocal == 'false' && assocParentGoalSelected == false}">
+										<apex:outputLabel value="Parent Goal" for="assocParentInput"/>
+										<apex:inputField id="assocParentInput"
+														 value="{!dummyGoal.Associate_Parent__c}"
+														 required="true"
+														 onchange="assocParentSelected()"/>
+									</apex:pageBlockSectionItem>
+									<apex:actionStatus id="assocParentStatus"
+													   startText="Loading parent goal..."
+													   rendered="{!assocParentGoalSelected == false}"/>
+									<apex:inputField rendered="{!assocParentGoalSelected}"
+													 value="{!dummyGoal.Name}"
+													 required="true"/>
+									<apex:outputField value="{!dummyGoal.Parent_Goal__c}"
+													  rendered="{!assocParentGoalSelected}"/>
+									<apex:inputField rendered="{!assocParentGoalSelected}"
+													 value="{!dummyGoal.Due_Date__c}"
+													 required="true"/>
+									<apex:pageBlockSectionItem rendered="{!assocParentGoalSelected}">
+										<apex:outputLabel value="Record Type" for="goalRecType"/>
+	        							<apex:outputLabel value="{!dummyGoalRecTypeName}" id="goalRecType"/>
+									</apex:pageBlockSectionItem>
+									<apex:inputField rendered="{!assocParentGoalSelected}"
+													 value="{!dummyGoal.Minimum_of_Accounts__c}"
+													 required="true"/>
+									<apex:outputField rendered="{!assocParentGoalSelected}"
+													  value="{!dummyGoal.Sales_Channel__c}"/>
+									<apex:inputField value="{!dummyGoal.Features_Displayed__c}"
+													 rendered="{!showFeatures}"/>
+									<apex:inputField value="{!dummyGoal.Cases_Displayed__c}"
+													 rendered="{!showCases}"/>
+									<apex:outputField rendered="{!assocParentGoalSelected}"
+													  value="{!dummyGoal.Goal_Type__c}"/>
+									<apex:inputField rendered="{!assocParentGoalSelected}"
+													 value="{!dummyGoal.Percent_of_Universe__c}"/>
+									<apex:outputField rendered="{!assocParentGoalSelected}"
+													  value="{!dummyGoal.Brand_Category__c}"/>
+									<apex:inputField rendered="{!assocParentGoalSelected}"
+													 value="{!dummyGoal.Account_Grade__c}"/>
+									<apex:inputField rendered="{!assocParentGoalSelected}"
+													 value="{!dummyGoal.Comments__c}"
+													 style="width: 90%; height: 60px;"/>
+								</apex:pageBlockSection>
+							</apex:outputPanel>
+								<apex:pageBlockSection title="Basic Information"
+													   rendered="{!dummyMode == 'edit'}">
+									<apex:outputField value="{!dummyGoal.Name}"/>
+									<apex:pageBlockSectionItem >
+										<apex:outputLabel value="Record Type" for="goalRecType"/>
+	        							<apex:outputLabel value="{!dummyGoal.RecordType.Name}" id="goalRecType"/>
+									</apex:pageBlockSectionItem>
+									<apex:outputField value="{!dummyGoal.Due_Date__c}"/>
+									<apex:outputField value="{!dummyGoal.Sales_Channel__c}"/>
+									<apex:outputField value="{!dummyGoal.Minimum_of_Accounts__c}"/>
+									<apex:outputField value="{!dummyGoal.Goal_Type__c}"/>
+									<apex:outputField value="{!dummyGoal.Features_Displayed__c}"
+													 rendered="{!showFeatures}"/>
+									<apex:outputField value="{!dummyGoal.Cases_Displayed__c}"
+													 rendered="{!showCases}"/>
+									<apex:outputPanel />
+									<apex:outputField value="{!dummyGoal.Percent_of_Universe__c}"/>
+									<apex:outputField value="{!dummyGoal.Brand_Category__c}"/>
+									<apex:inputField value="{!dummyGoal.Account_Grade__c}"/>
+									<apex:inputField value="{!dummyGoal.Comments__c}"
+													 style="width: 90%; height: 60px;"/>
+								</apex:pageBlockSection>
+							<apex:pageBlockSection title="Details"
+												   rendered="{!dummyMode == 'view' && dummyGoal.RecordType.Name != 'General Goals'}">
+								<apex:outputField value="{!dummyGoal.Content_Link__c}"
+												 rendered="{!showContentLink}"/>
+								<apex:outputField value="{!dummyGoal.Location_Grade__c}"
+												 rendered="{!showLocationGrade}"/>
+								<apex:outputField value="{!dummyGoal.Suggested_Price__c}"
+												 rendered="{!showSuggestedPrice}"/>
+								<apex:outputField value="{!dummyGoal.Feature_Type__c}"
+												 rendered="{!showFeatureType}"/>
+								<apex:outputField value="{!dummyGoal.Size_of_Ad__c}"
+												 rendered="{!showSizeOfAd}"/>
+								<apex:outputField value="{!dummyGoal.Type_of_Ad__c}"
+												 rendered="{!showTypeOfAd}"/>
+								<apex:outputField value="{!dummyGoal.Length_of_Training__c}"
+												 rendered="{!showTrainingLength}"/>
+								<apex:outputField value="{!dummyGoal.Accomplishment_Recap__c}"
+												 rendered="{!showAccomplishment}"/>
+								<apex:outputField value="{!dummyGoal.Number_of_Attendees__c}"
+												 rendered="{!showNumAttendees}"/>
+								<apex:outputField value="{!dummyGoal.Tasted_Product__c}"
+												 rendered="{!showTastedProduct}"/>
+								<apex:outputField value="{!dummyGoal.Product_Sample_s__c}"
+												 rendered="{!showProductSamples}"/>
+								<apex:outputPanel rendered="{!showProductSamples}"/>
+								<apex:outputField value="{!dummyGoal.Trainer__c}"
+												 rendered="{!showTrainer}"/>
+								<apex:outputField value="{!dummyGoal.Training_Audience__c}"
+												 rendered="{!showTrainingAud}"/>
+								<apex:outputField value="{!dummyGoal.SFA_POS_Items__c}"
+												 rendered="{!showSFAPOS}"/>
+							</apex:pageBlockSection>
+							<apex:outputPanel id="detailEditPanel">
+								<apex:pageBlockSection title="Details"
+													   rendered="{!dummyMode != 'view' && dummyGoal.RecordType.Name != 'General Goals' && (assocParentGoalSelected == true || dummyGoalCreateIsLocal == 'true')}">
+									<apex:inputField value="{!dummyGoal.Content_Link__c}"
+													 rendered="{!showContentLink}"/>
+									<apex:inputField value="{!dummyGoal.Location_Grade__c}"
+													 rendered="{!showLocationGrade}"/>
+									<apex:inputField value="{!dummyGoal.Suggested_Price__c}"
+													 rendered="{!showSuggestedPrice}"/>
+									<apex:inputField value="{!dummyGoal.Feature_Type__c}"
+													 rendered="{!showFeatureType}"/>
+									<apex:inputField value="{!dummyGoal.Size_of_Ad__c}"
+													 rendered="{!showSizeOfAd}"/>
+									<apex:inputField value="{!dummyGoal.Type_of_Ad__c}"
+													 rendered="{!showTypeOfAd}"/>
+									<apex:inputField value="{!dummyGoal.Length_of_Training__c}"
+													 rendered="{!showTrainingLength}"/>
+									<apex:inputField value="{!dummyGoal.Accomplishment_Recap__c}"
+													 rendered="{!showAccomplishment}"/>
+									<apex:inputField value="{!dummyGoal.Number_of_Attendees__c}"
+													 rendered="{!showNumAttendees}"/>
+									<apex:inputField value="{!dummyGoal.Tasted_Product__c}"
+													 rendered="{!showTastedProduct}"/>
+									<apex:inputField value="{!dummyGoal.Product_Sample_s__c}"
+													 rendered="{!showProductSamples}"/>
+									<apex:outputPanel rendered="{!showProductSamples}"/>
+									<apex:inputField value="{!dummyGoal.Trainer__c}"
+													 rendered="{!showTrainer}"/>
+									<apex:inputField value="{!dummyGoal.Training_Audience__c}"
+													 rendered="{!showTrainingAud}"/>
+									<apex:inputField value="{!dummyGoal.SFA_POS_Items__c}"
+													 rendered="{!showSFAPOS}"/>
+								</apex:pageBlockSection>
+							</apex:outputPanel>
+							<apex:pageBlockSection title="Brand & Bottle Sizes"
+												   columns="1"
+												   rendered="{!dummyMode == 'view'}">
+								<apex:selectList value="{!selectedBBGs}"
+												 size="5"
+												 style="width: 50%;"
+												 disabled="true">
+									<apex:selectOptions value="{!bbgOptions}"/>
+								</apex:selectList>
+							</apex:pageBlockSection>
+							<div class="bbsDiv">
+								<apex:outputPanel id="bbgEditPanel">
+									<apex:pageBlockSection title="Brand & Bottle Sizes"
+														   columns="1"
+														   rendered="{!dummyMode != 'view' && (assocParentGoalSelected == true || dummyGoalCreateIsLocal == 'true')}">
+										<apex:actionRegion >
+											<div style="padding: 5px 0px;">
+												<span style="font-weight: normal;">
+													Click to add:
+												</span>
+												<apex:actionFunction name="addBBG"
+														 action="{!addBBG}"
+														 rerender="messagePanel, bbgEditPanel"
+														 oncomplete="clearBBSLookups()">
+													<apex:param name="selName"
+																value=""
+																assignTo="{!bbgSelName}"/>
+												</apex:actionFunction>
+												<apex:inputField value="{!dummyBBG.BrandBottle_Size__c}"
+																 required="false"
+																 label=""
+																 onchange="checkAddBBG(this.value)"/>
+											</div>
+											<div style="padding: 0px 2px;">
+												<apex:selectList value="{!selectedBBGs}"
+																 size="5"
+																 style="width: 50%;"
+																 multiselect="true">
+													<apex:selectOptions value="{!bbgOptions}"/>
+												</apex:selectList>
+											</div>
+											<apex:actionStatus id="deleteBBGStatus">
+												<apex:facet name="stop">
+													<apex:commandButton value="Delete Selected"
+																		style="float: left;"
+																		action="{!removeBBGs}"
+																		rerender="bbgEditPanel"
+																		status="deleteBBGStatus"/>
+												</apex:facet>
+												<apex:facet name="start">
+													<apex:commandButton value="Delete Selected"
+																		style="float: left;"
+																		disabled="true"/>
+												</apex:facet>
+											</apex:actionStatus>
+										</apex:actionRegion>
+									</apex:pageBlockSection>
+								</apex:outputPanel>
+							</div>
+							<apex:outputPanel rendered="{!dummyMode == 'view'}">
+								<div class="goalViewButtons">
+									<div class="goalViewCloseButton">Close</div>
+								</div>
+							</apex:outputPanel>
+							<apex:outputPanel id="goalEditButtonPanel"
+											  rendered="{!dummyMode != 'view'}">
+								<div class="goalEditButtons">
+									<apex:outputPanel >
+										<div class="goalEditSaveButton">Save</div>
+									</apex:outputPanel>
+									<div class="goalEditCancelButton">Cancel</div>
+								</div>
+							</apex:outputPanel>
+						</apex:pageBlock>
+					</apex:form>
+				</div>
+			</apex:outputPanel>
+		</apex:outputPanel>
+			
+		<div id="channelTabDiv"/>
+		
+		<div class="saveButtons"/>
+	</body>
+</apex:page>

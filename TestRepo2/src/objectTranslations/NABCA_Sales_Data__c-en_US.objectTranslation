@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>NABCA Sales Data</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>NABCA Sales Data</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- NABCA Sales Data --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Brand --></label>
+        <name>Brand__c</name>
+        <relationshipLabel><!-- NABCA Sales Data --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 10 --></label>
+        <name>Last12_Months_Dollar_value_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 11 --></label>
+        <name>Last12_Months_Dollar_value_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 12 --></label>
+        <name>Last12_Months_Dollar_value_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 13 --></label>
+        <name>Last12_Months_Dollar_value_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 14 --></label>
+        <name>Last12_Months_Dollar_value_14__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 15 --></label>
+        <name>Last12_Months_Dollar_value_15__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 16 --></label>
+        <name>Last12_Months_Dollar_value_16__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 17 --></label>
+        <name>Last12_Months_Dollar_value_17__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 18 --></label>
+        <name>Last12_Months_Dollar_value_18__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 19 --></label>
+        <name>Last12_Months_Dollar_value_19__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 1 --></label>
+        <name>Last12_Months_Dollar_value_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 20 --></label>
+        <name>Last12_Months_Dollar_value_20__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 21 --></label>
+        <name>Last12_Months_Dollar_value_21__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 22 --></label>
+        <name>Last12_Months_Dollar_value_22__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 23 --></label>
+        <name>Last12_Months_Dollar_value_23__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 24 --></label>
+        <name>Last12_Months_Dollar_value_24__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 25 --></label>
+        <name>Last12_Months_Dollar_value_25__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 2 --></label>
+        <name>Last12_Months_Dollar_value_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 3 --></label>
+        <name>Last12_Months_Dollar_value_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 4 --></label>
+        <name>Last12_Months_Dollar_value_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 5 --></label>
+        <name>Last12_Months_Dollar_value_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 6 --></label>
+        <name>Last12_Months_Dollar_value_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 7 --></label>
+        <name>Last12_Months_Dollar_value_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 8 --></label>
+        <name>Last12_Months_Dollar_value_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value 9 --></label>
+        <name>Last12_Months_Dollar_value_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last12 Months Dollar value --></label>
+        <name>Last12_Months_Dollar_value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 10 --></label>
+        <name>Last_12_Months_Volume_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 11 --></label>
+        <name>Last_12_Months_Volume_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 12 --></label>
+        <name>Last_12_Months_Volume_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 13 --></label>
+        <name>Last_12_Months_Volume_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 14 --></label>
+        <name>Last_12_Months_Volume_14__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 15 --></label>
+        <name>Last_12_Months_Volume_15__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 16 --></label>
+        <name>Last_12_Months_Volume_16__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 17 --></label>
+        <name>Last_12_Months_Volume_17__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 18 --></label>
+        <name>Last_12_Months_Volume_18__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 19 --></label>
+        <name>Last_12_Months_Volume_19__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 1 --></label>
+        <name>Last_12_Months_Volume_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 20 --></label>
+        <name>Last_12_Months_Volume_20__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 21 --></label>
+        <name>Last_12_Months_Volume_21__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 22 --></label>
+        <name>Last_12_Months_Volume_22__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 23 --></label>
+        <name>Last_12_Months_Volume_23__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 24 --></label>
+        <name>Last_12_Months_Volume_24__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 25 --></label>
+        <name>Last_12_Months_Volume_25__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 2 --></label>
+        <name>Last_12_Months_Volume_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 3 --></label>
+        <name>Last_12_Months_Volume_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 4 --></label>
+        <name>Last_12_Months_Volume_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 5 --></label>
+        <name>Last_12_Months_Volume_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 6 --></label>
+        <name>Last_12_Months_Volume_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 7 --></label>
+        <name>Last_12_Months_Volume_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 8 --></label>
+        <name>Last_12_Months_Volume_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume 9 --></label>
+        <name>Last_12_Months_Volume_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last 12 Months Volume --></label>
+        <name>Last_12_Months_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 10 --></label>
+        <name>Last_year_Shelfdollar_data_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 11 --></label>
+        <name>Last_year_Shelfdollar_data_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 12 --></label>
+        <name>Last_year_Shelfdollar_data_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 13 --></label>
+        <name>Last_year_Shelfdollar_data_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 1 --></label>
+        <name>Last_year_Shelfdollar_data_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 2 --></label>
+        <name>Last_year_Shelfdollar_data_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 3 --></label>
+        <name>Last_year_Shelfdollar_data_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 4 --></label>
+        <name>Last_year_Shelfdollar_data_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 5 --></label>
+        <name>Last_year_Shelfdollar_data_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 6 --></label>
+        <name>Last_year_Shelfdollar_data_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 7 --></label>
+        <name>Last_year_Shelfdollar_data_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 8 --></label>
+        <name>Last_year_Shelfdollar_data_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data 9 --></label>
+        <name>Last_year_Shelfdollar_data_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year Shelfdollar data --></label>
+        <name>Last_year_Shelfdollar_data__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 10 --></label>
+        <name>Last_year_volume_data_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 11 --></label>
+        <name>Last_year_volume_data_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 12 --></label>
+        <name>Last_year_volume_data_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 13 --></label>
+        <name>Last_year_volume_data_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 1 --></label>
+        <name>Last_year_volume_data_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 2 --></label>
+        <name>Last_year_volume_data_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 3 --></label>
+        <name>Last_year_volume_data_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 4 --></label>
+        <name>Last_year_volume_data_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 5 --></label>
+        <name>Last_year_volume_data_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 6 --></label>
+        <name>Last_year_volume_data_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 7 --></label>
+        <name>Last_year_volume_data_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 8 --></label>
+        <name>Last_year_volume_data_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data 9 --></label>
+        <name>Last_year_volume_data_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last year volume data --></label>
+        <name>Last_year_volume_data__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 26 --></label>
+        <name>Month10_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 26 --></label>
+        <name>Month10_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 25 --></label>
+        <name>Month11_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 25 --></label>
+        <name>Month11_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 24 --></label>
+        <name>Month12_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 24 --></label>
+        <name>Month12_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 23 --></label>
+        <name>Month13_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 23 --></label>
+        <name>Month13_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 22 --></label>
+        <name>Month14_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 22 --></label>
+        <name>Month14_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 21 --></label>
+        <name>Month15_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 21 --></label>
+        <name>Month15_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 20 --></label>
+        <name>Month16_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 20 --></label>
+        <name>Month16_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 19 --></label>
+        <name>Month17_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 19 --></label>
+        <name>Month17_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 18 --></label>
+        <name>Month18_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 18 --></label>
+        <name>Month18_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 17 --></label>
+        <name>Month19_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 17 --></label>
+        <name>Month19_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 35 --></label>
+        <name>Month1_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 35 --></label>
+        <name>Month1_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 16 --></label>
+        <name>Month20_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 16 --></label>
+        <name>Month20_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 15 --></label>
+        <name>Month21_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 15 --></label>
+        <name>Month21_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 14 --></label>
+        <name>Month22_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 14 --></label>
+        <name>Month22_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 13 --></label>
+        <name>Month23_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 13 --></label>
+        <name>Month23_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 12 --></label>
+        <name>Month24_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 12 --></label>
+        <name>Month24_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 11 --></label>
+        <name>Month25_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 11 --></label>
+        <name>Month25_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 10 --></label>
+        <name>Month26_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 10 --></label>
+        <name>Month26_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 9 --></label>
+        <name>Month27_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 9 --></label>
+        <name>Month27_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 8 --></label>
+        <name>Month28_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 8 --></label>
+        <name>Month28_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 7 --></label>
+        <name>Month29_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 7 --></label>
+        <name>Month29_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 34 --></label>
+        <name>Month2_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 34 --></label>
+        <name>Month2_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 6 --></label>
+        <name>Month30_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 6 --></label>
+        <name>Month30_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 5 --></label>
+        <name>Month31_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 5 --></label>
+        <name>Month31_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 4 --></label>
+        <name>Month32_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 4 --></label>
+        <name>Month32_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 3 --></label>
+        <name>Month33_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 3 --></label>
+        <name>Month33_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 2 --></label>
+        <name>Month34_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 2 --></label>
+        <name>Month34_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 1 --></label>
+        <name>Month35_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 1 --></label>
+        <name>Month35_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month Volume --></label>
+        <name>Month36_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month Volume --></label>
+        <name>Month36_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 33 --></label>
+        <name>Month3_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 33 --></label>
+        <name>Month3_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 32 --></label>
+        <name>Month4_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 32 --></label>
+        <name>Month4_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 31 --></label>
+        <name>Month5_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 31 --></label>
+        <name>Month5_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 30 --></label>
+        <name>Month6_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 30 --></label>
+        <name>Month6_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 29 --></label>
+        <name>Month7_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 29 --></label>
+        <name>Month7_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 28 --></label>
+        <name>Month8_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 28 --></label>
+        <name>Month8_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Month - 27 --></label>
+        <name>Month9_9L_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- SV Current Month - 27 --></label>
+        <name>Month9_ShelfDollar_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Month End Date --></label>
+        <name>Month_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 10 --></label>
+        <name>Percent_Change_in_Dollar_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 11 --></label>
+        <name>Percent_Change_in_Dollar_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 12 --></label>
+        <name>Percent_Change_in_Dollar_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 13 --></label>
+        <name>Percent_Change_in_Dollar_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 1 --></label>
+        <name>Percent_Change_in_Dollar_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 2 --></label>
+        <name>Percent_Change_in_Dollar_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 3 --></label>
+        <name>Percent_Change_in_Dollar_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 4 --></label>
+        <name>Percent_Change_in_Dollar_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 5 --></label>
+        <name>Percent_Change_in_Dollar_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 6 --></label>
+        <name>Percent_Change_in_Dollar_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 7 --></label>
+        <name>Percent_Change_in_Dollar_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 8 --></label>
+        <name>Percent_Change_in_Dollar_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar 9 --></label>
+        <name>Percent_Change_in_Dollar_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Dollar --></label>
+        <name>Percent_Change_in_Dollar__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 10 --></label>
+        <name>Percent_Change_in_Volume_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 11 --></label>
+        <name>Percent_Change_in_Volume_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 12 --></label>
+        <name>Percent_Change_in_Volume_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 13 --></label>
+        <name>Percent_Change_in_Volume_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 1 --></label>
+        <name>Percent_Change_in_Volume_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 2 --></label>
+        <name>Percent_Change_in_Volume_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 3 --></label>
+        <name>Percent_Change_in_Volume_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 4 --></label>
+        <name>Percent_Change_in_Volume_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 5 --></label>
+        <name>Percent_Change_in_Volume_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 6 --></label>
+        <name>Percent_Change_in_Volume_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 7 --></label>
+        <name>Percent_Change_in_Volume_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 8 --></label>
+        <name>Percent_Change_in_Volume_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume 9 --></label>
+        <name>Percent_Change_in_Volume_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Percent Change in Volume --></label>
+        <name>Percent_Change_in_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sale Composite Key --></label>
+        <name>Sale_Composite_Key__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 10 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 11 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 12 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 13 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 1 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 2 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 3 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 4 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 5 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 6 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 7 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 8 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year 9 --></label>
+        <name>ShelfDollar_for_Fiscal_Year_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- ShelfDollar for Fiscal Year --></label>
+        <name>ShelfDollar_for_Fiscal_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 10 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 11 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 12 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 13 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 1 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 2 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 3 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 4 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 5 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 6 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 7 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 8 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year 9 --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shelfdollar For last Fiscal Year --></label>
+        <name>Shelfdollar_For_last_Fiscal_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 10 --></label>
+        <name>Volume_For_last_Fiscal_Year_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 11 --></label>
+        <name>Volume_For_last_Fiscal_Year_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 12 --></label>
+        <name>Volume_For_last_Fiscal_Year_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 13 --></label>
+        <name>Volume_For_last_Fiscal_Year_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 1 --></label>
+        <name>Volume_For_last_Fiscal_Year_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 2 --></label>
+        <name>Volume_For_last_Fiscal_Year_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 3 --></label>
+        <name>Volume_For_last_Fiscal_Year_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 4 --></label>
+        <name>Volume_For_last_Fiscal_Year_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 5 --></label>
+        <name>Volume_For_last_Fiscal_Year_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 6 --></label>
+        <name>Volume_For_last_Fiscal_Year_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 7 --></label>
+        <name>Volume_For_last_Fiscal_Year_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 8 --></label>
+        <name>Volume_For_last_Fiscal_Year_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year 9 --></label>
+        <name>Volume_For_last_Fiscal_Year_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume For last Fiscal Year --></label>
+        <name>Volume_For_last_Fiscal_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 10 --></label>
+        <name>Volume_for_Fiscal_Year_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 11 --></label>
+        <name>Volume_for_Fiscal_Year_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 12 --></label>
+        <name>Volume_for_Fiscal_Year_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 13 --></label>
+        <name>Volume_for_Fiscal_Year_13__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 1 --></label>
+        <name>Volume_for_Fiscal_Year_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 2 --></label>
+        <name>Volume_for_Fiscal_Year_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 3 --></label>
+        <name>Volume_for_Fiscal_Year_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 4 --></label>
+        <name>Volume_for_Fiscal_Year_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 5 --></label>
+        <name>Volume_for_Fiscal_Year_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 6 --></label>
+        <name>Volume_for_Fiscal_Year_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 7 --></label>
+        <name>Volume_for_Fiscal_Year_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 8 --></label>
+        <name>Volume_for_Fiscal_Year_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year 9 --></label>
+        <name>Volume_for_Fiscal_Year_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Volume for Fiscal Year --></label>
+        <name>Volume_for_Fiscal_Year__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

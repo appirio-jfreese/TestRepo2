@@ -1,0 +1,37 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_PrivacyPolicy">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.TermsPrivacy, 'style'+siteTheme+'.css')}"/>    
+
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+    	<div class="header">
+	        <a href="http://www.diageodirect.com/"><div class="logotype">&nbsp;</div></a>            
+    	</div>  
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient">
+			<apex:outputPanel id="messages">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+			<div class="main-content-wrapper">
+				<div class="sub-header">DIAGEO PRIVACY AND COOKIE NOTICE</div>
+				<div class="pageContentRichText">
+					<apex:repeat value="{!contentItems}" var="item">
+						<apex:outputText value="{!item['Page_Content_Value__c']}" escape="false" />
+					</apex:repeat>
+					<apex:outputPanel rendered="{!if(attachments.size >  0, true, false)}">		            	
+			            <ol class="attachments-list" style="padding-left: 0px;">
+			            	<apex:repeat value="{!attachments}" var="att">
+			            		<li style="list-style: none;"><a href="{!URLFOR($Action.Attachment.Download, att.id)}">{!att.Name}</a></li>
+			           	 	</apex:repeat>
+			            </ol>
+		            </apex:outputPanel>
+				</div>
+			</div>
+		</div>
+        <!-- PAGE FOOTER -->
+		<div class="login-footer">
+			<a href="">&copy; Diageo 2011</a>
+		</div>
+   </div>
+</apex:page>

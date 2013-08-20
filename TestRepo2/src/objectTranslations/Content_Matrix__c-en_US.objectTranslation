@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Content Matrix</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Content Matrix</value>
+    </caseValues>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Matrix type --></label>
+        <name>Matrix_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub_Category --></label>
+        <name>Sub_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub_Sub_Category --></label>
+        <name>Sub_Sub_Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sub_Sub_Sub_Category --></label>
+        <name>Sub_Sub_Sub_Category__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

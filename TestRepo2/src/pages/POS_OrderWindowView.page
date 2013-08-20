@@ -1,0 +1,132 @@
+<apex:page controller="POS_OrderWindowViewController" standardStylesheets="false" showHeader="false" sidebar="false" cache="false">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=1138"  />
+    <meta name="MobileOptimized" content="1138" /> 
+    <title>Diageo POS</title> 
+    <link href="{!URLFOR($Resource.POS_Skin,'css/styles.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/widgets.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_Skin,'css/all.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_SkinExtensionCSS)}" rel="stylesheet" type="text/css" media="screen,print"/>
+    <link href="{!URLFOR($Resource.POS_JQueryUIJS,'css/custom-theme/jquery-ui-1.8.21.custom.css')}" rel="stylesheet" type="text/css" media="screen,print"/>
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-1.7.2.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery.hoverIntent.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.POS_JQueryUIJS, 'js/jquery-ui-1.8.21.custom.min.js')}"></script>
+    <script type="text/javascript"> 
+        
+        baseUrl = '{!baseUrl}';
+        var ssoComplete = false;
+        
+        //var brandListJson = '{!hasBrandsJson}';
+        
+        function launchWindow (magentoId, isComingSoon) {
+            if (isComingSoon) {
+                return;
+            }
+            /*if (brandListJson[magentoId]==true)}) {
+                alert("Misconfiguration: you do not have access to any brands.  Please contact a Diageo administrator for support.");
+                return;
+            }*/
+            //var expire = new Date();
+            //expire.setTime((new Date()).getTime() + 60000); //1 min expire
+            document.cookie="apex__returnUrl="+baseUrl+magentoId+";path=/";
+            //document.cookie="apex__returnUrl="+baseUrl+magentoId+";expires="+expire.toGMTString();
+            document.location.href="{!idpUrl}";
+        } 
+        
+    </script>
+    <style type="text/css">
+    .wrapper .page .header-container {height: 137px;}
+    .visual-block, .visual-block ul, .visual-block li, .visual-block li a, .visual-block li a span { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+    <div class="skip"><a href="#main" accesskey="s">skip to content</a></div>
+    <div class="wrapper">
+        <div class="page">
+            <div class="main col-full-layout" id="main">
+                <c:POS_Header breadcrumbs="{!breadcrumbs}" menuLinks="{!menuLinks}"/>
+                <div class="not-col-main">      
+                    <apex:form >         
+                        <div class="std"> 
+                            <div class="visual-block">
+                                <ul class="items-list"> 
+                                    <apex:repeat value="{!orderWindowCustomers}" var="owc">
+                                        <apex:outputPanel rendered="{!owc.Order_Window__r.Type__c!='On Demand' && owc.Order_Window__r.Status__c!='New' && owc.Order_Window__r.Status__c!='Completed' && owc.Order_Window__r.Status__c!='Archived'}">
+                                            <li class="POS_dynamic_item">
+                                                <apex:outputLink value="javascript:launchWindow('{!owc.Order_Window__r.Magento_Id__c}',{!owc.Order_Window__r.Status__c=='In Review' || owc.Order_Window__r.Status__c=='Budgeting'})">
+                                                    <apex:outputPanel rendered="{!owc.Order_Window__r.Type__c='Quarterly'}"><img width="308" height="175" src="{!URLFOR($Resource.POS_NewComps, 'images/img-18.gif')}"/></apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!owc.Order_Window__r.Type__c='Monthly'}"><img width="308" height="175" src="{!URLFOR($Resource.POS_NewComps, 'images/img-17.gif')}"/></apex:outputPanel>
+                                                    <span class="text">
+                                                        <span class="holder">
+                                                            <span class="title">
+                                                                {!owc.Order_Window__r.Name} - 
+                                                                <apex:outputPanel styleClass="state coming" rendered="{!owc.Order_Window__r.Status__c=='In Review' || owc.Order_Window__r.Status__c=='Budgeting'}">Coming Soon</apex:outputPanel>
+                                                                <apex:outputPanel styleClass="state" rendered="{!(owc.Order_Window__r.Status__c=='Open' || owc.Order_Window__r.Status__c=='Closed') && owc.Open_For_Shopping__c}">Open</apex:outputPanel>                            
+                                                                <apex:outputPanel styleClass="state closed" rendered="{!(owc.Order_Window__r.Status__c=='Open' || owc.Order_Window__r.Status__c=='Closed') && !owc.Open_For_Shopping__c}">Closed</apex:outputPanel>
+                                                            </span> 
+                                                        </span>
+                                                        {!owc.Order_Window__r.Icon_Label__c}
+                                                        <span class="date">
+                                                            Ordering dates:  
+                                                            <apex:outputText value="{0,date,MM'/'dd}">
+                                                                <apex:param value="{!owc.Order_Window__r.Order_Start_Date__c}" /> 
+                                                            </apex:outputText>&nbsp;-&nbsp; 
+                                                            <apex:outputText value="{0,date,MM'/'dd}">
+                                                                <apex:param value="{!owc.Order_Window__r.Order_Close_Date__c}" /> 
+                                                            </apex:outputText>  
+                                                        </span>
+                                                    </span>
+                                                </apex:outputLink>
+                                            </li>
+                                        </apex:outputPanel>
+                                    </apex:repeat>
+                                    <!--removing tile until wine wording finalized-->
+                                    <li><a href="http://www.dcepos.com"><span class="text"><span class="title">Wine POS Ordering</span></span></a></li>
+                                    <li><a href="POS_OnDemand"><span class="text"><span class="title">On Demand</span></span></a></li>
+                                    <li><a href="POS_OrderTimeline"><span class="text"><span class="title">Budgeting and <br/> Ordering Timeline</span></span></a></li>
+                                    <li><a href="POS_OrderHistory"><span class="text"><span class="title">Order History</span></span></a></li>
+                                    <li><a href="POS_Reports"><span class="text"><span class="title">Reports</span></span></a></li>
+                                    <li><a href="POS_POSDocuments"><span class="text"><span class="title">POS Documents</span></span></a></li>
+                                    
+                                </ul>                   
+                            </div>
+                        </div>
+                    </apex:form>
+                </div>
+                <!-- <div class="col-left">
+                    &nbsp;              
+                </div> -->
+                <c:POS_Footer />
+            </div>
+        </div>
+    </div>
+</body>
+<!--[if lte IE 7]>
+<script type="text/javascript">
+jQuery('.POS_dynamic_item').each(function(){
+    jQuery(this).css('width', 'auto').css('display', 'inline').css('zoom', 1);
+});
+</script>
+<![endif]-->
+<apex:outputText escape="false" value="{!lt}!--[if lt IE 10]{!gt}"/>
+<script type="text/javascript" src="{!URLFOR($Resource.CSS3PIE,'PIE.js')}"></script>
+<apex:outputText escape="false" value="{!lt}![endif]--{!gt}" />
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        // IE CSS3 workarounds
+        if (window.PIE) {
+            jQuery('.visual-block .items-list img').each(function() {
+                PIE.attach(this);
+            });
+        }
+    });
+</script>
+</html>
+
+
+</apex:page>

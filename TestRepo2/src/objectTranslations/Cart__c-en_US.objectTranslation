@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cart</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Carts</value>
+    </caseValues>
+    <fields>
+        <label><!-- Last Submitted --></label>
+        <name>Last_Submitted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento ID --></label>
+        <name>Magento_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window ID --></label>
+        <name>Order_Window_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Window --></label>
+        <name>Order_Window__c</name>
+        <relationshipLabel><!-- Carts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Shopper User License --></label>
+        <name>Shopper_User_License__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shopper --></label>
+        <name>Shopper__c</name>
+        <relationshipLabel><!-- Carts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Complete</masterLabel>
+            <translation><!-- Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processing</masterLabel>
+            <translation><!-- Processing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted</masterLabel>
+            <translation><!-- Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>POS Cart Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <namedFilters>
+        <errorMessage><!-- It is not possible to create or edit a Cart Item if the related quarterly or monthly Order Window is new, in review, budgeting, completed or archived --></errorMessage>
+        <name>nf_01IZ00000000IRTMA2_00NZ0000000I1O4MAK</name>
+    </namedFilters>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please specify a value for the Order Window --></errorMessage>
+        <name>Order_Window_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please specify a value for the Shopper --></errorMessage>
+        <name>Shopper_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a value for the Status --></errorMessage>
+        <name>Status_Required</name>
+    </validationRules>
+</CustomObjectTranslation>

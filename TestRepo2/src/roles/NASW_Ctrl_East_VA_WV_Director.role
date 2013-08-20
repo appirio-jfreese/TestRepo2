@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Edit</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>NASW Ctrl East VA/WV Director</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>NASW_Ctrl_East_VA_WV_Director_Diageo</parentRole>
+</Role>

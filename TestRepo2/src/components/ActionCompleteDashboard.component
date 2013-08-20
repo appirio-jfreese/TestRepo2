@@ -1,0 +1,238 @@
+<apex:component controller="ActionCompleteDashboardController">
+
+	<apex:attribute name="mode"
+					assignTo="{!mode}"
+					description="The mode to display this component"
+					type="String"
+					required="true"/>
+	<apex:attribute name="chart"
+					assignTo="{!chart}"
+					description="The chart to display for this component"
+					type="String"
+					required="true"/>
+
+	<head>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-1.7.2.min.js')}"/>
+	</head>
+
+	<style>
+		
+		.resultText {
+			margin: 0px 15px;
+		}
+		
+		.chartDiv {
+			margin: 10px 0px 10px 12px;
+			border: 1px solid black;
+			background-color: white;
+			width: 330px;
+		}
+	
+		.chartTitle {
+			font-weight: bold;
+			font-size: 12px;
+			text-align: center;
+			padding: 5px 0px 5px 0px;
+			background-color: #CCC;
+		}
+		
+		.vf-surface {
+			width: 330px;
+			position: relative;
+			left: -10px;
+		}
+		
+		.detailPage .bPageBlock, .editPage .bPageBlock {
+			border-top-width: 0px;
+		}
+		
+	</style>
+	
+	<script>
+	
+		var j$ = jQuery.noConflict();
+		
+		var initialized = false;
+		
+		window.onload = function(){
+			init();
+		};
+		
+		function init(){
+			if(initialized == false){
+				var labels = j$('text').filter(function(){ return j$(this).css('font-size').indexOf('18') > -1 });
+				if(labels.length == 0){
+					setTimeout("init()", 100);
+				} else {
+					initialized = true;
+					adjustAxisLabelCSS();
+				}
+			}
+		}
+		
+		function adjustAxisLabelCSS(){
+			var labels = j$('text').filter(function(){ return j$(this).css('font-size').indexOf('18') > -1 });
+			j$(labels).css('font-size', '10px');
+		}
+		
+	</script>
+
+	<apex:form >
+		<apex:actionFunction name="dateChanged"
+							 action="{!dateChanged}"
+							 rerender="goalNamePanel, goalTypePanel, goalForPanel, channelPanel, recTypePanel, chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="nameChanged"
+							 action="{!nameChanged}"
+							 rerender="chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="typeChanged"
+							 action="{!typeChanged}"
+							 rerender="chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="forChanged"
+							 action="{!forChanged}"
+							 rerender="chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="chanChanged"
+							 action="{!chanChanged}"
+							 rerender="chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+		<apex:actionFunction name="rtChanged"
+							 action="{!rtChanged}"
+							 rerender="chartPanel"
+							 status="filterChangeStatus"
+							 oncomplete="adjustAxisLabelCSS();"/>
+	
+		<apex:pageBlock mode="edit">
+			<br/>
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem rendered="{!showDueDate}">
+					<apex:outputLabel value="Goal Start Date"/>
+					<apex:selectList value="{!dateStartSel}"
+									 size="1"
+									 onchange="dateChanged()">
+						<apex:selectOptions value="{!dateSelections}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem rendered="{!showDueDate}">
+					<apex:outputLabel value="Goal Due Date"/>
+					<apex:selectList value="{!dateEndSel}"
+									 size="1"
+									 onchange="dateChanged()">
+						<apex:selectOptions value="{!dateSelections}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+					
+				<apex:pageBlockSectionItem rendered="{!showGoalName}">
+					<apex:outputLabel value="Goal Name"/>
+					<apex:outputPanel id="goalNamePanel">
+						<apex:selectList value="{!nameSel}"
+										 size="1"
+										 onchange="nameChanged()">
+							<apex:selectOptions value="{!nameSelections}"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem rendered="{!showGoalType}">
+					<apex:outputLabel value="Goal Type"/>
+					<apex:outputPanel id="goalTypePanel">
+						<apex:selectList value="{!typeSel}"
+										 size="1"
+										 onchange="typeChanged()">
+							<apex:selectOptions value="{!typeSelections}"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem rendered="{!showGoalFor}">
+					<apex:outputLabel value="{!forLabel}"/>
+					<apex:outputPanel id="goalForPanel">
+						<apex:selectList value="{!forSel}"
+										 size="1"
+										 onchange="forChanged()">
+							<apex:selectOptions value="{!forSelections}"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem rendered="{!showChannel}">
+					<apex:outputLabel value="Sales Channel"/>
+					<apex:outputPanel id="channelPanel">
+						<apex:selectList value="{!chanSel}"
+										 size="1"
+										 onchange="chanChanged()">
+							<apex:selectOptions value="{!chanSelections}"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem id="recTypePanel"
+										   rendered="{!showRecType}">
+					<apex:outputLabel value="Record Type"/>
+					<apex:outputPanel id="recTypePanel">
+						<apex:selectList value="{!rtSel}"
+										 size="1"
+										 onchange="rtChanged()">
+							<apex:selectOptions value="{!rtSelections}"/>
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:outputPanel id="chartPanel">
+
+					<br/>
+					<span class="resultText">
+						{!resultSize} goal(s) found.
+					</span>
+				
+					<div class="chartDiv">
+						<div class="chartTitle">
+							{!chartTitle}
+						</div>
+						<br/>
+						<apex:chart data="{!dataToUse}"
+									height="{!chartHeight}"
+									width="330">
+							<apex:axis type="Numeric"
+									   position="bottom"
+									   fields="dispValue"
+									   title="% Completed"
+									   minimum="0"
+									   maximum="100"
+									   steps="3"
+									   grid="true">
+								<apex:chartLabel font="9px Helvetica, sans-serif"/>
+							</apex:axis>
+							<apex:axis type="Category"
+									   position="left"
+									   fields="name"
+									   title="{!leftAxisLabel}">
+								<apex:chartLabel font="9px Helvetica, sans-serif"/>
+							</apex:axis>
+							<apex:barSeries axis="bottom"
+											orientation="horizontal"
+											yfield="name"
+											xfield="dispValue">
+								<apex:chartTips height="50"
+												width="120"
+												labelField="fullName"
+												valueField="tipValue"/>
+							</apex:barSeries>
+						</apex:chart>
+					</div>
+					
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		
+	</apex:form>
+
+</apex:component>

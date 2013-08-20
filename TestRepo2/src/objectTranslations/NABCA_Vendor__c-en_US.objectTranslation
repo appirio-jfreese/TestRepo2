@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>NABCA Vendor</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>NABCA Vendors</value>
+    </caseValues>
+    <fields>
+        <label><!-- Vendor Code --></label>
+        <name>NABCA_Vendor_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor Description --></label>
+        <name>NABCA_Vendor_Description__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Drink Recipe Ingredient</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Drink Recipe Ingredients</value>
+    </caseValues>
+    <fields>
+        <label><!-- Diageo Brand Name --></label>
+        <name>Diageo_Brand_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Product Name --></label>
+        <name>Diageo_Product_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Featured --></label>
+        <name>Featured__c</name>
+    </fields>
+    <fields>
+        <label><!-- Image --></label>
+        <name>Image__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ingredient --></label>
+        <name>Ingredient__c</name>
+        <relationshipLabel><!-- Drink Recipe Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+        <picklistValues>
+            <masterLabel>0.25</masterLabel>
+            <translation><!-- 0.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0.50</masterLabel>
+            <translation><!-- 0.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0.75</masterLabel>
+            <translation><!-- 0.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.00</masterLabel>
+            <translation><!-- 1.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.25</masterLabel>
+            <translation><!-- 1.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.50</masterLabel>
+            <translation><!-- 1.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.75</masterLabel>
+            <translation><!-- 1.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.00</masterLabel>
+            <translation><!-- 2.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.25</masterLabel>
+            <translation><!-- 2.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.50</masterLabel>
+            <translation><!-- 2.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.75</masterLabel>
+            <translation><!-- 2.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.00</masterLabel>
+            <translation><!-- 3.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.25</masterLabel>
+            <translation><!-- 3.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.50</masterLabel>
+            <translation><!-- 3.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.75</masterLabel>
+            <translation><!-- 3.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.00</masterLabel>
+            <translation><!-- 4.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.25</masterLabel>
+            <translation><!-- 4.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.50</masterLabel>
+            <translation><!-- 4.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.75</masterLabel>
+            <translation><!-- 4.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5.00</masterLabel>
+            <translation><!-- 5.00 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Drink Recipe Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>-</masterLabel>
+            <translation><!-- - --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cube</masterLabel>
+            <translation><!-- Cube --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cubes</masterLabel>
+            <translation><!-- Cubes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stalk</masterLabel>
+            <translation><!-- Stalk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>oz.</masterLabel>
+            <translation><!-- oz. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>tsp.</masterLabel>
+            <translation><!-- tsp. --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Drink Recipe Ingredient Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Add_Drink_Recipe_Ingredient --></label>
+        <name>Add_Drink_Recipe_Ingredient</name>
+    </webLinks>
+</CustomObjectTranslation>

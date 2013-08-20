@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>State</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>States</value>
+    </caseValues>
+    <fields>
+        <label><!-- Abbreviation --></label>
+        <name>Abbreviation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is this a Monopoly and Control state? --></help>
+        <label><!-- Control State? --></label>
+        <name>Control_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Org ID --></label>
+        <name>New_Org_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Prod ID --></label>
+        <name>New_Prod_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- No. of Applicable Rules --></label>
+        <name>No_of_Applicable_Rules__c</name>
+    </fields>
+    <fields>
+        <label><!-- No. of Non-Applicable Rules --></label>
+        <name>No_of_Non_Applicable_Rules__c</name>
+    </fields>
+    <fields>
+        <label><!-- Numerical Code --></label>
+        <name>Numerical_Code__c</name>
+    </fields>
+    <layouts>
+        <layout>State Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Rule Compliance --></label>
+            <section>Rule Compliance</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

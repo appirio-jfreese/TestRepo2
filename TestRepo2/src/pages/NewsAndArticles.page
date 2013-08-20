@@ -1,0 +1,75 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_NewsAndArticles">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style'+siteTheme+'.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.NewsAndArticlesCommonPage, 'style'+siteTheme+'.css')}"/>    
+
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <c:pageHeader showThemeSelector="false" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+		<script type="text/javascript">
+	    	pageViewed('News and articles');
+	    </script>
+
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient">
+            <!-- left menu -->
+            <div class="content-wrapper-left left {!if(ISNULL(siteTheme),'hidden','')}" style="height: 785px;"> 
+                    
+				<div class="menu-title"><apex:outputText value="Other News & Articles"/></div>
+				<ul class="article-list">
+					<apex:repeat value="{!articles}" var="article">
+						<li>
+							<a href="{!actionUrl}?id={!article.Id}">
+								<span class="bold">{!article.Title__c}</span>
+								<apex:outputText value="{0,date, MM'/'dd'/'yy}">
+    								<apex:param value="{!article.CreatedDate}" /> 
+								</apex:outputText>
+							</a>
+						</li>  	
+					</apex:repeat>
+				</ul>
+            </div>
+
+            <!-- Right box with sliders -->
+            <div class="content-wrapper-right">
+				<apex:outputPanel id="messages">
+					<apex:messages styleClass="errorMessagesList" />
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{! if( articleId != null, 'true','false' )}" >      
+		            <div class="article-title">{!currentArticle.Title__c} 
+		            	<span class="article-date">
+							<apex:outputText value="{0,date, MM'/'dd'/'yy}">
+    							<apex:param value="{!currentArticle.CreatedDate}" /> 
+							</apex:outputText>
+						</span>
+					</div>
+		            <div class="article-section">
+		            	<apex:outputText value="{!currentArticle.BodyText__c}" escape="false"/>
+		            </div>
+		            <apex:outputPanel rendered="{!if(attachments.size >  0, true, false)}">
+		            	<div class="attachments-title">Attachments</div>
+			            <ol class="attachments-list">
+			            	<apex:repeat value="{!attachments}" var="att">
+			            		<li><a href="{!URLFOR($Action.Attachment.Download, att.id)}" onclick="pageViewed('News and articles - {!att.Name}');">{!att.Name}</a></li>
+			           	 	</apex:repeat>
+			            </ol>
+		            </apex:outputPanel>
+		            
+	            </apex:outputPanel>
+            </div>
+        </div>
+
+        <!-- PAGE FOOTER -->
+		<c:pageFooter isInternal="{!isInternalUser}" />
+    </div>
+    
+    <script type="text/javascript">
+    	jQuery(document).ready(function() {
+    		var height = jQuery('.content-wrapper-right').height();
+    		jQuery('.content-wrapper-left').css('min-height', height);
+    	});
+    </script>
+</apex:page>

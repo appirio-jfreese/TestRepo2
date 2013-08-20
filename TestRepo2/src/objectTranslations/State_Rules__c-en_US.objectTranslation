@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>State Issue</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>State Issues</value>
+    </caseValues>
+    <fields>
+        <label><!-- Conditions/Restrictions --></label>
+        <name>Applicability_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Permissible? --></label>
+        <name>Rule_Applies__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes (with Restrictions)</masterLabel>
+            <translation><!-- Yes (with Restrictions) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Rule --></label>
+        <name>Rule__c</name>
+        <relationshipLabel><!-- State Issues --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+        <relationshipLabel><!-- State Issues --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- The link to the statute --></help>
+        <label><!-- Statute Link --></label>
+        <name>Statute_Link__c</name>
+    </fields>
+    <fields>
+        <help><!-- The legal statute reference --></help>
+        <label><!-- Statute Ref --></label>
+        <name>Statute_Ref__c</name>
+    </fields>
+    <layouts>
+        <layout>State Rule Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

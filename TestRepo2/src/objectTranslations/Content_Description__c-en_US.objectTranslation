@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Content Description</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Content Descriptions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Content ID Low --></label>
+        <name>Content_ID_Low__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content ID --></label>
+        <name>Content_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content Version Id Low --></label>
+        <name>Content_Version_Id_Low__c</name>
+    </fields>
+    <fields>
+        <label><!-- Content Version Id --></label>
+        <name>Content_Version_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Image Resolution --></label>
+        <name>Image_Resolution_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Image Resolution --></label>
+        <name>Image_Resolution__c</name>
+        <picklistValues>
+            <masterLabel>High</masterLabel>
+            <translation><!-- High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Innovation --></label>
+        <name>Innovation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Video --></label>
+        <name>Is_Video__c</name>
+    </fields>
+    <fields>
+        <label><!-- Matrix Type --></label>
+        <name>Matrix_Type_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Matrix type --></label>
+        <name>Matrix_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portfolio --></label>
+        <name>Portfolio_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Portfolio --></label>
+        <name>Portfolio__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preview Available --></label>
+        <name>Preview_Available__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preview_Id --></label>
+        <name>Preview_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ready to Serve --></label>
+        <name>RTS_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ready to Serve --></label>
+        <name>RTS__c</name>
+    </fields>
+    <fields>
+        <label><!-- TBA --></label>
+        <name>TBA_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- TBA --></label>
+        <name>TBA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tags --></label>
+        <name>Tags__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title_Display__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Uploaded date --></label>
+        <name>Uploaded_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Video Id --></label>
+        <name>Video_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Size of file --></help>
+        <label><!-- filesize --></label>
+        <name>filesize__c</name>
+    </fields>
+    <fields>
+        <help><!-- Size of low quality file --></help>
+        <label><!-- filesize_low --></label>
+        <name>filesize_low__c</name>
+    </fields>
+    <fields>
+        <label><!-- filetype --></label>
+        <name>filetype__c</name>
+    </fields>
+    <fields>
+        <label><!-- share_link --></label>
+        <name>share_link__c</name>
+    </fields>
+    <fields>
+        <label><!-- share link low --></label>
+        <name>share_link_low__c</name>
+    </fields>
+    <layouts>
+        <layout>Content Description Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Classification field is required for portfolio documents. --></errorMessage>
+        <name>Classification_required_for_portfolio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Description is required field --></errorMessage>
+        <name>Description_required</name>
+    </validationRules>
+</CustomObjectTranslation>

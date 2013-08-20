@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Organizational_Unit__c.Type__c</field>
+    </columns>
+    <columns>
+        <field>Organizational_Unit__c.Hierarchy_Location__c</field>
+    </columns>
+    <columns>
+        <field>Organizational_Unit__c.District_Code__c</field>
+    </columns>
+    <columns>
+        <field>Organizational_Unit__c.Responsible_Code__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Organizational Units</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Organizational_Unit__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

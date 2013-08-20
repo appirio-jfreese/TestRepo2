@@ -1,0 +1,53 @@
+<!------------------------------------------------------------------------------
+Name        : BlogSideTile.component
+
+Updated By  : Basant Verma (Appirio OffShore)
+Date        : 06/03/13
+Story/Task  : US503/TA907
+------------------------------------------------------------------------------->
+<apex:component controller="Controller_BlogPost">
+ 
+    <apex:attribute name="show" type="String" default="All" required="false" description=""/>
+    
+    <apex:outputPanel rendered="{!OR(show = 'Themes', show = 'All')}">  
+        <h2>Theme</h2>
+        <apex:repeat value="{!siteThemes}" var="thm">
+            <ul class="plain">
+                <li>
+                    <a href="javascript: switchToTheme('{!thm["label"]}');" class="link">{!thm["label"]}</a>
+                </li>
+            </ul>
+        </apex:repeat>
+    </apex:outputPanel>
+        
+    <!-- ARCHIVES -->
+    <apex:outputPanel rendered="{!OR(show = 'Archives', show = 'All')}">
+        <h2>Archive</h2>
+        <ul class="plain">
+            <apex:repeat value="{!archiveList}" var="arch" rows="10">
+                <li class="sideTile-Item">
+                    <a href="javascript: switchToArchive('{!arch}');" class="link">
+                        {!arch}
+                    </a>
+                </li>
+            </apex:repeat>
+        </ul>
+     </apex:outputPanel>
+        
+    <!-- TAGS -->
+    <apex:outputPanel rendered="{!OR(show = 'Tags', show = 'All')}">
+        <h2>Tags</h2>
+        <div class="tags" style="text-align: left;">
+
+            <apex:repeat value="{!tagList}" var="tg" rows="10">
+                <a href="javascript: showForTag('{!tg.Tag__c}');">{!tg.Name}</a>
+            </apex:repeat>
+<!--            
+            <apex:outputLabel rendered="{!(tagList.size > 10)}" onclick="">
+                    <span class="sideTile-Item-link">Show All Tags</span>
+            </apex:outputLabel>
+-->            
+        </div>
+    </apex:outputPanel>
+
+</apex:component>

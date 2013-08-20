@@ -1,0 +1,14 @@
+<apex:page standardController="event" extensions="Controller_RepDailyDateSelector">
+<apex:sectionHeader title="Representative Activities Worksheet" subtitle="Select Date"/>
+    <apex:form >
+<apex:pageBlock >
+    <apex:pageBlockSection columns="1">
+        <apex:inputfield value="{!event.ActivityDate}" label="Select Date"/>
+     </apex:pageBlockSection>   
+     <apex:pageBlockButtons location="bottom">
+        <apex:commandButton action="{!GeneratePDF}" value="Generate PDF"/>
+     </Apex:pageBlockButtons>
+</apex:pageBlock>
+ </apex:form>
+
+</apex:page>

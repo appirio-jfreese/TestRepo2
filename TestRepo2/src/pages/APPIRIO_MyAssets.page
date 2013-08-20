@@ -1,0 +1,92 @@
+<apex:page standardstylesheets="false" controller="APPIRIO_MyAssetsController" sidebar="false" showHeader="false" doctype="XHTML-1.0-Transitional" >
+    <html>
+        <head>
+            <apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7DashboardCSS}" /></apex:outputpanel>
+            <apex:outputpanel rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.recipeDashboardPageCSS}" /></apex:outputpanel>
+            <apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),true, false)}"><link rel="stylesheet" type="text/css" href="{!$Resource.ie7ViewAllRecipesCSS}" /></apex:outputText>
+			<apex:outputText rendered="{!IF(CONTAINS(UserAgent,'MSIE 7.0'),false, true)}"><link rel="stylesheet" type="text/css" href="{!$Resource.viewAllRecipesCSS}" /></apex:outputText>
+        </head>
+        
+       	<style type="text/css">
+       		table.tbl {
+				width: 75%;
+				text-align: left;
+				border-width: medium;
+				border-spacing: 0px;
+				border-style: double;
+				border-color: ;
+				border-collapse: separate;
+				background-color: white;
+			}
+			table.tbl th {
+				border-width: 0px;
+				padding: 5px;
+				border-style: none;
+				border-color: gray;
+				background-color: rgb(255, 255, 240);
+				-moz-border-radius: ;
+			}
+			table.tbl td {
+				border-width: 0px;
+				padding: 5px;
+				border-style: none;
+				border-color: gray;
+				background-color: rgb(255, 255, 240);
+				-moz-border-radius: ;
+			}
+		</style>
+		
+		<script>
+			function manageAsset(aId) {
+				window.open('/apex/APPIRIO_ManageAsset?Id='+aId,'_self');	
+			}
+		</script>
+		
+        <body>
+			<div class="outerDiv">
+				<c:DashBoardHeader />
+				<div id="bodyHeader" >
+					<div id="headerInner">
+ 						<div class="header arrow3">
+    						<apex:outputLink value="apex/MM_RecipeDashboard"><apex:image title="Dashboard" value="/resource/1320379988000/home"/>
+    						</apex:outputLink>
+    					</div> 
+    					<apex:image styleClass="header arrow2" title="Home" value="/resource/1320379988000/barrow"/>
+    					<b><apex:outputText value="My Assets" styleClass="header arrow"></apex:outputText></b>
+					</div>
+				</div>
+				<div class="innerDiv">
+					<apex:form id="theform">
+						<div  align="center" id="bodyContainer">
+							<apex:outputPanel id="myAssetPanel" styleClass="fontClass">
+					       		<div id="blank"></div> 
+					          	<div class="recipeStatusHeader borderBackgroundTop savedHeaderClass">
+						           <div class="columnBar">
+							             <div class="nameColumnEditor"><apex:outputlabel value="Asset Name" styleclass="statusHeaderClass"></apex:outputlabel></div>
+							             <div class="dateColumnEditor"><apex:outputlabel value="Publisher" styleclass="statusHeaderClass"></apex:outputlabel></div>
+							             <div class="actionColumnEditor"><apex:outputlabel value="Action" styleclass="statusHeaderClass"></apex:outputlabel></div>
+							        </div>
+					          	</div>     
+					           	<div id="savedRecipes" class="recipeStatusContainer borderBackgroundBottom">
+				                   	<div class="saved dashboardSection">
+				                   		<apex:repeat value="{!MyAssets}" var="asset" id="idMyAssets">
+				                	    	<div class="dashboardRow">
+			                                	<div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!asset.Name}"/></div>
+								            	<div class="nameColumnDataEditor"><apex:outputText styleclass="dataContainerClass" style="font-weight:bold;padding-left:0px!important" value="{!asset.Publisher__r.Name}"/></div>
+								            	<div class="statusColumnDataEditor">
+								                 	<apex:commandButton styleClass="actionButton" value="Manage" onclick="manageAsset('{!asset.Id}','{!asset.Name}'); return false;">
+								                 	</apex:commandButton>
+								              	</div>
+								            </div>
+			                          	</apex:repeat>
+			                          	<apex:outputText styleClass="dashboardRowNoValues" rendered="{!!hasMyAssets}" value="You have no Assets." style="padding-top:20px;vertical-align:middle;font-weight:bold;"/>
+			                     	</div>
+				              	</div>
+							</apex:outputPanel>
+						</div>
+					</apex:form>
+				</div>
+			</div>
+		</body>
+    </html>
+</apex:page>

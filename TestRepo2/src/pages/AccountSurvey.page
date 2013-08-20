@@ -1,0 +1,838 @@
+<apex:page showheader="true" standardStylesheets="true" sidebar="true" title="Account Survey" 
+		   extensions="Controller_AccountSurvey"
+		   standardController="Survey__c"
+		   cache="false">
+	
+	
+	<style type="text/css">
+		
+		.spaced {
+		    padding-left: 8px;
+		    padding-right: 8px;
+		    vertical-align:middle;
+		    text-align:center;
+		}
+		.spacedAlignRight {
+		    padding-left: 8px;
+		    padding-right: 8px;
+		    vertical-align:middle;
+		    text-align:right;
+		}
+		
+		.warningRed {
+			background-color:red
+		}
+		
+		.popup {
+		    position:absolute;
+		    background-color:#DDDDDD ;
+		    top:130px;
+		    /* margin:-400px 0 0 -100px;   [-(height/2)px 0 0 -(width/2)px] */
+		    display:none;
+		  }
+		
+		
+	</style>
+	
+	<script>
+		
+		function recalcAll()
+		{
+			var ttlSurvScoreSpan = document.getElementById('totalSurveyScoreSpan') ;
+			var score = topFinalGrade + beatingCompFinalGrade + totalExtraCreditScore + innovationTotalGrade ;
+			ttlSurvScoreSpan.innerHTML = 'Total Score: ' + score ;
+		}
+		
+		
+		function hideAllBrandContentDivs()
+		{
+			for(i=0;i<{!topCheckboxRowCount};i++)
+			{
+				var spanName = 'brandDescriptionHtmlItem' + i ;
+				var divToReplaceContent = document.getElementById(spanName) ;
+				divToReplaceContent.style.display = 'none' ;
+				divToReplaceContent.style.border =  '';
+			}
+			
+			for(i=0;i<{!brandBottleCheckboxRowCount};i++)
+			{
+				var spanName2 = 'brandBottleDescriptionHtmlItem' + i ;
+				var divToReplaceContent2 = document.getElementById(spanName2) ;
+				divToReplaceContent2.style.display = 'none' ;
+				divToReplaceContent2.style.border =  '';
+			}
+			
+		}
+		
+		var brandContentList = [];
+		
+		function displayGoldStandardHtmlContent(rowNum)
+		{
+			hideAllBrandContentDivs();
+			
+			var spanName = 'brandDescriptionHtmlItem' + rowNum ;
+			var divToReplaceContent = document.getElementById(spanName) ;
+			//divToReplaceContent.innerHTML = htmlString ;
+			divToReplaceContent.style.display = 'block' ;
+			divToReplaceContent.style.border =  'solid black';
+		}
+		
+		function displayGoldStandardBottleHtmlContent(rowNum)
+		{
+			hideAllBrandContentDivs();
+			
+			var spanName = 'brandBottleDescriptionHtmlItem' + rowNum ;
+			var divToReplaceContent = document.getElementById(spanName) ;
+			//divToReplaceContent.innerHTML = htmlString ;
+			divToReplaceContent.style.display = 'block' ;
+			divToReplaceContent.style.border =  'solid black';
+		}
+		
+		function initializeValues()
+		{
+			if(totalRowsSuccessful == -100) {
+				totalRowsSuccessful = {!totalBeatingCompetitionSuccesses} ;
+				totalRowsAvail = {!totalBeatingCompetitionRows};
+				beatingRowSuccesses[0] = {!beatingRow1Success} ;
+				beatingRowSuccesses[1] = {!beatingRow2Success} ;
+				beatingRowSuccesses[2] = {!beatingRow3Success} ;
+				beatingRowSuccesses[3] = {!beatingRow4Success} ;
+				beatingRowSuccesses[4] = {!beatingRow5Success} ;
+				beatingRowSuccesses[5] = {!beatingRow6Success} ;
+				beatingRowSuccesses[6] = {!beatingRow7Success} ;
+				beatingRowSuccesses[7] = {!beatingRow8Success} ;
+				beatingRowSuccesses[8] = {!beatingRow9Success} ;
+				beatingRowSuccesses[9] = {!beatingRow10Success} ;
+				beatingCompFinalGrade = {!beatingCompGrade};
+			}
+			
+			if(innovationTotalGrade == -100) {
+				innovationTotalGrade = {!innovationGrade} ;
+				innovationSelectedCheckboxCount = {!innovationSelectedCheckboxCount} ;
+				totalInnovationCheckboxes = {!totalInnovationCheckboxes} ;
+				innovationPercentage = {!surveyLayout.Percent_of_Grade_Innovation__c} ;
+			}
+			
+			if(percentExtraCredit == -100) {
+				percentExtraCredit = {!surveyLayout.Percent_of_Grade_Extra_Credit__c} ;
+				totalExtraCreditScore = {!extraCreditGrade} ;
+			}
+			
+			if(extraCreditCheckboxCount == -100) {
+				extraCreditCheckboxCount = {!totalExtraCreditRows} ;
+				extraCreditSuccesses = {!totalExtraCreditSuccesses} ;
+			}
+			
+			if(topCol1CheckboxCount == -100) {
+				topCol1CheckboxCount = {!topCheckboxInitializedCountCol1} ;
+			}
+			
+			if(topCol2CheckboxCount == -100) {
+				topCol2CheckboxCount = {!topCheckboxInitializedCountCol2} ;
+			}
+			
+			if(topCol3CheckboxCount == -100) {
+				topCol3CheckboxCount = {!topCheckboxInitializedCountCol3} ;
+			}
+			
+			if(topCheckboxCount == -100) {
+				topCheckboxCount = {!topCheckboxInitializedCount} ;
+				topTotalCheckboxesAvailable = {!totalCheckboxTopSectionAvailable} ;
+				topPercentage = {!surveyLayout.Percent_of_Grade_Dist__c} ;
+				topFinalGrade = {!topGrade} ;
+			}
+			
+		}
+		
+		
+		//lame, but onchange fires all the time, and this was the quickest fix to a potential problem.
+		var beatingRowSuccesses = [0,0,0,0,0,0,0,0,0,0];
+		var totalRowsSuccessful = -100 ;
+		var totalRowsAvail = 0;
+		var beatingCompFinalGrade = 0;
+		function recalcBeatingComp(numeratorInputId, denominatorInputId, spanTagId, successPercent, rowSuccessSubNum, totalsSpanId)
+		{
+			initializeValues();
+			
+			var numeratorInput = document.getElementById(numeratorInputId) ;
+			var denominatorInput = document.getElementById(denominatorInputId) ;
+			var spanTag = document.getElementById(spanTagId) ;
+			var totalsSpan = document.getElementById(totalsSpanId) ;
+			
+			if(numeratorInput.value != '' && denominatorInput.value != '' && denominatorInput.value != '0') {
+				//var stringSpanId = 'pageId' + spanTagId ;
+				//alert.show(stringSpanId);
+				var unroundedNumber = ((numeratorInput.value / denominatorInput.value) * 100) ;
+				unroundedNumber = roundNumber(unroundedNumber, 2)
+				unroundedNumber = unroundedNumber.toFixed(2) ;
+				spanTag.innerHTML = unroundedNumber;
+				
+				if(!isNaN(unroundedNumber) && !isNaN(successPercent) && unroundedNumber >= successPercent) {
+					beatingRowSuccesses[rowSuccessSubNum - 1] = 1;
+				}else{
+					beatingRowSuccesses[rowSuccessSubNum - 1] = 0;
+				}
+				
+				
+				
+			}else{
+				beatingRowSuccesses[rowSuccessSubNum - 1] = 0;
+			}
+			
+			var i=0;
+			totalRowsSuccessful = 0;
+			for (i=0;i<=9;i++)
+			{
+				totalRowsSuccessful += beatingRowSuccesses[i] ;
+			}
+			
+			totalsSpan.innerHTML = totalRowsSuccessful + ' out of a total of ' + totalRowsAvail ;
+			
+			if(totalRowsSuccessful != 0 && totalRowsAvail != 0) {
+				beatingCompFinalGrade = (totalRowsSuccessful / totalRowsAvail) * {!surveyLayout.Percent_of_Grade_BeatComp__c} ;
+				beatingCompFinalGrade = roundNumber(beatingCompFinalGrade, 0);
+			}else{
+				beatingCompFinalGrade = 0;
+			}
+			
+			var gradSpan = document.getElementById('beatingCompGradeSpan') ;
+			gradSpan.innerHTML = beatingCompFinalGrade ;
+			
+			recalcAll();
+		}
+		
+		function roundNumber(num, decimalCount) {
+			var result = Math.round(num*Math.pow(10,decimalCount))/Math.pow(10,decimalCount);
+			
+			return result;
+		}
+		
+		
+		
+		var extraCreditCheckboxCount = -100;
+		var extraCreditSuccesses = 0;
+		function updateCheckboxExtraCredit(checkbox)
+		{
+			initializeValues();
+			
+			if(checkbox.checked) {
+				extraCreditSuccesses++;
+			}else{
+				extraCreditSuccesses--;
+			}
+			
+			var totalsSpanTag = document.getElementById('totalExtraCreditSpan') ;
+			totalsSpanTag.innerHTML = extraCreditSuccesses + ' out of a total of ' + extraCreditCheckboxCount ;
+			calculateExtraCreditScore();
+			
+		}
+		
+		
+		var percentExtraCredit = -100;
+		var totalExtraCreditScore = -100 ;
+		function calculateExtraCreditScore()
+		{
+			var spanTag = document.getElementById('extraCreditGradeSpan') ;
+			var num = (extraCreditSuccesses / extraCreditCheckboxCount) * percentExtraCredit ;
+			num = roundNumber(num,0);
+			totalExtraCreditScore = num ;
+			spanTag.innerHTML = num ;
+			
+			recalcAll();
+		}
+		
+		
+		var topCol1CheckboxCount = -100 ;
+		function updateCheckboxCountCol1(checkbox)
+		{
+			initializeValues();
+			
+			if(checkbox.checked) {
+				topCol1CheckboxCount++;
+			}else{
+				topCol1CheckboxCount--;
+			}
+			var spanTag = document.getElementById('spanTopSectionTotalCol1') ;
+			spanTag.innerHTML = topCol1CheckboxCount ;
+			updateCheckboxTotals(checkbox);
+			
+			
+		}
+		
+		var topCol2CheckboxCount = -100 ;
+		function updateCheckboxCountCol2(checkbox)
+		{
+			initializeValues();
+			
+			if(checkbox.checked) {
+				topCol2CheckboxCount++;
+			}else{
+				topCol2CheckboxCount--;
+			}
+			var spanTag = document.getElementById('spanTopSectionTotalCol2') ;
+			spanTag.innerHTML = topCol2CheckboxCount ;
+			updateCheckboxTotals(checkbox);
+		}
+		
+		var topCol3CheckboxCount = -100 ;
+		function updateCheckboxCountCol3(checkbox)
+		{
+			initializeValues();
+			
+			if(checkbox.checked) {
+				topCol3CheckboxCount++;
+			}else{
+				topCol3CheckboxCount--;
+			}
+			var spanTag = document.getElementById('spanTopSectionTotalCol3') ;
+			spanTag.innerHTML = topCol3CheckboxCount ;
+			updateCheckboxTotals(checkbox);
+		}
+		
+		var topCheckboxCount = -100;
+		var topTotalCheckboxesAvailable = -100;
+		var topPercentage = 100;
+		var topFinalGrade = 0;
+		function updateCheckboxTotals(checkbox)
+		{
+			initializeValues();
+			
+			if(checkbox.checked) {
+				topCheckboxCount++;
+			}else{
+				topCheckboxCount--;
+			}
+			
+			var spanTag = document.getElementById('spanTopSectionTotals') ;
+			spanTag.innerHTML = topCheckboxCount + ' out of a total of ' + topTotalCheckboxesAvailable ;
+			
+			var gradeSpan = document.getElementById('topGradeSpan') ;
+			var num = (topCheckboxCount/topTotalCheckboxesAvailable) * topPercentage ;
+			num =  roundNumber( num, 0 ) ;
+			topFinalGrade = num ;
+			gradeSpan.innerHTML = num ;
+			
+			recalcAll();
+			
+		}
+		
+		
+		var innovationTotalGrade = -100;
+		var totalInnovationCheckboxes = 0;
+		var innovationSelectedCheckboxCount = 0;
+		var innovationPercentage = 0;
+		function updateCheckboxCountForInnovation(checkbox)
+		{
+			initializeValues() ;
+			
+			if(checkbox.checked) {
+				innovationSelectedCheckboxCount++;
+			}else{
+				innovationSelectedCheckboxCount--;
+			}
+			
+			
+			var spanTag = document.getElementById('spanInnovationTotals') ;
+			spanTag.innerHTML = innovationSelectedCheckboxCount + ' out of a total of ' + totalInnovationCheckboxes ;
+			
+			var gradeSpan = document.getElementById('innovationGradeSpan') ;
+			var num = (innovationSelectedCheckboxCount/totalInnovationCheckboxes) * innovationPercentage ;
+			num =  roundNumber( num, 0 ) ;
+			innovationTotalGrade = num ;
+			gradeSpan.innerHTML = num ;
+			
+			recalcAll();
+		}
+
+		
+		
+	</script>
+	
+	<apex:form >
+	
+	<div style="height:50px;">
+		<br />
+		<h1><apex:outputText value="{!account.Name} {!surveyLayout.Name}" escape="false" /></h1>
+		<table width="400">
+			<tr>
+				<td width="100"></td>
+				<td>
+					<div width="300" style="border:solid red; text-align:center;">
+						<span id="totalSurveyScoreSpan">
+							<apex:outputText value="Total Score: {!totalSurveyScore}" escape="false" />
+						</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+		
+	</div>
+	
+	<div id="goldStandardInformationDiv" width="100%">
+		<apex:variable var="gsRecordCount" value="{!0}" /> 
+		<apex:repeat value="{!brandContentStringHtmlItems}" var="arrayItem">
+			<div id="brandDescriptionHtmlItem{!ROUND(gsRecordCount,0)}" class="popup">
+				<div width="100%" align="right">
+					<a href="javascript:void(0)" onclick="hideAllBrandContentDivs();">close</a>
+				</div>
+				<apex:outputText value="{!arrayItem}" escape="false" />
+			</div>
+			<apex:variable var="gsRecordCount" value="{!gsRecordCount+1}"/>
+		</apex:repeat>
+		
+		<apex:variable var="gsRecordCount" value="{!0}" /> 
+		<apex:repeat value="{!brandContentStringHtmlItems}" var="arrayItem">
+			<div id="brandBottleDescriptionHtmlItem{!ROUND(gsRecordCount,0)}" class="popup">
+				<div width="100%" align="right">
+					<a href="javascript:void(0)" onclick="hideAllBrandContentDivs();">close</a>
+				</div>
+				<apex:outputText value="{!arrayItem}" escape="false" />
+			</div>
+			<apex:variable var="gsRecordCount" value="{!gsRecordCount+1}"/>
+		</apex:repeat>
+	</div>
+	
+	<div >
+		
+		
+ 			
+ 			<apex:pageMessages />
+ 			
+ 			<table border="0" cellpadding="5">
+ 				<tr>
+ 				
+ 					<td width="60">
+ 						<div width="50" style="border:solid red; text-align:center;">
+ 							<apex:outputText value=" {!surveyLayout.Percent_of_Grade_Dist__c}%" />
+ 						</div>
+ 						
+ 						<div width="50" style="text-align:center;">
+ 							<span id="topGradeSpan">
+								<apex:outputText value="{!topGrade}" />
+							</span>
+ 						</div>
+ 					</td>
+ 					
+ 					<td>
+ 						<table border="1" cellpadding="0" cellspacing="0">
+							<tr>
+								<td colspan="5" align="center">
+									<h1>Distribution / Shelf / Display</h1>
+								</td>
+							</tr>
+							<tr>
+								<td width="180"></td>
+								<td class="spaced">Distribution</td>
+								<td class="spaced">Shelf</td>
+								<td class="spaced">Display</td>
+								<td class="spaced">Notes / Corrective Measures</td>
+							</tr>
+							
+							<apex:variable var="gsSecondRecordCount" value="{!0}" /> 
+							<apex:repeat value="{!goldStandardList}" var="goldStandard">
+							<tr>
+								<td class="spacedAlignRight" width="180">
+									<a href="javascript:void(0)" onclick="javascript:displayGoldStandardHtmlContent({!ROUND(gsSecondRecordCount,0)})">{!goldStandard.Brand__r.Name}</a> 
+									
+								</td>
+								<td class="spaced"> <apex:inputCheckbox value="{!goldStandard.Gold_Standard_for_Distribution_Met__c}"
+																		onclick="javascript:updateCheckboxCountCol1(this)" /> </td>
+								<td class="spaced"> <apex:inputCheckbox value="{!goldStandard.Gold_Standard_for_Shelf_Met__c}" 
+																		onclick="javascript:updateCheckboxCountCol2(this)" /> </td>
+								<td class="spaced"
+									bgcolor="{!IF(goldStandard.Gold_Standard_Display_Not_Applicable__c, '#CCCCCC', '')}"> 
+													<apex:inputCheckbox value="{!goldStandard.Gold_Standard_for_Display_Met__c}"
+																		rendered="{!(goldStandard.Gold_Standard_Display_Not_Applicable__c == false)}" 
+																		onclick="javascript:updateCheckboxCountCol3(this)" /> </td>
+								<td class="spaced"><apex:inputField value=" {!goldStandard.Comments__c}" /></td>
+							</tr>
+							<apex:variable var="gsSecondRecordCount" value="{!gsSecondRecordCount+1}"/>
+							</apex:repeat>
+							
+							<tr>
+								<td> </td>
+								<td class="spaced">
+									<span id="spanTopSectionTotalCol1">
+										<apex:outputText id="outputFieldTotalCol1" value="{!topCheckboxInitializedCountCol1}" />
+									</span>
+								</td>
+								<td class="spaced">
+									<span id="spanTopSectionTotalCol2">
+										<apex:outputText id="outputFieldTotalCol2" value="{!topCheckboxInitializedCountCol2}" />
+									</span>
+								</td>
+								<td class="spaced">
+									<span id="spanTopSectionTotalCol3">
+										<apex:outputText id="outputFieldTotalCol3" value="{!topCheckboxInitializedCountCol3}" />
+									</span>
+								</td>
+								<td class="spaced">
+									<span id="spanTopSectionTotals">
+										<apex:outputText value="{!topCheckboxInitializedCount} out of a total of {!totalCheckboxTopSectionAvailable}" />
+									</span>
+								</td>
+							</tr>
+						</table>
+ 					</td>
+ 					
+ 					
+ 				</tr>
+ 				
+ 				
+ 				<tr>
+ 					<td width="60">
+ 						<div width="50" style="border:solid red; text-align:center;">
+ 							<apex:outputText value=" {!surveyLayout.Percent_of_Grade_Innovation__c}%" />
+ 						</div>
+ 						
+ 						<div width="50" style="text-align:center;">
+ 							<span id="innovationGradeSpan">
+								<apex:outputText value="{!innovationGrade}" />
+							</span>
+ 						</div>
+ 					</td>
+ 					
+ 					<td>
+ 					
+ 						<table border="1" cellpadding="0" cellspacing="0" width="450"> 
+							<tr>
+								<td colspan="3" align="center">
+									<h1>Innovation / Sustainovation</h1>
+								</td>
+							</tr>
+							
+							<tr>
+								<td width="180"></td>
+								<td class="spaced">Check if achieved</td>
+								<td class="spaced">Notes / Corrective Measures</td>
+							</tr>
+							
+							<apex:variable var="gsSecondRecordCount" value="{!0}" /> 
+							<apex:repeat value="{!goldStandardBottleList}" var="goldStandardBottle">
+							<tr>
+								<td class="spacedAlignRight" width="180">
+									<a href="javascript:void(0)" onclick="javascript:displayGoldStandardBottleHtmlContent({!ROUND(gsSecondRecordCount,0)})">{!goldStandardBottle.BrandBottle_Size__r.Name}</a>
+								</td>
+								<td class="spaced"> <apex:inputCheckbox value="{!goldStandardBottle.Gold_Standard_for_Distribution_Met__c}"
+																		onclick="javascript:updateCheckboxCountForInnovation(this)" /> </td>
+								<td class="spaced"><apex:inputField value="{!goldStandardBottle.Comments__c}" /></td>
+							</tr>
+							<apex:variable var="gsSecondRecordCount" value="{!gsSecondRecordCount+1}"/>
+							</apex:repeat>
+							
+							<tr>
+								<td></td>
+								<td></td>
+								
+								<td class="spaced">
+									<span id="spanInnovationTotals">
+										<apex:outputText value="{!innovationSelectedCheckboxCount} out of a total of {!totalInnovationCheckboxes}" />
+									</span>
+								</td>
+							</tr>
+							
+						</table>
+ 					
+ 					</td>
+ 					
+ 				</tr>
+ 				
+ 				
+ 				
+ 				<tr>
+ 				
+ 					<td width="60">
+ 						<div width="50" style="border:solid red; text-align:center;">
+ 							<apex:outputText value=" {!surveyLayout.Percent_of_Grade_BeatComp__c}%" />
+ 						</div>
+ 						
+ 						<div width="50" style="text-align:center;">
+ 							<span id="beatingCompGradeSpan">
+								<apex:outputText value="{!beatingCompGrade}" />
+							</span>
+ 						</div>
+ 					</td>
+ 				
+ 					<td>
+ 					
+ 					
+ 						<table border="1" cellpadding="0" cellspacing="0" >
+							<tr>
+								<td colspan="4" align="center">
+									<h1>Beating The Competition</h1>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="spaced">Diageo</td>
+								<td class="spaced">Total</td>
+								<td class="spaced">Diageo %</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_1__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_1__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator1" value="{!survey.Beating_Comp_Diageo_Val_1__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator1}', '{!$Component.beatingDenominator1}', '{!$Component.beatingCalc1}', {!surveyLayout.Beating_Comp_Success_Percent_1__c}, 1, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator1" value="{!survey.Beating_Comp_Tot_Val_1__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator1}', '{!$Component.beatingDenominator1}', '{!$Component.beatingCalc1}', {!surveyLayout.Beating_Comp_Success_Percent_1__c}, 1, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc1" value="{!survey.Beating_Comp_Calc1__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_2__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_2__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator2" value="{!survey.Beating_Comp_Diageo_Val_2__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator2}', '{!$Component.beatingDenominator2}', '{!$Component.beatingCalc2}', {!surveyLayout.Beating_Comp_Success_Percent_2__c}, 2, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator2" value="{!survey.Beating_Comp_Tot_Val_2__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator2}', '{!$Component.beatingDenominator2}', '{!$Component.beatingCalc2}', {!surveyLayout.Beating_Comp_Success_Percent_2__c}, 2, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc2" value="{!survey.Beating_Comp_Calc2__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_3__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_3__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator3" value="{!survey.Beating_Comp_Diageo_Val_3__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator3}', '{!$Component.beatingDenominator3}', '{!$Component.beatingCalc3}', {!surveyLayout.Beating_Comp_Success_Percent_3__c}, 3, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator3" value="{!survey.Beating_Comp_Tot_Val_3__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator3}', '{!$Component.beatingDenominator3}', '{!$Component.beatingCalc3}', {!surveyLayout.Beating_Comp_Success_Percent_3__c}, 3, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc3" value="{!survey.Beating_Comp_Calc3__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_4__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_4__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator4" value="{!survey.Beating_Comp_Diageo_Val_4__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator4}', '{!$Component.beatingDenominator4}', '{!$Component.beatingCalc4}', {!surveyLayout.Beating_Comp_Success_Percent_4__c}, 4, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator4" value="{!survey.Beating_Comp_Tot_Val_4__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator4}', '{!$Component.beatingDenominator4}', '{!$Component.beatingCalc4}', {!surveyLayout.Beating_Comp_Success_Percent_4__c}, 4, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc4" value="{!survey.Beating_Comp_Calc4__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_5__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_5__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator5" value="{!survey.Beating_Comp_Diageo_Val_5__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator5}', '{!$Component.beatingDenominator5}', '{!$Component.beatingCalc5}', {!surveyLayout.Beating_Comp_Success_Percent_5__c}, 5, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator5" value="{!survey.Beating_Comp_Tot_Val_5__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator5}', '{!$Component.beatingDenominator5}', '{!$Component.beatingCalc5}', {!surveyLayout.Beating_Comp_Success_Percent_5__c}, 5, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc5" value="{!survey.Beating_Comp_Calc5__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_6__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_6__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator6" value="{!survey.Beating_Comp_Diageo_Val_6__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator6}', '{!$Component.beatingDenominator6}', '{!$Component.beatingCalc6}', {!surveyLayout.Beating_Comp_Success_Percent_6__c}, 6, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator6" value="{!survey.Beating_Comp_Tot_Val_6__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator6}', '{!$Component.beatingDenominator6}', '{!$Component.beatingCalc6}', {!surveyLayout.Beating_Comp_Success_Percent_6__c}, 6, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc6" value="{!survey.Beating_Comp_Calc6__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_7__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_7__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator7" value="{!survey.Beating_Comp_Diageo_Val_7__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator7}', '{!$Component.beatingDenominator7}', '{!$Component.beatingCalc7}', {!surveyLayout.Beating_Comp_Success_Percent_7__c}, 7, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator7" value="{!survey.Beating_Comp_Tot_Val_7__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator7}', '{!$Component.beatingDenominator7}', '{!$Component.beatingCalc7}', {!surveyLayout.Beating_Comp_Success_Percent_7__c}, 7, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc7" value="{!survey.Beating_Comp_Calc7__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_8__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_8__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator8" value="{!survey.Beating_Comp_Diageo_Val_8__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator8}', '{!$Component.beatingDenominator8}', '{!$Component.beatingCalc8}', {!surveyLayout.Beating_Comp_Success_Percent_8__c}, 8, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator8" value="{!survey.Beating_Comp_Tot_Val_8__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator8}', '{!$Component.beatingDenominator8}', '{!$Component.beatingCalc8}', {!surveyLayout.Beating_Comp_Success_Percent_8__c}, 8, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc8" value="{!survey.Beating_Comp_Calc8__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_9__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_9__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator9" value="{!survey.Beating_Comp_Diageo_Val_9__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator9}', '{!$Component.beatingDenominator9}', '{!$Component.beatingCalc9}', {!surveyLayout.Beating_Comp_Success_Percent_9__c}, 9, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator9" value="{!survey.Beating_Comp_Tot_Val_9__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator9}', '{!$Component.beatingDenominator9}', '{!$Component.beatingCalc9}', {!surveyLayout.Beating_Comp_Success_Percent_9__c}, 9, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc9" value="{!survey.Beating_Comp_Calc9__c}" />
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Beating_Comp_Label_10__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Beating_Comp_Label_10__c}" escape="true" /></td>
+								<td> <apex:inputField id="beatingNumerator10" value="{!survey.Beating_Comp_Diageo_Val_10__c}" style="width:60px;"
+									 				  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator10}', '{!$Component.beatingDenominator10}', '{!$Component.beatingCalc10}', {!surveyLayout.Beating_Comp_Success_Percent_10__c}, 10, '{!$Component.totalCompTotalOutputText}' )" /> 
+								</td>
+								<td> <apex:inputField id="beatingDenominator10" value="{!survey.Beating_Comp_Tot_Val_10__c}" style="width:60px;"
+													  onchange="javascript:recalcBeatingComp('{!$Component.beatingNumerator10}', '{!$Component.beatingDenominator10}', '{!$Component.beatingCalc10}', {!surveyLayout.Beating_Comp_Success_Percent_10__c}, 10, '{!$Component.totalCompTotalOutputText}' )" />
+								</td>
+								<td> 
+									 <apex:outputField id="beatingCalc10" value="{!survey.Beating_Comp_Calc10__c}" />
+								</td>
+								
+							</tr>
+							
+							<tr>
+								<td class="spacedAlignRight">
+									TOTAL
+								</td>
+								
+								<td colspan="4" class="spaced">
+									 <apex:outputText id="totalCompTotalOutputText" value="{0, Number} out of a total of {1, Number}">
+									 	<apex:param value="{!totalBeatingCompetitionSuccesses}" />
+									 	<apex:param value="{!totalBeatingCompetitionRows}" />
+									 </apex:outputText>
+								</td>
+							</tr>
+						</table>
+ 					
+ 					
+ 					
+ 					
+ 					</td>
+ 				
+ 				</tr>
+ 				
+ 				
+ 				<tr>
+ 					<td width="60">
+ 						<div width="50" style="border:solid red; text-align:center;">
+ 							<apex:outputText value=" {!surveyLayout.Percent_of_Grade_Extra_Credit__c}%" />
+ 						</div>
+ 						
+ 						<div width="50" style="text-align:center;">
+ 							<span id="extraCreditGradeSpan">
+								<apex:outputText value="{!extraCreditGrade}" />
+							</span>
+ 						</div>
+ 						
+ 					</td>
+ 					
+ 					
+ 					<td>
+ 						
+ 						<table border="1" cellpadding="0" cellspacing="0"  >
+							<tr>
+								<td align="center"><h1>Extra Credit</h1></td>
+								<td class="spaced">Check if achieved</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_1__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_1__c}" escape="true" /></td>
+								<td class="spaced">
+									<apex:inputCheckbox value="{!survey.Extra_Credit_Value_1__c}"
+														onclick="javascript:updateCheckboxExtraCredit(this)" /> 
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_2__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_2__c}" escape="true" /></td>
+								<td class="spaced"> 
+									<apex:inputCheckbox value="{!survey.Extra_Credit_Value_2__c}"
+														onclick="javascript:updateCheckboxExtraCredit(this)" /> 
+								</td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_3__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_3__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_3__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_4__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_4__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_4__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_5__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_5__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_5__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_6__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_6__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_6__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_7__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_7__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_7__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_8__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_8__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_8__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_9__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_9__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_9__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							<tr style="display:{!IF(ISBLANK(surveyLayout.Extra_Credit_Label_10__c), 'None', '')}">
+								<td class="spaced"><apex:outputText value="{!surveyLayout.Extra_Credit_Label_10__c}" escape="true" /></td>
+								<td class="spaced"> <apex:inputCheckbox value="{!survey.Extra_Credit_Value_10__c}" 
+																		onclick="javascript:updateCheckboxExtraCredit(this)" /> </td>
+							</tr>
+							
+							<tr>
+								<td class="spacedAlignRight" colspan="2">
+									<span id="totalExtraCreditSpan">
+										<apex:outputText value="{0, Number} out of a total of {1, Number}">
+										 	<apex:param value="{!totalExtraCreditSuccesses}" />
+										 	<apex:param value="{!totalExtraCreditRows}" />
+										 </apex:outputText>
+									</span>
+								</td>
+							</tr>
+							
+						</table>
+ 						
+ 						
+ 					</td>
+ 				</tr>
+ 				
+ 				
+ 			</table>
+ 			
+			
+			
+			
+			<table width="600">
+				<tr>
+					<td width="400"><apex:commandButton value="Submit" action="{!submitSurvey}"
+								disabled="{!IF(userHasEditPerms,false,true)}" />
+					</td>
+					<td>
+						<apex:inputCheckbox value="{!surveyStatusIsComplete}" label="Survey Completed"
+								disabled="{!IF(userHasEditPerms,false,true)}" />
+						Survey Completed
+					</td>
+				</tr>
+			</table>
+			
+			
+			
+		
+	</div>
+	
+	
+	</apex:form>
+	
+	
+</apex:page>

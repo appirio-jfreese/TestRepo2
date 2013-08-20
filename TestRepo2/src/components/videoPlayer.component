@@ -1,0 +1,44 @@
+<apex:component >
+    <apex:attribute name="videoId" description="Video Id from BrightCove website" type="string" required="true"/>
+    <apex:attribute name="videoPlayerId" description="Video player Id" type="string" default="1114031894001"/>
+    <apex:attribute name="videoPlayerKey" description="Video player key" type="string" default="AQ~~,AAAA-0SGM4k~,ew6kFM-Odj8uX2B9QgnDK_UR61QX4O97"/>
+    <apex:attribute name="width" description="Video player width" type="integer" required="true"/>
+    <apex:attribute name="height" description="Video player width" type="integer" required="true"/>
+ 
+    <!-- Start of Brightcove Player -->
+    <object id="myExperience{!videoId}" class="BrightcoveExperience" wmode="transparent">
+        <param name="bgcolor" value="#FFFFFF" />
+        <param name="width" value="{!width}" />
+        <param name="height" value="{!height}" />
+        <param name="playerID" value="{!videoPlayerId}" />
+        <param name="playerKey" value="{!videoPlayerKey}" />
+        <param name="isVid" value="true" />
+        <param name="isUI" value="true" />
+        <param name="dynamicStreaming" value="true" />
+        <param name="wmode" value="transparent" />
+        <param name="@videoPlayer" value="{!videoId}" />
+        <param name="secureConnections" value="true" />
+    </object>
+	<script type="text/javascript">
+		if (!window.brightcove) {
+			if(!window.brightcoveLoading) {
+				window.brightcoveLoading = true;
+				var headID = document.getElementsByTagName("head")[0];         
+				var newScript = document.createElement('script');
+				newScript.type = 'text/javascript';
+				newScript.src = 'https://sadmin.brightcove.com/js/BrightcoveExperiences_all.js';
+				headID.appendChild(newScript);
+			}
+			(function(){
+				var timer = setInterval(function(){
+					if(window.brightcove) {
+						clearInterval(timer);
+						brightcove.createExperiences('myExperience{!videoId}');
+					}
+				}, 100)
+			})();
+		} else {
+			brightcove.createExperiences('myExperience{!videoId}');
+		}
+	</script>
+</apex:component>

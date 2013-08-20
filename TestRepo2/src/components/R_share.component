@@ -1,0 +1,75 @@
+<!------------------------------------------------------------------------------
+Name        : R_share.component
+Modified By : Parul Gupta (Appirio OffShore)
+Date		: 7/11/13
+Description	: Integrated modal dialog for responsive site
+------------------------------------------------------------------------------->
+<apex:component controller="Service_Messages" allowDML="true">
+
+    <apex:attribute name="cvid" description="Id" type="String" required="false" assignTo="{!cvid}"/>
+    <apex:attribute name="description" description="Description" type="String" required="false"/>
+    <apex:attribute name="cShareLink" description="sharelink" type="String" required="false" assignTo="{!cShareLink}"/>
+    <apex:attribute name="cShareLinkLow" description="sharelinklow" type="String" required="false" assignTo="{!cShareLinkLow}"/>
+    <apex:attribute name="cvids" description="String of ids" type="String" required="false" assignTo="{!cvids}"/>
+	
+	<script type="text/javascript">
+		function closeDialog() {
+			jQuery("#shareModal").hide();
+			jQuery(".jquery-modal").remove();
+		}
+	</script>
+	<!-- START :: MODAL DIALOG -->
+	<div class="modal" id="shareModal" > 
+	    
+	    <div class="title">
+	        Share: <apex:outputPanel rendered="{! OR(ISNULL(cvids), len(cvids)=0 )}"> 
+	            		{! IF (len(description)>30, LEFT(description, 30)+'...',description)}
+	            	</apex:outputPanel>
+	            	<apex:outputPanel rendered="{! AND(NOT(ISNULL(cvids)), len(cvids)!=0 )}"> 
+	            		Multiple files
+	            	</apex:outputPanel>
+	    </div>
+	    
+	    <div class="moreInfoError">
+			<apex:outputPanel id="moreInfoError">
+				<apex:messages styleClass="errorMessagesList" />
+			</apex:outputPanel>
+		</div>
+		<apex:form >
+			<apex:actionFunction status="ajax-status" name="sendEmailMsg" action="{!sendEmailMsg}" rerender="sendBox, moreInfoError"/>
+			<apex:actionFunction status="ajax-status" name="sendEmailMsgMultiple" action="{!sendEmailMsgMultiple}" rerender="sendBox, moreInfoError"/>
+			<apex:actionFunction status="ajax-status" name="closeEmailMsg" action="{!closeEmailMsg}" rerender="sendBox, moreInfoError" onComplete="closeDialog();"/>
+				
+			<apex:pageBlock id="sendBox">
+	 			<div class="shareRecipientInformation">
+					<apex:outputPanel rendered="{!isSend!=true}">
+						<div class="html">
+							Recipient Email<br/>
+							<apex:inputTextarea rows="1" value="{!sRecipientEmail}" styleClass="recipientEmailInput"/><br/>
+			            	Custom Message (optional)<br/>
+							<apex:inputTextarea value="{!sRecipientMsg}"/><br/>
+						</div>
+						<div class="buttons">
+							<apex:outputPanel rendered="{! OR(ISNULL(cvids), len(cvids)=0 )}">
+										<a href="javascript:void(0);" onclick="closeEmailMsg();return true;" rel="modal:close" class="link">Cancel</a> 
+				        		<a href="javascript:void(0);" onclick="sendEmailMsg(); return false;" class="button">Send</a>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{! AND(NOT(ISNULL(cvids)), len(cvids)!=0 )}">
+										<a href="javascript:void(0);" onclick="closeEmailMsg(); return true;" rel="modal:close" class="link">Cancel</a>
+										<a href="javascript:void(0);" onclick="sendEmailMsgMultiple(); return false;" class="button">Send</a>
+							</apex:outputPanel>
+						</div>
+	    			</apex:outputPanel>
+				    <apex:outputPanel rendered="{!isSend==true}">
+				    	<div class="html">
+							<label>&nbsp;&nbsp;Message sent. Thank You.</label>
+							<a href="javascript:void(0);" onclick="closeEmailMsg();return true;" rel="modal:close" class="button">CLOSE</a>
+							</div>
+					</apex:outputPanel>	    			
+    			</div>
+    		</apex:pageBlock>	
+    	</apex:form>
+	</div>
+	<!-- END :: MODAL DIALOG -->
+ 
+</apex:component>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_$Recipe__c.API_External_ID__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Recipe__c.Recipe_Title__c</field>
+    </columns>
+    <columns>
+        <field>FK_CREATED</field>
+    </columns>
+    <columns>
+        <field>FK_LAST_UPDATE</field>
+    </columns>
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>CUST_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Published_Recipe__c.Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Asset Manager Published/Suppressed Recip</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$Digital_Published_Asset__c$Published_Recipe__c@Published_Recipe__c.Recipe__c</reportType>
+    <scope>user</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

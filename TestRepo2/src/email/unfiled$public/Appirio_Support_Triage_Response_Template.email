@@ -1,0 +1,15 @@
+Hi ,
+
+Thank you for submitting your case. A representative will be assigned to your case and be in touch with you shortly regarding your issue with ...(issue)  in ...(application).
+
+Thanks and best regards,
+
+Diageo Salesforce Support
+
+
+Case Number {!Case.CaseNumber} 
+Subject: {!Case.Subject} 
+Application: {!Case.Application__c} 
+Priority: {!Case.Priority} 
+Type: {!Case.Type} 
+Description: {!Case.Description}

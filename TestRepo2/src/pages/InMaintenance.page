@@ -1,0 +1,26 @@
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Auth">
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+    <div class="content-wrapper">
+        <!-- PAGE HEADER -->
+        <div class="header">
+            <div class="logotype">&nbsp;</div>            
+        </div>  
+        <!-- PAGE CONTENT -->
+        <div class="content left">
+
+            <div class="error-header">
+                <apex:outputText escape="false" styleClass="title" value="{!$Label.site.down_for_maintenance}">
+                    <apex:param value="{!$Site.CurrentSiteUrl}"/>
+                </apex:outputText>
+            </div>
+            <div class="error-description">
+                <apex:outputText value="{!$Label.site.sorry_for_inconvenience_back_shortly}"/>
+            </div>
+
+        </div>
+        <!-- PAGE FOOTER -->
+        <div class="login-footer">
+            <apex:outputText value="{!$Label.LoginFooter}" escape="false" />
+        </div>
+    </div>
+</apex:page>

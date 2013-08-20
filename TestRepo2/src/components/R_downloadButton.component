@@ -1,0 +1,10 @@
+<apex:component >
+    <apex:attribute name="cvid" description="Id" type="String" required="false"/>
+    <apex:attribute name="description" description="Description" type="String" required="false"/>
+    <apex:attribute name="filetype" description="Filetype" type="String" required="false"/>
+        
+	<div class="download-button">
+		<div class="download-type-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-{!filetype}"/></div>
+		<div class="download-description"><a href="/sfc/servlet.shepherd/version/download/{!cvid}">DOWNLOAD {!description}</a></div>
+	</div>
+</apex:component>

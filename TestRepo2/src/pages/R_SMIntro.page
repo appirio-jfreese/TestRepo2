@@ -1,0 +1,85 @@
+<!------------------------------------------------------------------------------
+Name        : SMIntro.page
+
+Updated By  : Basant Verma (Appirio OffShore)   
+Date        : 7/19/13
+Story/Task  : US609/DE654
+------------------------------------------------------------------------------->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_SMIntro">
+<body class="home-page sm-page">
+	<div class="wrapper">
+	    <div class="container">
+	        <!-- PAGE HEADER -->
+	        <c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}" />
+
+	        <!-- BREADCRUMB -->
+	        <apex:outputPanel id="beadcrumblinks">
+	            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+	        </apex:outputPanel>
+        	        
+	        <script type="text/javascript">
+	            pageViewed('Selling Materials - Intro Page');
+	        </script>
+	        
+	        <!-- PAGE CONTENT -->
+	            <div class="boxes">
+	            	<apex:variable var="lastItem" value=""/>
+	            	<apex:repeat value="{!sections}" var="section"><apex:variable var="lastItem" value="{!section}"/></apex:repeat>
+	            	
+	                <apex:repeat value="{!sections}" var="section">
+	                		<!-- START : Changed for US609/DE654 - Basant Verma -->
+	                    <div class="column default {!IF(section == lastItem,'last','')}" style="display: {!IF(ISNULL(selectedSection), 'block', 'none')};" >
+	                    <!-- END : Changed for US609/DE654 - Basant Verma -->
+		                    <img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-1.png')}"/>
+		                    <a class="purple" href="javascript:;" onclick="addInBreadcrumb('{!$Page.R_SMIntro}', '{!section}');" data-related="{!idMap[section]}-boxes">{!section}</a>
+ 	                    </div>
+ 	                </apex:repeat>
+ 	                
+ 	                <apex:variable var="currentRow" value="{!1}" />
+					<apex:variable var="currentItem" value="{!1}" />
+                    <apex:variable var="currentSection" value="" />
+					
+ 	                <apex:repeat value="{!sections}" var="section">
+						<apex:variable var="currentItem" value="{!1}" />
+                        <apex:repeat value="{!subSectionsMap[section]}" var="subSection">
+                            <apex:variable var="currentSection" value="{!idMap[section]}-boxes" />
+							<!-- START : Changed for US609/DE654 - Basant Verma -->
+							<div class="column {!idMap[section]}-boxes {!IF(AND(!ISNULL(selectedSection), selectedSection == section), '', 'hide')} {!IF(currentItem/currentRow==3,'last','')}">
+							<!-- END : Changed for US609/DE654 - Basant Verma -->
+								<img src="{!URLFOR($Resource.Responsive_Base, 'i/home-image-1.png')}"/>
+								<a class="purple" href="{!$Page.R_SellingMaterials}?section={!urlencode(section)}&subsection={!urlencode(totalSubSectionsMap[subSection])}&openfilter=true">
+									<div style="position: relative; top: 24px; line-height: 25px;">{!subSection}</div>
+								</a>
+							</div>
+
+							<apex:variable var="currentRow" value="{!IF(currentItem/currentRow==3,currentRow+1,currentRow+0)}" />	                        
+							<apex:variable var="currentItem" value="{!currentItem+1}" />
+
+                        </apex:repeat>
+
+						<div class="column empty black  {!IF(currentItem/currentRow==1,currentSection,'garbage')} " style="display: none;">
+						</div>
+						
+						<div class="column empty black  {!IF(currentItem/currentRow==2,currentSection,'garbage')} " style="display: none;">
+						</div>
+						
+						<div class="column empty black {!currentSection} {!IF(currentItem/currentRow==3 || currentItem/currentRow==1,'last','')} " style="display: none;">
+						</div>
+
+	                </apex:repeat>
+	                
+
+	            </div>
+
+	        <!-- PAGE FOOTER -->
+	        <c:R_pageFooter isInternal="{!isInternalUser}" />
+	    </div>
+	</div>
+</body>
+<apex:form >
+	<apex:actionFunction status="ajax-status" name="addInBreadcrumb" action="{!addInBreadcrumb}" rerender="beadcrumblinks">
+		<apex:param name="bdLink" assignTo="{!bdLink}" value="" />
+		<apex:param name="bdLinkName" assignTo="{!bdLinkName}" value="" />
+	</apex:actionFunction>
+</apex:form>
+</apex:page>

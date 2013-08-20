@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Non Diageo Ingredient</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Non Diageo Ingredients</value>
+    </caseValues>
+    <fields>
+        <label><!-- Ingredient Number --></label>
+        <name>Ingredient_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>Quantity__c</name>
+        <picklistValues>
+            <masterLabel>0.25</masterLabel>
+            <translation><!-- 0.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0.5</masterLabel>
+            <translation><!-- 0.5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0.50</masterLabel>
+            <translation><!-- 0.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0.75</masterLabel>
+            <translation><!-- 0.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.00</masterLabel>
+            <translation><!-- 1.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.25</masterLabel>
+            <translation><!-- 1.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.50</masterLabel>
+            <translation><!-- 1.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1.75</masterLabel>
+            <translation><!-- 1.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.00</masterLabel>
+            <translation><!-- 2.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.25</masterLabel>
+            <translation><!-- 2.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.50</masterLabel>
+            <translation><!-- 2.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2.75</masterLabel>
+            <translation><!-- 2.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.00</masterLabel>
+            <translation><!-- 3.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.25</masterLabel>
+            <translation><!-- 3.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.50</masterLabel>
+            <translation><!-- 3.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3.75</masterLabel>
+            <translation><!-- 3.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.00</masterLabel>
+            <translation><!-- 4.00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.25</masterLabel>
+            <translation><!-- 4.25 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.50</masterLabel>
+            <translation><!-- 4.50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4.75</masterLabel>
+            <translation><!-- 4.75 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5.00</masterLabel>
+            <translation><!-- 5.00 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Recipe Modifiers --></label>
+        <name>Recipe_Modifiers__c</name>
+        <relationshipLabel><!-- Non Diageo Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipe Non-Diageo Product --></label>
+        <name>Recipe_Non_Diageo_Product__c</name>
+        <relationshipLabel><!-- Non Diageo Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Recipe --></label>
+        <name>Recipe__c</name>
+        <relationshipLabel><!-- Non Diageo Ingredients --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Units --></label>
+        <name>Units__c</name>
+        <picklistValues>
+            <masterLabel>N/A</masterLabel>
+            <translation><!-- N/A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ml.</masterLabel>
+            <translation><!-- ml. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>oz.</masterLabel>
+            <translation><!-- oz. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>tsp.</masterLabel>
+            <translation><!-- tsp. --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- unit --></label>
+        <name>unit__c</name>
+        <relationshipLabel><!-- Non Diageo Ingredients --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

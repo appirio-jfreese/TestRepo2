@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Planning page associated with each theme</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Planning_Page__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>The planning page associated with the theme name.  This is used by Controller_Base.cls changeCurrentSiteTheme() to redirect the focus to the planning page associated with the selected theme.</description>
+        <externalId>false</externalId>
+        <label>Planning_Page</label>
+        <length>200</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>PlanningPage_Theme</label>
+</CustomObject>

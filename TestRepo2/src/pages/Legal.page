@@ -1,0 +1,221 @@
+<apex:page controller="Controller_Legal" showHeader="false" standardStylesheets="false" id="thePage" title="Diageo" >
+    <apex:stylesheet value="{!URLFOR($Resource.CommonPage, 'style.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FaqPage, 'style.css')}"/>    
+
+      <div class="content-wrapper">
+      
+      <!-- PAGE HEADER -->
+        <c:pageHeader isLoggedIn="{!isLoggedIn}" />
+        
+        <script type="text/javascript">
+            pageViewed('Legal');
+        </script>
+        
+        <!--  BREADCRUMB -->
+        <c:pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+
+        <!-- PAGE CONTENT -->
+        <div class="content bggradient left">
+      
+        <!-- State rules -->
+            <div id="theContent">
+            
+                <div class="headerText" align="left">
+                    <p><span style="color:#BD1C1C;">1.</span> Select your state(s) and your topic(s)</p>
+                </div>
+                <div align="left" style="padding-left:40px">
+                Hold CTRL to select more than one or use CTRL+A to select all. It is not necessary to press the Enter button.
+                </div>
+                <apex:form >
+                    <div align="center">
+                    <table>
+                         <tr>
+                            <td>
+                                <div id="theDropDown">
+                                    <apex:selectList value="{!selectedState}" size="15" multiselect="true">
+                                        <apex:actionSupport event="onchange" rerender="thePanel" action="{!findIssues}"/>   
+                                        <apex:selectOptions value="{!statesForList}"></apex:selectOptions>
+                                        </apex:selectList>
+                                </div>
+                            </td>
+                            <td>
+                                <div id="theDropDown">
+                                    <apex:selectList value="{!selectedRule}" size="15" multiselect="true">
+                                        <apex:actionSupport event="onchange" rerender="thePanel" action="{!findIssues}"/>   
+                                        <apex:selectOptions value="{!rulesForList}"></apex:selectOptions>
+                                    </apex:selectList>
+                                </div>
+                            </td>
+                            <td style="padding-left:40px;">
+                              
+                               Notes:
+                               <ol>
+                                   <li>Not all topics will appear for every state.</li>
+                                   <li>Do NOT share this information outside of Diageo.</li>
+                                   <li>Reach out to your Beverage Alcohol Law contact with any questions.</li>
+                               </ol>
+                              
+                                   
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    For additional legal information such as trademark guidelines, contract templates, topical analyses and Diageo policies, please 
+                                        <a href="{!$Page.SpiritsPlanning}?section=a0GA000000D6DQtMAN" onclick="pageViewed('Legal');">CLICK HERE</a>.
+  
+                    </div>
+                    <div class="headerText" align="left"> 
+                        <apex:actionFunction name="sendPDF" action="{!sendPDF}"  />
+                        <div class="download-pdf-button" style="float:right;" onclick="javascript:sendPDF();" >
+                             <div class="download-pdf-button-ico"><apex:image url="{!URLFOR($Resource.CommonPage, 'images/transparent.gif')}" styleClass="file-ico24 ico-PDF"/></div>
+                             <div class="download-pdf-button-description">DOWNLOAD AS PDF</div>
+                        </div>
+                        <p><span style="color:#BD1C1C;">2.</span> View the Issues</p>
+                    </div>  
+                </apex:form>
+                
+                <apex:outputPanel id="thePanel">
+                    <apex:pageBlock rendered="{!tooManyRecords}">
+                    <p>Your search returned over 399 records.  Please narrow down your search options.</p>
+                    </apex:pageBlock>
+                    <apex:pageBlock rendered="{!displayList}">
+                            <apex:pageBlockTable value="{!issues}" var="issue" width="100%">
+                                <apex:column value="{!issue.State__r.Name}" width="5%"/>
+                                <apex:column value="{!issue.Rule__r.Name}" width="10%"/>
+                                <apex:column value="{!issue.Rule_Applies__c}" width="5%"/>
+                                <apex:column value="{!issue.Applicability_Comment__c}" width="60%"/>
+                                <apex:column value="{!issue.Statute_Ref__c}" width="20%"/>
+                            </apex:pageBlockTable>
+                            
+                    </apex:pageBlock> 
+                </apex:outputPanel>    
+            </div>
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:pageFooter isInternal="{!isInternalUser}" />
+        </div>
+ 
+    <style>
+    
+        #theLink
+        {
+            
+            width: 64px;
+            height: 64px;
+            position: relative;
+            top: -325px;
+            left: 800px;
+        
+        }
+
+        
+        .red
+        {
+            font-weight: bold;
+            color: #BD1C1C;
+            font-size: x-large;
+            float: left;
+        }
+        
+        body 
+        {
+            width: 960px;
+            margin-left:auto;
+            margin-right:auto;    
+            padding-bottom:50px;  
+     
+        }
+        
+        #theContent
+        {
+            width:100%;
+            height: 100%;
+            min-height:800px;
+            background-color: #FFFFFF;
+            -moz-box-shadow: 0px 5px 5px #313131;
+            -webkit-box-shadow: 0px 5px 5px #313131;
+            box-shadow: 0px 5px 5px #313131;
+            padding-bottom: 25px;
+            
+        }
+        
+        #theDropDown
+        {
+            margin-top: 55px;
+            width:85%;
+            margin-left:auto;
+            margin-right:auto;
+            
+        }
+        
+        #paddingDropDown
+        {
+            margin-left:12px;
+        }
+        
+        .headerText
+        {
+            width: 100%;
+            background-color: #3D3D3D;
+            height: 32px;
+            color: #FFFFFF;
+            font-size: x-large;
+            font-weight: bold;
+
+        
+        }
+        
+        .headerText p
+        {
+            padding-left: 40px;
+        }
+        
+        
+        
+        select 
+        {
+            -moz-box-shadow: 0px 5px 5px #999999;
+            -webkit-box-shadow: 0px 5px 5px #999999;
+            box-shadow: 0px 5px 5px #999999;
+        }
+        
+        
+       
+        body .bRelatedList .pbBody table.list, body .apexp .pbBody table.list 
+        {
+            border: 1px solid #D4DADC;
+            -moz-box-shadow: 0px 5px 5px #999999;
+            -webkit-box-shadow: 0px 5px 5px #999999;
+            box-shadow: 0px 5px 5px #999999;
+            margin-top:10px;
+            text-align: left;
+            vertical-align: top;
+        }        
+        body .pbBody table.list tr.headerRow td, body .pbBody table.list tr.headerRow th 
+        {
+            border-width: 1px 1px 1px 1px;
+            color: #DD0000;
+            font-size: medium;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+            text-align: left;
+            vertical-align: top;
+
+        }     
+        
+        body td.dataCell
+        {
+         vertical-align: top;
+         border: 1px solid #D4DADC;
+        }  
+        
+       
+        
+    
+    
+    </style>
+
+    <c:ajaxLoader />
+
+</apex:page>

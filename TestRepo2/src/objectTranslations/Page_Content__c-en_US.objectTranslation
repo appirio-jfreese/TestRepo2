@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Page Content</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Page Contents</value>
+    </caseValues>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Page Content Value --></label>
+        <name>Page_Content_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Page Name --></label>
+        <name>Page_Name__c</name>
+        <picklistValues>
+            <masterLabel>Codes &amp; Policies</masterLabel>
+            <translation><!-- Codes &amp; Policies --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Privacy Policy</masterLabel>
+            <translation><!-- Privacy Policy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terms &amp; Conditions</masterLabel>
+            <translation><!-- Terms &amp; Conditions --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Page Content Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

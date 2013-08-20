@@ -1,0 +1,647 @@
+<apex:page />
+
+<!-- 
+<apex:page standardController="Goal__c"
+		   recordSetVar="incomingGoals"
+		   extensions="Controller_GoalCreationPage"
+		   tabStyle="Goal_Creation__tab"
+		   sidebar="false">
+		   
+	<head>
+		<apex:includeScript value="{!URLFOR($Resource.ACPJQuery, 'js/jquery-1.7.2.min.js')}"/>
+	</head>
+
+	<style>
+		
+		.pageHeader {
+			margin-bottom: 5px;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		
+		.Custom50Tab .bPageBlock {
+			border-top: 2px solid #00A4CA;
+		}
+	
+		.tabHeader {
+			float: left;
+		}
+	
+		.tabHeader ul {
+			list-style: none;
+			padding: 0;
+			margin: 0px 0px 0px 1px;
+		}
+		
+		.tabHeader li, .tabHeader a {
+			-webkit-border-top-left-radius: 10px;
+			-khtml-border-radius-topleft: 10px;	
+			-moz-border-radius-topleft: 10px;
+			border-top-left-radius: 10px;
+			
+			-webkit-border-top-right-radius: 10px;
+			-khtml-border-radius-topright: 10px;	
+			-moz-border-radius-topright: 10px;
+			border-top-right-radius: 10px;
+		}
+		
+		.tabHeader li {
+			float: left;
+			border-bottom: 2px solid #005D83;
+			margin: 0px 2px 0px 0px;
+		}
+	
+		.tabHeader a {
+			text-decoration: none;
+			display: block;
+			background: #005D83;
+			padding: 5px 20px;
+			color: white;
+			text-align: center;
+		}
+		
+		.unselected a:hover {
+			text-decoration: none;
+			background: #95DDF8;
+			color: black;
+		}
+		
+		.selected a{
+			background: #00A4CA;
+			color: white;
+			font-weight: bold;
+		}
+		
+		.selected a:hover {
+			text-decoration: none;
+			color: white;
+		}
+		
+		body .secondaryPalette.bPageBlock {
+			-webkit-border-top-left-radius: 0px;
+			-khtml-border-radius-topleft: 0px;	
+			-moz-border-radius-topleft: 0px;
+			border-top-left-radius: 0px;
+			
+			-webkit-border-top-right-radius: 0px;
+			-khtml-border-radius-topright: 0px;	
+			-moz-border-radius-topright: 0px;
+			border-top-right-radius: 0px;
+		}
+		
+		.totalAccDiv {
+			float: right;
+			font-weight: bold;
+			padding: 4px 10px 0px 0px;
+		}
+		
+		.block {
+			width: 100%;
+			margin-bottom: 10px;
+		}
+	
+		.blockHeader {
+			background-color: #00A4CA;
+			width: 100%;
+			padding: 5px;
+		}
+		
+		.blockHeader td {
+			font-weight: bold;
+			color: white;
+			width: 33%;
+		}
+		
+		.sfdcLabel {
+			font-weight: bold;
+			font-size: 91%;
+			color: #4A4A56;
+		}
+		
+		.hiddenLookup {
+			width: 0px;
+			padding: 0px;
+			border: none;
+		}
+	
+	</style>
+	
+	<script>
+	
+		var j$ = jQuery.noConflict();
+		
+		function clearBBSLookups(){
+			j$('.block').find('.lookupInput').find('input').val('');
+			hideBBSLookups();
+		}
+		
+		function hideBBSLookups(){
+			j$('.block').find('.lookupInput').find('input').addClass('hiddenLookup');
+		}
+	
+		function checkAddBBG(mgrId, prem, value){
+			if(value != ''){
+				addBBG(mgrId, prem, value);
+			}
+		}
+		
+	</script>
+
+	<div class="pageHeader">Goal Creation</div>
+	
+	<apex:form >
+		
+		<apex:outputPanel id="messagePanel">
+			<apex:pageMessages />
+		</apex:outputPanel>
+		
+		<apex:actionFunction name="programChanged"
+							 action="{!programSelected}"
+							 rerender="messagePanel, programPanel, goalPanel, tabPanel, totalPanel, componentPanel"
+							 status="programStatus"
+							 oncomplete="hideBBSLookups()"/>
+		<apex:actionFunction name="assocGoalChanged"
+							 action="{!beginAssocCreation}"
+							 rerender="messagePanel, programPanel, goalPanel, goalCreatePanel, tabPanel, totalPanel, componentPanel"
+							 status="programStatus"
+							 oncomplete="hideBBSLookups()"/>
+		<apex:actionFunction name="premiseChanged"
+							 action="{!premiseSelected}"
+							 rerender="messagePanel, tabPanel, componentPanel"
+							 status="premiseStatus"
+							 oncomplete="hideBBSLookups()">
+			<apex:param name="premiseValue"
+						value=""
+						assignTo="{!premiseValue}"/>
+		</apex:actionFunction>
+		<apex:actionFunction name="overallDueDateChanged"
+							 action="{!overallDueDateChanged}"
+							 rerender="messagePanel, componentPanel"
+							 oncomplete="hideBBSLookups()"/>
+		<apex:actionFunction name="addBBG"
+							 action="{!addBBG}"
+							 rerender="messagePanel, bbgListPanel"
+							 oncomplete="clearBBSLookups()">
+			<apex:param name="mpMgrId"
+						value=""
+						assignTo="{!bbgMPMgrId}"/>
+			<apex:param name="mpPrem"
+						value=""
+						assignTo="{!bbgMPPrem}"/>
+			<apex:param name="selName"
+						value=""
+						assignTo="{!bbgSelName}"/>
+		</apex:actionFunction>
+	
+		<apex:outputPanel id="programPanel">
+		
+			<apex:outputPanel rendered="{!directorMode == true && isProgramSelected == false && isCreatingLocalGoal == false && isCreatingAssocGoal == false}">
+				<apex:pageMessage severity="info" strength="3" title="Goal Creation"
+					detail="This tab should only be used to create local and associated goals. To cascade goals from the national execution calendar, click on the 'Goals' tab, find the goal to be cascaded from the 'My Goals' list, check the box to the left of the goal and then choose the 'Goal Creation' button."/>	
+			</apex:outputPanel>
+		
+			<apex:pageBlock rendered="{!isProgramSelected == false && isCreatingLocalGoal == false && isCreatingAssocGoal == false}"
+							mode="edit">
+				<apex:outputPanel rendered="{!directorMode == false}">
+					<apex:pageBlockSection title="National Execution Goal" columns="1">
+							Select a Program: &nbsp; 
+							<apex:inputField value="{!dummyGoal.Program__c}"
+										 label=""
+										 onChange="programChanged()"/>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
+					
+				<apex:outputPanel rendered="{!directorMode == true}">
+					<apex:pageBlockSection title="Associated Goal" columns="1">
+						<i>Associated goals refer to those that should be tied to previously cascaded goals.</i>
+						<br/><br/>
+						<apex:outputPanel >
+							Create an associated goal related to an existing goal:&nbsp;
+							<apex:inputField value="{!dummyGoal.Associate_Parent__c}"
+											 onChange="assocGoalChanged()"/>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
+				<apex:outputPanel >
+					<apex:pageBlockSection title="Local Goal" columns="1">
+						<i>Local goals refer to goals outside of the national execution calendar that have not been cascaded to you.</i>
+						<br/><br/>
+							<apex:outputPanel >
+							Create a &nbsp; 
+							<apex:selectList value="{!localType}"
+											 size="1">
+								<apex:selectOptions value="{!localTypeOptions}"/>
+							</apex:selectList>
+							&nbsp;local goal for&nbsp;
+							<apex:selectList value="{!localPrem}"
+											 size="1">
+								<apex:selectOption itemValue="On-Premise - Control" itemLabel="On-Premise"/>
+								<apex:selectOption itemValue="Off-Premise - Control" itemLabel="Off-Premise"/>
+							</apex:selectList>
+							&nbsp;accounts:&nbsp;
+							<apex:actionStatus id="beginCreateGoalStatus">
+								<apex:facet name="stop">
+									<apex:commandButton value="Create"
+														action="{!beginGoalCreation}"
+														status="beginCreateGoalStatus"
+														rerender="messagePanel, programPanel, goalCreatePanel, componentPanel, saveButtonPanel"
+														oncomplete="hideBBSLookups()"/>
+								</apex:facet>
+								<apex:facet name="start">
+									<apex:commandButton value="Create"
+														disabled="true"/>
+								</apex:facet>
+							</apex:actionStatus>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+		<apex:actionStatus id="programStatus">
+			<apex:facet name="start">
+				<apex:image value="/img/loading.gif" />
+			</apex:facet>
+		</apex:actionStatus>
+		
+		<apex:outputPanel id="goalCreatePanel">
+			<apex:pageBlock rendered="{!(isCreatingLocalGoal == true || isCreatingAssocGoal == true) && showConfirmation == false}"
+							mode="edit">
+				<apex:pageBlockSection title="Basic Information">
+					<apex:inputField value="{!dummyGoal.Name}"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Record Type" for="goalRecType"/>
+     					<apex:outputLabel value="{!localType}" id="goalRecType"/>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem rendered="{!isCreatingLocalGoal == true}">
+						<apex:outputLabel value="Due Date" for="localDueDate"/>
+						<apex:inputField value="{!dummyGoal.Due_Date__c}"
+										 id="localDueDate"
+										 onchange="overallDueDateChanged()"/>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem rendered="{!isCreatingAssocGoal == true}">
+						<apex:outputLabel value="Due Date" for="assocDueDate"/>
+						<apex:outputField value="{!dummyGoal.Due_Date__c}" id="assocDueDate"/>
+					</apex:pageBlockSectionItem>
+					<apex:outputField value="{!dummyGoal.Goal_Type__c}"/>
+					<apex:inputField value="{!dummyGoal.Account_Grade__c}"/>
+					<apex:outputField value="{!dummyGoal.Sales_Channel__c}"/>
+				</apex:pageBlockSection>
+				<apex:pageBlockSection title="Details"
+									   rendered="{!localType != 'General Goals'}">
+					<apex:inputField value="{!dummyGoal.Content_Link__c}"
+									 rendered="{!showContentLink}"/>
+					<apex:inputField value="{!dummyGoal.Location_Grade__c}"
+									 rendered="{!showLocationGrade}"/>
+					<apex:inputField value="{!dummyGoal.Suggested_Price__c}"
+									 rendered="{!showSuggestedPrice}"/>
+					<apex:inputField value="{!dummyGoal.Feature_Type__c}"
+									 rendered="{!showFeatureType}"/>
+					<apex:inputField value="{!dummyGoal.Size_of_Ad__c}"
+									 rendered="{!showSizeOfAd}"/>
+					<apex:inputField value="{!dummyGoal.Type_of_Ad__c}"
+									 rendered="{!showTypeOfAd}"/>
+					<apex:inputField value="{!dummyGoal.Length_of_Training__c}"
+									 rendered="{!showTrainingLength}"/>
+					<apex:inputField value="{!dummyGoal.Accomplishment_Recap__c}"
+									 rendered="{!showAccomplishment}"/>
+					<apex:inputField value="{!dummyGoal.Number_of_Attendees__c}"
+									 rendered="{!showNumAttendees}"/>
+					<apex:inputField value="{!dummyGoal.Tasted_Product__c}"
+									 rendered="{!showTastedProduct}"/>
+					<apex:inputField value="{!dummyGoal.Product_Sample_s__c}"
+									 rendered="{!showProductSamples}"/>
+					<apex:outputPanel rendered="{!showProductSamples}"/>
+					<apex:inputField value="{!dummyGoal.Trainer__c}"
+									 rendered="{!showTrainer}"/>
+					<apex:inputField value="{!dummyGoal.Training_Audience__c}"
+									 rendered="{!showTrainingAud}"/>
+					<apex:inputField value="{!dummyGoal.SFA_POS_Items__c}"
+									 rendered="{!showSFAPOS}"/>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+		<apex:outputPanel id="goalPanel">
+			<apex:pageBlock rendered="{!isProgramSelected && showConfirmation == false}">
+				<apex:pageBlockSection >
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{!dummyGoal.Name}"
+										  label="Goal Name"/>
+						<apex:outputField value="{!dummyGoal.Sales_Channel__c}"
+										  label="Program Type"/>
+						<apex:inputField value="{!dummyGoal.Due_Date__c}"
+										  label="Due Date"
+										  onchange="overallDueDateChanged()"
+									 	  rendered="{!directorMode == false}"/>
+						<apex:outputField value="{!dummyGoal.Due_Date__c}"
+										  label="Due Date"
+											rendered="{!directorMode == true}"/>
+						<apex:pageBlockSectionItem rendered="{!directorMode == false && isProgramSelected == true}">
+							<apex:outputLabel value="On-Premise Record Type"
+											  for="onPremRTSelect"/>
+							<apex:selectList id="onPremRTSelect"
+											 value="{!onPremRecTypeSel}"
+											 size="1">
+								<apex:selectOptions value="{!onPremGoalRecTypes}"/>
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem rendered="{!directorMode == true && isProgramSelected == true}">
+							<apex:outputLabel value="On-Premise Record Type"
+											  for="onPremRTSelect"/>
+							<apex:outputLabel id="onPremRTSelect"
+											  value="{!onPremRecTypeName}"/>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem rendered="{!directorMode == false && isProgramSelected == true}">
+							<apex:outputLabel value="Off-Premise Record Type"
+											  for="offPremRTSelect"/>
+							<apex:selectList id="offPremRTSelect"
+											 value="{!offPremRecTypeSel}"
+											 size="1">
+								<apex:selectOptions value="{!offPremGoalRecTypes}"/>
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem rendered="{!directorMode == true && isProgramSelected == true}">
+							<apex:outputLabel value="Off-Premise Record Type"
+											  for="offPremRTSelect"/>
+							<apex:outputLabel id="offPremRTSelect"
+											  value="{!offPremRecTypeName}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection rendered="{!readOnlyMode == false}">
+						<apex:inputField value="{!dummyGoal.Account_Grade__c}"/>
+						<apex:inputField value="{!dummyGoal.SFA_POS_Items__c}"
+										 rendered="{!goalRecType == 'Display'}"/>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection rendered="{!readOnlyMode == true}">
+						<apex:outputField value="{!dummyGoal.Account_Grade__c}"/>
+						<apex:outputField value="{!dummyGoal.SFA_POS_Items__c}"
+										  rendered="{!goalRecType == 'Display'}"/>
+					</apex:pageBlockSection>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+		<apex:outputPanel id="tabPanel">
+			<apex:outputPanel rendered="{!isProgramSelected && showConfirmation == false}">			
+				<div class="tabHeader">
+					<ul>
+						<li id="premTab0"
+							onclick="premiseChanged('On-Premise - Control')"
+							class="{!IF(premiseValue == 'On-Premise - Control', 'selected', 'unselected')}">
+							<a href="#">On Premise</a>
+						</li>
+						<li id="premTab1"
+							onclick="premiseChanged('Off-Premise - Control')"
+							class="{!IF(premiseValue == 'Off-Premise - Control', 'selected', 'unselected')}">
+							<a href="#">Off Premise</a>
+						</li>
+					</ul>
+				</div>
+				<apex:actionStatus id="premiseStatus" style="float: left;">
+					<apex:facet name="start">
+						<apex:image value="/img/loading.gif"
+									style="padding: 3px 0px 0px 3px;"/>
+					</apex:facet>
+				</apex:actionStatus>
+				
+				<apex:outputPanel id="totalPanel">
+					<div class="totalAccDiv">
+						<apex:outputLabel value="{!premiseDispValue + ' accounts targeted: ' + TEXT(totalAccsSelected) + ' (' + TEXT(totalAccsAvail) + ' available)'}"
+										  rendered="{!directorMode == false}"/>
+						<apex:outputLabel value="{!premiseDispValue + ' accounts targeted: ' + TEXT(totalAccsSelected) + ' (' + TEXT(totalAccsReq) + ' assigned, ' + TEXT(totalAccsAvail) + ' available)'}"
+										  rendered="{!directorMode == true && premiseDispValue == 'On Premise' || (incomingGoal.Sales_Channel__c != 'Integrated National Program' && incomingGoal.Sales_Channel__c != 'Display/Visibility')}"/>
+						<apex:outputLabel value="{!premiseDispValue + ' accounts targeted: ' + TEXT(totalAccsSelected) + ' (' + TEXT(totalAccsReq) + ' assigned, ' + TEXT(totalAccsAvail) + ' available), cases targeted: ' + TEXT(totalCasesSelected) + ' (' + TEXT(totalCasesReq) + ' assigned)'}"
+										  rendered="{!directorMode == true && premiseDispValue == 'Off Premise' && (incomingGoal.Sales_Channel__c == 'Integrated National Program' || incomingGoal.Sales_Channel__c == 'Display/Visibility')}"/>
+						&nbsp;
+						<apex:actionStatus id="updateTotalStatus"
+										   startText="Updating...">
+							<apex:facet name="stop">
+								<apex:commandLink value="Update"
+												  action="{!totalSelectedChanged}"
+												  rerender="totalPanel"
+												  status="updateTotalStatus"/>
+							</apex:facet>
+						</apex:actionStatus>
+					</div>
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</apex:outputPanel>
+		
+		<apex:outputPanel id="componentPanel">
+			<apex:pageBlock rendered="{!(isProgramSelected || isCreatingLocalGoal || isCreatingAssocGoal) && showConfirmation == false}"
+							mode="edit">
+				<apex:repeat value="{!dispMPs}"
+							 var="mp">
+					<div class="block">
+						<table class="blockHeader">
+							<tr>
+								<td>
+									{!mp.mgrStateString}
+								</td>
+								<td style="text-align: center;">
+									{!premiseDispValue} Accounts: {!mp.accCount}
+								</td>
+								<td style="text-align: right;">
+									{!mp.mgrName}
+								</td>
+							</tr>
+						</table>
+						<table style="width: 100%">
+							<tr>
+								<td>
+									<apex:outputPanel rendered="{!mp.readOnlyMode == true}">
+										<apex:pageMessage severity="info"
+														  strength="3"
+														  detail="This goal cannot be created, because an admin has not cascaded a goal down of type '{!premiseDispValue}' for this program."/>
+									</apex:outputPanel>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 60%; vertical-align: top;">
+									<apex:pageBlockSection columns="1"
+														   rendered="{!mp.readOnlyMode == false && readOnlyMode == false}">
+										<apex:inputField value="{!mp.goal.Minimum_of_Accounts__c}"/>
+										<apex:inputField value="{!mp.goal.Features_Displayed__c}"
+														 rendered="{!showFeatures}"/>
+										<apex:inputField value="{!mp.goal.Cases_Displayed__c}"
+														 rendered="{!showCases}"/>
+										<apex:inputField value="{!mp.goal.Due_Date__c}"
+														 rendered="{!directorMode == false}"/>
+										<apex:inputField value="{!mp.goal.Percent_of_Universe__c}"/>
+										<apex:inputField value="{!mp.goal.Location_Grade__c}"
+														 rendered="{!goalRecType == 'Display'}"/>
+										<apex:inputField value="{!mp.goal.Content_Link__c}"
+														 rendered="{!goalRecType == 'Distribution'}"
+														 style="width: 80%;"/>
+										<apex:inputField value="{!mp.goal.Comments__c}"
+														 style="width: 80%; height: 60px;"/>
+									</apex:pageBlockSection>
+									<apex:pageBlockSection columns="1"
+														   rendered="{!mp.readOnlyMode == true || readOnlyMode == true}">
+										<apex:outputField value="{!mp.goal.Minimum_of_Accounts__c}"/>
+										<apex:outputField value="{!mp.goal.Features_Displayed__c}"
+														  rendered="{!showFeatures}"/>
+										<apex:outputField value="{!mp.goal.Cases_Displayed__c}"
+														  rendered="{!showCases}"/>
+										<apex:outputField value="{!mp.goal.Due_Date__c}"/>
+										<apex:outputField value="{!mp.goal.Percent_of_Universe__c}"/>
+										<apex:outputField value="{!mp.goal.Location_Grade__c}"
+														  rendered="{!goalRecType == 'Display'}"/>
+										<apex:outputField value="{!mp.goal.Content_Link__c}"
+														  rendered="{!goalRecType == 'Distribution'}"/>
+										<apex:outputField value="{!mp.goal.Comments__c}"/>
+									</apex:pageBlockSection>
+								</td>
+								<td style="width: 40%; padding: 7px 10px 0px 0px; vertical-align: top;'">
+									<span class="sfdcLabel">
+										Brand &amp; Bottle Sizes
+									</span>
+									<apex:outputPanel id="bbgListPanel"
+													  rendered="{!mp.readOnlyMode == false}">
+										<div style="padding: 5px 0px;">
+											<span style="font-weight: normal;">
+												Click to add:
+											</span>
+											<apex:inputField value="{!mp.dummyBBG.BrandBottle_Size__c}"
+															 required="false"
+															 label=""
+															 onchange="checkAddBBG('{!mp.mgrId}', '{!mp.prem}', this.value)"/>
+										</div>
+										<div style="padding: 0px 2px;">
+											<apex:selectList value="{!mp.selectedBBGs}"
+															 size="9"
+															 style="width: 100%;"
+															 multiselect="true">
+												<apex:selectOptions value="{!mp.bbgOptions}"/>
+											</apex:selectList>
+										</div>
+										<div style="padding-top: 4px;">
+											<apex:actionStatus id="copyBBGStatus">
+												<apex:facet name="stop">
+													<apex:commandButton value="Copy Selected to All"
+																		style="float: left;"
+																		action="{!copyBBGs}"
+																		rerender="messagePanel, componentPanel"
+																		status="copyBBGStatus"
+																		oncomplete="hideBBSLookups()">
+														<apex:param name="mpMgrId"
+																	value="{!mp.mgrId}"
+																	assignTo="{!bbgMPMgrId}"/>
+														<apex:param name="mpPrem"
+																	value="{!mp.prem}"
+																	assignTo="{!bbgMPPrem}"/>
+													</apex:commandButton>
+												</apex:facet>
+												<apex:facet name="start">
+													<apex:commandButton value="Copy Selected to All"
+																		style="float: left;"
+																		disabled="true"/>
+												</apex:facet>
+											</apex:actionStatus>
+											<apex:actionStatus id="deleteBBGStatus">
+												<apex:facet name="stop">
+													<apex:commandButton value="Delete Selected"
+																		style="float: right;"
+																		action="{!removeBBGs}"
+																		rerender="messagePanel, bbgListPanel"
+																		status="deleteBBGStatus"
+																		oncomplete="hideBBSLookups()">
+														<apex:param name="mpMgrId"
+																	value="{!mp.mgrId}"
+																	assignTo="{!bbgMPMgrId}"/>
+														<apex:param name="mpPrem"
+																	value="{!mp.prem}"
+																	assignTo="{!bbgMPPrem}"/>
+													</apex:commandButton>
+												</apex:facet>
+												<apex:facet name="start">
+													<apex:commandButton value="Delete Selected"
+																		style="float: right;"
+																		disabled="true"/>
+												</apex:facet>
+											</apex:actionStatus>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!readOnlyMode == true}">
+										<apex:selectList value="{!mp.selectedBBGs}"
+														 disabled="true"
+														 size="9"
+														 style="width: 100%;">
+											<apex:selectOptions value="{!mp.bbgOptions}"/>
+										</apex:selectList>
+									</apex:outputPanel>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</apex:repeat>
+			</apex:pageBlock>
+			
+			<apex:outputPanel id="saveButtonPanel">
+				<apex:outputPanel rendered="{!(isProgramSelected || isCreatingLocalGoal || isCreatingAssocGoal) && readOnlyMode == false && showConfirmation == false}">
+					<div style="width: 100%; margin: 0 auto; text-align: center;">
+						<apex:actionStatus id="saveStatus">
+							<apex:facet name="stop">
+								<apex:outputPanel >
+									<apex:commandButton value="Save"
+														action="{!saveClicked}"
+														rendered="{!isCreatingLocalGoal == false && isCreatingAssocGoal == false}"
+														status="saveStatus"
+														rerender="messagePanel, programPanel, goalPanel, goalCreatePanel, tabPanel, totalPanel, componentPanel, saveButtonPanel, confirmButtonPanel"/>
+									<apex:commandButton value="Save and Submit"
+														action="{!submitClicked}"
+														status="saveStatus"
+														rerender="messagePanel, programPanel, goalPanel, goalCreatePanel, tabPanel, totalPanel, componentPanel, saveButtonPanel, confirmButtonPanel"/>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:facet name="start">
+								<apex:outputPanel >
+									<apex:commandButton value="Save"
+														disabled="true"
+														rendered="{!isCreatingLocalGoal == false && isCreatingAssocGoal == false}"/>
+									<apex:commandButton value="Save and Submit"
+														disabled="true"/>
+								</apex:outputPanel>
+							</apex:facet>
+						</apex:actionStatus>
+					</div>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			
+			<apex:outputPanel id="confirmButtonPanel">
+				<apex:outputPanel rendered="{!showConfirmation}">
+					<div style="width: 100%; margin: 0 auto; text-align: center;">
+						<apex:actionStatus id="confirmStatus">
+							<apex:facet name="stop">
+								<apex:outputPanel >
+									<apex:commandButton value="Go Back"
+														action="{!confirmationCancelClicked}"
+														status="confirmStatus"
+														rerender="messagePanel, programPanel, goalPanel, goalCreatePanel, tabPanel, totalPanel, componentPanel, saveButtonPanel, confirmButtonPanel"/>
+									<apex:commandButton value="Confirm Submission"
+														action="{!confirmationSubmitClicked}"
+														status="confirmStatus"
+														rerender="messagePanel, programPanel, goalPanel, goalCreatePanel, tabPanel, totalPanel, componentPanel, saveButtonPanel, confirmButtonPanel"/>
+								</apex:outputPanel>
+							</apex:facet>
+							<apex:facet name="start">
+								<apex:outputPanel >
+									<apex:commandButton value="Go Back"
+														disabled="true"/>
+									<apex:commandButton value="Confirm Submission"
+														disabled="true"/>
+								</apex:outputPanel>
+							</apex:facet>
+						</apex:actionStatus>
+					</div>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			
+		</apex:outputPanel>
+		
+	
+	</apex:form>
+
+</apex:page>
+ -->

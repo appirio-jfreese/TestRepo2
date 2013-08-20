@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Recipe Brand</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Recipe Brands</value>
+    </caseValues>
+    <fields>
+        <label><!-- API External ID --></label>
+        <name>API_External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available --></label>
+        <name>Available__c</name>
+        <picklistValues>
+            <masterLabel>FALSE</masterLabel>
+            <translation><!-- FALSE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRUE</masterLabel>
+            <translation><!-- TRUE --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Brand Category --></label>
+        <name>Brand_Category__c</name>
+        <picklistValues>
+            <masterLabel>Beer</masterLabel>
+            <translation><!-- Beer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blended Whiskey</masterLabel>
+            <translation><!-- Blended Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bourbon</masterLabel>
+            <translation><!-- Bourbon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canadian Whiskey</masterLabel>
+            <translation><!-- Canadian Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cordials</masterLabel>
+            <translation><!-- Cordials --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gin</masterLabel>
+            <translation><!-- Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Irish Whiskey</masterLabel>
+            <translation><!-- Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rum</masterLabel>
+            <translation><!-- Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rye Whiskey</masterLabel>
+            <translation><!-- Rye Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schnapps</masterLabel>
+            <translation><!-- Schnapps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scotch</masterLabel>
+            <translation><!-- Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tennessee Whiskey</masterLabel>
+            <translation><!-- Tennessee Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequila</masterLabel>
+            <translation><!-- Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodka</masterLabel>
+            <translation><!-- Vodka --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Brand Image --></label>
+        <name>Brand_Image__c</name>
+        <relationshipLabel><!-- Recipe Brands --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Gin</masterLabel>
+            <translation><!-- Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Liqueur</masterLabel>
+            <translation><!-- Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rum</masterLabel>
+            <translation><!-- Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Speciality</masterLabel>
+            <translation><!-- Speciality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tequila</masterLabel>
+            <translation><!-- Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vodka</masterLabel>
+            <translation><!-- Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whiskey</masterLabel>
+            <translation><!-- Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whisky</masterLabel>
+            <translation><!-- Whisky --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Diageo Brand External Id --></label>
+        <name>Diageo_Brand_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Diageo Brand Tags --></label>
+        <name>Diageo_Brand_Tags__c</name>
+    </fields>
+    <fields>
+        <label><!-- Generic Brand --></label>
+        <name>Generic_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Locale --></label>
+        <name>Locale__c</name>
+        <picklistValues>
+            <masterLabel>DE</masterLabel>
+            <translation><!-- DE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-CA</masterLabel>
+            <translation><!-- EN-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-GB</masterLabel>
+            <translation><!-- EN-GB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-IN</masterLabel>
+            <translation><!-- EN-IN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EN-US</masterLabel>
+            <translation><!-- EN-US --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-AR</masterLabel>
+            <translation><!-- ES-AR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CL</masterLabel>
+            <translation><!-- ES-CL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-CO</masterLabel>
+            <translation><!-- ES-CO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ES-MX</masterLabel>
+            <translation><!-- ES-MX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR</masterLabel>
+            <translation><!-- FR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FR-CA</masterLabel>
+            <translation><!-- FR-CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PT-BR</masterLabel>
+            <translation><!-- PT-BR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TH</masterLabel>
+            <translation><!-- TH --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Long Description --></label>
+        <name>Long_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Level 3 Code --></label>
+        <name>SAP_Level_3_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SAP Level 3 Description --></label>
+        <name>SAP_Level_3_Descr__c</name>
+    </fields>
+    <fields>
+        <label><!-- Short Description --></label>
+        <name>Short_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- SubBrand --></label>
+        <name>SubBrand__c</name>
+        <picklistValues>
+            <masterLabel>Vodka 100</masterLabel>
+            <translation><!-- Vodka 100 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub-Brand --></label>
+        <name>Sub_Brand__c</name>
+        <picklistValues>
+            <masterLabel>AUTHENTIC JOSE CUERVO LIGHT MARGARITAS® - LIGHT</masterLabel>
+            <translation><!-- AUTHENTIC JOSE CUERVO LIGHT MARGARITAS® - LIGHT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AUTHENTIC JOSE CUERVO WATERMELON MARGARITAS®</masterLabel>
+            <translation><!-- AUTHENTIC JOSE CUERVO WATERMELON MARGARITAS® --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BAILEYS® Caramel Irish Cream Liqueur</masterLabel>
+            <translation><!-- BAILEYS® Caramel Irish Cream Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BAILEYS® Coffee Irish Cream Liqueur</masterLabel>
+            <translation><!-- BAILEYS® Coffee Irish Cream Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BAILEYS® Mint Chocolate Irish Cream Liqueur</masterLabel>
+            <translation><!-- BAILEYS® Mint Chocolate Irish Cream Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BLACK HAUS® Schnapps</masterLabel>
+            <translation><!-- BLACK HAUS® Schnapps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUCHANAN’S RED SEAL® Blended Scotch Whisky</masterLabel>
+            <translation><!-- BUCHANAN’S RED SEAL® Blended Scotch Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUCHANAN’S® Deluxe Blended Scotch Whisky</masterLabel>
+            <translation><!-- BUCHANAN’S® Deluxe Blended Scotch Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUCHANAN’S® Special Reserve Whisky</masterLabel>
+            <translation><!-- BUCHANAN’S® Special Reserve Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BULLEIT® Bourbon</masterLabel>
+            <translation><!-- BULLEIT® Bourbon --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BULLEIT® Rye</masterLabel>
+            <translation><!-- BULLEIT® Rye --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BUSHMILLS® Original Irish Whiskey</masterLabel>
+            <translation><!-- BUSHMILLS® Original Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BaILEYS® Mudslide Cocktail</masterLabel>
+            <translation><!-- BaILEYS® Mudslide Cocktail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baileys® Original Irish Cream Liqueur</masterLabel>
+            <translation><!-- Baileys® Original Irish Cream Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bulloch Lade®</masterLabel>
+            <translation><!-- Bulloch Lade® --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bushmills®  1608 Irish Whiskey</masterLabel>
+            <translation><!-- Bushmills®  1608 Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bushmills® Black Bush Irish Whiskey</masterLabel>
+            <translation><!-- Bushmills® Black Bush Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bushmills® Malt 10 Irish Whiskey</masterLabel>
+            <translation><!-- Bushmills® Malt 10 Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bushmills® Malt 16 Irish Whiskey</masterLabel>
+            <translation><!-- Bushmills® Malt 16 Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bushmills®Malt 21 Irish Whiskey</masterLabel>
+            <translation><!-- Bushmills®Malt 21 Irish Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAPTAIN MORGAN TATTOO® Black Spiced Rum</masterLabel>
+            <translation><!-- CAPTAIN MORGAN TATTOO® Black Spiced Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAPTAIN MORGAN® Original Spiced Rum</masterLabel>
+            <translation><!-- CAPTAIN MORGAN® Original Spiced Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CROWN ROYAL BLACK™ Blended Whisky</masterLabel>
+            <translation><!-- CROWN ROYAL BLACK™ Blended Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CROWN ROYAL CASK NO.16® Blended Whisky</masterLabel>
+            <translation><!-- CROWN ROYAL CASK NO.16® Blended Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CROWN ROYAL Deluxe® Blended Whisky</masterLabel>
+            <translation><!-- CROWN ROYAL Deluxe® Blended Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CROWN ROYAL RESERVE® Blended Whisky</masterLabel>
+            <translation><!-- CROWN ROYAL RESERVE® Blended Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CROWN ROYAL® XR® Blended Whisky</masterLabel>
+            <translation><!-- CROWN ROYAL® XR® Blended Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caol Ila 12® Year Old</masterLabel>
+            <translation><!-- Caol Ila 12® Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caol Ila® 18 Year Old</masterLabel>
+            <translation><!-- Caol Ila® 18 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan 100 Proof</masterLabel>
+            <translation><!-- Captain Morgan 100 Proof --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Lime Bite®</masterLabel>
+            <translation><!-- Captain Morgan Lime Bite® --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Long Island Iced Tea</masterLabel>
+            <translation><!-- Captain Morgan Long Island Iced Tea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Parrot Bay® Coconut</masterLabel>
+            <translation><!-- Captain Morgan Parrot Bay® Coconut --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Parrot Bay® Key Lime Rum</masterLabel>
+            <translation><!-- Captain Morgan Parrot Bay® Key Lime Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Parrot Bay® Mango</masterLabel>
+            <translation><!-- Captain Morgan Parrot Bay® Mango --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Parrot Bay® Passion Fruit</masterLabel>
+            <translation><!-- Captain Morgan Parrot Bay® Passion Fruit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan Parrot Bay® Pineapple</masterLabel>
+            <translation><!-- Captain Morgan Parrot Bay® Pineapple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan® Private Stock</masterLabel>
+            <translation><!-- Captain Morgan® Private Stock --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan® Silver Spiced</masterLabel>
+            <translation><!-- Captain Morgan® Silver Spiced --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Captain Morgan® Tattoo</masterLabel>
+            <translation><!-- Captain Morgan® Tattoo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ciroc Coconut</masterLabel>
+            <translation><!-- Ciroc Coconut --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ciroc Red Berry</masterLabel>
+            <translation><!-- Ciroc Red Berry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ciroc Vodka</masterLabel>
+            <translation><!-- Ciroc Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Clynelish® 14 Year Old</masterLabel>
+            <translation><!-- Clynelish® 14 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cragganmore®  Distillers Edition</masterLabel>
+            <translation><!-- Cragganmore®  Distillers Edition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cragganmore® 12 Year Old</masterLabel>
+            <translation><!-- Cragganmore® 12 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dalwhinnie® 15 Year Old</masterLabel>
+            <translation><!-- Dalwhinnie® 15 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dalwhinnie® Distillers Edition</masterLabel>
+            <translation><!-- Dalwhinnie® Distillers Edition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio Real® Tequila</masterLabel>
+            <translation><!-- Don Julio Real® Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio® 1942 Tequila</masterLabel>
+            <translation><!-- Don Julio® 1942 Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio® Añejo Tequila</masterLabel>
+            <translation><!-- Don Julio® Añejo Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio® Blanco Tequila</masterLabel>
+            <translation><!-- Don Julio® Blanco Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Don Julio® Reposado Tequila</masterLabel>
+            <translation><!-- Don Julio® Reposado Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GEORGE DICKEL Barrel Select® Tennessee Whisky</masterLabel>
+            <translation><!-- GEORGE DICKEL Barrel Select® Tennessee Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GEORGE DICKEL Cascade Hollow® Tennessee Whisky</masterLabel>
+            <translation><!-- GEORGE DICKEL Cascade Hollow® Tennessee Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GEORGE DICKEL NO. 12® Tennessee Whisky</masterLabel>
+            <translation><!-- GEORGE DICKEL NO. 12® Tennessee Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GEORGE DICKEL NO. 8® Tennessee Whisky</masterLabel>
+            <translation><!-- GEORGE DICKEL NO. 8® Tennessee Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® Caramel Liqueur</masterLabel>
+            <translation><!-- GODIVA® Caramel Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® Chocolate Infused Vodka</masterLabel>
+            <translation><!-- GODIVA® Chocolate Infused Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® Chocolate Raspberry Infused Vodka</masterLabel>
+            <translation><!-- GODIVA® Chocolate Raspberry Infused Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® Milk Chocolate Liqueur</masterLabel>
+            <translation><!-- GODIVA® Milk Chocolate Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® Mocha Liqueur</masterLabel>
+            <translation><!-- GODIVA® Mocha Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® Original Liqueur</masterLabel>
+            <translation><!-- GODIVA® Original Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GODIVA® White Chocolate Liqueur</masterLabel>
+            <translation><!-- GODIVA® White Chocolate Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GOLDSCHLAGER® Schnapps</masterLabel>
+            <translation><!-- GOLDSCHLAGER® Schnapps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GUINNESS® Black Lager</masterLabel>
+            <translation><!-- GUINNESS® Black Lager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glenkinchie® Distillers Edition</masterLabel>
+            <translation><!-- Glenkinchie® Distillers Edition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glenkinchie®12 Year Old</masterLabel>
+            <translation><!-- Glenkinchie®12 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grand Marnier</masterLabel>
+            <translation><!-- Grand Marnier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grand Marnier Cuvée du Centenaire</masterLabel>
+            <translation><!-- Grand Marnier Cuvée du Centenaire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guinness®  Extra Stout</masterLabel>
+            <translation><!-- Guinness®  Extra Stout --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guinness® Draught in Can</masterLabel>
+            <translation><!-- Guinness® Draught in Can --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Guinness®Draught in Bottle</masterLabel>
+            <translation><!-- Guinness®Draught in Bottle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HARP® Lager</masterLabel>
+            <translation><!-- HARP® Lager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>J&amp;B RARE® Blended Scotch Whisky</masterLabel>
+            <translation><!-- J&amp;B RARE® Blended Scotch Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOHNNIE WALKER® BLACK LABEL® Blended Scotch Whisky</masterLabel>
+            <translation><!-- JOHNNIE WALKER® BLACK LABEL® Blended Scotch Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOHNNIE WALKER® BLUE LABEL® Blended Scotch</masterLabel>
+            <translation><!-- JOHNNIE WALKER® BLUE LABEL® Blended Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOHNNIE WALKER® GOLD LABEL® Blended Scotch</masterLabel>
+            <translation><!-- JOHNNIE WALKER® GOLD LABEL® Blended Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOHNNIE WALKER® GREEN LABEL® Blended Scotch</masterLabel>
+            <translation><!-- JOHNNIE WALKER® GREEN LABEL® Blended Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOHNNIE WALKER® RED LABEL® Blended Scotch</masterLabel>
+            <translation><!-- JOHNNIE WALKER® RED LABEL® Blended Scotch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO BLACK MEDALLION™ Tequila</masterLabel>
+            <translation><!-- JOSE CUERVO BLACK MEDALLION™ Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO ESPECIAL® Gold Tequila</masterLabel>
+            <translation><!-- JOSE CUERVO ESPECIAL® Gold Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO ESPECIAL® Silver Tequila</masterLabel>
+            <translation><!-- JOSE CUERVO ESPECIAL® Silver Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO PLATINO™ Tequila</masterLabel>
+            <translation><!-- JOSE CUERVO PLATINO™ Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO RESERVA DE LA FAMILIA® Tequila</masterLabel>
+            <translation><!-- JOSE CUERVO RESERVA DE LA FAMILIA® Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO TRADICIONAL® Tequila</masterLabel>
+            <translation><!-- JOSE CUERVO TRADICIONAL® Tequila --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOSE CUERVO® Light Margarita Mix</masterLabel>
+            <translation><!-- JOSE CUERVO® Light Margarita Mix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jeremiah Weed Lightning Lemonade (FMB)</masterLabel>
+            <translation><!-- Jeremiah Weed Lightning Lemonade (FMB) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jeremiah Weed Roadhouse Tea (FMB)</masterLabel>
+            <translation><!-- Jeremiah Weed Roadhouse Tea (FMB) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jeremiah Weed Spiked Cola (FMB)</masterLabel>
+            <translation><!-- Jeremiah Weed Spiked Cola (FMB) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jeremiah Weed Sweet Tea Flavored Vodka</masterLabel>
+            <translation><!-- Jeremiah Weed Sweet Tea Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jose Cuervo Authentic Margaritas - Lime</masterLabel>
+            <translation><!-- Jose Cuervo Authentic Margaritas - Lime --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jose Cuervo Authentic Margaritas - Strawberry Lime</masterLabel>
+            <translation><!-- Jose Cuervo Authentic Margaritas - Strawberry Lime --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jose Cuervo Golden Margarita</masterLabel>
+            <translation><!-- Jose Cuervo Golden Margarita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KETEL ONE CITROEN® Flavored Vodka</masterLabel>
+            <translation><!-- KETEL ONE CITROEN® Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KETEL ONE ORANJE® Flavored Vodka</masterLabel>
+            <translation><!-- KETEL ONE ORANJE® Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KETEL ONE® Vodka</masterLabel>
+            <translation><!-- KETEL ONE® Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lagavulin® 16 Year Old</masterLabel>
+            <translation><!-- Lagavulin® 16 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lagavulin® Distillers Edition</masterLabel>
+            <translation><!-- Lagavulin® Distillers Edition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lemon Sorbet</masterLabel>
+            <translation><!-- Lemon Sorbet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOON MOUNTAIN® Coastal Citrus Flavored Vodka</masterLabel>
+            <translation><!-- MOON MOUNTAIN® Coastal Citrus Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOON MOUNTAIN® Vodka</masterLabel>
+            <translation><!-- MOON MOUNTAIN® Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOON MOUNTAIN® Wild Raspberry Flavored Vodka</masterLabel>
+            <translation><!-- MOON MOUNTAIN® Wild Raspberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MYERS’S LEGEND® Rum</masterLabel>
+            <translation><!-- MYERS’S LEGEND® Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MYERS’S® Original Dark Rum</masterLabel>
+            <translation><!-- MYERS’S® Original Dark Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MYERS’S® Platinum White Rum</masterLabel>
+            <translation><!-- MYERS’S® Platinum White Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NUVO® Sparkling Liqueur</masterLabel>
+            <translation><!-- NUVO® Sparkling Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ORONOCO® Rum</masterLabel>
+            <translation><!-- ORONOCO® Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oban® 14 Year Old</masterLabel>
+            <translation><!-- Oban® 14 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oban® Distillers Edition</masterLabel>
+            <translation><!-- Oban® Distillers Edition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PIMM’S NO. 1® Liqueur</masterLabel>
+            <translation><!-- PIMM’S NO. 1® Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pampero® Aniversario</masterLabel>
+            <translation><!-- Pampero® Aniversario --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pampero® Blanco Rum</masterLabel>
+            <translation><!-- Pampero® Blanco Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pampero® Especial Rum</masterLabel>
+            <translation><!-- Pampero® Especial Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parrot Bay Mojito</masterLabel>
+            <translation><!-- Parrot Bay Mojito --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parrot Bay Pineapple Colada</masterLabel>
+            <translation><!-- Parrot Bay Pineapple Colada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parrot Bay Strawberry Daiquiri</masterLabel>
+            <translation><!-- Parrot Bay Strawberry Daiquiri --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parrot Bay Sunset Surf</masterLabel>
+            <translation><!-- Parrot Bay Sunset Surf --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parrot Bay Wave Runner</masterLabel>
+            <translation><!-- Parrot Bay Wave Runner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Peach Qream</masterLabel>
+            <translation><!-- Peach Qream --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RED STRIPE® Lager</masterLabel>
+            <translation><!-- RED STRIPE® Lager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RED STRIPE® Light</masterLabel>
+            <translation><!-- RED STRIPE® Light --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ROMANA SAMBUCA® Liqueur</masterLabel>
+            <translation><!-- ROMANA SAMBUCA® Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RUMPLE MINZE® Peppermint Schnapps</masterLabel>
+            <translation><!-- RUMPLE MINZE® Peppermint Schnapps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rökk® Apple Flavored Vodka</masterLabel>
+            <translation><!-- Rökk® Apple Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rökk® Citrus Flavored Vodka</masterLabel>
+            <translation><!-- Rökk® Citrus Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rökk® Orange Flavored Vodka</masterLabel>
+            <translation><!-- Rökk® Orange Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rökk® Raspberry Flavored Vodka</masterLabel>
+            <translation><!-- Rökk® Raspberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rökk® Vodka</masterLabel>
+            <translation><!-- Rökk® Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEAGRAM’S® SEVEN CROWN® Blended Whisky</masterLabel>
+            <translation><!-- SEAGRAM’S® SEVEN CROWN® Blended Whisky --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEAGRAM’S® SEVEN CROWN® Dark Honey</masterLabel>
+            <translation><!-- SEAGRAM’S® SEVEN CROWN® Dark Honey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEAGRAM’S® SEVEN CROWN® Stone Cherry</masterLabel>
+            <translation><!-- SEAGRAM’S® SEVEN CROWN® Stone Cherry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEAGRAM’S® VO® Blended Whiskey</masterLabel>
+            <translation><!-- SEAGRAM’S® VO® Blended Whiskey --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF BLUEBERRY &amp; LEMONADE™ Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF BLUEBERRY &amp; LEMONADE™ Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF CLASSIC LEMONADE™ Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF CLASSIC LEMONADE™ Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF CRANBERRY &amp; LIME™ Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF CRANBERRY &amp; LIME™ Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE TRIPLE BLACK® Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE TRIPLE BLACK® Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Green Apple Bite Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Green Apple Bite Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Light Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Light Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Mango Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Mango Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Passion Fruit Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Passion Fruit Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Pomegranate Fusion Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Pomegranate Fusion Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Raspberry Burst Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Raspberry Burst Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Strawberry Acai Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Strawberry Acai Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Watermelon Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Watermelon Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF ICE® Wild Grape Flavored Malt Beverage</masterLabel>
+            <translation><!-- SMIRNOFF ICE® Wild Grape Flavored Malt Beverage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF NO. 21® Vodka</masterLabel>
+            <translation><!-- SMIRNOFF NO. 21® Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Black Cherry Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Black Cherry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Blueberry Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Blueberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Citrus Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Citrus Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Coconut Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Coconut Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Cranberry Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Cranberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Fluffed Marshmellow Favored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Fluffed Marshmellow Favored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Grand Cosmopolitan</masterLabel>
+            <translation><!-- SMIRNOFF® Grand Cosmopolitan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Green Apple Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Green Apple Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Lime Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Lime Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Melon Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Melon Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Orange Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Orange Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Passion Fruit Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Passion Fruit Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Pear Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Pear Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Pineapple Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Pineapple Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Pomegranate Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Pomegranate Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Pomegranate Martini</masterLabel>
+            <translation><!-- SMIRNOFF® Pomegranate Martini --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Raspberry Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Raspberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Savannah Tea Cocktail</masterLabel>
+            <translation><!-- SMIRNOFF® Savannah Tea Cocktail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Strawberry Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Strawberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Tuscan Lemonade Cocktail</masterLabel>
+            <translation><!-- SMIRNOFF® Tuscan Lemonade Cocktail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Vanilla Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Vanilla Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Vodka Mojito</masterLabel>
+            <translation><!-- SMIRNOFF® Vodka Mojito --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Watermelon Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Watermelon Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® Whipped Cream Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® Whipped Cream Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMIRNOFF® White Grape Flavored Vodka</masterLabel>
+            <translation><!-- SMIRNOFF® White Grape Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMITHWICK’S® Ale</masterLabel>
+            <translation><!-- SMITHWICK’S® Ale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Bellini Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Bellini Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Cosmopolitan Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Cosmopolitan Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Dirty Martini</masterLabel>
+            <translation><!-- STIRRINGS®  Dirty Martini --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Ginger Ale Cocktail Soda</masterLabel>
+            <translation><!-- STIRRINGS®  Ginger Ale Cocktail Soda --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Lemonade Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Lemonade Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Margarita Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Margarita Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Mojito Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Mojito Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Pina Colada Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Pina Colada Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Red Sangria Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS®  Red Sangria Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS®  Simple Syrup</masterLabel>
+            <translation><!-- STIRRINGS®  Simple Syrup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Apple Flavored Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Apple Flavored Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Authentic Grenadine</masterLabel>
+            <translation><!-- STIRRINGS® Authentic Grenadine --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Blood Orange Mixer</masterLabel>
+            <translation><!-- STIRRINGS® Blood Orange Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Bloody Mary Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS® Bloody Mary Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Clarified Key Lime Juice</masterLabel>
+            <translation><!-- STIRRINGS® Clarified Key Lime Juice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Club Soda</masterLabel>
+            <translation><!-- STIRRINGS® Club Soda --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Espresso Flavored Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Espresso Flavored Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Ginger Flavored Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Ginger Flavored Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Lemon Drop Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS® Lemon Drop Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Peach Bellini Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS® Peach Bellini Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Peach Flavored Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Peach Flavored Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Pomegranate Flavored Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Pomegranate Flavored Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Pomegranate Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Pomegranate Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Triple Sec</masterLabel>
+            <translation><!-- STIRRINGS® Triple Sec --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Triple Sec Liqueur</masterLabel>
+            <translation><!-- STIRRINGS® Triple Sec Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STIRRINGS® Watermelon Cocktail Mixer</masterLabel>
+            <translation><!-- STIRRINGS® Watermelon Cocktail Mixer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smirnoff Ice Party Pack</masterLabel>
+            <translation><!-- Smirnoff Ice Party Pack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Smirnoff Mixed Drinks - Party Pack</masterLabel>
+            <translation><!-- Smirnoff Mixed Drinks - Party Pack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strawberry Qream</masterLabel>
+            <translation><!-- Strawberry Qream --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TANQUERAY NO. TEN® Gin</masterLabel>
+            <translation><!-- TANQUERAY NO. TEN® Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TANQUERAY RANGPUR® Gin</masterLabel>
+            <translation><!-- TANQUERAY RANGPUR® Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TANQUERAY® London Dry Gin</masterLabel>
+            <translation><!-- TANQUERAY® London Dry Gin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TGIF Long Island Ice Tea</masterLabel>
+            <translation><!-- TGIF Long Island Ice Tea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TGIF Margarita</masterLabel>
+            <translation><!-- TGIF Margarita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TGIF Mudslide</masterLabel>
+            <translation><!-- TGIF Mudslide --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TGIF Pina Colada</masterLabel>
+            <translation><!-- TGIF Pina Colada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>THE SINGLETON® Single Malt</masterLabel>
+            <translation><!-- THE SINGLETON® Single Malt --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Talisker® 10 Year Old</masterLabel>
+            <translation><!-- Talisker® 10 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Talisker® 18 Year Old</masterLabel>
+            <translation><!-- Talisker® 18 Year Old --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Talisker® Distillers Edition</masterLabel>
+            <translation><!-- Talisker® Distillers Edition --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>URSUS® Blue Raspberry Flavored Vodka</masterLabel>
+            <translation><!-- URSUS® Blue Raspberry Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>URSUS® Green Apple Flavored Vodka</masterLabel>
+            <translation><!-- URSUS® Green Apple Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>URSUS® Punch Flavored Vodka</masterLabel>
+            <translation><!-- URSUS® Punch Flavored Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>URSUS® Vodka</masterLabel>
+            <translation><!-- URSUS® Vodka --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YUKON JACK® Liqueur</masterLabel>
+            <translation><!-- YUKON JACK® Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZWACK® Liqueur</masterLabel>
+            <translation><!-- ZWACK® Liqueur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zacapa® Centenario 23 Years Rum</masterLabel>
+            <translation><!-- Zacapa® Centenario 23 Years Rum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Zacapa® Centenario XO Rum</masterLabel>
+            <translation><!-- Zacapa® Centenario XO Rum --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Brand Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

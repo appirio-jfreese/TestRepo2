@@ -1,0 +1,18 @@
+<apex:component >
+
+    <apex:attribute name="beforeStop" description="On stop function" type="string" required="false"/>
+    <apex:attribute name="afterStop" description="On stop function" type="string" required="false"/>
+
+    <apex:actionStatus id="ajax-status" onstart="showDialog('ajaxLoader');" onstop=" {!beforeStop} hideDialog('ajaxLoader'); jQuery('img.scaleImg').imgscale({parent : '.preview-wrapper',scale: 'fit',fade : 1000}); {!afterStop} bindUserAutoComplete(); try { calculateBoxHeight(); } catch(e) {}; checkHeaderThemeSelector();">
+        <apex:facet name="start">
+
+        </apex:facet>
+    </apex:actionStatus>    
+    <div id="ajaxLoader" class="loaderDialog hidden">
+    	<div id="ajaxLoaderBox" class="ajaxLoaderBox sectionBackground sectionBorder">
+   			<!-- <apex:image url="{!URLFOR($Resource.CommonPage, 'images/ajax-loader.gif')}"/><br/> -->
+   			<br/>Loading<br/><span class="ajaxLoaderMoreInfo">Please wait...</span>
+		</div>    		
+    </div>
+    <div id="loaderOverlayDisable"></div>
+</apex:component>

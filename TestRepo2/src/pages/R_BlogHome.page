@@ -1,0 +1,195 @@
+<!--
+    Name            : BlogHome.page
+    Author          : Randy Wandell (Appirio)
+    Created Date    : 6 June, 2013 
+    Task Ref        : US503/TA907
+    Usage           : Blog Home page 
+-->
+<apex:page showheader="false" standardStylesheets="false" sidebar="false"  controller="Controller_BlogPost" title="Diageo Blog" action="{!processFilters}">
+<body class="blog-home">   
+    <script type="text/javascript">
+        function showComments(showHide){
+            if(showHide == "Show"){
+                document.getElementById("showCommentsBlock").style.display = "none";
+                document.getElementById("j_id0:j_id179:commentBlock").style.display = "block";
+            }else{
+                document.getElementById("showCommentsBlock").style.display = "block";
+                document.getElementById("j_id0:j_id179:commentBlock").style.display = "none";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function openDetails(blogId){
+            var the_inputs=document.getElementsByTagName("input");
+            var clickedBlogHidden;
+            for(var n=0;n<the_inputs.length;n++){
+                if(the_inputs[n].type=="hidden" && the_inputs[n].name.indexOf("blogPostFrm:clickedBlogPostId")>0){
+                    clickedBlogHidden = the_inputs[n];
+                }
+            }
+            
+            if(clickedBlogHidden != null){
+                clickedBlogHidden.value = blogId;
+            }
+
+            openBlogDetail();
+        }
+        
+        function pageChange(pageNumElement){
+            var pageNum  = pageNumElement.value;
+            if(pageNum <= {!pageCount} && pageNum != {!currPage})
+                pageChanged();
+            else
+                pageNumElement.value = {!currPage};
+        }
+        
+        function previous(){
+            if({!currPage} > 1)
+                previousPage();
+        }
+        
+        function next(){
+            if({!currPage} < {!pageCount})
+                nextPage();
+        }
+        
+        function changeDisplay(opt){
+            var shortDesc = document.getElementsByClassName('TitlesAndShortDesc_block');
+            var longDesc = document.getElementsByClassName('TitlesAndLongDesc_block');
+            var descBlock = document.getElementsByClassName('BlogPostDesc_block');
+            var blockDisplay, shortDisplay, longDisplay;
+            if(opt == 'Titles'){
+                blockDisplay = "none";
+                shortDisplay = "none";
+                longDisplay = "none";
+            }else if(opt == 'TitlesAndShortDesc'){
+                blockDisplay = "block";
+                shortDisplay = "block";
+                longDisplay = "none";
+            }else if(opt == 'TitlesAndLongDesc'){
+                blockDisplay = "block";
+                shortDisplay = "none";
+                longDisplay = "block";
+            }
+            for(var i=0; i<shortDesc.length; i++){
+                shortDesc[i].style.display = shortDisplay;
+                longDesc[i].style.display = longDisplay;
+                descBlock[i].style.display = blockDisplay;
+            }
+            
+            var the_inputs=document.getElementsByTagName("input");
+            var dispOpt;
+            for(var n=0;n<the_inputs.length;n++){
+                if(the_inputs[n].type=="hidden" && the_inputs[n].name.indexOf("blogPostComp:blogPostComponent:blogPostFrm:disOpt")>0){
+                    dispOpt = the_inputs[n];
+                }
+            }
+            if(dispOpt != null){
+                dispOpt.value = opt;
+            }
+        }
+        
+        function onLoad(){
+
+        }
+                       
+    </script>    
+	<div class="wrapper">
+
+    	<div class="container">
+            <!-- PAGE HEADER -->
+            <c:R_PageHeader showThemeSelector="true" isLoggedIn="{!isLoggedIn}" basketItemsNumber="{!basketItemsNo}"/>
+                    
+            <script type="text/javascript">
+                pageViewed('Blog Posts - Detail Page');
+            </script>
+            
+	        <!-- BREADCRUMB -->
+	        <apex:outputPanel id="beadcrumblinks">
+	            <c:R_pageBreadcrumb breadcrumbLinks="{!breadCrumbLinks}" menuLinks="{!menuLinks}"/>
+	        </apex:outputPanel>
+
+            <div class="content clearfix" style="text-align: left;">
+
+			<apex:form id="blogPostFrm">  
+                <!-- main -->
+                <apex:outputPanel id="currentPageBlogItems">
+                    <div class="main columns">
+                        <apex:repeat value="{!blogPosts}" var="blogItem">
+                        <div class="blog-brief clearfix">
+                            <div class="image columns" style="height: 150px;">
+                            </div>
+                            <div class="summary">
+                                <a style="cursor: pointer;" onClick="openDetails('{!blogItem.Id}'); pageViewed('BlogHome - {!IF(LEFT(blogItem.Name,20) = blogItem.Name, blogItem.Name, TRIM(LEFT(blogItem.Name,20))&'....')}');" class="title link">{!blogItem.Name}</a>
+                                <div class="info">
+                                    Posted By : <a href="javascript:;" class="link">{!blogItem.CreatedBy.Name}</a>
+                                    &nbsp;|&nbsp;<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!blogItem.CreatedDate}" /></apex:outputText>                                
+                                </div>
+                                <p class="short">                           
+                                    <apex:outputText value="{!blogItem.Summary__c}" escape="false" />                              
+                                </p>
+                                <div class="info">{!blogItem.Comment__r.size} Comments&nbsp;|&nbsp;
+                                    Tags : 
+                                    <apex:repeat value="{!blogItem.Blog2Tag__r}" var="tg">
+                                    <a href="javascript:;" class="link">{!tg.Tag__r.Name}&nbsp;</a>
+                                    </apex:repeat>
+                                </div>
+                            </div>
+                        </div>
+                        </apex:repeat>
+
+                        <!--        Control Paging    -->  
+                        <div class="paging">
+                            <a href="javascript: {!IF(currPage==1,'','pageChanged(1)')};" class="button" style="display: {!IF(pageCount>1,'','none')};">1</a>
+                            <a href="javascript: {!IF(currPage==2,'','pageChanged(2)')};" class="button" style="display: {!IF(pageCount>=2,'','none')};">2</a>
+                            <a href="javascript: {!IF(currPage==3,'','pageChanged(3)')};" class="button" style="display: {!IF(pageCount>=3,'','none')};">3</a>
+                            <a href="javascript: {!IF(currPage==4,'','pageChanged(4)')};" class="button" style="display: {!IF(pageCount>=4,'','none')};">4</a>
+                            <a href="javascript: nextPage();" class="button" style="display: {!IF(pageCount>1 && currPage<pageCount,'','none')};">Next</a>
+                            <a href="javascript: previousPage();" class="button" style="display: {!IF(pageCount>1 && currPage>1,'','none')};">Previous</a>
+                        </div>
+                  
+                    </div>
+                          
+                </apex:outputPanel>                  
+                                
+                <apex:actionFunction action="{!openBlogDetail}" name="openBlogDetail">
+                </apex:actionFunction>
+                <apex:inputHidden value="{!clickedBlogId}" id="clickedBlogPostId"/>
+
+                <!-- pagination -->
+                <apex:actionFunction action="{!pageChanged}" name="pageChanged" reRender="currentPageBlogItems">
+                    <apex:param id="aparam1" name="pageNumElement" value="" assignTo="{!currPage}"/>
+                </apex:actionFunction>
+                <apex:actionFunction action="{!previousPage}" name="previousPage" reRender="currentPageBlogItems"/>
+                <apex:actionFunction action="{!nextPage}" name="nextPage" reRender="currentPageBlogItems"/>
+                <apex:inputHidden value="{!currPage}" id="pageNumber"/>
+
+                <!-- Filter by Tag -->
+                <apex:actionFunction action="{!showForTag}" name="showForTag" reRender="currentPageBlogItems">
+                    <apex:param id="aparam2" name="tag" value="" assignTo="{!filterByTag}"/>
+                </apex:actionFunction>
+
+                <!-- Filter by Theme -->
+                <apex:actionFunction action="{!switchToTheme}" name="switchToTheme" reRender="currentPageBlogItems">
+                    <apex:param id="aparam3" name="theme" value="" assignTo="{!theme}"/>
+                </apex:actionFunction>
+
+                <!-- Filter by Date -->
+                <apex:actionFunction action="{!switchToArchive}" name="switchToArchive" reRender="currentPageBlogItems">
+                    <apex:param id="aparam4" name="startDate" value="" assignTo="{!archive}"/>
+                </apex:actionFunction>
+                </apex:form>
+            
+                <div class="sidebar columns" style="display: {!IF(blogPostsCount == 0,'none','')};">
+                    <c:BlogSideTile />
+                </div>         
+            </div>
+              
+        </div>
+
+        <!-- PAGE FOOTER -->
+        <c:R_pageFooter isInternal="{!isInternalUser}" />
+    
+    </div>
+</body>  
+</apex:page>

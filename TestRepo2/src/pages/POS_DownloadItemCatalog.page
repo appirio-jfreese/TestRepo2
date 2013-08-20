@@ -1,0 +1,141 @@
+<apex:page controller="POS_DownloadItemCatalogController" renderAs="pdf">
+<head>
+<style>
+.tablehead {
+    border: 1px solid;
+    background-color: #E8E8E8;
+    font-weight: bold;
+    font-size: small;
+}
+
+.infohead {
+  font-size: 70%;
+  font-weight: bold;
+}
+
+.odd {
+ border-bottom: 1px solid #000;
+ background-color: #E8E8E8;
+ padding: 1px 1px 2px 2px;
+ font-size: small;
+ height:20px;
+ vertical-align:middle;
+}
+
+.even {
+   border-bottom: 1px solid #000;
+   padding: 1px 1px 2px 2px;
+ font-size: small;
+ height:20px;
+ vertical-align:middle;
+}
+
+
+
+.highlightcol {
+	background-color: #FBB917;
+}
+ 
+@page {
+	@bottom-right {
+	 content: "Page " counter(page) " of " counter(pages);
+	}
+}
+</style>
+</head>
+<body onload="javascrip:this.window.close();">
+<apex:pageblock >
+<apex:dataTable value="{!orderwindowData}" var="program" columns="2" width="100%" cellpadding="5">
+	<apex:column breakBefore="true" width="30%" style="color:white;background-color: #2a3c75;font-size:small;height:50px;vertical-align:middle;">
+		<font style="font-size:large;">DIAGEO</font><br/>
+		{!orderWindow.Name}
+	</apex:column>
+	<apex:column width="60%" style="color:white;background-color: #2a3c75;font-size:medium;height:50px;vertical-align:middle;">
+		{!program.Name}
+	</apex:column>
+	<apex:column width="10%" style="color:white;background-color: #2a3c75;font-size:medium;height:50px;vertical-align:middle;">
+		{!program.Sales_Driver__c}
+	</apex:column>	
+	<apex:column breakBefore="true" colspan="3" style="font-size:small;color:#666666;vertical-align:top;">
+	<div><div style="float:left;width:15%;">Legal Notice: </div><div style="float:right;width:85%">{!disclaimerText}</div></div>
+	</apex:column>
+	<apex:column breakBefore="true" style="height:25px;">&nbsp;</apex:column>
+	<apex:column breakBefore="true" colspan="3">
+    <apex:dataTable value="{!program.Items__r}" var="item" border="1" width="100%" cellpadding="5" headerClass="tablehead" rowClasses="even, odd">
+	    <apex:column width="40%">
+	    	<apex:facet name="header">Item Name</apex:facet>
+	    	<apex:outputText value="{!item.name}"  escape="false"/>
+	    </apex:column>
+	    <apex:column style="font-size:small;height:20px;vertical-align:middle;" width="25%">
+	    	<apex:facet name="header">Item Brand</apex:facet>
+	    	<apex:outputText value="{!program.Brand__r.name}" />
+	    </apex:column>	    
+	    <apex:column style="font-size:small;height:20px;vertical-align:middle;" width="20%">
+	    	<apex:facet name="header">Item ID</apex:facet>
+	    	<apex:outputText value="{!item.Item_ID__c}" />
+	    </apex:column>	    
+	    <apex:column style="font-size:small;height:20px;vertical-align:middle;text-align:right;" width="15%">
+	    	<apex:facet name="header">Est. Price</apex:facet>
+	    	<apex:outputText value="{0, number,$###,###,##0.00}">
+	    		<apex:param value="{!item.Current_Price__c}" />
+	    	</apex:outputText>
+	    </apex:column>	
+   	</apex:dataTable>
+   	</apex:column>
+   	<apex:column breakBefore="true"><apex:outputPanel layout="block" style="page-break-after:always;"/></apex:column>
+   	
+	<apex:column breakBefore="true" width="30%" style="color:white;background-color: #2a3c75;font-size:small;height:50px;vertical-align:middle;">
+		<font style="font-size:large;">DIAGEO</font><br/>
+		{!orderWindow.Name}
+	</apex:column>
+	<apex:column width="60%" style="color:white;background-color: #2a3c75;font-size:medium;height:50px;vertical-align:middle;">
+		{!program.Name}
+	</apex:column>
+	<apex:column width="10%" style="color:white;background-color: #2a3c75;font-size:medium;height:50px;vertical-align:middle;">
+		{!program.Sales_Driver__c}
+	</apex:column>		
+	<apex:column breakBefore="true" colspan="3" style="font-size:small;color:#666666;vertical-align:top;">
+	<div><div style="float:left;width:15%;">Legal Notice: </div><div style="float:right;width:85%;">{!disclaimerText}</div></div>
+	</apex:column>
+	<apex:column breakBefore="true" style="height:25px;">&nbsp;</apex:column>
+	<apex:column breakBefore="true" colspan="3">
+    <apex:dataTable value="{!program.Items__r}" var="item" width="100%" cellpadding="10">
+	    <apex:column style="font-size:small;font-weight:bold;height:20px;vertical-align:middle;" width="50%">
+	    	<apex:outputText value="{!item.Item_ID__c}" /><br/><apex:outputText value="{!item.name}" escape="false"/>
+	    </apex:column>
+	    <apex:column style="font-size:small;font-weight:bold;height:20px;vertical-align:bottom;" width="50%">
+	    	Description:
+	    </apex:column>
+	    <apex:column breakBefore="true" style="height:5px;" width="50%">
+	    <apex:dataTable value="{!itemWithImages[item.Id].Item_Images__r}" var="image" width="100%" cellpadding="5" columns="4">	    
+		    <apex:column style="font-size:small;height:20px;vertical-align:middle;">
+		    	<!-- <apex:image value="{!image.Magento_Image_URL__c}" />-->
+		    	<!-- <apex:image value="{!thumbnailUrl}?itemid={!item.Magento_ID__c}&size=200" width="200" />-->
+		    	<apex:image value="{!thumbnailUrl}?size=200&file={!image.Magento_Image_URL__c}"/>
+		    </apex:column>	    
+		</apex:dataTable>
+		</apex:column>	
+		<apex:column style="font-size:small;height:20px;vertical-align:top;" width="50%">
+			<apex:outputText value="{!item.Description__c}" escape="false"/><br/><br/><br/>
+	    	<br/><apex:outputText value="Estimated Price: {0, number,$###,###,##0.00}" style="font-weight:bold;">
+	    		<apex:param value="{!item.Current_Price__c}" />
+	    	</apex:outputText>
+	    	<br/><apex:outputText value="Based On A Minimum Quantity Of: {0, number, ###,###,##0}" style="font-weight:bold;">
+	    		<apex:param value="{!item.Minimum_Quantity__c}" />
+	    	</apex:outputText>	    	
+	    	<br/><apex:outputText value="Bundled In Packs Of: {0, number, ###,###,##0}" style="font-weight:bold;">
+	    		<apex:param value="{!item.Packout_Quantity__c}" />
+	    	</apex:outputText>		    	
+	    </apex:column>
+		<apex:column colspan="3" breakBefore="true" style="height:5px;" width="100%">	    
+	    <hr style="height:2px;color:#2a3c75;background-color:#2a3c75;"/>
+	    </apex:column>
+   	</apex:dataTable>
+   	</apex:column> 
+   	<apex:column breakBefore="true"><apex:outputPanel layout="block" style="page-break-after:always;"/></apex:column>
+   	  	
+</apex:dataTable>
+
+</apex:pageblock>
+</body>
+</apex:page>

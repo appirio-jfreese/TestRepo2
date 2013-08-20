@@ -1,0 +1,27 @@
+<apex:page controller="BlitzAdminController">
+	<apex:form >
+		<apex:outputPanel id="messagePanel">
+			<apex:pageMessages />
+		</apex:outputPanel>
+		<br/>
+		
+		<apex:outputPanel id="countPanel">
+			<apex:outputLabel value="{!'Active Blitz records: ' + TEXT(activeCount)}"/>
+		</apex:outputPanel>
+		<br/>
+		<br/>
+		<apex:actionStatus id="archiveStatus">
+			<apex:facet name="stop">
+				<apex:commandButton value="Archive All Active Blitz Records"
+									action="{!doMassArchival}"
+									rerender="messagePanel, countPanel"
+									status="archiveStatus"/>
+			</apex:facet>
+			<apex:facet name="start">
+				<apex:commandButton value="Archive All Active Blitz Records"
+									disabled="true"/>
+				Archiving...
+			</apex:facet>
+		</apex:actionStatus>
+	</apex:form>
+</apex:page>

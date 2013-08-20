@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Window</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Windows</value>
+    </caseValues>
+    <fields>
+        <label><!-- Fiscal Year --></label>
+        <name>Fiscal_Year__c</name>
+    </fields>
+    <fields>
+        <label><!-- Icon Label --></label>
+        <name>Icon_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Icon --></label>
+        <name>Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Magento Category Id --></label>
+        <name>Magento_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- On Demand Site URL --></label>
+        <name>On_Demand_Site_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Close Date --></label>
+        <name>Order_Close_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Delivery Date --></label>
+        <name>Order_Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order Start Date --></label>
+        <name>Order_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Archived</masterLabel>
+            <translation><!-- Archived --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Budgeting</masterLabel>
+            <translation><!-- Budgeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Review</masterLabel>
+            <translation><!-- In Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Demand</masterLabel>
+            <translation><!-- On Demand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quarterly</masterLabel>
+            <translation><!-- Quarterly --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>POS Order Window Layout - CM Admins</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POS Order Window Layout - Production Agencies</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <namedFilters>
+        <errorMessage><!-- It is not possible to create or edit a Budget if the related quarterly or monthly Order Window is new, in review, completed or archived --></errorMessage>
+        <name>nf_01IZ00000000IQaMAM_00NZ0000000I1JTMA0</name>
+    </namedFilters>
+    <namedFilters>
+        <errorMessage><!-- It is not possible to create or edit a Cart if the related quarterly or monthly Order Window is new, in review, budgeting, completed or archived --></errorMessage>
+        <name>nf_01IZ00000000IRYMA2_00NZ0000000I2MsMAK</name>
+    </namedFilters>
+    <namedFilters>
+        <errorMessage><!-- It is not possible to create or edit a Program if the related quarterly or monthly Order Window is completed or archived --></errorMessage>
+        <name>nf_01IZ00000000ISRMA2_00NZ0000000I1VAMA0</name>
+    </namedFilters>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- The Order Window attributes (except status) cannot be modified when the status is closed, completed or archived --></errorMessage>
+        <name>Edit_Order_Window</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a valid fiscal year --></errorMessage>
+        <name>Fiscal_Year</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide a URL for the On Demand site --></errorMessage>
+        <name>On_Demand_Site_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Order Close Date must be greater than Order Start Date --></errorMessage>
+        <name>Order_Close_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Order Delivery Date must be greater than Order Close Date --></errorMessage>
+        <name>Order_Delivery_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide an Order Start Date, an Order Close Date, and an Order Delivery Date --></errorMessage>
+        <name>Order_Window_Required_Dates</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Only one Order Window can be setup as &quot;On Demand&quot; --></errorMessage>
+        <name>Prevent_On_Demand_Order_Window_Creation</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Budget_Allocation --></label>
+        <name>Budget_Allocation</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Download_Ordering_Sheet --></label>
+        <name>Download_Ordering_Sheet</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Items_Catalog --></label>
+        <name>Generate_Items_Catalog</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Recalculate_All_WBS --></label>
+        <name>Recalculate_All_WBS</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Recalculate_Missing_WBS --></label>
+        <name>Recalculate_Missing_WBS</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Report_All_Orders --></label>
+        <name>Report_All_Orders</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Report_Associated_Items --></label>
+        <name>Report_Associated_Items</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Report_Item_Statuses_Percentage --></label>
+        <name>Report_Item_Statuses_Percentage</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Report_Ordered_Items_by_Sales_Channel_Group_and_Category --></label>
+        <name>Report_Ordered_Items_by_Sales_Channel_Group_and_Category</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Report_Total_Spend_by_Division --></label>
+        <name>Report_Total_Spend_by_Division</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_Associated_Items --></label>
+        <name>View_Associated_Items</name>
+    </webLinks>
+</CustomObjectTranslation>

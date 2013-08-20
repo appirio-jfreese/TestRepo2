@@ -1,0 +1,156 @@
+<apex:component controller="Controller_Base">
+	<!-- START : For US85/TA910 -->
+	<script type="text/javascript">
+		var allChildClasses = new Array();
+		function subOptionChange(childClass, calledOnClick, currentCB){
+			var bIndeterminate = false;
+			var bChecked = false;
+			var i=0;
+			jQuery("."+childClass).each(function() {
+    		if(jQuery(this).is(':checked')){
+    			bIndeterminate = true
+			  	if(!bChecked && i == 0)
+			  		bChecked = true;
+    		}else if(bChecked){
+			  	bChecked = false;
+			  }
+			  i++;
+			});
+
+			if(bChecked && bIndeterminate && i == jQuery("."+childClass).length){
+				bChecked = true;
+				bIndeterminate = false;
+			}
+			
+			if(childClass == '{!siteTheme}' && !bChecked && !bIndeterminate){
+				alert('{!$Label.SubThemeOptionError}' + " '" + '{!siteTheme}' + "'..!!!");
+				currentCB.checked = !currentCB.checked;
+				calledOnClick = false;
+			}
+			else{
+				var parentCheckBoxId;
+				jQuery("."+childClass+"_P").each(function() {
+					parentCheckBoxId = jQuery(this).attr('id');
+					jQuery(this).prop('indeterminate',bIndeterminate);
+					jQuery(this).prop('checked',bChecked);
+				});
+			}
+			
+			if(calledOnClick)
+				{!onchange};
+		}
+		
+		function parentOptionChange(childClass, calledOnClick){
+			var bChecked;
+			jQuery("."+childClass+"_P").each(function() {
+					bChecked = jQuery(this).is(':checked');
+			});
+			
+			jQuery("."+childClass).each(function() {
+    		jQuery(this).prop('checked',bChecked);
+			});
+			
+			if(calledOnClick)
+				{!onchange};
+		}
+		
+		
+		function onLoadForChildOptions(){
+			var i;
+			for(i=0; i<allChildClasses.length; i++){
+				subOptionChange(allChildClasses[i], false);
+			}
+		}
+	</script>
+	<!-- END : For US85/TA910 -->
+
+	<apex:attribute name="onchange" description="Onchange function name" type="string" required="false"/>
+	<apex:attribute name="useSectionTheme" description="If true then use section color theme" type="boolean" required="false"/>
+	<apex:attribute name="options" description="Checkbox options" type="CheckboxOption[]" assignTo="{!themeOptions}" required="false"/>
+	<apex:attribute name="noOfOptions" description="Number of options available" type="Integer" required="false"/>
+	
+   	<apex:attribute name="width" description="Width" type="string" required="false"/>
+   	<apex:attribute name="darkTheme" description="Theme" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="useSectionTheme" description="If true then use section color theme" type="boolean" required="false"/>
+	<apex:attribute name="trim" description="Is trim required" type="Boolean" required="false" default="true"/>
+	
+	<apex:outputPanel rendered="{!IF(noOfOptions==1, 'false', 'true')}">
+		<div class="custom-select-box-holder {!if(trim=true,'trim','')}" style="width: {!IF(ISNULL(width), '200px', text(value(width))+'px')};">
+	    	<div class='custom-select-box' style="color: {!IF(darkTheme != true, '#575757', '#ffffff')}; border-color: {!IF(darkTheme != true, 'auto', '#676767')};  background: {!IF(darkTheme != true, '#ffffff', '#7A7A7A')} !important; ">
+	    		<div class='custom-select-box-header'>
+	    			<div class='custom-select-box-val multi' style="width: {!IF(ISNULL(width), '135px', text(value(width)-65)+'px')}; color: {!IF(darkTheme != true, 'auto', '#ffffff')};">
+	    				Include
+	    			</div>
+	    			<div class="custom-select-box-button {!IF(useSectionTheme == true, 'sectionBackground sectionBorder','')}">
+	                    <div class="custom-select-button">
+	                        <apex:image url="{!URLFOR($Resource.CommonPage, 'images/selectArrow.png')}"/>
+	                    </div>
+	                </div>
+	    		</div>
+	    		
+	    		<apex:outputPanel rendered="{!NOT(trim)}">
+		            <div class='custom-select-box-values' style="width: {!IF(ISNULL(width), '190px', text(value(width)-10)+'px')};">
+			            <apex:repeat value="{!themeOptions}" var="option">
+			            		<apex:outputPanel rendered="{!option.subOptions.size = 0}">
+				                <div title="{!option.name}" name='{!option.name}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')}}">
+				                    <apex:inputCheckbox styleClass="{!option.name}_P" value="{!option.chosen}" disabled="{!option.disabled}" onclick="{!onchange}" /> {!option.name}
+				                </div>
+			                </apex:outputPanel>
+			                <!-- START : For US85/TA910 -->
+			                <apex:outputPanel rendered="{!option.subOptions.size > 0}">
+			                	<div title="{!option.name}" name='{!option.name}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')}}">
+				                    <apex:inputCheckbox styleClass="{!option.name}_P" value="{!option.chosen}" disabled="{!IF( option.name = '{!siteTheme}', option.disabled, false)}" onclick="parentOptionChange('{!option.name}', true)" /> {!option.name}
+				                </div>
+				                <apex:repeat value="{!option.subOptions}" var="subOp">
+													<div title="{!subOp.name}" name='{!subOp.name}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')}}">
+														&nbsp;&nbsp;
+														<apex:inputCheckbox styleClass="{!option.name}" value="{!subOp.chosen}" disabled="{!subOp.disabled}" onclick="subOptionChange('{!option.name}', true, this)" /> {!subOp.name}
+													</div>
+												</apex:repeat>
+												<script type="text/javascript">
+													allChildClasses[allChildClasses.length] = '{!option.name}';
+												</script>
+											</apex:outputPanel>
+											<!-- END : For US85/TA910 -->
+			            </apex:repeat>
+		            </div>
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!trim}">
+		            <div class='custom-select-box-values' style="width: {!IF(ISNULL(width), '190px', text(value(width)-10)+'px')};">
+			            <apex:repeat value="{!themeOptions}" var="option">
+		                  <apex:outputPanel rendered="{!option.subOptions.size = 0}">
+		                  <div title="{!option.name}" name='{!option.name}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')}}">
+			                    <apex:inputCheckbox styleClass="{!option.name}_P" value="{!option.chosen}" disabled="{!option.disabled}" onclick="{!onchange}"/>
+														{! IF (len(option.name)>22, LEFT(option.name, 22)+'...', option.name)}
+			                </div>
+			                </apex:outputPanel>
+			                <!-- START : For US85/TA910 -->
+			                <apex:outputPanel rendered="{!option.subOptions.size > 0}">
+			                	<div title="{!option.name}" name='{!option.name}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')}}">
+				                    <apex:inputCheckbox styleClass="{!option.name}_P" value="{!option.chosen}" disabled="{!option.disabled}" onclick="parentOptionChange('{!option.name}', true)"/>
+															{! IF (len(option.name)>22, LEFT(option.name, 22)+'...', option.name)}
+				                </div>
+			                	<apex:repeat value="{!option.subOptions}" var="subOp">
+													<div title="{!subOp.name}" name='{!subOp.name}' class="bold custom-select-box-item {!IF(useSectionTheme == true, 'useSectionTheme','')}}">
+														&nbsp;&nbsp;
+														<apex:inputCheckbox styleClass="{!option.name}" value="{!subOp.chosen}" disabled="{!subOp.disabled}" onclick="subOptionChange('{!option.name}', true, this)" /> 
+																{! IF (len(subOp.name)>20, LEFT(subOp.name, 20)+'...', subOp.name)}
+													</div>
+												</apex:repeat>
+												<script type="text/javascript">
+													allChildClasses[allChildClasses.length] = '{!option.name}';
+												</script>
+											</apex:outputPanel>
+											<!-- END : For US85/TA910 -->
+			            </apex:repeat>
+		            </div>
+				</apex:outputPanel>
+	    	</div>
+	    </div>
+    </apex:outputPanel>
+    <!-- START : For US85/TA910 -->
+    <script type="text/javascript">
+    	onLoadForChildOptions();
+    </script>
+    <!-- END : For US85/TA910 -->
+</apex:component>

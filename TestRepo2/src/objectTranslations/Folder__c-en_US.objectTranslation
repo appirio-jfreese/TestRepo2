@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Folder</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Folders</value>
+    </caseValues>
+    <fields>
+        <label><!-- Allow Add Comment --></label>
+        <name>Allow_Add_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Allow File Upload --></label>
+        <name>Allow_File_Upload__c</name>
+    </fields>
+    <fields>
+        <label><!-- Classification --></label>
+        <name>Classification__c</name>
+        <picklistValues>
+            <masterLabel>Spirits</masterLabel>
+            <translation><!-- Spirits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wine</masterLabel>
+            <translation><!-- Wine --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Distributors --></label>
+        <name>Distributor_Names__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distributor IDs --></label>
+        <name>Distributors__c</name>
+        <picklistValues>
+            <masterLabel>Distributor</masterLabel>
+            <translation><!-- Distributor --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Division --></label>
+        <name>Division__c</name>
+        <picklistValues>
+            <masterLabel>Additional</masterLabel>
+            <translation><!-- Additional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Charmer</masterLabel>
+            <translation><!-- Charmer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Control</masterLabel>
+            <translation><!-- Control --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Franchise</masterLabel>
+            <translation><!-- Franchise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Glazers</masterLabel>
+            <translation><!-- Glazers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Independent</masterLabel>
+            <translation><!-- Independent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SWS</masterLabel>
+            <translation><!-- SWS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Filter By Brand --></label>
+        <name>Filter_By_Brand__c</name>
+    </fields>
+    <fields>
+        <label><!-- Filter By Time --></label>
+        <name>Filter_By_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Layout Type --></label>
+        <name>Layout_Type__c</name>
+        <picklistValues>
+            <masterLabel>Calendar</masterLabel>
+            <translation><!-- Calendar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Calendar With Columns</masterLabel>
+            <translation><!-- Calendar With Columns --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Only For Internal User --></label>
+        <name>Only_For_Internal_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Organizational Units --></label>
+        <name>OrgUnitsNames__c</name>
+    </fields>
+    <fields>
+        <label><!-- OrgUnit Id --></label>
+        <name>OrgUnits__c</name>
+        <picklistValues>
+            <masterLabel>OrgUnits</masterLabel>
+            <translation><!-- OrgUnits --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Page Section --></label>
+        <name>Page_Section__c</name>
+        <picklistValues>
+            <masterLabel>Collaboration</masterLabel>
+            <translation><!-- Collaboration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Performance Management</masterLabel>
+            <translation><!-- Performance Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planning</masterLabel>
+            <translation><!-- Planning --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Parent Folder --></label>
+        <name>Parent_Folder__c</name>
+        <relationshipLabel><!-- Folders --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Is header --></label>
+        <name>is_header__c</name>
+    </fields>
+    <layouts>
+        <layout>Folder Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You cannot add folders to Collaboration section. --></errorMessage>
+        <name>Collaboration_Section_Availability</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Adding comments can be enabled only for folder in a Collaboration section --></errorMessage>
+        <name>Comments_allowed_only_for_Collaboration</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Filtering by time or brand can be enabled only for folder in a Planing section --></errorMessage>
+        <name>Filter_allowed_only_for_Planing</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- One or more Organization Unit should be set. --></errorMessage>
+        <name>OrganizationUnitsRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Uploading files can be enabled only for folder in a Collaboration section --></errorMessage>
+        <name>Uploading_allowed_only_for_Collaboration</name>
+    </validationRules>
+</CustomObjectTranslation>

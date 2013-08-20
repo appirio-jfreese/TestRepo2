@@ -1,0 +1,5 @@
+<apex:page standardController="File__c" extensions="Controller_FileDelete" showheader="false" action="{!deleteAndRedirect}">
+       
+	
+	
+</apex:page>
