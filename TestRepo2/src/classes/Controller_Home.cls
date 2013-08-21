@@ -2,7 +2,8 @@ public with sharing class Controller_Home extends Controller_Base {
 
 	// RKW 8/20/2013 - Testing Git (still)
 	// RKW 8/20/2013 - Testing Rally (again) { once more }
-	// RKW 8/20/2013 - US654/TA1166 (another test)   
+	// RKW 8/20/2013 - US654/TA1166 (another test) 
+	// RKW 8/21/2013 - Test for Jenkins  
 	// video
     public String videoId{get; private set;}
     public String videoDesc{get; private set;}
