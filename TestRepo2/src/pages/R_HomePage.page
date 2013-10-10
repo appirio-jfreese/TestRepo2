@@ -16,6 +16,7 @@ Story/Task  : US584/DE706
 <apex:page showheader="false" standardStylesheets="false" sidebar="false" title="Diageo" controller="Controller_Home">
  <!-- START - Changed for  - Basant Verma -->
 <!-- this is a test from Randy Wandell -->
+<!-- and this is a test by jfreese -->
  <body class="home-page">
  <!-- END - Changed for  - Basant Verma -->
  <!-- 
